@@ -13,7 +13,7 @@
   <body>
     <div class="grid-container" style="white-space: nowrap; overflow-x: auto; background-color: white;">
 
-      <!-- Top Row -->
+      <!-- Top Row: STRICT button and column titles -->
       <div class="grid-item-blank">
         <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">STRICT</button>
       </div> 
@@ -24,7 +24,7 @@
       <div class="grid-item">Wine</div>
       <div class="grid-item">Cloth</div>
 
-      <!-- Row 2: Current Store values -->
+      <!-- Row 2: RESET button and Current Store values -->
       <div class="grid-item-blank">
         <button class="btn-full-not-selected" onclick="ResetStoreCurrent()" style="background-color: orange;">RESET</button>
       </div> 
@@ -36,7 +36,7 @@
       <div class="grid-item" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
 
       <!-- Row 3: Inc Buttons for current store -->
-      <div class="grid-item-blank"></div>
+      <div class="grid-item-blank" id="version"></div>
       <div class="button-inc" onclick="IncStore('num-storecurrent-cash') ">+</div>
       <div class="button-inc" onclick="IncStore('num-storecurrent-brick')">+</div>
       <div class="button-inc" onclick="IncStore('num-storecurrent-food')">+</div>
@@ -62,6 +62,9 @@
       <div class="grid-item-blank" style="font-size: 10pt; justify-content: left; margin-top: auto;">4/B/W</div>
       <div class="grid-item-blank" style="font-size: 10pt; justify-content: left; margin-top: auto;">5/B/C</div>
 
+      <!-- ******************************************************************************** -->
+      <!-- **************************************** ARCHITECT ***************************** -->
+      <!-- ******************************************************************************** -->
       <!-- Row 6: Arch numbers -->
       <div class = "card-title">ARCHITECT</div>
       <div class="grid-item-blank" id="num-architect-cash-reqd" style="font-size: 6pt;">Build-></div>

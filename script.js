@@ -7,6 +7,12 @@ let fieldValues = {
   storeCurrentWine:0,
   storeCurrentCloth:0,
 
+  archBrickHouseActual:0,
+  archFoodHouseActual:0,
+  archToolHouseActual:0,
+  archWineHouseActual:0,
+  archClothHouseActual:0,
+
   mercBuyBrick:0,
   mercBuyFood:0,
   mercBuyTool:0,
@@ -66,8 +72,10 @@ let fieldValues = {
   archWineHousesValid:false,
   archClothHousesValid:false,
 
-  mercToBankCash:0,
   archToBankCash:0,
+  archFromBankCash:0,
+  mercToBankCash:0,
+  mercFromBankCash:0,
 
 
 }
@@ -83,13 +91,6 @@ let elemNumStorecurrentFood;
 let elemNumStorecurrentTool;
 let elemNumStorecurrentWine;
 let elemNumStorecurrentCloth;
-
-let numStoreCurrentCash;
-let numStoreCurrentBrick;
-let numStoreCurrentFood;
-let numStoreCurrentTool;
-let numStoreCurrentWine;
-let numStoreCurrentCloth;
 
 let elemNumArchCostCash;
 let elemNumArchCostBrick;
@@ -196,12 +197,6 @@ let mercToolDelta;
 let mercWineDelta;
 let mercClothDelta;
 
-let  archBrickHouseActual;
-let  archFoodHouseActual;
-let  archToolHouseActual;
-let  archWineHouseActual;
-let  archClothHouseActual;
-
 let btnSellMercBrick;
 let btnSellMercFood;
 let btnSellMercTool;
@@ -211,7 +206,7 @@ let btnSellMercCloth;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "v1.0";
+  document.getElementById("version").textContent = "v1.02";
 
   elemBtnMode = document.getElementById("btn-mode");
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -331,11 +326,11 @@ document.addEventListener("DOMContentLoaded", function () {
   mercWineDelta=0;
   mercClothDelta=0;
 
-  archBrickHouseActual=0;
-  archFoodHouseActual=0;
-  archToolHouseActual=0;
-  archWineHouseActual=0;
-  archClothHouseActual=0;
+  fieldValues.archBrickHouseActual=0;
+  fieldValues.archFoodHouseActual=0;
+  fieldValues.archToolHouseActual=0;
+  fieldValues.archWineHouseActual=0;
+ fieldValues.archClothHouseActual=0;
 
   fieldValues.mercBuyBrick=0;
   fieldValues.mercBuyFood=0;
@@ -355,11 +350,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function Dec(idNum) {
 
-  if (idNum.includes("num-architect-brickhouses"))  archBrickHouseActual = Max(0,  archBrickHouseActual-1);
-  if (idNum.includes("num-architect-foodhouses"))  archFoodHouseActual = Max(0,  archFoodHouseActual-1);
-  if (idNum.includes("num-architect-toolhouses"))  archToolHouseActual = Max(0,  archToolHouseActual-1);
-  if (idNum.includes("num-architect-winehouses"))  archWineHouseActual = Max(0,  archWineHouseActual-1);
-  if (idNum.includes("num-architect-clothhouses"))  archClothHouseActual = Max(0,  archClothHouseActual-1);
+  if (idNum.includes("num-architect-brickhouses"))  fieldValues.archBrickHouseActual = Max(0,  fieldValues.archBrickHouseActual-1);
+  if (idNum.includes("num-architect-foodhouses"))  fieldValues.archFoodHouseActual = Max(0,  fieldValues.archFoodHouseActual-1);
+  if (idNum.includes("num-architect-toolhouses"))  fieldValues.archToolHouseActual = Max(0,  fieldValues.archToolHouseActual-1);
+  if (idNum.includes("num-architect-winehouses"))  fieldValues.archWineHouseActual = Max(0,  fieldValues.archWineHouseActual-1);
+  if (idNum.includes("num-architect-clothhouses"))  fieldValues.archClothHouseActual = Max(0,  fieldValues.archClothHouseActual-1);
 
   if (idNum.includes("num-storecurrent-cash")) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
   if (idNum.includes("num-storecurrent-brick")) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
@@ -448,11 +443,11 @@ function Inc(idItem, idButton) {
   let buttonText = elemButton.textContent;
 
 
-  if (fieldValues.archBrickHousesValid && idItem.includes("architect-brickhouses"))  archBrickHouseActual += 1;
-  if (fieldValues.archFoodHousesValid && idItem.includes("architect-foodhouses"))  archFoodHouseActual += 1;
-  if (fieldValues.archToolHousesValid && idItem.includes("architect-toolhouses"))  archToolHouseActual += 1;
-  if (fieldValues.archWineHousesValid && idItem.includes("architect-winehouses"))  archWineHouseActual += 1;
-  if (fieldValues.archClothHousesValid && idItem.includes("architect-clothhouses"))  archClothHouseActual += 1;
+  if (fieldValues.archBrickHousesValid && idItem.includes("architect-brickhouses"))  fieldValues.archBrickHouseActual += 1;
+  if (fieldValues.archFoodHousesValid && idItem.includes("architect-foodhouses"))  fieldValues.archFoodHouseActual += 1;
+  if (fieldValues.archToolHousesValid && idItem.includes("architect-toolhouses"))  fieldValues.archToolHouseActual += 1;
+  if (fieldValues.archWineHousesValid && idItem.includes("architect-winehouses"))  fieldValues.archWineHouseActual += 1;
+  if (fieldValues.archClothHousesValid && idItem.includes("architect-clothhouses"))  fieldValues.archClothHouseActual += 1;
 
   if (!IsGreyBackground(elemButton)) {
     currentNumber += 1;
@@ -605,11 +600,11 @@ function ResetStoreCurrent() {
 /* ------------------------------------------------------------------------------------ */
 
 function ResetArchitect() {
-  archBrickHouseActual=0;
-  archFoodHouseActual=0;
-  archToolHouseActual=0;
-  archWineHouseActual=0;
-  archClothHouseActual=0;
+  fieldValues.archBrickHouseActual=0;
+  fieldValues.archFoodHouseActual=0;
+  fieldValues.archToolHouseActual=0;
+  fieldValues.archWineHouseActual=0;
+  fieldValues.archClothHouseActual=0;
 
   UpdateAll();
 }
@@ -620,13 +615,16 @@ function ProcessArchitect() {
 
   /* brick reqd to build all of the houses */
   let brickReqd =
-     archFoodHouseActual +  archToolHouseActual +  archWineHouseActual +  archClothHouseActual;
+     fieldValues.archFoodHouseActual +  
+     fieldValues.archToolHouseActual +  
+     fieldValues.archWineHouseActual +  
+     fieldValues.archClothHouseActual;
 
 
-  let foodReqd =  archBrickHouseActual +  archFoodHouseActual;
-  let toolReqd =  archToolHouseActual;
-  let wineReqd =  archWineHouseActual;
-  let clothReqd =  archClothHouseActual;
+  let foodReqd =  fieldValues.archBrickHouseActual +  fieldValues.archFoodHouseActual;
+  let toolReqd =  fieldValues.archToolHouseActual;
+  let wineReqd =  fieldValues.archWineHouseActual;
+  let clothReqd =  fieldValues.archClothHouseActual;
 
   let brickDelta = fieldValues.storeCurrentBrick - brickReqd;
   let foodDelta = fieldValues.storeCurrentFood - foodReqd;
@@ -658,19 +656,25 @@ function ProcessArchitect() {
   elemNumArchRemainingCloth.textContent = clothDelta;
 
   /* Update the numbers on the screen */
-  fieldValues.archToBankCash = GetTotalBuildValue( archBrickHouseActual,  archFoodHouseActual,  archToolHouseActual,  archWineHouseActual,  archClothHouseActual);
-  /*elemNumArchitectCashReqd.textContent = fieldValues.archToBankCash;  */
-  let fromBankCash = 0;
+  fieldValues.archToBankCash = 
+    GetTotalBuildValue( 
+        fieldValues.archBrickHouseActual,  
+        fieldValues.archFoodHouseActual,  
+        fieldValues.archToolHouseActual,  
+        fieldValues.archWineHouseActual,  
+        fieldValues.archClothHouseActual);
 
   fieldValues.archRemCash = fieldValues.storeCurrentCash - fieldValues.archToBankCash;
     
 
-  /* calculate future cash */
-  elemNumArchCostCash.textContent = fieldValues.archToBankCash - fromBankCash;
-
 
 /*  elemNumArchitectCashReqd.textContent = String(
-    GetTotalBuildValue( archBrickHouseActual,  archFoodHouseActual,  archToolHouseActual,  archWineHouseActual,  archClothHouseActual)
+    GetTotalBuildValue( 
+      fieldValues.archBrickHouseActual,  
+      fieldValues.archFoodHouseActual,  
+      fieldValues.archToolHouseActual,  
+      fieldValues.archWineHouseActual,  
+      fieldValues.archClothHouseActual)
   ); */
 
 }
@@ -830,7 +834,7 @@ function ProcessMerc() {
 
   fieldValues.mercToBankCash = buyValue;  
 
-  let fromBankCash = mercStartCash + sellValue;
+  fieldValues.mercFromBankCash = mercStartCash + sellValue;
 
   /* remove all grey-background to start with */
   btnBuyMercBrick.classList.remove('grey-background');
@@ -853,7 +857,7 @@ function ProcessMerc() {
 
    /* calculate future cash */
    elemNumMercStoreOutCash.textContent = fieldValues.mercToBankCash;
-   elemNumMercStoreInCash.textContent = fromBankCash;
+   elemNumMercStoreInCash.textContent = fieldValues.mercFromBankCash;
 
    elemNumMercStoreOutBrick.textContent = fieldValues.mercSellBrick;
    elemNumMercStoreOutFood.textContent = fieldValues.mercSellTool;
@@ -889,11 +893,11 @@ function ProcessMerc() {
 
 function ResetArchitect() {
   /*elemNumArchitectCashReqd.textContent = "";*/
-   archBrickHouseActual = 0;
-   archFoodHouseActual = 0;
-   archToolHouseActual = 0;
-   archWineHouseActual = 0;
-   archClothHouseActual = 0;
+   fieldValues.archBrickHouseActual = 0;
+   fieldValues.archFoodHouseActual = 0;
+   fieldValues.archToolHouseActual = 0;
+   fieldValues.archWineHouseActual = 0;
+   fieldValues.archClothHouseActual = 0;
 
   UpdateAll();
 }
@@ -1000,6 +1004,9 @@ function BlankAllZeroes() {
 
 function UpdateGUI() {
 
+  /* ARCHITECT (top to bottom) */
+   console.log("Heello logger");
+
   /* write to the GUI */
   elemNumStorecurrentCash.textContent = fieldValues.storeCurrentCash;
   elemNumStorecurrentBrick.textContent = fieldValues.storeCurrentBrick;
@@ -1078,6 +1085,10 @@ function UpdateGUI() {
   else {
     elemNumArchRemainingCloth.classList.remove("red-background");
   }
+
+  /* calculate future cash */
+  elemNumArchCostCash.textContent = fieldValues.archToBankCash - fieldValues.archFromBankCash;
+
 
 
 }
@@ -1186,11 +1197,11 @@ function UpdateAll() {
     let var2 = 25;
 /*    elemNumArchitectBrickHouses.innerHTML = `<span class="large-text">1</span><span class="small-text">5</span>`;*/
 
-    WriteToArchBuildBox(elemNumArchitectBrickHouses, fieldValues.archBrickAddtionalHouses, archBrickHouseActual);
-    WriteToArchBuildBox(elemNumArchitectFoodHouses, fieldValues.archFoodAddtionalHouses, archFoodHouseActual);
-    WriteToArchBuildBox(elemNumArchitectToolHouses, fieldValues.archToolAddtionalHouses, archToolHouseActual);
-    WriteToArchBuildBox(elemNumArchitectWineHouses, fieldValues.archWineAddtionalHouses, archWineHouseActual);
-    WriteToArchBuildBox(elemNumArchitectClothHouses, fieldValues.archClothAddtionalHouses, archClothHouseActual);
+    WriteToArchBuildBox(elemNumArchitectBrickHouses, fieldValues.archBrickAddtionalHouses, fieldValues.archBrickHouseActual);
+    WriteToArchBuildBox(elemNumArchitectFoodHouses, fieldValues.archFoodAddtionalHouses, fieldValues.archFoodHouseActual);
+    WriteToArchBuildBox(elemNumArchitectToolHouses, fieldValues.archToolAddtionalHouses, fieldValues.archToolHouseActual);
+    WriteToArchBuildBox(elemNumArchitectWineHouses, fieldValues.archWineAddtionalHouses, fieldValues.archWineHouseActual);
+    WriteToArchBuildBox(elemNumArchitectClothHouses, fieldValues.archClothAddtionalHouses, fieldValues.archClothHouseActual);
 
     
 
@@ -1209,7 +1220,7 @@ function UpdateAll() {
   SetMercTradeStatus();
 
   /* always make dec buttons grey if zero */
-  if (archBrickHouseActual === 0) {
+  if (fieldValues.archBrickHouseActual === 0) {
     btnDecArchBrick.classList.add ('grey-background');
   }
   else
@@ -1217,7 +1228,7 @@ function UpdateAll() {
     btnDecArchBrick.classList.remove ('grey-background');
   }
 
-  if (archFoodHouseActual === 0) {
+  if (fieldValues.archFoodHouseActual === 0) {
     btnDecArchFood.classList.add ('grey-background');
   }
   else
@@ -1225,7 +1236,7 @@ function UpdateAll() {
     btnDecArchFood.classList.remove ('grey-background');
   }
 
-  if (archToolHouseActual === 0) {
+  if (fieldValues.archToolHouseActual === 0) {
     btnDecArchTool.classList.add ('grey-background');
   }
   else
@@ -1233,7 +1244,7 @@ function UpdateAll() {
     btnDecArchTool.classList.remove ('grey-background');
   }
 
-  if (archWineHouseActual === 0) {
+  if (fieldValues.archWineHouseActual === 0) {
     btnDecArchWine.classList.add ('grey-background');
   }
   else
@@ -1241,7 +1252,7 @@ function UpdateAll() {
     btnDecArchWine.classList.remove ('grey-background');
   }
 
-  if (archClothHouseActual === 0) {
+  if (fieldValues.archClothHouseActual === 0) {
     btnDecArchCloth.classList.add ('grey-background');
   }
   else

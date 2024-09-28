@@ -69,7 +69,7 @@ body {
 }
 
 
-.button-dec {
+.button-inc {
   display: flex;
   justify-content: center;
   align-items: center;

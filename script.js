@@ -77,6 +77,11 @@ let fieldValues = {
   mercToBankCash:0,
   mercFromBankCash:0,
 
+  archBrickReqd:0,
+  archFoodReqd:0,
+  archToolReqd:0,
+  archWineReqd:0,
+  archClothReqd:0,
 
 }
 
@@ -206,7 +211,7 @@ let btnSellMercCloth;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "v1.02";
+  document.getElementById("version").textContent = "v1.04";
 
   elemBtnMode = document.getElementById("btn-mode");
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -330,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fieldValues.archFoodHouseActual=0;
   fieldValues.archToolHouseActual=0;
   fieldValues.archWineHouseActual=0;
- fieldValues.archClothHouseActual=0;
+  fieldValues.archClothHouseActual=0;
 
   fieldValues.mercBuyBrick=0;
   fieldValues.mercBuyFood=0;
@@ -439,22 +444,11 @@ function Inc(idItem, idButton) {
   const elemItem = document.getElementById(idItem);
   const elemButton = document.getElementById(idButton);
 
-  let currentNumber = GetIntegerValue(elemItem.textContent);
-  let buttonText = elemButton.textContent;
-
-
   if (fieldValues.archBrickHousesValid && idItem.includes("architect-brickhouses"))  fieldValues.archBrickHouseActual += 1;
   if (fieldValues.archFoodHousesValid && idItem.includes("architect-foodhouses"))  fieldValues.archFoodHouseActual += 1;
   if (fieldValues.archToolHousesValid && idItem.includes("architect-toolhouses"))  fieldValues.archToolHouseActual += 1;
   if (fieldValues.archWineHousesValid && idItem.includes("architect-winehouses"))  fieldValues.archWineHouseActual += 1;
   if (fieldValues.archClothHousesValid && idItem.includes("architect-clothhouses"))  fieldValues.archClothHouseActual += 1;
-
-  if (!IsGreyBackground(elemButton)) {
-    currentNumber += 1;
-  }
-
-  /* currentNumber = Min(10, currentNumber); */
-  /* elemItem.textContent = currentNumber; */
 
   UpdateAll();
 }
@@ -614,46 +608,23 @@ function ProcessArchitect() {
 
 
   /* brick reqd to build all of the houses */
-  let brickReqd =
+  fieldValues.archBrickReqd =
      fieldValues.archFoodHouseActual +  
      fieldValues.archToolHouseActual +  
      fieldValues.archWineHouseActual +  
      fieldValues.archClothHouseActual;
 
 
-  let foodReqd =  fieldValues.archBrickHouseActual +  fieldValues.archFoodHouseActual;
-  let toolReqd =  fieldValues.archToolHouseActual;
-  let wineReqd =  fieldValues.archWineHouseActual;
-  let clothReqd =  fieldValues.archClothHouseActual;
+  fieldValues.archFoodReqd =  fieldValues.archBrickHouseActual +  fieldValues.archFoodHouseActual;
+  fieldValues.archToolReqd =  fieldValues.archToolHouseActual;
+  fieldValues.archWineReqd =  fieldValues.archWineHouseActual;
+  fieldValues.archClothReqd =  fieldValues.archClothHouseActual;
 
-  let brickDelta = fieldValues.storeCurrentBrick - brickReqd;
-  let foodDelta = fieldValues.storeCurrentFood - foodReqd;
-  let toolDelta = fieldValues.storeCurrentTool - toolReqd;
-  let wineDelta = fieldValues.storeCurrentWine - wineReqd;
-  let clothDelta = fieldValues.storeCurrentCloth - clothReqd;
-
-  elemNumArchCostBrick.textContent = brickReqd;
-  elemNumArchCostFood.textContent = foodReqd;
-  elemNumArchCostTool.textContent = toolReqd;
-  elemNumArchCostWine.textContent = wineReqd;
-  elemNumArchCostCloth.textContent = clothReqd;
-
-  fieldValues.archRemBrick = brickDelta;
-  fieldValues.archRemFood = foodDelta;
-  fieldValues.archRemTool = toolDelta;
-  fieldValues.archRemWine = wineDelta;
-  fieldValues.archRemCloth = clothDelta;
-
-  elemNumArchRemainingBrick.textContent = fieldValues.archRemBrick;
-  elemNumArchRemainingFood.textContent = fieldValues.archRemFood;
-  elemNumArchRemainingTool.textContent = fieldValues.archRemTool;
-  elemNumArchRemainingWine.textContent = fieldValues.archRemWine;
-  elemNumArchRemainingCloth.textContent = fieldValues.archRemCloth;
-
-  elemNumArchRemainingFood.textContent = foodDelta;
-  elemNumArchRemainingTool.textContent = toolDelta;
-  elemNumArchRemainingWine.textContent = wineDelta;
-  elemNumArchRemainingCloth.textContent = clothDelta;
+  fieldValues.archRemBrick = fieldValues.storeCurrentBrick - fieldValues.archBrickReqd;
+  fieldValues.archRemFood = fieldValues.storeCurrentFood - fieldValues.archFoodReqd;
+  fieldValues.archRemTool = fieldValues.storeCurrentTool - fieldValues.archToolReqd;
+  fieldValues.archRemWine = fieldValues.storeCurrentWine - fieldValues.archWineReqd;
+  fieldValues.archRemCloth = fieldValues.storeCurrentCloth - fieldValues.archClothReqd;
 
   /* Update the numbers on the screen */
   fieldValues.archToBankCash = 
@@ -1032,6 +1003,18 @@ function UpdateGUI() {
   WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
 
   elemNumArchRemainingCash.textContent = fieldValues.archRemCash;;
+  elemNumArchRemainingBrick.textContent = fieldValues.archRemBrick;
+  elemNumArchRemainingFood.textContent = fieldValues.archRemFood;
+  elemNumArchRemainingTool.textContent = fieldValues.archRemTool;
+  elemNumArchRemainingWine.textContent = fieldValues.archRemWine;
+  elemNumArchRemainingCloth.textContent = fieldValues.archRemCloth;
+
+  elemNumArchCostBrick.textContent = fieldValues.archBrickReqd;
+  elemNumArchCostFood.textContent = fieldValues.archFoodReqd;
+  elemNumArchCostTool.textContent = fieldValues.archToolReqd;
+  elemNumArchCostWine.textContent = fieldValues.archWineReqd;
+  elemNumArchCostCloth.textContent = fieldValues.archClothReqd;
+
 
   elemNumStorecurrentArchCash.textContent = fieldValues.storeCurrentCash;
   elemNumStorecurrentArchBrick.textContent=fieldValues.storeCurrentBrick;  

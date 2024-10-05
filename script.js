@@ -60,11 +60,11 @@ let fieldValues = {
   archRemWine:0,
   archRemCloth:0,
 
-  archBrickAddtionalHouses:0,
-  archFoodAddtionalHouses:0,
-  archToolAddtionalHouses:0,
-  archWineAddtionalHouses:0,
-  archClothAddtionalHouses:0,
+  archBrickAdditionalHouses:0,
+  archFoodAdditionalHouses:0,
+  archToolAdditionalHouses:0,
+  archWineAdditionalHouses:0,
+  archClothAdditionalHouses:0,
 
   archBrickHousesValid:false,
   archFoodHousesValid:false,
@@ -97,12 +97,12 @@ let elemNumStorecurrentTool;
 let elemNumStorecurrentWine;
 let elemNumStorecurrentCloth;
 
-let elemNumArchCostCash;
-let elemNumArchCostBrick;
-let elemNumArchCostFood;
-let elemNumArchCostTool;
-let elemNumArchCostWine;
-let elemNumArchCostCloth;
+let elemNumArchStoreCostCash;
+let elemNumArchStoreCostBrick;
+let elemNumArchStoreCostFood;
+let elemNumArchStoreCostTool;
+let elemNumArchStoreCostWine;
+let elemNumArchStoreCostCloth;
 
 let elemNumArchRemainingCash;
 let elemNumArchRemainingBrick;
@@ -211,7 +211,7 @@ let btnSellMercCloth;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "v1.04";
+  document.getElementById("version").textContent = "v1.05";
 
   elemBtnMode = document.getElementById("btn-mode");
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -241,12 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
   elemNumStorecurrentArchCloth = document.getElementById("num-storecurrent-arch-cloth");
 
 
-  elemNumArchCostCash = document.getElementById("num-arch-store-cost-cash");
-  elemNumArchCostBrick = document.getElementById("num-arch-store-cost-brick");
-  elemNumArchCostFood = document.getElementById("num-arch-store-cost-food");
-  elemNumArchCostTool = document.getElementById("num-arch-store-cost-tool");
-  elemNumArchCostWine = document.getElementById("num-arch-store-cost-wine");
-  elemNumArchCostCloth = document.getElementById("num-arch-store-cost-cloth");
+  elemNumArchStoreCostCash = document.getElementById("num-arch-store-cost-cash");
+  elemNumArchStoreCostBrick = document.getElementById("num-arch-store-cost-brick");
+  elemNumArchStoreCostFood = document.getElementById("num-arch-store-cost-food");
+  elemNumArchStoreCostTool = document.getElementById("num-arch-store-cost-tool");
+  elemNumArchStoreCostWine = document.getElementById("num-arch-store-cost-wine");
+  elemNumArchStoreCostCloth = document.getElementById("num-arch-store-cost-cloth");
 
   elemNumArchRemainingCash = document.getElementById("num-arch-remaining-cash");
   elemNumArchRemainingBrick = document.getElementById("num-arch-remaining-brick");
@@ -284,11 +284,11 @@ document.addEventListener("DOMContentLoaded", function () {
   elemNumMercRemaining2Wine = document.getElementById("num-merc-remaining2-wine");
   elemNumMercRemaining2Cloth = document.getElementById("num-merc-remaining2-cloth");
 
-  elemNumArchitectBrickHouses = document.getElementById("num-architect-brickhouses");
-  elemNumArchitectFoodHouses = document.getElementById("num-architect-foodhouses");
-  elemNumArchitectToolHouses = document.getElementById("num-architect-toolhouses");
-  elemNumArchitectWineHouses = document.getElementById("num-architect-winehouses");
-  elemNumArchitectClothHouses = document.getElementById("num-architect-clothhouses");
+  elemNumArchitectBrickHouses = document.getElementById("num-arch-brickhouses-built");
+  elemNumArchitectFoodHouses = document.getElementById("num-arch-foodhouses-built");
+  elemNumArchitectToolHouses = document.getElementById("num-arch-toolhouses-built");
+  elemNumArchitectWineHouses = document.getElementById("num-arch-winehouses-built");
+  elemNumArchitectClothHouses = document.getElementById("num-arch-clothhouses-built");
 
   elemNumArchitectCashReqd = document.getElementById("num-architect-cash-reqd");
 
@@ -355,11 +355,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function Dec(idNum) {
 
-  if (idNum.includes("num-architect-brickhouses"))  fieldValues.archBrickHouseActual = Max(0,  fieldValues.archBrickHouseActual-1);
-  if (idNum.includes("num-architect-foodhouses"))  fieldValues.archFoodHouseActual = Max(0,  fieldValues.archFoodHouseActual-1);
-  if (idNum.includes("num-architect-toolhouses"))  fieldValues.archToolHouseActual = Max(0,  fieldValues.archToolHouseActual-1);
-  if (idNum.includes("num-architect-winehouses"))  fieldValues.archWineHouseActual = Max(0,  fieldValues.archWineHouseActual-1);
-  if (idNum.includes("num-architect-clothhouses"))  fieldValues.archClothHouseActual = Max(0,  fieldValues.archClothHouseActual-1);
+  if (idNum.includes("num-arch-brickhouses-built"))  fieldValues.archBrickHouseActual = Max(0,  fieldValues.archBrickHouseActual-1);
+  if (idNum.includes("num-arch-foodhouses-built"))  fieldValues.archFoodHouseActual = Max(0,  fieldValues.archFoodHouseActual-1);
+  if (idNum.includes("num-arch-toolhouses-built"))  fieldValues.archToolHouseActual = Max(0,  fieldValues.archToolHouseActual-1);
+  if (idNum.includes("num-arch-winehouses-built"))  fieldValues.archWineHouseActual = Max(0,  fieldValues.archWineHouseActual-1);
+  if (idNum.includes("num-arch-clothhouses-built"))  fieldValues.archClothHouseActual = Max(0,  fieldValues.archClothHouseActual-1);
 
   if (idNum.includes("num-storecurrent-cash")) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
   if (idNum.includes("num-storecurrent-brick")) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
@@ -439,16 +439,13 @@ function IsGreyBackground(element) {
 
 function Inc(idItem, idButton) {
 
-  /* idItem example: num-architect-brickhouses */
+  /* idItem example: num-arch-brickhouses-built */
   /* idButton example: btn-inc-arch-brick */
-  const elemItem = document.getElementById(idItem);
-  const elemButton = document.getElementById(idButton);
-
-  if (fieldValues.archBrickHousesValid && idItem.includes("architect-brickhouses"))  fieldValues.archBrickHouseActual += 1;
-  if (fieldValues.archFoodHousesValid && idItem.includes("architect-foodhouses"))  fieldValues.archFoodHouseActual += 1;
-  if (fieldValues.archToolHousesValid && idItem.includes("architect-toolhouses"))  fieldValues.archToolHouseActual += 1;
-  if (fieldValues.archWineHousesValid && idItem.includes("architect-winehouses"))  fieldValues.archWineHouseActual += 1;
-  if (fieldValues.archClothHousesValid && idItem.includes("architect-clothhouses"))  fieldValues.archClothHouseActual += 1;
+  if (fieldValues.archBrickHousesValid && idItem.includes("num-arch-brickhouses-built")) fieldValues.archBrickHouseActual += 1;
+  if (fieldValues.archFoodHousesValid && idItem.includes("num-arch-foodhouses-built"))  fieldValues.archFoodHouseActual += 1;
+  if (fieldValues.archToolHousesValid && idItem.includes("num-arch-toolhouses-built"))  fieldValues.archToolHouseActual += 1;
+  if (fieldValues.archWineHousesValid && idItem.includes("v-winehouses-built"))  fieldValues.archWineHouseActual += 1;
+  if (fieldValues.archClothHousesValid && idItem.includes("num-arch-clothhouses-built"))  fieldValues.archClothHouseActual += 1;
 
   UpdateAll();
 }
@@ -638,15 +635,6 @@ function ProcessArchitect() {
   fieldValues.archRemCash = fieldValues.storeCurrentCash - fieldValues.archToBankCash;
     
 
-
-/*  elemNumArchitectCashReqd.textContent = String(
-    GetTotalBuildValue( 
-      fieldValues.archBrickHouseActual,  
-      fieldValues.archFoodHouseActual,  
-      fieldValues.archToolHouseActual,  
-      fieldValues.archWineHouseActual,  
-      fieldValues.archClothHouseActual)
-  ); */
 
 }
 
@@ -873,10 +861,14 @@ function ResetArchitect() {
   UpdateAll();
 }
 
-function ConvertZeroesToBlank(id) {
-  if (GetIntegerValue(id.textContent) === 0) {
+function ConvertZeroesToBlank(id, value) {
+  if (value === 0) {
     id.textContent = "";
   }
+  else {
+    id.textContent = value;
+  }
+
 }
 
 function UpdateErrorConditions() {
@@ -910,97 +902,29 @@ function ElemHasGreyBackground(id) {
 
 }
 
-function BlankAllZeroes() {
-
-  ConvertZeroesToBlank(elemNumStorecurrentCash);
-  ConvertZeroesToBlank(elemNumStorecurrentBrick);
-  ConvertZeroesToBlank(elemNumStorecurrentFood);
-  ConvertZeroesToBlank(elemNumStorecurrentTool);
-  ConvertZeroesToBlank(elemNumStorecurrentWine);
-  ConvertZeroesToBlank(elemNumStorecurrentCloth);
-
-  ConvertZeroesToBlank(elemNumArchCostBrick);
-  ConvertZeroesToBlank(elemNumArchCostFood);
-  ConvertZeroesToBlank(elemNumArchCostTool);
-  ConvertZeroesToBlank(elemNumArchCostWine);
-  ConvertZeroesToBlank(elemNumArchCostCloth);
-
-  /* ConvertZeroesToBlank(elemNumArchitectCashReqd);*/
-
-  ConvertZeroesToBlank(elemNumArchCostCash);
-  ConvertZeroesToBlank(elemNumArchCostBrick);
-  ConvertZeroesToBlank(elemNumArchCostFood);
-  ConvertZeroesToBlank(elemNumArchCostTool);
-  ConvertZeroesToBlank(elemNumArchCostWine);
-  ConvertZeroesToBlank(elemNumArchCostCloth);
-
-  ConvertZeroesToBlank(elemNumArchRemainingCash);
-  ConvertZeroesToBlank(elemNumArchRemainingBrick);
-  ConvertZeroesToBlank(elemNumArchRemainingFood);
-  ConvertZeroesToBlank(elemNumArchRemainingTool);
-  ConvertZeroesToBlank(elemNumArchRemainingWine);
-  ConvertZeroesToBlank(elemNumArchRemainingCloth);
-
-  ConvertZeroesToBlank(elemNumMercStoreOutCash);
-  ConvertZeroesToBlank(elemNumMercStoreOutBrick);
-  ConvertZeroesToBlank(elemNumMercStoreOutFood);
-  ConvertZeroesToBlank(elemNumMercStoreOutTool);
-  ConvertZeroesToBlank(elemNumMercStoreOutWine);
-  ConvertZeroesToBlank(elemNumMercStoreOutCloth);
-
-  ConvertZeroesToBlank(elemNumMercStoreInCash);
-  ConvertZeroesToBlank(elemNumMercStoreInBrick);
-  ConvertZeroesToBlank(elemNumMercStoreInFood);
-  ConvertZeroesToBlank(elemNumMercStoreInTool);
-  ConvertZeroesToBlank(elemNumMercStoreInWine);
-  ConvertZeroesToBlank(elemNumMercStoreInCloth);
-
-  /*  ConvertZeroesToBlank(elemNumMercRemainingCash);*/
-  ConvertZeroesToBlank(elemNumMercDeltaBrick);
-  ConvertZeroesToBlank(elemNumMercDeltaFood);
-  ConvertZeroesToBlank(elemNumMercDeltaTool);
-  ConvertZeroesToBlank(elemNumMercDeltaWine);
-  ConvertZeroesToBlank(elemNumMercDeltaCloth);
-
-  ConvertZeroesToBlank(elemNumArchitectBrickHouses);
-  ConvertZeroesToBlank(elemNumArchitectFoodHouses);
-  ConvertZeroesToBlank(elemNumArchitectToolHouses);
-  ConvertZeroesToBlank(elemNumArchitectWineHouses);
-  ConvertZeroesToBlank(elemNumArchitectClothHouses);
-
-
-}
-
-
 
 function UpdateGUI() {
 
   /* ARCHITECT (top to bottom) */
-   console.log("Heello logger");
 
   /* write to the GUI */
-  elemNumStorecurrentCash.textContent = fieldValues.storeCurrentCash;
-  elemNumStorecurrentBrick.textContent = fieldValues.storeCurrentBrick;
-  elemNumStorecurrentFood.textContent = fieldValues.storeCurrentFood;
-  elemNumStorecurrentTool.textContent = fieldValues.storeCurrentTool;
-  elemNumStorecurrentWine.textContent = fieldValues.storeCurrentWine;
-  elemNumStorecurrentCloth.textContent = fieldValues.storeCurrentCloth;
-
-  elemNumStorecurrentMercCash.textContent = fieldValues.storeCurrentCash;
-  elemNumStorecurrentMercBrick.textContent=fieldValues.storeCurrentBrick;  
-  elemNumStorecurrentMercFood.textContent=fieldValues.storeCurrentFood;  
-  elemNumStorecurrentMercTool.textContent=fieldValues.storeCurrentTool;  
-  elemNumStorecurrentMercWine.textContent=fieldValues.storeCurrentWine;  
-  elemNumStorecurrentMercCloth.textContent=fieldValues.storeCurrentCloth;  
-
-  btnSellMercBrick.textContent = fieldValues.mercRemBrick;
-
+  /* Store */
   WriteFieldValueBlankZero(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
   WriteFieldValueBlankZero(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
   WriteFieldValueBlankZero(elemNumStorecurrentFood, fieldValues.storeCurrentFood);
   WriteFieldValueBlankZero(elemNumStorecurrentTool, fieldValues.storeCurrentTool);
   WriteFieldValueBlankZero(elemNumStorecurrentWine, fieldValues.storeCurrentWine);
   WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
+
+  /* ARCHITECT */
+  WriteToArchBuildBox(elemNumArchitectBrickHouses, fieldValues.archBrickAdditionalHouses, fieldValues.archBrickHouseActual);
+  WriteToArchBuildBox(elemNumArchitectFoodHouses, fieldValues.archFoodAdditionalHouses, fieldValues.archFoodHouseActual);
+  WriteToArchBuildBox(elemNumArchitectToolHouses, fieldValues.archToolAdditionalHouses, fieldValues.archToolHouseActual);
+  WriteToArchBuildBox(elemNumArchitectWineHouses, fieldValues.archWineAdditionalHouses, fieldValues.archWineHouseActual);
+  WriteToArchBuildBox(elemNumArchitectClothHouses, fieldValues.archClothAdditionalHouses, fieldValues.archClothHouseActual);
+
+    
+
 
   elemNumArchRemainingCash.textContent = fieldValues.archRemCash;;
   elemNumArchRemainingBrick.textContent = fieldValues.archRemBrick;
@@ -1009,11 +933,11 @@ function UpdateGUI() {
   elemNumArchRemainingWine.textContent = fieldValues.archRemWine;
   elemNumArchRemainingCloth.textContent = fieldValues.archRemCloth;
 
-  elemNumArchCostBrick.textContent = fieldValues.archBrickReqd;
-  elemNumArchCostFood.textContent = fieldValues.archFoodReqd;
-  elemNumArchCostTool.textContent = fieldValues.archToolReqd;
-  elemNumArchCostWine.textContent = fieldValues.archWineReqd;
-  elemNumArchCostCloth.textContent = fieldValues.archClothReqd;
+  elemNumArchStoreCostBrick.textContent = fieldValues.archBrickReqd;
+  elemNumArchStoreCostFood.textContent = fieldValues.archFoodReqd;
+  elemNumArchStoreCostTool.textContent = fieldValues.archToolReqd;
+  elemNumArchStoreCostWine.textContent = fieldValues.archWineReqd;
+  elemNumArchStoreCostCloth.textContent = fieldValues.archClothReqd;
 
 
   elemNumStorecurrentArchCash.textContent = fieldValues.storeCurrentCash;
@@ -1070,8 +994,67 @@ function UpdateGUI() {
   }
 
   /* calculate future cash */
-  elemNumArchCostCash.textContent = fieldValues.archToBankCash - fieldValues.archFromBankCash;
+  elemNumArchStoreCostCash.textContent = fieldValues.archToBankCash - fieldValues.archFromBankCash;
 
+  ConvertZeroesToBlank(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
+  ConvertZeroesToBlank(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
+  ConvertZeroesToBlank(elemNumStorecurrentFood, fieldValues.storeCurrentFood);
+  ConvertZeroesToBlank(elemNumStorecurrentTool, fieldValues.storeCurrentTool);
+  ConvertZeroesToBlank(elemNumStorecurrentWine, fieldValues.storeCurrentWine);
+  ConvertZeroesToBlank(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
+
+  ConvertZeroesToBlank(elemNumArchStoreCostBrick, fieldValues.archBrick);
+  ConvertZeroesToBlank(elemNumArchStoreCostFood);
+  ConvertZeroesToBlank(elemNumArchStoreCostTool);
+  ConvertZeroesToBlank(elemNumArchStoreCostWine);
+  ConvertZeroesToBlank(elemNumArchStoreCostCloth);
+
+  /* ConvertZeroesToBlank(elemNumArchitectCashReqd);*/
+
+  ConvertZeroesToBlank(elemNumArchStoreCostCash);
+  ConvertZeroesToBlank(elemNumArchStoreCostBrick);
+  ConvertZeroesToBlank(elemNumArchStoreCostFood);
+  ConvertZeroesToBlank(elemNumArchStoreCostTool);
+  ConvertZeroesToBlank(elemNumArchStoreCostWine);
+  ConvertZeroesToBlank(elemNumArchStoreCostCloth);
+
+  ConvertZeroesToBlank(elemNumArchRemainingCash);
+  ConvertZeroesToBlank(elemNumArchRemainingBrick);
+  ConvertZeroesToBlank(elemNumArchRemainingFood);
+  ConvertZeroesToBlank(elemNumArchRemainingTool);
+  ConvertZeroesToBlank(elemNumArchRemainingWine);
+  ConvertZeroesToBlank(elemNumArchRemainingCloth);
+
+  ConvertZeroesToBlank(elemNumMercStoreOutCash);
+  ConvertZeroesToBlank(elemNumMercStoreOutBrick);
+  ConvertZeroesToBlank(elemNumMercStoreOutFood);
+  ConvertZeroesToBlank(elemNumMercStoreOutTool);
+  ConvertZeroesToBlank(elemNumMercStoreOutWine);
+  ConvertZeroesToBlank(elemNumMercStoreOutCloth);
+
+  ConvertZeroesToBlank(elemNumMercStoreInCash);
+  ConvertZeroesToBlank(elemNumMercStoreInBrick);
+  ConvertZeroesToBlank(elemNumMercStoreInFood);
+  ConvertZeroesToBlank(elemNumMercStoreInTool);
+  ConvertZeroesToBlank(elemNumMercStoreInWine);
+  ConvertZeroesToBlank(elemNumMercStoreInCloth);
+
+  /* Blank the zeroes */
+  /*  ConvertZeroesToBlank(elemNumMercRemainingCash);*/
+  ConvertZeroesToBlank(elemNumMercDeltaBrick);
+  ConvertZeroesToBlank(elemNumMercDeltaFood);
+  ConvertZeroesToBlank(elemNumMercDeltaTool);
+  ConvertZeroesToBlank(elemNumMercDeltaWine);
+  ConvertZeroesToBlank(elemNumMercDeltaCloth);
+
+  elemNumStorecurrentMercCash.textContent = fieldValues.storeCurrentCash;
+  elemNumStorecurrentMercBrick.textContent=fieldValues.storeCurrentBrick;  
+  elemNumStorecurrentMercFood.textContent=fieldValues.storeCurrentFood;  
+  elemNumStorecurrentMercTool.textContent=fieldValues.storeCurrentTool;  
+  elemNumStorecurrentMercWine.textContent=fieldValues.storeCurrentWine;  
+  elemNumStorecurrentMercCloth.textContent=fieldValues.storeCurrentCloth;  
+
+  btnSellMercBrick.textContent = fieldValues.mercRemBrick;
 
 
 }
@@ -1079,13 +1062,13 @@ function UpdateGUI() {
 function WriteToArchBuildBox(elem_, additionalCount_, actualCount_) {
 
     var totalPossible = additionalCount_ + actualCount_;
-    
     if (totalPossible <= 0) {
       elem_.textContent =  '';
     }
     else {
       /*elem_.innerHTML = `${actualCount_.toString()}/ <span class="small-text">${numberOnRight.toString()}</span>`;*/
 /*      elem_.textContent =  actualCount_ + "/" + totalPossible;*/
+    console.log ("total possible: " + totalPossible)
       elem_.textContent =  actualCount_ + "/" + totalPossible;
     }  
 
@@ -1101,13 +1084,12 @@ function UpdateAll() {
 
   ProcessArchitect();
   ProcessMerc();
+    console.log("addit: " + fieldValues.archBrickAdditionalHouses + ", actual: " + fieldValues.archBrickHouseActual);
 
 
   /* Assign differet colours to the buttons */
 
   UpdateErrorConditions();
-
-  BlankAllZeroes();
 
   /* Apply additional formatting depending upon moding and valus */
   if (editMode === EditModeType.STRICT) {
@@ -1121,7 +1103,7 @@ function UpdateAll() {
     /* Architect */
 
     /* BRICK */
-    fieldValues.archBrickAddtionalHouses = Min(Math.floor(fieldValues.archRemCash/brickCost),fieldValues.archRemFood);
+    fieldValues.archBrickAdditionalHouses = Min(Math.floor(fieldValues.archRemCash/brickCost),fieldValues.archRemFood);
     fieldValues.archBrickHousesValid = fieldValues.archRemCash >= brickCost && fieldValues.archRemFood >= 1;
 
     if (!fieldValues.archBrickHousesValid) {
@@ -1133,7 +1115,7 @@ function UpdateAll() {
     }
 
     /* FOOD */
-    fieldValues.archFoodAddtionalHouses = Min3(Math.floor(fieldValues.archRemCash/foodCost),fieldValues.archRemBrick, fieldValues.archRemFood);
+    fieldValues.archFoodAdditionalHouses = Min3(Math.floor(fieldValues.archRemCash/foodCost),fieldValues.archRemBrick, fieldValues.archRemFood);
     fieldValues.archFoodHousesValid = fieldValues.archRemCash >= foodCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemFood >= 1;
 
     if (!fieldValues.archFoodHousesValid) {
@@ -1144,7 +1126,7 @@ function UpdateAll() {
     }
 
     /* TOOL */
-    fieldValues.archToolAddtionalHouses = Min3(Math.floor(fieldValues.archRemCash/toolCost),fieldValues.archRemBrick, fieldValues.archRemTool);
+    fieldValues.archToolAdditionalHouses = Min3(Math.floor(fieldValues.archRemCash/toolCost),fieldValues.archRemBrick, fieldValues.archRemTool);
     fieldValues.archToolHousesValid = fieldValues.archRemCash >= toolCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemTool >= 1;
 
     if (!fieldValues.archToolHousesValid) {
@@ -1155,7 +1137,7 @@ function UpdateAll() {
     }
 
     /* WINE */
-    fieldValues.archWineAddtionalHouses = Min3(Math.floor(fieldValues.archRemCash/wineCost),fieldValues.archRemBrick, fieldValues.archRemTool);
+    fieldValues.archWineAdditionalHouses = Min3(Math.floor(fieldValues.archRemCash/wineCost),fieldValues.archRemBrick, fieldValues.archRemTool);
     fieldValues.archWineHousesValid = fieldValues.archRemCash >= wineCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemWine >= 1;
 
     if (!fieldValues.archWineHousesValid) {
@@ -1166,7 +1148,7 @@ function UpdateAll() {
     }
 
     /* CLOTH */
-    fieldValues.archClothAddtionalHouses = Min3(Math.floor(fieldValues.archRemCash/clothCost),fieldValues.archRemBrick, fieldValues.archRemCloth);
+    fieldValues.archClothAdditionalHouses = Min3(Math.floor(fieldValues.archRemCash/clothCost),fieldValues.archRemBrick, fieldValues.archRemCloth);
     fieldValues.archClothHousesValid = fieldValues.archRemCash >= clothCost && fieldValues.archRemBrick && 1 && fieldValues.archRemCloth >= 1;
 
     if (!fieldValues.archClothHousesValid) {
@@ -1179,14 +1161,6 @@ function UpdateAll() {
     let var1 = 10;
     let var2 = 25;
 /*    elemNumArchitectBrickHouses.innerHTML = `<span class="large-text">1</span><span class="small-text">5</span>`;*/
-
-    WriteToArchBuildBox(elemNumArchitectBrickHouses, fieldValues.archBrickAddtionalHouses, fieldValues.archBrickHouseActual);
-    WriteToArchBuildBox(elemNumArchitectFoodHouses, fieldValues.archFoodAddtionalHouses, fieldValues.archFoodHouseActual);
-    WriteToArchBuildBox(elemNumArchitectToolHouses, fieldValues.archToolAddtionalHouses, fieldValues.archToolHouseActual);
-    WriteToArchBuildBox(elemNumArchitectWineHouses, fieldValues.archWineAddtionalHouses, fieldValues.archWineHouseActual);
-    WriteToArchBuildBox(elemNumArchitectClothHouses, fieldValues.archClothAddtionalHouses, fieldValues.archClothHouseActual);
-
-    
 
 
   }

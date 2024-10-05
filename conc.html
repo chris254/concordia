@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <link rel="stylesheet" href="grid.css" />
-    <title>Main</title>
+    <title>Concordia</title>
   </head>
 
   <body>
@@ -36,10 +36,10 @@
       </div> 
       <div class="grid-item" id="num-storecurrent-cash" style="font-weight: bolder;">0</div>
       <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-storecurrent-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
+      <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
 
       <!-- Row 3: Inc Buttons for current store -->
       <div class="grid-item-no-border" id="version"></div>
@@ -75,31 +75,40 @@
       <div class = "card-title">ARCHITECT</div>
       <div class="grid-item-no-border" id="num-architect-cash-reqd" style="font-size: 6pt;">Build-></div>
 
-      <div class="grid-item" id="num-arch-brickhouses-built" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-arch-foodhouses-built" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-arch-toolhouses-built" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-arch-winehouses-built" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-arch-clothhouses-built" style="font-weight: bolder;">0</div>
+      <div class="grid-item brick" id="num-arch-brickhouses-actual" style="font-weight: bolder;">0</div>
+      <div class="grid-item food" id="num-arch-foodhouses-actual" style="font-weight: bolder;">0</div>
+      <div class="grid-item tool" id="num-arch-toolhouses-actual" style="font-weight: bolder;">0</div>
+      <div class="grid-item wine" id="num-arch-winehouses-actual" style="font-weight: bolder;">0</div>
+      <div class="grid-item cloth" id="num-arch-clothhouses-actual" style="font-weight: bolder;">0</div>
 
       <!-- Row 7: Arch + button-->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: orange;">RESET</button>
       </div> 
       <div class="grid-item-no-border"></div>
-      <div class="button-inc" id="btn-inc-arch-brick" onclick="Inc('num-arch-brickhouses-built','btn-inc-arch-brick')">+</div>
-      <div class="button-inc" id="btn-inc-arch-food" onclick="Inc('num-arch-foodhouses-built','btn-inc-arch-food')">+</div>
-      <div class="button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-toolhouses-built','btn-inc-arch-tool')">+</div>
-      <div class="button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-winehouses-built','btn-inc-arch-wine')">+</div>
-      <div class="button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-clothhouses-built','btn-inc-arch-cloth')">+</div>
+      <div class="grid-item brick" id="num-arch-brickhouses-potential" style="font-weight: bolder;">0</div>
+      <div class="grid-item food" id="num-arch-foodhouses-potential" style="font-weight: bolder;">0</div>
+      <div class="grid-item tool" id="num-arch-toolhouses-potential" style="font-weight: bolder;">0</div>
+      <div class="grid-item wine" id="num-arch-winehouses-potential" style="font-weight: bolder;">0</div>
+      <div class="grid-item cloth" id="num-arch-clothhouses-potential" style="font-weight: bolder;">0</div>
+
+
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="button-inc" id="btn-inc-arch-brick" onclick="Inc('num-arch-brickhouses-actual','btn-inc-arch-brick')">+</div>
+      <div class="button-inc" id="btn-inc-arch-food" onclick="Inc('num-arch-foodhouses-actual','btn-inc-arch-food')">+</div>
+      <div class="button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-toolhouses-actual','btn-inc-arch-tool')">+</div>
+      <div class="button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-winehouses-actual','btn-inc-arch-wine')">+</div>
+      <div class="button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-clothhouses-actual','btn-inc-arch-cloth')">+</div>
 
       <!-- Row 8: Arch - button-->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="button-dec" id="btn-dec-arch-brick" onclick="Dec('num-arch-brickhouses-built')">-</div>
-      <div class="button-dec" id="btn-dec-arch-food" onclick="Dec('num-arch-foodhouses-built')">-</div>
-      <div class="button-dec" id="btn-dec-arch-tool" onclick="Dec('num-arch-toolhouses-built')">-</div>
-      <div class="button-dec" id="btn-dec-arch-wine" onclick="Dec('num-arch-winehouses-built')">-</div>
-      <div class="button-dec" id="btn-dec-arch-cloth" onclick="Dec('num-arch-clothhouses-built')">-</div>
+      <div class="button-dec" id="btn-dec-arch-brick" onclick="Dec('num-arch-brickhouses-actual')">-</div>
+      <div class="button-dec" id="btn-dec-arch-food" onclick="Dec('num-arch-foodhouses-actual')">-</div>
+      <div class="button-dec" id="btn-dec-arch-tool" onclick="Dec('num-arch-toolhouses-actual')">-</div>
+      <div class="button-dec" id="btn-dec-arch-wine" onclick="Dec('num-arch-winehouses-actual')">-</div>
+      <div class="button-dec" id="btn-dec-arch-cloth" onclick="Dec('num-arch-clothhouses-actual')">-</div>
 
       <!-- Row 9: Padding row -->
       <div class="grid-item-no-border"></div>

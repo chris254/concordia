@@ -1,6 +1,16 @@
+html, body {
+  /*height: 100%;
+  margin : 0;
+  padding : 0;*/
+}
+
 body {
   font-family: Arial, sans-serif;
   touch-action: manipulation;
+  background-color: bisque;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .grid-container {
@@ -48,6 +58,27 @@ body {
 
   border: 3px solid rgb(183,65,14);
 }
+
+.food {
+
+  border: 3px solid rgb(226, 199, 23);
+}
+
+.tool {
+
+  border: 3px solid rgb(141, 141, 137);
+}
+
+.wine {
+
+  border: 3px solid rgb(241, 12, 12);
+}
+
+.cloth {
+
+  border: 3px solid rgb(62, 16, 189);
+}
+
 
 .grid-item img {
   max-width: 100%;

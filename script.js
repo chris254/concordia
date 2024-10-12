@@ -457,48 +457,13 @@ function IsGreyBackground(element) {
 
 function Inc(idItem, idButton) {
 
-  if (fieldValues.freeMode) {
-    if (idItem.includes("num-arch-brickhouses-actual")) {
-      fieldValues.storeCurrentCash += 1;
-      fieldValues.storeCurrentFood += 1;
-
-    }
-
-    if (idItem.includes("num-arch-foodhouses-actual")) {
-      fieldValues.storeCurrentCash += 2;
-      fieldValues.storeCurrentBrick += 1;
-      fieldValues.storeCurrentFood += 1;
-    }
-
-    if (idItem.includes("num-arch-toolhouses-actual")) {
-      fieldValues.storeCurrentCash += 3;
-      fieldValues.storeCurrentBrick += 1;
-      fieldValues.storeCurrentTool += 1;
-    }
-
-    if (idItem.includes("num-arch-winehouses-actual")) {
-      fieldValues.storeCurrentCash += 4;
-      fieldValues.storeCurrentBrick += 1;
-      fieldValues.storeCurrentWine += 1;
-    }
-
-    if (idItem.includes("num-arch-clothhouses-actual")) {
-      fieldValues.storeCurrentCash += 5;
-      fieldValues.storeCurrentBrick += 1;
-      fieldValues.storeCurrentCloth += 1;
-    }
-
-  }
-  else 
-  {
-    /* idItem example: num-arch-brickhouses-actual */
-    /* idButton example: btn-inc-arch-brick */
-    if (fieldValues.archBrickHousesValid && idItem.includes("num-arch-brickhouses-actual")) fieldValues.archBrickHousesActual += 1;
-    if (fieldValues.archFoodHousesValid && idItem.includes("num-arch-foodhouses-actual"))  fieldValues.archFoodHousesActual += 1;
-    if (fieldValues.archToolHousesValid && idItem.includes("num-arch-toolhouses-actual"))  fieldValues.archToolHousesActual += 1;
-    if (fieldValues.archWineHousesValid && idItem.includes("num-arch-winehouses-actual"))  fieldValues.archWineHousesActual += 1;
-    if (fieldValues.archClothHousesValid && idItem.includes("num-arch-clothhouses-actual"))  fieldValues.archClothHousesActual += 1;
-  }
+  /* idItem example: num-arch-brickhouses-actual */
+  /* idButton example: btn-inc-arch-brick */
+  if (fieldValues.archBrickHousesValid && idItem.includes("num-arch-brickhouses-actual")) fieldValues.archBrickHousesActual += 1;
+  if (fieldValues.archFoodHousesValid && idItem.includes("num-arch-foodhouses-actual"))  fieldValues.archFoodHousesActual += 1;
+  if (fieldValues.archToolHousesValid && idItem.includes("num-arch-toolhouses-actual"))  fieldValues.archToolHousesActual += 1;
+  if (fieldValues.archWineHousesValid && idItem.includes("num-arch-winehouses-actual"))  fieldValues.archWineHousesActual += 1;
+  if (fieldValues.archClothHousesValid && idItem.includes("num-arch-clothhouses-actual"))  fieldValues.archClothHousesActual += 1;
 
   UpdateAll();
 }
@@ -655,6 +620,15 @@ function ResetArchitect() {
 
 
 function ProcessArchitect() {
+
+  if (fieldValues.freeMode) {
+    fieldValues.storeCurrentCash = 99;
+    fieldValues.storeCurrentBrick = 99;
+    fieldValues.storeCurrentFood = 99;
+    fieldValues.storeCurrentTool = 99;
+    fieldValues.storeCurrentWine = 99;
+    fieldValues.storeCurrentCloth = 99;
+  }
 
   /* brick reqd to build all of the houses */
   fieldValues.archCostBrick =
@@ -1271,15 +1245,13 @@ function SetCardMerc() {
 
 function ToggleEditMode() {
 
-  if (editMode === EditModeType.STRICT) {
-    btnEditMode.textContent = "FREE";
-    editMode = EditModeType.FREE;
-
+  if (fieldValues.freeMode) {
+    fieldValues.freeMode = false;
+    btnEditMode.textContent = "S";
   }
   else {
-    btnEditMode.textContent = "STRICT";
-    editMode = EditModeType.STRICT;
+    fieldValues.freeMode = true;
+    btnEditMode.textContent = "F";
   }
-
   UpdateAll();
 }

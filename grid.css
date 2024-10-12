@@ -45,6 +45,14 @@ body {
   height: 20px;
 }
 
+.thin-gap {
+  background-color: transparent;
+  color: black;
+  justify-content: center;
+  align-items: center;
+  height: 1px;
+}
+
 .grid-item {
   background-color: transparent;
   color: black;
@@ -55,6 +63,29 @@ body {
   border: 1px solid black;
   height: 20px;
 }
+.card-title {
+  background-color: lightblue;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12pt;
+  font-weight: bolder;
+  border: 1px solid black;
+  height: 20px;
+}
+
+.sub-title {
+  background-color: lightcyan;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10pt;
+  font-weight: bolder;
+  border: 1px solid black;
+  height: 20px;
+}
 
 .gap {
   background-color: transparent;
@@ -62,6 +93,12 @@ body {
   height: 20px;
   width: 5px;
 }
+
+.cash {
+
+  border: 3px solid green
+}
+
 
 .brick {
 
@@ -95,18 +132,6 @@ body {
   /*object-fit: contain;*/
 }
 
-.card-title {
-  background-color: lightblue;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10pt;
-  font-weight: bolder;
-  border: 1px solid black;
-
-
-}
 
 
 .button-inc {
@@ -129,6 +154,19 @@ body {
   border: 1px solid black;
 }
 
+.btn-full-not-selected {
+  /*width: 60px;*/
+  display: flex; /* Use flexbox to center the button text */
+  /*height: 100%;*/
+  color: black; /* Button text color */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 12px; /* Font size for button text */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  border: 2px solid black;
+}
+
 .tool-highlight {
   grid-column: 2 / 3;
   grid-row: 1 / -1; /* Span all rows */
@@ -147,18 +185,6 @@ body {
 
 }
 
-.btn-full-not-selected {
-  width: 60px;
-  height: 100%;
-  color: black; /* Button text color */
-  border: none; /* Remove default button border */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 12px; /* Font size for button text */
-  display: flex; /* Use flexbox to center the button text */
-  align-items: center; /* Center text vertically */
-  justify-content: center; /* Center text horizontally */
-  border: 2px solid black;
-}
 
 .btn-full-selected {
   background-color: #007bff; /* Button background color */

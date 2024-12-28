@@ -1180,24 +1180,12 @@ function UpdateGUIArch() {
 
   /* write to the GUI */
   /* Store */
-  if (fieldValues.freeMode)
-  {
-    elemNumStorecurrentCash.textContent = "";
-    elemNumStorecurrentBrick.textContent = "";
-    elemNumStorecurrentFood.textContent = "";
-    elemNumStorecurrentTool.textContent = "";
-    elemNumStorecurrentWine.textContent = "";
-    elemNumStorecurrenCloth.textContent = "";
-  }
-  else
-  {
-    WriteFieldValueBlankZero(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
-    WriteFieldValueBlankZero(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
-    WriteFieldValueBlankZero(elemNumStorecurrentFood, fieldValues.storeCurrentFood);
-    WriteFieldValueBlankZero(elemNumStorecurrentTool, fieldValues.storeCurrentTool);
-    WriteFieldValueBlankZero(elemNumStorecurrentWine, fieldValues.storeCurrentWine);
-    WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
-  }
+  WriteFieldValueBlankZero(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
+  WriteFieldValueBlankZero(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
+  WriteFieldValueBlankZero(elemNumStorecurrentFood, fieldValues.storeCurrentFood);
+  WriteFieldValueBlankZero(elemNumStorecurrentTool, fieldValues.storeCurrentTool);
+  WriteFieldValueBlankZero(elemNumStorecurrentWine, fieldValues.storeCurrentWine);
+  WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
 
   /* ARCHITECT */
   UpdateActGui(elemNumArchitectBrickHousesActual,dataArch.archHousesCurrentBrick);

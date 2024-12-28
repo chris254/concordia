@@ -66,12 +66,12 @@
 
       <!-- Row 4: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-cash')">-</div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-brick')">-</div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-food')">-</div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-tool')">-</div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-wine')">-</div>
-      <div class="grid-item button-dec" onclick="Dec('num-storecurrent-cloth')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-cash" onclick="Dec('num-storecurrent-cash')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-brick" onclick="Dec('num-storecurrent-brick')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-food" onclick="Dec('num-storecurrent-food')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-tool" onclick="Dec('num-storecurrent-tool')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-wine" onclick="Dec('num-storecurrent-wine')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-cloth" onclick="Dec('num-storecurrent-cloth')">-</div>
 
       <!-- Row 5: Arch Store Cost -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Cost</div>
@@ -113,7 +113,7 @@
       <div class="grid-item wine" id="num-arch-winehouses-actual" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-arch-clothhouses-actual" style="font-weight: bolder;">0</div>
 
-      <!-- Row 7: Arch potentitals-->
+      <!-- Row 7: Arch potentials -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border" style="font-size: 10pt;">POT</div>
       <div class="grid-item brick" id="num-arch-brickhouses-potential" style="font-weight: lighter; color: black; font-size: 10pt;">0</div>

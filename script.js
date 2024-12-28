@@ -1,4 +1,47 @@
 /* local data */
+let dataArch = {
+  archBrickHousesCurrent:0,
+  archHousesCurrentBrick:0,
+  archHousesCurrentFood:0,
+  archHousesCurrentTool:0,
+  archHousesCurrentWine:0,
+  archHousesCurrentCloth:0,
+
+  archHousesDeltaPossibleBrick:0,
+  archHousesDeltaPossibleFood:0,
+  archHousesDeltaPossibleTool:0,
+  archHousesDeltaPossibleWine:0,
+  archHousesDeltaPossibleCloth:0,
+
+  archHousesTotalPossibleBrick:0,
+  archHousesTotalPossibleFood:0,
+  archHousesTotalPossibleTool:0,
+  archHousesTotalPossibleWine:0,
+  archHousesTotalPossibleCloth:0,
+
+  archRemCash:0,
+  archRemBrick:0,
+  archRemFood:0,
+  archRemTool:0,
+  archRemWine:0,
+  archRemCloth:0,
+
+  archMoreHousesAvailableBrick:false,
+  archMoreHousesAvailableFood:false,
+  archMoreHousesAvailableTool:false,
+  archMoreHousesAvailableWine:false,
+  archMoreHousesAvailableCloth:false,
+
+  archBuildCostCash:0,
+  archBuildCostBrick:0,
+  archBuildCostFood:0,
+  archBuildCostTool:0,
+  archBuildCostWine:0,
+  archBuildCostCloth:0,
+
+
+}
+
 let fieldValues = {
   storeCurrentCash:0,
   storeCurrentBrick:0,
@@ -7,11 +50,6 @@ let fieldValues = {
   storeCurrentWine:0,
   storeCurrentCloth:0,
 
-  archBrickHousesActual:0,
-  archFoodHousesActual:0,
-  archToolHousesActual:0,
-  archWineHousesActual:0,
-  archClothHousesActual:0,
 
   mercBuyBrick:0,
   mercBuyFood:0,
@@ -53,38 +91,13 @@ let fieldValues = {
   mercTradeActiveWine:false,
   mercTradeActiveCloth:false,
 
-  archRemCash:0,
-  archRemBrick:0,
-  archRemFood:0,
-  archRemTool:0,
-  archRemWine:0,
-  archRemCloth:0,
-
-  archBrickHousesPotential:0,
-  archFoodHousesPotential:0,
-  archToolHousesPotential:0,
-  archWineHousesPotential:0,
-  archClothHousesPotential:0,
-
-  archBrickHousesValid:false,
-  archFoodHousesValid:false,
-  archToolHousesValid:false,
-  archWineHousesValid:false,
-  archClothHousesValid:false,
-
   archToBankCash:0,
   archFromBankCash:0,
   mercToBankCash:0,
   mercFromBankCash:0,
 
-  archCashCost:0,
-  archCostBrick:0,
-  archCostFood:0,
-  archCostTool:0,
-  archCostWine:0,
-  archCostCloth:0,
-
-  freeMode:false,
+  archFreeMode:false,
+  archModeFirstPass:true,
 
 }
 
@@ -148,11 +161,11 @@ let elemNumArchitectToolHousesActual;
 let elemNumArchitectWineHousesActual;
 let elemNumArchitectClothHousesActual;
 
-let elemNumArchitectBrickHousesPotential;
-let elemNumArchitectFoodHousesPotential;
-let elemNumArchitectToolHousesPotential;
-let elemNumArchitectWineHousesPotential;
-let elemNumArchitectClothHousesPotential;
+let elemNumArchitectBrickHousesTotalPossible;
+let elemNumArchitectFoodHousesTotalPossible;
+let elemNumArchitectToolHousesTotalPossible;
+let elemNumArchitectWineHousesTotalPossible;
+let elemNumArchitectClothHousesTotalPossible;
 
 const brickHouseCost = 1;
 const foodHouseCost = 2;
@@ -223,7 +236,7 @@ let btnSellMercCloth;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "v1.08";
+  document.getElementById("version").textContent = "v1.09";
 
   elemBtnMode = document.getElementById("btn-mode");
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -302,18 +315,18 @@ document.addEventListener("DOMContentLoaded", function () {
   elemNumArchitectWineHousesActual = document.getElementById("num-arch-winehouses-actual");
   elemNumArchitectClothHousesActual = document.getElementById("num-arch-clothhouses-actual");
 
-  elemNumArchitectBrickHousesPotential = document.getElementById("num-arch-brickhouses-potential");
-  elemNumArchitectFoodHousesPotential = document.getElementById("num-arch-foodhouses-potential");
-  elemNumArchitectToolHousesPotential = document.getElementById("num-arch-toolhouses-potential");
-  elemNumArchitectWineHousesPotential = document.getElementById("num-arch-winehouses-potential");
-  elemNumArchitectClothHousesPotential = document.getElementById("num-arch-clothhouses-potential");
+  elemNumArchitectBrickHousesTotalPossible = document.getElementById("num-arch-brickhouses-potential");
+  elemNumArchitectFoodHousesTotalPossible = document.getElementById("num-arch-foodhouses-potential");
+  elemNumArchitectToolHousesTotalPossible = document.getElementById("num-arch-toolhouses-potential");
+  elemNumArchitectWineHousesTotalPossible = document.getElementById("num-arch-winehouses-potential");
+  elemNumArchitectClothHousesTotalPossible = document.getElementById("num-arch-clothhouses-potential");
 
 
   elemBtnArch = document.getElementById("btn-architect");
   elemBtnMerc = document.getElementById("btn-merc");
 
   cardActive = CardType.ARCHITECT;
-  freeMode = false;
+  archFreeMode = false;
   editMode = EditModeType.STRICT;
   btnEditMode = document.getElementById("btn-edit-mode"); 
 
@@ -330,6 +343,13 @@ document.addEventListener("DOMContentLoaded", function () {
   btnDecArchTool = document.getElementById("btn-dec-arch-tool");
   btnDecArchWine = document.getElementById("btn-dec-arch-wine");
   btnDecArchCloth = document.getElementById("btn-dec-arch-cloth");
+
+  btnDecStoreCash = document.getElementById("btn-dec-storecurrent-cash");
+  btnDecStoreBrick = document.getElementById("btn-dec-storecurrent-brick");
+  btnDecStoreFood = document.getElementById("btn-dec-storecurrent-food");
+  btnDecStoreTool = document.getElementById("btn-dec-storecurrent-tool");
+  btnDecStoreWine = document.getElementById("btn-dec-storecurrent-wine");
+  btnDecStoreCloth = document.getElementById("btn-dec-storecurrent-cloth");
 
   btnBuyMercBrick = document.getElementById("btn-buy-merc-brick");
   btnBuyMercFood = document.getElementById("btn-buy-merc-food");
@@ -349,11 +369,11 @@ document.addEventListener("DOMContentLoaded", function () {
   mercWineDelta=0;
   mercClothDelta=0;
 
-  fieldValues.archBrickHousesActual=0;
-  fieldValues.archFoodHousesActual=0;
-  fieldValues.archToolHousesActual=0;
-  fieldValues.archWineHousesActual=0;
-  fieldValues.archClothHousesActual=0;
+  dataArch.archHousesCurrentBrick=0;
+  dataArch.archHousesCurrentFood=0;
+  dataArch.archHousesCurrentTool=0;
+  dataArch.archHousesCurrentWine=0;
+  dataArch.archHousesCurrentCloth=0;
 
   fieldValues.mercBuyBrick=0;
   fieldValues.mercBuyFood=0;
@@ -373,18 +393,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function Dec(idNum) {
 
-  if (idNum.includes("num-arch-brickhouses-actual"))  fieldValues.archBrickHousesActual = Max(0,  fieldValues.archBrickHousesActual-1);
-  if (idNum.includes("num-arch-foodhouses-actual"))  fieldValues.archFoodHousesActual = Max(0,  fieldValues.archFoodHousesActual-1);
-  if (idNum.includes("num-arch-toolhouses-actual"))  fieldValues.archToolHousesActual = Max(0,  fieldValues.archToolHousesActual-1);
-  if (idNum.includes("num-arch-winehouses-actual"))  fieldValues.archWineHousesActual = Max(0,  fieldValues.archWineHousesActual-1);
-  if (idNum.includes("num-arch-clothhouses-actual"))  fieldValues.archClothHousesActual = Max(0,  fieldValues.archClothHousesActual-1);
+  if (idNum.includes("num-arch-brickhouses-actual"))  dataArch.archHousesCurrentBrick = Max(0,  dataArch.archHousesCurrentBrick-1);
+  if (idNum.includes("num-arch-foodhouses-actual"))  dataArch.archHousesCurrentFood = Max(0,  dataArch.archHousesCurrentFood-1);
+  if (idNum.includes("num-arch-toolhouses-actual"))  dataArch.archHousesCurrentTool = Max(0,  dataArch.archHousesCurrentTool-1);
+  if (idNum.includes("num-arch-winehouses-actual"))  dataArch.archHousesCurrentWine = Max(0,  dataArch.archHousesCurrentWine-1);
+  if (idNum.includes("num-arch-clothhouses-actual"))  dataArch.archHousesCurrentCloth = Max(0,  dataArch.archHousesCurrentCloth-1);
 
-  if (idNum.includes("num-storecurrent-cash")) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
-  if (idNum.includes("num-storecurrent-brick")) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
-  if (idNum.includes("num-storecurrent-food")) fieldValues.storeCurrentFood = Max(0, fieldValues.storeCurrentFood-1);
-  if (idNum.includes("num-storecurrent-tool")) fieldValues.storeCurrentTool = Max(0, fieldValues.storeCurrentTool-1);
-  if (idNum.includes("num-storecurrent-wine")) fieldValues.storeCurrentWine = Max(0, fieldValues.storeCurrentWine-1);
-  if (idNum.includes("num-storecurrent-cloth")) fieldValues.storeCurrentCloth = Max(0, fieldValues.storeCurrentCloth-1);
+  if (idNum.includes("num-storecurrent-cash") && !dataArch.noneLeftCash) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
+  if (idNum.includes("num-storecurrent-brick") && !dataArch.noneLeftBrick) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
+  if (idNum.includes("num-storecurrent-food") && !dataArch.noneLeftFood) fieldValues.storeCurrentFood = Max(0, fieldValues.storeCurrentFood-1);
+  if (idNum.includes("num-storecurrent-tool") && !dataArch.noneLeftTool) fieldValues.storeCurrentTool = Max(0, fieldValues.storeCurrentTool-1);
+  if (idNum.includes("num-storecurrent-wine") && !dataArch.noneLeftWine) fieldValues.storeCurrentWine = Max(0, fieldValues.storeCurrentWine-1);
+  if (idNum.includes("num-storecurrent-cloth") && !dataArch.noneLeftCloth) fieldValues.storeCurrentCloth = Max(0, fieldValues.storeCurrentCloth-1);
 
   UpdateAll();
 }
@@ -457,13 +477,28 @@ function IsGreyBackground(element) {
 
 function Inc(idItem, idButton) {
 
-  /* idItem example: num-arch-brickhouses-actual */
-  /* idButton example: btn-inc-arch-brick */
-  if (fieldValues.archBrickHousesValid && idItem.includes("num-arch-brickhouses-actual")) fieldValues.archBrickHousesActual += 1;
-  if (fieldValues.archFoodHousesValid && idItem.includes("num-arch-foodhouses-actual"))  fieldValues.archFoodHousesActual += 1;
-  if (fieldValues.archToolHousesValid && idItem.includes("num-arch-toolhouses-actual"))  fieldValues.archToolHousesActual += 1;
-  if (fieldValues.archWineHousesValid && idItem.includes("num-arch-winehouses-actual"))  fieldValues.archWineHousesActual += 1;
-  if (fieldValues.archClothHousesValid && idItem.includes("num-arch-clothhouses-actual"))  fieldValues.archClothHousesActual += 1;
+  if (fieldValues.archFreeMode) {
+
+    /* In free mode, bo limit to house building */
+    if (idItem.includes("num-arch-brickhouses-actual")) dataArch.archHousesCurrentBrick += 1;
+    if (idItem.includes("num-arch-foodhouses-actual"))  dataArch.archHousesCurrentFood += 1;
+    if (idItem.includes("num-arch-toolhouses-actual"))  dataArch.archHousesCurrentTool += 1;
+    if (idItem.includes("num-arch-winehouses-actual"))  dataArch.archHousesCurrentWine += 1;
+    if (idItem.includes("num-arch-clothhouses-actual"))  dataArch.archHousesCurrentCloth += 1;
+
+  }
+  else {
+
+    /* Strict mode. Need to see if more building is possible */
+    /* idItem example: num-arch-brickhouses-actual */
+    /* idButton example: btn-inc-arch-brick */
+    if (dataArch.archMoreHousesAvailableBrick && idItem.includes("num-arch-brickhouses-actual")) dataArch.archHousesCurrentBrick += 1;
+    if (dataArch.archMoreHousesAvailableFood && idItem.includes("num-arch-foodhouses-actual"))  dataArch.archHousesCurrentFood += 1;
+    if (dataArch.archMoreHousesAvailableTool && idItem.includes("num-arch-toolhouses-actual"))  dataArch.archHousesCurrentTool += 1;
+    if (dataArch.archMoreHousesAvailableWine && idItem.includes("num-arch-winehouses-actual"))  dataArch.archHousesCurrentWine += 1;
+    if (dataArch.archMoreHousesAvailableCloth && idItem.includes("num-arch-clothhouses-actual"))  dataArch.archHousesCurrentCloth += 1;
+
+  }
 
   UpdateAll();
 }
@@ -609,128 +644,162 @@ function ResetStoreCurrent() {
 /* ------------------------------------------------------------------------------------ */
 
 function ResetArchitect() {
-  fieldValues.archBrickHousesActual=0;
-  fieldValues.archFoodHousesActual=0;
-  fieldValues.archToolHousesActual=0;
-  fieldValues.archWineHousesActual=0;
-  fieldValues.archClothHousesActual=0;
+  dataArch.archHousesCurrentBrick=0;
+  dataArch.archHousesCurrentFood=0;
+  dataArch.archHousesCurrentTool=0;
+  dataArch.archHousesCurrentWine=0;
+  dataArch.archHousesCurrentCloth=0;
 
   UpdateAll();
 }
 
+function ProcessArchitectFree() {
 
-function ProcessArchitect() {
+  if (fieldValues.archModeFirstPass) {
+      
 
-  if (fieldValues.freeMode) {
-    fieldValues.storeCurrentCash = 99;
-    fieldValues.storeCurrentBrick = 99;
-    fieldValues.storeCurrentFood = 99;
-    fieldValues.storeCurrentTool = 99;
-    fieldValues.storeCurrentWine = 99;
-    fieldValues.storeCurrentCloth = 99;
+
   }
 
-  /* brick reqd to build all of the houses */
-  fieldValues.archCostBrick =
-     fieldValues.archFoodHousesActual +  
-     fieldValues.archToolHousesActual +  
-     fieldValues.archWineHousesActual +  
-     fieldValues.archClothHousesActual;
+  /* building more houses is always valid */
+  dataArch.archMoreHousesAvailableBrick = true;
+  dataArch.archMoreHousesAvailableFood = true;
+  dataArch.archMoreHousesAvailableTool = true;
+  dataArch.archMoreHousesAvailableWine = true;
+  dataArch.archMoreHousesAvailableCloth = true;
+
+  /* Calculate store values from houses */
+  fieldValues.storeCurrentCash = 
+    dataArch.archHousesCurrentBrick * brickHouseCost + 
+    dataArch.archHousesCurrentFood * foodHouseCost + 
+    dataArch.archHousesCurrentTool * toolHouseCost + 
+    dataArch.archHousesCurrentCloth * clothHouseCost + 
+    dataArch.archHousesCurrentWine * wineHouseCost;
+
+  fieldValues.storeCurrentBrick = 
+    dataArch.archHousesCurrentFood + 
+    dataArch.archHousesCurrentTool + 
+    dataArch.archHousesCurrentCloth + 
+    dataArch.archHousesCurrentWine;
+
+  fieldValues.storeCurrentFood = 
+    dataArch.archHousesCurrentBrick + 
+    dataArch.archHousesCurrentFood;
+
+  fieldValues.storeCurrentTool = dataArch.archHousesCurrentTool;
+
+  fieldValues.storeCurrentWine = dataArch.archHousesCurrentWine;
+
+  fieldValues.storeCurrentCloth = dataArch.archHousesCurrentCloth;
 
 
-  fieldValues.archCostFood =  fieldValues.archBrickHousesActual +  fieldValues.archFoodHousesActual;
-  fieldValues.archCostTool =  fieldValues.archToolHousesActual;
-  fieldValues.archCostWine =  fieldValues.archWineHousesActual;
-  fieldValues.archCostCloth =  fieldValues.archClothHousesActual;
 
-  fieldValues.archRemBrick = fieldValues.storeCurrentBrick - fieldValues.archCostBrick;
-  fieldValues.archRemFood = fieldValues.storeCurrentFood - fieldValues.archCostFood;
-  fieldValues.archRemTool = fieldValues.storeCurrentTool - fieldValues.archCostTool;
-  fieldValues.archRemWine = fieldValues.storeCurrentWine - fieldValues.archCostWine;
-  fieldValues.archRemCloth = fieldValues.storeCurrentCloth - fieldValues.archCostCloth;
 
-  /* Update the numbers on the screen */
-  fieldValues.archToBankCash = 
+}
+
+function ProcessArchitectStrict() {
+
+  /* -------------------------------------------------------------- */
+  /* Write to .archBuildCost */
+  /* -------------------------------------------------------------- */
+  fieldValues.archBuildCostCash = 
     GetTotalBuildValue( 
-        fieldValues.archBrickHousesActual,  
-        fieldValues.archFoodHousesActual,  
-        fieldValues.archToolHousesActual,  
-        fieldValues.archWineHousesActual,  
-        fieldValues.archClothHousesActual);
+        dataArch.archHousesCurrentBrick,  
+        dataArch.archHousesCurrentFood,  
+        dataArch.archHousesCurrentTool,  
+        dataArch.archHousesCurrentWine,  
+        dataArch.archHousesCurrentCloth);
 
-  fieldValues.archRemCash = fieldValues.storeCurrentCash - fieldValues.archToBankCash;
-    
-  fieldValues.archCashCost = fieldValues.archToBankCash - fieldValues.archFromBankCash;
+  dataArch.archBuildCostBrick =
+     dataArch.archHousesCurrentFood +  
+     dataArch.archHousesCurrentTool +  
+     dataArch.archHousesCurrentWine +  
+     dataArch.archHousesCurrentCloth;
 
-      fieldValues.archBrickHousesPotential = 
-      Min(Math.floor(fieldValues.archRemCash/brickHouseCost),fieldValues.archRemFood) + 
-      fieldValues.archBrickHousesActual;
+  dataArch.archBuildCostFood =  dataArch.archHousesCurrentBrick +  dataArch.archHousesCurrentFood;
+  dataArch.archBuildCostTool =  dataArch.archHousesCurrentTool;
+  dataArch.archBuildCostWine =  dataArch.archHousesCurrentWine;
+  dataArch.archBuildCostCloth =  dataArch.archHousesCurrentCloth;
 
-    fieldValues.archBrickHousesValid = fieldValues.archRemCash >= brickHouseCost && fieldValues.archRemFood >= 1;
+  /* -------------------------------------------------------------- */
+  /* Write to .archRem */
+  /* -------------------------------------------------------------- */
+  dataArch.archRemCash = fieldValues.storeCurrentCash - fieldValues.archBuildCostCash;
+  dataArch.archRemBrick = fieldValues.storeCurrentBrick - dataArch.archBuildCostBrick;
+  dataArch.archRemFood = fieldValues.storeCurrentFood - dataArch.archBuildCostFood;
+  dataArch.archRemTool = fieldValues.storeCurrentTool - dataArch.archBuildCostTool;
+  dataArch.archRemWine = fieldValues.storeCurrentWine - dataArch.archBuildCostWine;
+  dataArch.archRemCloth = fieldValues.storeCurrentCloth - dataArch.archBuildCostCloth;
 
-    if (!fieldValues.archBrickHousesValid) {
-      btnIncArchBrick.classList.add('grey-background');
-    }
-    else {
-      btnIncArchBrick.classList.remove('grey-background');
+  /* -------------------------------------------------------------- */
+  /* Write to: */
+  /* .archHousesDeltaPossible */
+  /* .archMoreHousesAvailable */
+  /* -------------------------------------------------------------- */
+  dataArch.noneLeftCash = dataArch.archRemCash <= 0;
+  dataArch.noneLeftBrick = dataArch.archRemBrick <= 0;
+  dataArch.noneLeftFood = dataArch.archRemFood <= 0;
+  dataArch.noneLeftTool = dataArch.archRemTool <= 0;
+  dataArch.noneLeftWine = dataArch.archRemWine <= 0;
+  dataArch.noneLeftCloth = dataArch.archRemCloth <= 0;
 
-    }
+  /* --------------------------------------------------------------------- */
+  /* BRICK HOUSES */
+  /* --------------------------------------------------------------------- */
+  dataArch.archHousesDeltaPossibleBrick = Min(Math.floor(dataArch.archRemCash/brickHouseCost),dataArch.archRemFood);
+  dataArch.archMoreHousesAvailableBrick = dataArch.archHousesDeltaPossibleBrick > 0;
 
-    /* FOOD */
-    fieldValues.archFoodHousesPotential = 
-      Min3(Math.floor(fieldValues.archRemCash/foodHouseCost),fieldValues.archRemBrick, fieldValues.archRemFood) +
-      fieldValues.archFoodHousesActual;
+  dataArch.archHousesTotalPossibleBrick = 
+    dataArch.archHousesDeltaPossibleBrick +
+    dataArch.archHousesCurrentBrick;
 
-    fieldValues.archFoodHousesValid = fieldValues.archRemCash >= foodHouseCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemFood >= 1;
+  /*dataArch.archRemCash >= brickHouseCost && dataArch.archRemFood >= 1;*/
 
-    if (!fieldValues.archFoodHousesValid) {
-      btnIncArchFood.classList.add('grey-background');
-    }
-    else {
-      btnIncArchFood.classList.remove('grey-background');
-    }
+  /* --------------------------------------------------------------------- */
+  /* FOOD HOUSES */
+  /* --------------------------------------------------------------------- */
+  dataArch.archHousesDeltaPossibleFood = Min3(Math.floor(dataArch.archRemCash/foodHouseCost),dataArch.archRemBrick, dataArch.archRemFood);
+  dataArch.archMoreHousesAvailableFood = dataArch.archHousesDeltaPossibleFood > 0;
 
-    /* TOOL */
-    fieldValues.archToolHousesPotential = 
-      Min3(Math.floor(fieldValues.archRemCash/toolHouseCost),fieldValues.archRemBrick, fieldValues.archRemTool) +
-      fieldValues.archToolHousesActual;
+  dataArch.archHousesTotalPossibleFood = 
+    dataArch.archHousesDeltaPossibleFood +
+    dataArch.archHousesCurrentFood;
 
-    fieldValues.archToolHousesValid = fieldValues.archRemCash >= toolHouseCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemTool >= 1;
+  
+  /* --------------------------------------------------------------------- */
+  /* TOOL HOUSES */
+  /* --------------------------------------------------------------------- */
+  dataArch.archHousesDeltaPossibleTool = Min3(Math.floor(dataArch.archRemCash/toolHouseCost),dataArch.archRemBrick, dataArch.archRemTool);
+  dataArch.archMoreHousesAvailableTool = dataArch.archHousesDeltaPossibleTool > 0;
+  dataArch.archHousesTotalPossibleTool = 
+     dataArch.archHousesDeltaPossibleTool +
+    dataArch.archHousesCurrentTool;
 
-    if (!fieldValues.archToolHousesValid) {
-      btnIncArchTool.classList.add('grey-background');
-    }
-    else {
-      btnIncArchTool.classList.remove('grey-background');
-    }
 
-    /* WINE */
-    fieldValues.archWineHousesPotential = 
-      Min3(Math.floor(fieldValues.archRemCash/wineHouseCost),fieldValues.archRemBrick, fieldValues.archRemTool) +
-      fieldValues.archWineHousesActual;
+  /* --------------------------------------------------------------------- */
+  /* WINE HOUSES */
+  /* --------------------------------------------------------------------- */
+  dataArch.archHousesDeltaPossibleWine = Min3(Math.floor(dataArch.archRemCash/wineHouseCost),dataArch.archRemBrick, dataArch.archRemTool);
+  dataArch.archMoreHousesAvailableWine = dataArch.archHousesDeltaPossibleWine > 0;
+  dataArch.archHousesTotalPossibleWine = 
+    dataArch.archHousesDeltaPossibleWine +
+    dataArch.archHousesCurrentWine;
 
-    fieldValues.archWineHousesValid = fieldValues.archRemCash >= wineHouseCost && fieldValues.archRemBrick >= 1 && fieldValues.archRemWine >= 1;
 
-    if (!fieldValues.archWineHousesValid) {
-      btnIncArchWine.classList.add('grey-background');
-    }
-    else {
-      btnIncArchWine.classList.remove('grey-background');
-    }
+  /* --------------------------------------------------------------------- */
+  /* CLOTH HOUSES */
+  /* --------------------------------------------------------------------- */
+  dataArch.archHousesDeltaPossibleCloth = Min3(Math.floor(dataArch.archRemCash/clothHouseCost),dataArch.archRemBrick, dataArch.archRemCloth);
+  dataArch.archMoreHousesAvailableCloth = dataArch.archHousesDeltaPossibleCloth > 0;
+  dataArch.archHousesTotalPossibleCloth = 
+    dataArch.archHousesDeltaPossibleCloth +
+    dataArch.archHousesCurrentCloth;
 
-    /* CLOTH */
-    fieldValues.archClothHousesPotential = 
-      Min3(Math.floor(fieldValues.archRemCash/clothHouseCost),fieldValues.archRemBrick, fieldValues.archRemCloth) +
-      fieldValues.archClothHousesActual;
 
-    fieldValues.archClothHousesValid = fieldValues.archRemCash >= clothHouseCost && fieldValues.archRemBrick && 1 && fieldValues.archRemCloth >= 1;
 
-    if (!fieldValues.archClothHousesValid) {
-      btnIncArchCloth.classList.add('grey-background');
-    }
-    else {
-      btnIncArchCloth.classList.remove('grey-background');
-    }
+
+
+
 
 }
 
@@ -947,11 +1016,11 @@ function ProcessMerc() {
 
 
 function ResetArchitect() {
-   fieldValues.archBrickHousesActual = 0;
-   fieldValues.archFoodHousesActual = 0;
-   fieldValues.archToolHousesActual = 0;
-   fieldValues.archWineHousesActual = 0;
-   fieldValues.archClothHousesActual = 0;
+   dataArch.archHousesCurrentBrick = 0;
+   dataArch.archHousesCurrentFood = 0;
+   dataArch.archHousesCurrentTool = 0;
+   dataArch.archHousesCurrentWine = 0;
+   dataArch.archHousesCurrentCloth = 0;
 
   UpdateAll();
 }
@@ -989,18 +1058,123 @@ function ResetMerc() {
   UpdateAll();
 }
 
-function UpdateRemGui(elem, storeCurrent, storeRem) {
-  if ((storeRem === 0 && storeCurrent > 0) || (storeRem > 0)) {
-      /* Must have spent it all */
-      elem.textContent = storeRem;
+function UpdateRemGui(elem, storeCurrent, storeRem, archFreeMode) {
+
+  if (archFreeMode) {
+    elem.textContent = "";
   }
   else {
+    if ((storeRem === 0 && storeCurrent > 0) || (storeRem > 0)) {
+      /* Must have spent it all */
+      elem.textContent = storeRem;
+    }
+    else {
       elem.textContent = "";
+    }
+    
   }
 
 }
 
-function UpdateGUI() {
+function UpdateActGui(elem, actual) {
+  if (actual === 0) {
+      /* Must have spent it all */
+      elem.textContent = "";
+  }
+  else {
+      elem.textContent = actual;
+  }
+
+}
+
+function UpdateGUIArch() {
+
+  /* always make dec buttons grey if zero */
+  if (dataArch.archHousesCurrentBrick === 0) {
+    btnDecArchBrick.classList.add ('grey-background');
+  }
+  else
+  {
+    btnDecArchBrick.classList.remove ('grey-background');
+  }
+
+  if (dataArch.archHousesCurrentFood === 0) {
+    btnDecArchFood.classList.add ('grey-background');
+  }
+  else
+  {
+    btnDecArchFood.classList.remove ('grey-background');
+  }
+
+  if (dataArch.archHousesCurrentTool === 0) {
+    btnDecArchTool.classList.add ('grey-background');
+  }
+  else
+  {
+    btnDecArchTool.classList.remove ('grey-background');
+  }
+
+  if (dataArch.archHousesCurrentWine === 0) {
+    btnDecArchWine.classList.add ('grey-background');
+  }
+  else
+  {
+    btnDecArchWine.classList.remove ('grey-background');
+  }
+
+  if (dataArch.archHousesCurrentCloth === 0) {
+    btnDecArchCloth.classList.add ('grey-background');
+  }
+  else
+  {
+    btnDecArchCloth.classList.remove ('grey-background');
+  }
+
+  if (editMode === EditModeType.STRICT && cardActive === CardType.MERC3) {
+  
+  }
+
+  if (dataArch.noneLeftCash) {
+    btnDecStoreCash.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreCash.classList.remove ('grey-background');
+  }
+
+  if (dataArch.noneLeftBrick) {
+    btnDecStoreBrick.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreBrick.classList.remove ('grey-background');
+  }
+
+  if (dataArch.noneLeftFood) {
+    btnDecStoreFood.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreFood.classList.remove ('grey-background');
+  }
+
+  if (dataArch.noneLeftTool) {
+    btnDecStoreTool.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreTool.classList.remove ('grey-background');
+  }
+
+  if (dataArch.noneLeftWine) {
+    btnDecStoreWine.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreWine.classList.remove ('grey-background');
+  }
+
+  if (dataArch.noneLeftCloth) {
+    btnDecStoreCloth.classList.add ('grey-background');
+  }
+  else {
+    btnDecStoreCloth.classList.remove ('grey-background');
+  }
 
   /* ARCHITECT (top to bottom) */
 
@@ -1014,72 +1188,73 @@ function UpdateGUI() {
   WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
 
   /* ARCHITECT */
-  elemNumArchitectBrickHousesActual.textContent = fieldValues.archBrickHousesActual;
-  elemNumArchitectFoodHousesActual.textContent = fieldValues.archFoodHousesActual;
-  elemNumArchitectToolHousesActual.textContent = fieldValues.archToolHousesActual;
-  elemNumArchitectWineHousesActual.textContent = fieldValues.archWineHousesActual;
-  elemNumArchitectClothHousesActual.textContent = fieldValues.archClothHousesActual;
+  UpdateActGui(elemNumArchitectBrickHousesActual,dataArch.archHousesCurrentBrick);
+  UpdateActGui(elemNumArchitectFoodHousesActual, dataArch.archHousesCurrentFood);
+  UpdateActGui(elemNumArchitectToolHousesActual, dataArch.archHousesCurrentTool);
+  UpdateActGui(elemNumArchitectWineHousesActual,dataArch.archHousesCurrentWine);
+  UpdateActGui(elemNumArchitectClothHousesActual,dataArch.archHousesCurrentCloth);
 
-  elemNumArchitectBrickHousesPotential.textContent = fieldValues.archBrickHousesPotential;
-  elemNumArchitectFoodHousesPotential.textContent = fieldValues.archFoodHousesPotential;
-  elemNumArchitectToolHousesPotential.textContent = fieldValues.archToolHousesPotential;
-  elemNumArchitectWineHousesPotential.textContent = fieldValues.archWineHousesPotential;
-  elemNumArchitectClothHousesPotential.textContent = fieldValues.archClothHousesPotential;
+  if (fieldValues.archFreeMode)
+  {
+    elemNumArchitectBrickHousesTotalPossible.textContent = "";
+    elemNumArchitectFoodHousesTotalPossible.textContent = "";
+    elemNumArchitectToolHousesTotalPossible.textContent = "";
+    elemNumArchitectWineHousesTotalPossible.textContent = "";
+    elemNumArchitectClothHousesTotalPossible.textContent = "";
+  }
+  else {
+    elemNumArchitectBrickHousesTotalPossible.textContent = dataArch.archHousesTotalPossibleBrick;
+    elemNumArchitectFoodHousesTotalPossible.textContent = dataArch.archHousesTotalPossibleFood;
+    elemNumArchitectToolHousesTotalPossible.textContent = dataArch.archHousesTotalPossibleTool;
+    elemNumArchitectWineHousesTotalPossible.textContent = dataArch.archHousesTotalPossibleWine;
+    elemNumArchitectClothHousesTotalPossible.textContent = dataArch.archHousesTotalPossibleCloth;
+  }
 
-  elemNumArchRemainingCash.textContent = fieldValues.archRemCash;;
-  elemNumArchRemainingBrick.textContent = fieldValues.archRemBrick;
-  elemNumArchRemainingFood.textContent = fieldValues.archRemFood;
-  elemNumArchRemainingTool.textContent = fieldValues.archRemTool;
-  elemNumArchRemainingWine.textContent = fieldValues.archRemWine;
-  elemNumArchRemainingCloth.textContent = fieldValues.archRemCloth;
-
-  elemNumStorecurrentArchCash.textContent = fieldValues.storeCurrentCash;
-  elemNumStorecurrentArchBrick.textContent=fieldValues.storeCurrentBrick;  
-  elemNumStorecurrentArchFood.textContent=fieldValues.storeCurrentFood;  
-  elemNumStorecurrentArchTool.textContent=fieldValues.storeCurrentTool;  
-  elemNumStorecurrentArchWine.textContent=fieldValues.storeCurrentWine;  
-  elemNumStorecurrentArchCloth.textContent=fieldValues.storeCurrentCloth;  
-
-
+  elemNumArchRemainingCash.textContent = dataArch.archRemCash;;
+  elemNumArchRemainingBrick.textContent = dataArch.archRemBrick;
+  elemNumArchRemainingFood.textContent = dataArch.archRemFood;
+  elemNumArchRemainingTool.textContent = dataArch.archRemTool;
+  elemNumArchRemainingWine.textContent = dataArch.archRemWine;
+  elemNumArchRemainingCloth.textContent = dataArch.archRemCloth;
 
   /* Determine grey backgrounds */
   /* check for negative numbers */
-  if (fieldValues.archRemCash < 0) {
+  if (dataArch.archRemCash < 0) {
     elemNumArchRemainingCash.classList.add("red-background");
   } 
   else {
     elemNumArchRemainingCash.classList.remove("red-background");
   }
 
-  if (fieldValues.archRemBrick < 0) {
+  if (dataArch.archRemBrick < 0) {
     elemNumArchRemainingBrick.classList.add("red-background");
   } 
   else {
     elemNumArchRemainingBrick.classList.remove("red-background");
   }
 
-  if (fieldValues.archRemFood < 0) {
+  if (dataArch.archRemFood < 0) {
     elemNumArchRemainingFood.classList.add("red-background");
   } 
   else {
     elemNumArchRemainingFood.classList.remove("red-background");
   }
 
-  if (fieldValues.archRemTool < 0) {
+  if (dataArch.archRemTool < 0) {
     elemNumArchRemainingTool.classList.add("red-background");
   } 
   else {
     elemNumArchRemainingTool.classList.remove("red-background");
   }
 
-  if (fieldValues.archRemWine < 0) {
+  if (dataArch.archRemWine < 0) {
     elemNumArchRemainingWine.classList.add("red-background");
   } 
   else {
     elemNumArchRemainingWine.classList.remove("red-background");
   }
 
-  if (fieldValues.archRemCloth < 0) {
+  if (dataArch.archRemCloth < 0) {
     elemNumArchRemainingCloth.classList.add("red-background");
   } 
   else {
@@ -1088,27 +1263,63 @@ function UpdateGUI() {
 
   /* calculate future cash */
 
-  ConvertZeroesToBlank(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
-  ConvertZeroesToBlank(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
-  ConvertZeroesToBlank(elemNumStorecurrentFood, fieldValues.storeCurrentFood);
-  ConvertZeroesToBlank(elemNumStorecurrentTool, fieldValues.storeCurrentTool);
-  ConvertZeroesToBlank(elemNumStorecurrentWine, fieldValues.storeCurrentWine);
-  ConvertZeroesToBlank(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
-
-  ConvertZeroesToBlank(elemNumArchStoreCostCash, fieldValues.archCashCost);
-  ConvertZeroesToBlank(elemNumArchStoreCostBrick, fieldValues.archCostBrick);
-  ConvertZeroesToBlank(elemNumArchStoreCostFood, fieldValues.archCostFood);
-  ConvertZeroesToBlank(elemNumArchStoreCostTool, fieldValues.archCostTool);
-  ConvertZeroesToBlank(elemNumArchStoreCostWine, fieldValues.archCostWine);
-  ConvertZeroesToBlank(elemNumArchStoreCostCloth, fieldValues.archCostCloth);
+  ConvertZeroesToBlank(elemNumArchStoreCostCash, dataArch.archBuildCostCash);
+  ConvertZeroesToBlank(elemNumArchStoreCostBrick, dataArch.archBuildCostBrick);
+  ConvertZeroesToBlank(elemNumArchStoreCostFood, dataArch.archBuildCostFood);
+  ConvertZeroesToBlank(elemNumArchStoreCostTool, dataArch.archBuildCostTool);
+  ConvertZeroesToBlank(elemNumArchStoreCostWine, dataArch.archBuildCostWine);
+  ConvertZeroesToBlank(elemNumArchStoreCostCloth, dataArch.archBuildCostCloth);
 
   
-  UpdateRemGui(elemNumArchRemainingCash, fieldValues.storeCurrentCash, fieldValues.archRemCash);
-  UpdateRemGui(elemNumArchRemainingBrick, fieldValues.storeCurrentBrick, fieldValues.archRemBrick);
-  UpdateRemGui(elemNumArchRemainingFood, fieldValues.storeCurrentFood, fieldValues.archRemFood);
-  UpdateRemGui(elemNumArchRemainingTool, fieldValues.storeCurrentTool, fieldValues.archRemTool);
-  UpdateRemGui(elemNumArchRemainingWine, fieldValues.storeCurrentWine, fieldValues.archRemWine);
-  UpdateRemGui(elemNumArchRemainingCloth, fieldValues.storeCurrentCloth, fieldValues.archRemCloth);
+  UpdateRemGui(elemNumArchRemainingCash, fieldValues.storeCurrentCash, dataArch.archRemCash, fieldValues.archFreeMode);
+  UpdateRemGui(elemNumArchRemainingBrick, fieldValues.storeCurrentBrick, dataArch.archRemBrick, fieldValues.archFreeMode);
+  UpdateRemGui(elemNumArchRemainingFood, fieldValues.storeCurrentFood, dataArch.archRemFood, fieldValues.archFreeMode);
+  UpdateRemGui(elemNumArchRemainingTool, fieldValues.storeCurrentTool, dataArch.archRemTool, fieldValues.archFreeMode);
+  UpdateRemGui(elemNumArchRemainingWine, fieldValues.storeCurrentWine, dataArch.archRemWine, fieldValues.archFreeMode);
+  UpdateRemGui(elemNumArchRemainingCloth, fieldValues.storeCurrentCloth, dataArch.archRemCloth, fieldValues.archFreeMode);
+
+  /* --------------------------------------------------------------------- */
+  /* Set grey backgrounds where applicable */
+  /* --------------------------------------------------------------------- */
+  if (!dataArch.archMoreHousesAvailableCloth) {
+    btnIncArchCloth.classList.add('grey-background');
+  }
+  else {
+    btnIncArchCloth.classList.remove('grey-background');
+  }
+
+  if (!dataArch.archMoreHousesAvailableBrick) {
+    btnIncArchBrick.classList.add('grey-background');
+  }
+  else {
+    btnIncArchBrick.classList.remove('grey-background');
+  }
+
+  if (!dataArch.archMoreHousesAvailableFood) {
+    btnIncArchFood.classList.add('grey-background');
+  }
+  else {
+    btnIncArchFood.classList.remove('grey-background');
+  }
+
+  if (!dataArch.archMoreHousesAvailableWine) {
+    btnIncArchWine.classList.add('grey-background');
+  }
+  else {
+    btnIncArchWine.classList.remove('grey-background');
+  }
+
+  if (!dataArch.archMoreHousesAvailableTool) {
+    btnIncArchTool.classList.add('grey-background');
+  }
+  else {
+    btnIncArchTool.classList.remove('grey-background');
+  }
+
+}
+
+
+function UpdateGUIMerc() {
 
 
   ConvertZeroesToBlank(elemNumMercStoreOutCash);
@@ -1168,59 +1379,23 @@ function UpdateAll() {
 
   /* Check to see if current architect houses selected are still affordable */
 
-  ProcessArchitect();
+  if (fieldValues.archFreeMode) {
+    ProcessArchitectFree();
+  }
+  else {
+    ProcessArchitectStrict();
+  }
+
   ProcessMerc();
-    console.log("addit: " + fieldValues.archBrickHousesPotential + ", actual: " + fieldValues.archBrickHousesActual);
+    console.log("addit: " + dataArch.archHousesTotalPossibleBrick + ", actual: " + dataArch.archHousesCurrentBrick);
 
 
   SetMercTradeStatus();
 
-  /* always make dec buttons grey if zero */
-  if (fieldValues.archBrickHousesActual === 0) {
-    btnDecArchBrick.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchBrick.classList.remove ('grey-background');
-  }
-
-  if (fieldValues.archFoodHousesActual === 0) {
-    btnDecArchFood.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchFood.classList.remove ('grey-background');
-  }
-
-  if (fieldValues.archToolHousesActual === 0) {
-    btnDecArchTool.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchTool.classList.remove ('grey-background');
-  }
-
-  if (fieldValues.archWineHousesActual === 0) {
-    btnDecArchWine.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchWine.classList.remove ('grey-background');
-  }
-
-  if (fieldValues.archClothHousesActual === 0) {
-    btnDecArchCloth.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchCloth.classList.remove ('grey-background');
-  }
-
-  if (editMode === EditModeType.STRICT && cardActive === CardType.MERC3) {
+  UpdateGUIArch(); 
+  UpdateGUIMerc();
   
-  }
-
-  UpdateGUI();  
+  fieldValues.archModeFirstPass = false;
 
 }
 
@@ -1245,13 +1420,16 @@ function SetCardMerc() {
 
 function ToggleEditMode() {
 
-  if (fieldValues.freeMode) {
-    fieldValues.freeMode = false;
+  if (fieldValues.archFreeMode) {
+    fieldValues.archFreeMode = false;
     btnEditMode.textContent = "S";
+
   }
   else {
-    fieldValues.freeMode = true;
+    fieldValues.archFreeMode = true;
     btnEditMode.textContent = "F";
   }
+
+  fieldValues.archModeFirstPass = true;
   UpdateAll();
 }

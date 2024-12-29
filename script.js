@@ -736,12 +736,12 @@ function ProcessArchitectStrict() {
   /* .archHousesDeltaPossible */
   /* .archMoreHousesAvailable */
   /* -------------------------------------------------------------- */
-  dataArch.noneLeftCash = dataArch.archRemCash <= 0;
-  dataArch.noneLeftBrick = dataArch.archRemBrick <= 0;
-  dataArch.noneLeftFood = dataArch.archRemFood <= 0;
-  dataArch.noneLeftTool = dataArch.archRemTool <= 0;
-  dataArch.noneLeftWine = dataArch.archRemWine <= 0;
-  dataArch.noneLeftCloth = dataArch.archRemCloth <= 0;
+  dataArch.noneLeftCash =  fieldValues.storeCurrentCash > 0 && dataArch.archRemCash <= 0;
+  dataArch.noneLeftBrick = fieldValues.storeCurrentBrick > 0 && dataArch.archRemBrick <= 0;
+  dataArch.noneLeftFood =  fieldValues.storeCurrentFood > 0 && dataArch.archRemFood <= 0;
+  dataArch.noneLeftTool =  fieldValues.storeCurrentTool > 0 && dataArch.storeCurrentCash > 0 && dataArch.archRemTool <= 0;
+  dataArch.noneLeftWine =  fieldValues.storeCurrentWine > 0 && dataArch.archRemWine <= 0;
+  dataArch.noneLeftCloth = fieldValues.storeCurrentCloth > 0 && dataArch.archRemCloth <= 0;
 
   /* --------------------------------------------------------------------- */
   /* BRICK HOUSES */
@@ -831,27 +831,6 @@ function SetMercTradeStatus() {
 }
 
 
-function Max(value1, value2) {
-
-  if (value1 > value2) {
-    return value1;
-  }
-  else {
-    return value2;
-  }
-
-}
-
-function Min(value1, value2) {
-
-  if (value1 < value2) {
-    return value1;
-  }
-  else {
-    return value2;
-  }
-
-}
 
 function Min3(value1, value2, value3) {
 
@@ -872,8 +851,19 @@ function Min3(value1, value2, value3) {
 
 }
 
-function ApplyGreyBackground(elem) {
-  elem.classList.add('grey-background');
+function SetStoreCurrentColour(elem, valueBefore, valueRemaining) {
+
+  
+}
+function SetBackgroundColor(elem, colour) {
+
+  elem.style.backgroundColor = colour;
+}
+
+function ApplyBackground(elem) {
+
+  elem.backgroundColor = "gray";
+  /* elem.classList.add('grey-background');*/
 }
 
 function UpdateBuySellButton(elemBuyBtn, elemSellBtn, buyCount, sellCount, avail, rem) {
@@ -1087,99 +1077,51 @@ function UpdateActGui(elem, actual) {
 
 }
 
+function SetArchStoreBackground(elem, valueCurrent, valueRemaining) {
+
+  if (valueCurrent === 0) SetBackgroundColor(elem,"transparent");
+  else if (valueRemaining === 0) SetBackgroundColor(elem,"red");
+}
+
+function SetArchBuildDecColour(elem, valueCurrent) {
+
+  if (valueCurrent === 0) SetBackgroundColor(elem,"gray");
+  else SetBackgroundColor(elem,"orange");
+}
+
+function SetArchStoreDecColour(elem, noneLeft, valueCurrent) {
+
+  if (noneLeft) SetBackgroundColor(elem,"red");
+  else if (valueCurrent === 0) SetBackgroundColor(elem,"gray");
+  else SetBackgroundColor(elem,"orange");
+}
+
 function UpdateGUIArch() {
 
-  /* always make dec buttons grey if zero */
-  if (dataArch.archHousesCurrentBrick === 0) {
-    btnDecArchBrick.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchBrick.classList.remove ('grey-background');
-  }
+  /* ------------------------------------------------------------- */
+  /* Set architect build decremeent colour */
+  /* ------------------------------------------------------------- */
+  SetArchBuildDecColour(btnDecArchBrick, dataArch.archHousesCurrentBrick);
+  SetArchBuildDecColour(btnDecArchFood, dataArch.archHousesCurrentFood);
+  SetArchBuildDecColour(btnDecArchTool, dataArch.archHousesCurrentTool);
+  SetArchBuildDecColour(btnDecArchWine, dataArch.archHousesCurrentWine);
+  SetArchBuildDecColour(btnDecArchCloth, dataArch.archHousesCurrentCloth);
 
-  if (dataArch.archHousesCurrentFood === 0) {
-    btnDecArchFood.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchFood.classList.remove ('grey-background');
-  }
+  /* ------------------------------------------------------------- */
+  /* Set store current decrement colour:                           */
+  /*    Red - if none Left (it's all been spent)                   */
+  /*    transparent - all other times                              */
+  /* ------------------------------------------------------------- */
+  SetArchStoreDecColour(btnDecStoreCash, dataArch.noneLeftCash, dataArch.archRemCash);
+  SetArchStoreDecColour(btnDecStoreBrick, dataArch.noneLeftBrick, dataArch.archRemBrick);
+  SetArchStoreDecColour(btnDecStoreFood, dataArch.noneLeftFood, dataArch.archRemFood);
+  SetArchStoreDecColour(btnDecStoreTool, dataArch.noneLeftTool, dataArch.archRemTool);
+  SetArchStoreDecColour(btnDecStoreWine, dataArch.noneLeftWine, dataArch.archRemWine);
+  SetArchStoreDecColour(btnDecStoreCloth, dataArch.noneLeftCloth, dataArch.archRemCloth);
 
-  if (dataArch.archHousesCurrentTool === 0) {
-    btnDecArchTool.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchTool.classList.remove ('grey-background');
-  }
-
-  if (dataArch.archHousesCurrentWine === 0) {
-    btnDecArchWine.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchWine.classList.remove ('grey-background');
-  }
-
-  if (dataArch.archHousesCurrentCloth === 0) {
-    btnDecArchCloth.classList.add ('grey-background');
-  }
-  else
-  {
-    btnDecArchCloth.classList.remove ('grey-background');
-  }
-
-  if (editMode === EditModeType.STRICT && cardActive === CardType.MERC3) {
-  
-  }
-
-  if (dataArch.noneLeftCash) {
-    btnDecStoreCash.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreCash.classList.remove ('grey-background');
-  }
-
-  if (dataArch.noneLeftBrick) {
-    btnDecStoreBrick.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreBrick.classList.remove ('grey-background');
-  }
-
-  if (dataArch.noneLeftFood) {
-    btnDecStoreFood.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreFood.classList.remove ('grey-background');
-  }
-
-  if (dataArch.noneLeftTool) {
-    btnDecStoreTool.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreTool.classList.remove ('grey-background');
-  }
-
-  if (dataArch.noneLeftWine) {
-    btnDecStoreWine.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreWine.classList.remove ('grey-background');
-  }
-
-  if (dataArch.noneLeftCloth) {
-    btnDecStoreCloth.classList.add ('grey-background');
-  }
-  else {
-    btnDecStoreCloth.classList.remove ('grey-background');
-  }
-
-  /* ARCHITECT (top to bottom) */
-
-  /* write to the GUI */
-  /* Store */
+  /* ------------------------------------------------------------- */
+  /* Set store current blank if zero */
+  /* ------------------------------------------------------------- */
   WriteFieldValueBlankZero(elemNumStorecurrentCash, fieldValues.storeCurrentCash);
   WriteFieldValueBlankZero(elemNumStorecurrentBrick, fieldValues.storeCurrentBrick);
   WriteFieldValueBlankZero(elemNumStorecurrentFood, fieldValues.storeCurrentFood);

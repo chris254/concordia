@@ -96,7 +96,7 @@ body {
 
 .cash {
 
-  border: 3px solid green
+  border: 3px solid green;
 }
 
 
@@ -125,6 +125,41 @@ body {
   border: 3px solid rgb(62, 16, 189);
 }
 
+.cash-filled {
+
+  border: 3px solid green;
+}
+
+
+.brick-filled {
+
+  border: 3px solid rgb(183,65,14);
+  background-color: rgb(183,65,14);
+}
+
+.food-filled {
+
+  border: 3px solid rgb(226, 199, 23);
+  background-color: rgb(226, 199, 23);
+}
+
+.tool-filled {
+
+  border: 3px solid rgb(141, 141, 137);
+  background-color: rgb(141, 141, 137);
+}
+
+.wine-filled {
+
+  border: 3px solid rgb(241, 12, 12);
+  background-color: rgb(241, 12, 12);
+}
+
+.cloth-filled {
+
+  border: 3px solid rgb(62, 16, 189);
+  background-color: rgb(62, 16, 189);
+}
 
 .grid-item img {
   max-width: 100%;

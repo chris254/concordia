@@ -39,7 +39,12 @@ let dataArch = {
   archBuildCostWine:0,
   archBuildCostCloth:0,
 
-
+  runOutOfCash:false,
+  runOutOfBrick:false,
+  runOutOfFood:false,
+  runOutOfTool:false,
+  runOutOfWine:false,
+  runOutOfCloth:false,
 }
 
 let fieldValues = {
@@ -155,11 +160,11 @@ let elemNumMercDeltaTool;
 let elemNumMercDeltaWine;
 let elemNumMercDeltaCloth;
 
-let elemNumArchitectBrickHousesActual;
-let elemNumArchitectFoodHousesActual;
-let elemNumArchitectToolHousesActual;
-let elemNumArchitectWineHousesActual;
-let elemNumArchitectClothHousesActual;
+let elemNumArchitectHousesActualBrick;
+let elemNumArchitectHousesActualFood;
+let elemNumArchitectHousesActualTool;
+let elemNumArchitectHousesActualWine;
+let elemNumArchitectHousesActualCloth;
 
 let elemNumArchitectBrickHousesTotalPossible;
 let elemNumArchitectFoodHousesTotalPossible;
@@ -309,11 +314,11 @@ document.addEventListener("DOMContentLoaded", function () {
   elemNumMercRemaining2Wine = document.getElementById("num-merc-remaining2-wine");
   elemNumMercRemaining2Cloth = document.getElementById("num-merc-remaining2-cloth");
 
-  elemNumArchitectBrickHousesActual = document.getElementById("num-arch-brickhouses-actual");
-  elemNumArchitectFoodHousesActual = document.getElementById("num-arch-foodhouses-actual");
-  elemNumArchitectToolHousesActual = document.getElementById("num-arch-toolhouses-actual");
-  elemNumArchitectWineHousesActual = document.getElementById("num-arch-winehouses-actual");
-  elemNumArchitectClothHousesActual = document.getElementById("num-arch-clothhouses-actual");
+  elemNumArchitectHousesActualBrick = document.getElementById("num-arch-brickhouses-actual");
+  elemNumArchitectHousesActualFood = document.getElementById("num-arch-foodhouses-actual");
+  elemNumArchitectHousesActualTool = document.getElementById("num-arch-toolhouses-actual");
+  elemNumArchitectHousesActualWine = document.getElementById("num-arch-winehouses-actual");
+  elemNumArchitectHousesActualCloth = document.getElementById("num-arch-clothhouses-actual");
 
   elemNumArchitectBrickHousesTotalPossible = document.getElementById("num-arch-brickhouses-potential");
   elemNumArchitectFoodHousesTotalPossible = document.getElementById("num-arch-foodhouses-potential");
@@ -399,12 +404,12 @@ function Dec(idNum) {
   if (idNum.includes("num-arch-winehouses-actual"))  dataArch.archHousesCurrentWine = Max(0,  dataArch.archHousesCurrentWine-1);
   if (idNum.includes("num-arch-clothhouses-actual"))  dataArch.archHousesCurrentCloth = Max(0,  dataArch.archHousesCurrentCloth-1);
 
-  if (idNum.includes("num-storecurrent-cash") && !dataArch.noneLeftCash) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
-  if (idNum.includes("num-storecurrent-brick") && !dataArch.noneLeftBrick) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
-  if (idNum.includes("num-storecurrent-food") && !dataArch.noneLeftFood) fieldValues.storeCurrentFood = Max(0, fieldValues.storeCurrentFood-1);
-  if (idNum.includes("num-storecurrent-tool") && !dataArch.noneLeftTool) fieldValues.storeCurrentTool = Max(0, fieldValues.storeCurrentTool-1);
-  if (idNum.includes("num-storecurrent-wine") && !dataArch.noneLeftWine) fieldValues.storeCurrentWine = Max(0, fieldValues.storeCurrentWine-1);
-  if (idNum.includes("num-storecurrent-cloth") && !dataArch.noneLeftCloth) fieldValues.storeCurrentCloth = Max(0, fieldValues.storeCurrentCloth-1);
+  if (idNum.includes("num-storecurrent-cash") && !dataArch.runOutOfCash) fieldValues.storeCurrentCash = Max(0, fieldValues.storeCurrentCash-1);
+  if (idNum.includes("num-storecurrent-brick") && !dataArch.runOutOfBrick) fieldValues.storeCurrentBrick = Max(0, fieldValues.storeCurrentBrick-1);
+  if (idNum.includes("num-storecurrent-food") && !dataArch.runOutOfFood) fieldValues.storeCurrentFood = Max(0, fieldValues.storeCurrentFood-1);
+  if (idNum.includes("num-storecurrent-tool") && !dataArch.runOutOfTool) fieldValues.storeCurrentTool = Max(0, fieldValues.storeCurrentTool-1);
+  if (idNum.includes("num-storecurrent-wine") && !dataArch.runOutOfWine) fieldValues.storeCurrentWine = Max(0, fieldValues.storeCurrentWine-1);
+  if (idNum.includes("num-storecurrent-cloth") && !dataArch.runOutOfCloth) fieldValues.storeCurrentCloth = Max(0, fieldValues.storeCurrentCloth-1);
 
   UpdateAll();
 }
@@ -736,12 +741,12 @@ function ProcessArchitectStrict() {
   /* .archHousesDeltaPossible */
   /* .archMoreHousesAvailable */
   /* -------------------------------------------------------------- */
-  dataArch.noneLeftCash =  fieldValues.storeCurrentCash > 0 && dataArch.archRemCash <= 0;
-  dataArch.noneLeftBrick = fieldValues.storeCurrentBrick > 0 && dataArch.archRemBrick <= 0;
-  dataArch.noneLeftFood =  fieldValues.storeCurrentFood > 0 && dataArch.archRemFood <= 0;
-  dataArch.noneLeftTool =  fieldValues.storeCurrentTool > 0 && dataArch.storeCurrentCash > 0 && dataArch.archRemTool <= 0;
-  dataArch.noneLeftWine =  fieldValues.storeCurrentWine > 0 && dataArch.archRemWine <= 0;
-  dataArch.noneLeftCloth = fieldValues.storeCurrentCloth > 0 && dataArch.archRemCloth <= 0;
+  dataArch.runOutOfCash =  fieldValues.storeCurrentCash > 0 && dataArch.archRemCash <= 0;
+  dataArch.runOutOfBrick = fieldValues.storeCurrentBrick > 0 && dataArch.archRemBrick <= 0;
+  dataArch.runOutOfFood =  fieldValues.storeCurrentFood > 0 && dataArch.archRemFood <= 0;
+  dataArch.runOutOfTool =  fieldValues.storeCurrentTool > 0 && dataArch.storeCurrentCash > 0 && dataArch.archRemTool <= 0;
+  dataArch.runOutOfWine =  fieldValues.storeCurrentWine > 0 && dataArch.archRemWine <= 0;
+  dataArch.runOutOfCloth = fieldValues.storeCurrentCloth > 0 && dataArch.archRemCloth <= 0;
 
   /* --------------------------------------------------------------------- */
   /* BRICK HOUSES */
@@ -1083,6 +1088,12 @@ function SetArchStoreBackground(elem, valueCurrent, valueRemaining) {
   else if (valueRemaining === 0) SetBackgroundColor(elem,"red");
 }
 
+function SetArchStoreActColour(elem, noneLeft, valueCurrent) {
+
+  if (valueCurrent == 0) SetBackgroundColor(elem,"gray");
+  else SetBackgroundColor(elem,"white");
+}
+
 function SetArchBuildDecColour(elem, valueCurrent) {
 
   if (valueCurrent === 0) SetBackgroundColor(elem,"gray");
@@ -1096,10 +1107,29 @@ function SetArchStoreDecColour(elem, noneLeft, valueCurrent) {
   else SetBackgroundColor(elem,"orange");
 }
 
+function SetArchBuilActColour(elem, delta, valueCurrent) {
+
+  if (delta > 0) SetBackgroundColor(elem,"lightgreen");
+  else if (delta === 0) SetBackgroundColor(elem,"red");
+  else SetBackgroundColor(elem,"gray");
+}
+
 function UpdateGUIArch() {
 
   /* ------------------------------------------------------------- */
-  /* Set architect build decremeent colour */
+  /* Set architect store act colour */
+  /* ------------------------------------------------------------- */
+  /*SetArchStoreActColour(elemNumStorecurrentCash, dataArch.runOutOfCash, dataArch.archRemCash);
+  SetArchStoreActColour(elemNumStorecurrentBrick, dataArch.runOutOfBrick, dataArch.archRemBrick);
+  SetArchStoreActColour(elemNumStorecurrentFood, dataArch.runOutOfFood, dataArch.archRemFood);
+  SetArchStoreActColour(elemNumStorecurrentTool, dataArch.runOutOfTool, dataArch.archRemTool);
+  SetArchStoreActColour(elemNumStorecurrentWine, dataArch.runOutOfWine, dataArch.archRemWine);
+  SetArchStoreActColour(elemNumStorecurrentCloth, dataArch.runOutOfCloth, dataArch.archRemCloth);*/
+
+  /* ------------------------------------------------------------- */
+  /* Set architect build dec colour:                               */
+  /*   gray: zero                                                  */ 
+  /*   amber: non-zero                                             */
   /* ------------------------------------------------------------- */
   SetArchBuildDecColour(btnDecArchBrick, dataArch.archHousesCurrentBrick);
   SetArchBuildDecColour(btnDecArchFood, dataArch.archHousesCurrentFood);
@@ -1109,15 +1139,26 @@ function UpdateGUIArch() {
 
   /* ------------------------------------------------------------- */
   /* Set store current decrement colour:                           */
-  /*    Red - if none Left (it's all been spent)                   */
+  /*    orange - if none Left (it's all been spent)                */
   /*    transparent - all other times                              */
   /* ------------------------------------------------------------- */
-  SetArchStoreDecColour(btnDecStoreCash, dataArch.noneLeftCash, dataArch.archRemCash);
-  SetArchStoreDecColour(btnDecStoreBrick, dataArch.noneLeftBrick, dataArch.archRemBrick);
-  SetArchStoreDecColour(btnDecStoreFood, dataArch.noneLeftFood, dataArch.archRemFood);
-  SetArchStoreDecColour(btnDecStoreTool, dataArch.noneLeftTool, dataArch.archRemTool);
-  SetArchStoreDecColour(btnDecStoreWine, dataArch.noneLeftWine, dataArch.archRemWine);
-  SetArchStoreDecColour(btnDecStoreCloth, dataArch.noneLeftCloth, dataArch.archRemCloth);
+  SetArchStoreDecColour(btnDecStoreCash, dataArch.runOutOfCash, dataArch.archRemCash);
+  SetArchStoreDecColour(btnDecStoreBrick, dataArch.runOutOfBrick, dataArch.archRemBrick);
+  SetArchStoreDecColour(btnDecStoreFood, dataArch.runOutOfFood, dataArch.archRemFood);
+  SetArchStoreDecColour(btnDecStoreTool, dataArch.runOutOfTool, dataArch.archRemTool);
+  SetArchStoreDecColour(btnDecStoreWine, dataArch.runOutOfWine, dataArch.archRemWine);
+  SetArchStoreDecColour(btnDecStoreCloth, dataArch.runOutOfCloth, dataArch.archRemCloth);
+
+  /* ------------------------------------------------------------- */
+  /* Set arch build actual colour:                           */
+  /*    red - if none Left (it's all been spent)                */
+  /* ------------------------------------------------------------- */
+  SetArchBuilActColour(elemNumArchitectHousesActualBrick, dataArch.archHousesDeltaPossibleBrick, dataArch.archRemBrick);
+  SetArchBuilActColour(elemNumArchitectHousesActualFood, dataArch.archHousesDeltaPossibleFood, dataArch.archRemFood);
+  SetArchBuilActColour(elemNumArchitectHousesActualTool, dataArch.archHousesDeltaPossibleTool, dataArch.archRemTool);
+  SetArchBuilActColour(elemNumArchitectHousesActualWine, dataArch.archHousesDeltaPossibleWine, dataArch.archRemWine);
+  SetArchBuilActColour(elemNumArchitectHousesActualCloth, dataArch.archHousesDeltaPossibleCloth, dataArch.archRemCloth);
+
 
   /* ------------------------------------------------------------- */
   /* Set store current blank if zero */
@@ -1130,11 +1171,11 @@ function UpdateGUIArch() {
   WriteFieldValueBlankZero(elemNumStorecurrentCloth, fieldValues.storeCurrentCloth);
 
   /* ARCHITECT */
-  UpdateActGui(elemNumArchitectBrickHousesActual,dataArch.archHousesCurrentBrick);
-  UpdateActGui(elemNumArchitectFoodHousesActual, dataArch.archHousesCurrentFood);
-  UpdateActGui(elemNumArchitectToolHousesActual, dataArch.archHousesCurrentTool);
-  UpdateActGui(elemNumArchitectWineHousesActual,dataArch.archHousesCurrentWine);
-  UpdateActGui(elemNumArchitectClothHousesActual,dataArch.archHousesCurrentCloth);
+  UpdateActGui(elemNumArchitectHousesActualBrick,dataArch.archHousesCurrentBrick);
+  UpdateActGui(elemNumArchitectHousesActualFood, dataArch.archHousesCurrentFood);
+  UpdateActGui(elemNumArchitectHousesActualTool, dataArch.archHousesCurrentTool);
+  UpdateActGui(elemNumArchitectHousesActualWine,dataArch.archHousesCurrentWine);
+  UpdateActGui(elemNumArchitectHousesActualCloth,dataArch.archHousesCurrentCloth);
 
   if (fieldValues.archFreeMode)
   {
@@ -1329,9 +1370,6 @@ function UpdateAll() {
   }
 
   ProcessMerc();
-    console.log("addit: " + dataArch.archHousesTotalPossibleBrick + ", actual: " + dataArch.archHousesCurrentBrick);
-
-
   SetMercTradeStatus();
 
   UpdateGUIArch(); 

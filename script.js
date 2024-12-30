@@ -322,6 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
   elemBtnTrade1Mode = document.getElementById("btn-merc-trade1-mode");
   elemBtnTrade2Mode = document.getElementById("btn-merc-trade2-mode");
 
+  elemNumPreMercTotalCash = document.getElementById("num-pre-merc-total-cash");
   elemNumPreMercCash = document.getElementById("num-pre-merc-cash");
   elemNumPreMercBrick = document.getElementById("num-pre-merc-brick");
   elemNumPreMercFood = document.getElementById("num-pre-merc-food");
@@ -1355,13 +1356,21 @@ function UpdateGUIMerc() {
     elemBtnTrade1Mode.textContent = mercTrade1Mode;
     elemBtnTrade2Mode.textContent = mercTrade2Mode;
 
-    elemNumPreMercCash.textContent = fieldValues.preMercCash;    
-    elemNumPreMercBrick.textContent = fieldValues.preMercBrick;    
-    elemNumPreMercFood.textContent = fieldValues.preMercFood;    
-    elemNumPreMercTool.textContent = fieldValues.preMercTool;    
-    elemNumPreMercWine.textContent = fieldValues.preMercWine;    
-    elemNumPreMercCloth.textContent = fieldValues.preMercCloth;    
 
+    elemNumPreMercCash.textContent = fieldValues.preMercCash;    
+    elemNumPreMercBrick.textContent = fieldValues.storeCurrentBrick * 3;    
+    elemNumPreMercFood.textContent = fieldValues.storeCurrentFood * 4;    
+    elemNumPreMercTool.textContent = fieldValues.storeCurrentTool * 5;    
+    elemNumPreMercWine.textContent = fieldValues.storeCurrentWine * 6;    
+    elemNumPreMercCloth.textContent = fieldValues.storeCurrentCloth * 7;    
+
+    elemNumPreMercTotalCash.textContent = 
+      fieldValues.preMercCash +  
+      fieldValues.storeCurrentBrick * 3 + 
+      fieldValues.storeCurrentFood * 4 + 
+      fieldValues.storeCurrentTool * 5 + 
+      fieldValues.storeCurrentWine * 6 + 
+      fieldValues.storeCurrentCloth * 7;
 
 }
 

@@ -166,7 +166,7 @@ let elemBtnTrade2Cloth;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "v1.09";
+  document.getElementById("version").textContent = "v1.10";
 
   elemBtnMode = document.getElementById("btn-mode");
   elemBtnResetAll = document.getElementById("btn-reset-all");

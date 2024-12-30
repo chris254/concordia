@@ -1,110 +1,3 @@
-/* local data */
-let dataArch = {
-  archBrickHousesCurrent:0,
-  archHousesCurrentBrick:0,
-  archHousesCurrentFood:0,
-  archHousesCurrentTool:0,
-  archHousesCurrentWine:0,
-  archHousesCurrentCloth:0,
-
-  archHousesDeltaPossibleBrick:0,
-  archHousesDeltaPossibleFood:0,
-  archHousesDeltaPossibleTool:0,
-  archHousesDeltaPossibleWine:0,
-  archHousesDeltaPossibleCloth:0,
-
-  archHousesTotalPossibleBrick:0,
-  archHousesTotalPossibleFood:0,
-  archHousesTotalPossibleTool:0,
-  archHousesTotalPossibleWine:0,
-  archHousesTotalPossibleCloth:0,
-
-  archRemCash:0,
-  archRemBrick:0,
-  archRemFood:0,
-  archRemTool:0,
-  archRemWine:0,
-  archRemCloth:0,
-
-  archMoreHousesAvailableBrick:false,
-  archMoreHousesAvailableFood:false,
-  archMoreHousesAvailableTool:false,
-  archMoreHousesAvailableWine:false,
-  archMoreHousesAvailableCloth:false,
-
-  archBuildCostCash:0,
-  archBuildCostBrick:0,
-  archBuildCostFood:0,
-  archBuildCostTool:0,
-  archBuildCostWine:0,
-  archBuildCostCloth:0,
-
-  runOutOfCash:false,
-  runOutOfBrick:false,
-  runOutOfFood:false,
-  runOutOfTool:false,
-  runOutOfWine:false,
-  runOutOfCloth:false,
-}
-
-let fieldValues = {
-  storeCurrentCash:0,
-  storeCurrentBrick:0,
-  storeCurrentFood:0,
-  storeCurrentTool:0,
-  storeCurrentWine:0,
-  storeCurrentCloth:0,
-
-
-  mercBuyBrick:0,
-  mercBuyFood:0,
-  mercBuyTool:0,
-  mercBuyWine:0,
-  mercBuyCloth:0,
-
-  mercSellBrick:0,
-  mercSellFood:0,
-  mercSellTool:0,
-  mercSellWine:0,
-  mercSellCloth:0,
-
-  mercRemCash:0,
-  mercRemBrick:0,
-  mercRemFood:0,
-  mercRemTool:0,
-  mercRemWine:0,
-  mercRemCloth:0,
-
-  mercDeltaCash:0,
-  mercDeltaBrick:0,
-  mercDeltaFood:0,
-  mercDeltaTool:0,
-  mercDeltaWine:0,
-  mercDeltaCloth:0,
-
-  mercBuyAvailBrick:0,
-  mercBuyAvailFood:0,
-  mercBuyAvailTool:0,
-  mercBuyAvailWine:0,
-  mercBuyAvailCloth:0,
-
-  mercTradeCount:0,
-
-  mercTradeActiveBrick:false,
-  mercTradeActiveFood:false,
-  mercTradeActiveTool:false,
-  mercTradeActiveWine:false,
-  mercTradeActiveCloth:false,
-
-  archToBankCash:0,
-  archFromBankCash:0,
-  mercToBankCash:0,
-  mercFromBankCash:0,
-
-  archFreeMode:false,
-  archModeFirstPass:true,
-
-}
 
 let elemBtnResetAll;
 let elemBtnResetStoreCurrent;
@@ -237,6 +130,38 @@ let btnSellMercFood;
 let btnSellMercTool;
 let btnSellMercWine;
 let btnSellMercCloth;
+
+/* MERC ELEMENTS */
+let elemBtnTrade1Mode;
+let elemBtnTrade2Mode;
+
+/* MERC GLOBALS */
+let mercTrade1Mode;
+let mercTrade2Mode;
+
+let elemNumPreMercCash;
+let elemNumPreMercBrick;
+let elemNumPreMercFood;
+let elemNumPreMercTool;
+let elemNumPreMercWine;
+let elemNumPreMercCloth;
+
+let elemBtnTrade1Brick;
+let elemBtnTrade1Food;
+let elemBtnTrade1Tool;
+let elemBtnTrade1Wine;
+let elemBtnTrade1Cloth;
+
+let elemBtnTrade2Brick;
+let elemBtnTrade2Food;
+let elemBtnTrade2Tool;
+let elemBtnTrade2Wine;
+let elemBtnTrade2Cloth;
+
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
@@ -391,6 +316,34 @@ document.addEventListener("DOMContentLoaded", function () {
   fieldValues.mercSellTool=0;
   fieldValues.mercSellWine=0;
   fieldValues.mercSellCloth=0;
+  
+
+  /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+  elemBtnTrade1Mode = document.getElementById("btn-merc-trade1-mode");
+  elemBtnTrade2Mode = document.getElementById("btn-merc-trade2-mode");
+
+  elemNumPreMercCash = document.getElementById("num-pre-merc-cash");
+  elemNumPreMercBrick = document.getElementById("num-pre-merc-brick");
+  elemNumPreMercFood = document.getElementById("num-pre-merc-food");
+  elemNumPreMercTool = document.getElementById("num-pre-merc-tool");
+  elemNumPreMercWine = document.getElementById("num-pre-merc-wine");
+  elemNumPreMercCloth = document.getElementById("num-pre-merc-cloth");
+
+
+  mercTrade1Mode = "SELL";
+  mercTrade2Mode = "BUY";
+
+  elemBtnTrade1Brick = document.getElementById("btn-merc-trade1-brick");
+  elemBtnTrade1Food = document.getElementById("btn-merc-trade1-food");
+  elemBtnTrade1Tool = document.getElementById("btn-merc-trade1-tool");
+  elemBtnTrade1Wine = document.getElementById("btn-merc-trade1-wine");
+  elemBtnTrade1Cloth = document.getElementById("btn-merc-trade1-cloth");
+
+  elemBtnTrade2Brick = document.getElementById("btn-merc-trade1-brick");
+  elemBtnTrade2Food = document.getElementById("btn-merc-trade1-food");
+  elemBtnTrade2Tool = document.getElementById("btn-merc-trade1-tool");
+  elemBtnTrade2Wine = document.getElementById("btn-merc-trade1-wine");
+  elemBtnTrade2Cloth = document.getElementById("btn-merc-trade1-cloth");
 
   UpdateAll();
 });
@@ -899,6 +852,15 @@ function DisplayDelta(elem, value) {
 }
 function ProcessMerc() {
 
+  if (mercActive === CardType.MERC3) fieldValues.preMercCash = fieldValues.storeCurrentCash + 3;
+  if (mercActive === CardType.MERC5) fieldValues.preMercCash = fieldValues.storeCurrentCash + 5;
+  fieldValues.preMercBrick = fieldValues.storeCurrentBrick;
+  fieldValues.preMercFood = fieldValues.storeCurrentFood;
+  fieldValues.preMercTool = fieldValues.storeCurrentTool; 
+  fieldValues.preMercWine = fieldValues.storeCurrentCloth; 
+  fieldValues.preMercCloth = fieldValues.storeCurrentWine; 
+
+
   let brickCost = 3;
   let foodCost = 4;
   let toolCost = 5;
@@ -955,27 +917,9 @@ function ProcessMerc() {
 
   fieldValues.mercFromBankCash = mercStartCash + sellValue;
 
-  /* remove all grey-background to start with */
-  btnBuyMercBrick.classList.remove('grey-background');
-  btnBuyMercFood.classList.remove('grey-background');
-  btnBuyMercTool.classList.remove('grey-background');
-  btnBuyMercWine.classList.remove('grey-background');
-  btnBuyMercCloth.classList.remove('grey-background');
-
-  btnSellMercBrick.classList.remove('grey-background');
-  btnSellMercFood.classList.remove('grey-background');
-  btnSellMercTool.classList.remove('grey-background');
-  btnSellMercWine.classList.remove('grey-background');
-  btnSellMercCloth.classList.remove('grey-background');
-
-  UpdateBuySellButton(btnBuyMercBrick, btnSellMercBrick, fieldValues.mercBuyBrick, fieldValues.mercSellBrick, fieldValues.mercBuyAvailBrick, fieldValues.mercRemBrick);
-  UpdateBuySellButton(btnBuyMercFood, btnSellMercFood, fieldValues.mercBuyFood, fieldValues.mercSellFood, fieldValues.mercBuyAvailFood, fieldValues.mercRemFood);
-  UpdateBuySellButton(btnBuyMercTool, btnSellMercTool, fieldValues.mercBuyTool, fieldValues.mercSellTool, fieldValues.mercBuyAvailTool, fieldValues.mercRemTool);
-  UpdateBuySellButton(btnBuyMercWine, btnSellMercWine, fieldValues.mercBuyWine, fieldValues.mercSellWine, fieldValues.mercBuyAvailWine, fieldValues.mercRemWine);
-  UpdateBuySellButton(btnBuyMercCloth, btnSellMercCloth, fieldValues.mercBuyCloth, fieldValues.mercSellCloth, fieldValues.mercBuyAvailCloth, fieldValues.mercRemCloth);
 
    /* calculate future cash */
-   elemNumMercStoreOutCash.textContent = fieldValues.mercToBankCash;
+   /*elemNumMercStoreOutCash.textContent = fieldValues.mercToBankCash;
    elemNumMercStoreInCash.textContent = fieldValues.mercFromBankCash;
 
    elemNumMercStoreOutBrick.textContent = fieldValues.mercSellBrick;
@@ -989,9 +933,7 @@ function ProcessMerc() {
    elemNumMercStoreInTool.textContent = fieldValues.mercBuyTool;
    elemNumMercStoreInWine.textContent = fieldValues.mercBuyWine;
    elemNumMercStoreInCloth.textContent = fieldValues.mercBuyCloth;
-   
-   elemNumMercRemainingCash.textContent = fieldValues.mercRemCash;
-   
+      
    DisplayDelta(elemNumMercDeltaBrick,fieldValues.mercRemBrick );
    DisplayDelta(elemNumMercDeltaFood, fieldValues.mercRemFood);
    DisplayDelta(elemNumMercDeltaTool, fieldValues.mercRemTool);
@@ -1004,7 +946,7 @@ function ProcessMerc() {
    elemNumMercRemaining2Tool.textContent = fieldValues.mercRemTool;
    elemNumMercRemaining2Wine.textContent = fieldValues.mercRemWine;
    elemNumMercRemaining2Cloth.textContent = fieldValues.mercRemCloth;
-   
+   */
   
 }
 
@@ -1301,44 +1243,6 @@ function UpdateGUIArch() {
 
 }
 
-
-function UpdateGUIMerc() {
-
-
-  ConvertZeroesToBlank(elemNumMercStoreOutCash);
-  ConvertZeroesToBlank(elemNumMercStoreOutBrick);
-  ConvertZeroesToBlank(elemNumMercStoreOutFood);
-  ConvertZeroesToBlank(elemNumMercStoreOutTool);
-  ConvertZeroesToBlank(elemNumMercStoreOutWine);
-  ConvertZeroesToBlank(elemNumMercStoreOutCloth);
-
-  ConvertZeroesToBlank(elemNumMercStoreInCash);
-  ConvertZeroesToBlank(elemNumMercStoreInBrick);
-  ConvertZeroesToBlank(elemNumMercStoreInFood);
-  ConvertZeroesToBlank(elemNumMercStoreInTool);
-  ConvertZeroesToBlank(elemNumMercStoreInWine);
-  ConvertZeroesToBlank(elemNumMercStoreInCloth);
-
-  /* Blank the zeroes */
-  /*  ConvertZeroesToBlank(elemNumMercRemainingCash);*/
-  ConvertZeroesToBlank(elemNumMercDeltaBrick);
-  ConvertZeroesToBlank(elemNumMercDeltaFood);
-  ConvertZeroesToBlank(elemNumMercDeltaTool);
-  ConvertZeroesToBlank(elemNumMercDeltaWine);
-  ConvertZeroesToBlank(elemNumMercDeltaCloth);
-
-  elemNumStorecurrentMercCash.textContent = fieldValues.storeCurrentCash;
-  elemNumStorecurrentMercBrick.textContent=fieldValues.storeCurrentBrick;  
-  elemNumStorecurrentMercFood.textContent=fieldValues.storeCurrentFood;  
-  elemNumStorecurrentMercTool.textContent=fieldValues.storeCurrentTool;  
-  elemNumStorecurrentMercWine.textContent=fieldValues.storeCurrentWine;  
-  elemNumStorecurrentMercCloth.textContent=fieldValues.storeCurrentCloth;  
-
-  btnSellMercBrick.textContent = fieldValues.mercRemBrick;
-
-
-}
-
 function WriteToArchBuildBox(elem_, additionalCount_, actualCount_) {
 
     var totalPossible = additionalCount_ + actualCount_;
@@ -1412,4 +1316,62 @@ function ToggleEditMode() {
 
   fieldValues.archModeFirstPass = true;
   UpdateAll();
+}
+
+
+/* ------------------------------------------------------------------------------- */
+function Trade1ModeIsSell() {
+
+    return mercTrade1Mode === "SELL";
+}
+
+/* ------------------------------------------------------------------------------- */
+function Trade2ModeIsSell() {
+
+    return mercTrade2Mode === "SELL";
+}
+
+/* ------------------------------------------------------------------------------- */
+function Trade1Toggle() {
+
+  if (mercTrade1Mode  === "BUY") mercTrade1Mode = "SELL"; 
+  else if (mercTrade1Mode  === "SELL") mercTrade1Mode = "BUY";  
+
+  UpdateAll();
+}
+
+/* ------------------------------------------------------------------------------- */
+function Trade2Toggle() {
+
+  if (mercTrade2Mode  === "BUY") mercTrade2Mode = "SELL"; 
+  else if (mercTrade2Mode  === "SELL") mercTrade2Mode = "BUY"; 
+  
+  UpdateAll();
+}
+
+/* ------------------------------------------------------------------------------- */
+function UpdateGUIMerc() {
+
+    elemBtnTrade1Mode.textContent = mercTrade1Mode;
+    elemBtnTrade2Mode.textContent = mercTrade2Mode;
+
+    elemNumPreMercCash.textContent = fieldValues.preMercCash;    
+    elemNumPreMercBrick.textContent = fieldValues.preMercBrick;    
+    elemNumPreMercFood.textContent = fieldValues.preMercFood;    
+    elemNumPreMercTool.textContent = fieldValues.preMercTool;    
+    elemNumPreMercWine.textContent = fieldValues.preMercWine;    
+    elemNumPreMercCloth.textContent = fieldValues.preMercCloth;    
+
+
+}
+
+function Trade1Brick() {
+
+
+}
+
+function ProcessTrade1Buy() {
+
+  /* Calculate total possible */    
+
 }

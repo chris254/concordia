@@ -738,7 +738,7 @@ function ProcessArchitectStrict() {
   /* --------------------------------------------------------------------- */
   /* WINE HOUSES */
   /* --------------------------------------------------------------------- */
-  dataArch.archHousesDeltaPossibleWine = Min3(Math.floor(dataArch.archRemCash/wineHouseCost),dataArch.archRemBrick, dataArch.archRemTool);
+  dataArch.archHousesDeltaPossibleWine = Min3(Math.floor(dataArch.archRemCash/wineHouseCost),dataArch.archRemBrick, dataArch.archRemWine);
   dataArch.archMoreHousesAvailableWine = dataArch.archHousesDeltaPossibleWine > 0;
   dataArch.archHousesTotalPossibleWine = 
     dataArch.archHousesDeltaPossibleWine +

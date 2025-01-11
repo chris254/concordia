@@ -145,6 +145,17 @@ const elemIdsPreMercCashValue =
 
 const elemNumPreMercCashValue = elemIdsPreMercCashValue.map(id => document.getElementById(id));
 
+const elemIdsMercBuyPot = 
+  ['num-pre-merc-buypot-cash',
+   'num-pre-merc-buypot-brick',
+   'num-pre-merc-buypot-food',
+   'num-pre-merc-buypot-tool',
+   'num-pre-merc-buypot-wine',
+   'num-pre-merc-buypot-cloth'];
+
+const elemNumMercBuyPot = elemIdsMercBuyPot.map(id => document.getElementById(id));
+
+
 const elemIdsBtnMercBuy = 
   ['btn-merc-buy-cash',
    'btn-merc-buy-brick',
@@ -890,7 +901,12 @@ function ProcessMerc() {
     mercGlobal.preMercCashValue[index] = currentCashValue;
 
     mercGlobal.preMercCashValue[0] += currentCashValue;
+
+    mercGlobal.mercBuyPot[index] = Math.floor(mercGlobal.mercStorePreTrade[0] / resourceValue[index]);
+
+    // Calculat but potential
   }
+
 
 
   let brickCost = 3;
@@ -1385,6 +1401,17 @@ function UpdateGUIMerc() {
       }
       else {
         elemNumPreMercCashValue[resourceIndex].textContent = mercGlobal.preMercCashValue[resourceIndex];
+      }
+
+      // BUY POTENTIAL
+      if (resourceIndex != 0) {
+        if (mercGlobal.mercBuyPot[resourceIndex] === 0) {
+          elemNumMercBuyPot[resourceIndex].textContent = '';
+        }
+        else {
+          elemNumMercBuyPot[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+        }
+
       }
 
     }

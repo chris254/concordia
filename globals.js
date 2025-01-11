@@ -56,7 +56,7 @@ let dataArch = {
 
 let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],
-  
+
   mercBuyBrick:0,
   mercBuyFood:0,
   mercBuyTool:0,
@@ -130,6 +130,8 @@ let mercGlobal = {
 
   preMercCashValue:[0,0,0,0,0,0],
   preMercStore:[0,0,0,0,0,0],
+
+  mercBuyPot:[0,0,0,0,0,0],
 
 
 }

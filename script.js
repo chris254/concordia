@@ -886,7 +886,6 @@ function ProcessMerc() {
   mercGlobal.preMercCashValue[0] = mercGlobal.mercStorePreTrade[0];
   for (let index = 1; index <=5; index++) {
 
-    mercGlobal.mercStorePreTrade[index] = fieldValues.storeCurrent[index];
     currentCashValue = mercGlobal.mercStorePreTrade[index] * resourceValue[index];
     mercGlobal.preMercCashValue[index] = currentCashValue;
 
@@ -1368,21 +1367,26 @@ function BuyIsValid(currentCash, required, resourceValue) {
 /* ------------------------------------------------------------------------------- */
 function UpdateGUIMerc() {
 
-    elemNumPreMercCashValue[0].textContent = mercGlobal.preMercCashValue[0];
-    elemNumPreMercCashValue[1].textContent = mercGlobal.preMercCashValue[1];
-    elemNumPreMercCashValue[2].textContent = mercGlobal.preMercCashValue[2];
-    elemNumPreMercCashValue[3].textContent = mercGlobal.preMercCashValue[3];
-    elemNumPreMercCashValue[4].textContent = mercGlobal.preMercCashValue[4];
-    elemNumPreMercCashValue[5].textContent = mercGlobal.preMercCashValue[5];
-
     elemBtnTrade1Mode.textContent = mercTrade1Mode;
     elemBtnTrade2Mode.textContent = mercTrade2Mode;
 
     elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
-    elemNumPreMerc[0].textContent = mercGlobal.mercStorePreTrade[0];
 
-    for (let resourceIndex = 1; resourceIndex <= 5; resourceIndex++) {
-       elemNumPreMerc[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex]; 
+    for (let resourceIndex = 0; resourceIndex <= 5; resourceIndex++) {
+      if (mercGlobal.mercStorePreTrade[resourceIndex] === 0) {
+        elemNumPreMerc[resourceIndex].textContent = ''; 
+      }
+      else {
+        elemNumPreMerc[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex];
+      }
+
+      if (mercGlobal.preMercCashValue[resourceIndex] === 0) {
+        elemNumPreMercCashValue[resourceIndex].textContent = ''; 
+      }
+      else {
+        elemNumPreMercCashValue[resourceIndex].textContent = mercGlobal.preMercCashValue[resourceIndex];
+      }
+
     }
 
 }

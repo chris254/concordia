@@ -1,6 +1,17 @@
 /* local data */
+
+const indexCash = 0;
+const indexBrick = 1;
+const indexFood = 2;
+const indexTool = 3;
+const indexWine = 4;
+const indexCloth = 5;
+
+const resourceValue = [0,3,4,5,6,7];
+
+
 let dataArch = {
-  archBrickHousesCurrent:0,
+  archHousesCurrent:[0,0,0,0,0,0],
   archHousesCurrentBrick:0,
   archHousesCurrentFood:0,
   archHousesCurrentTool:0,
@@ -13,11 +24,7 @@ let dataArch = {
   archHousesDeltaPossibleWine:0,
   archHousesDeltaPossibleCloth:0,
 
-  archHousesTotalPossibleBrick:0,
-  archHousesTotalPossibleFood:0,
-  archHousesTotalPossibleTool:0,
-  archHousesTotalPossibleWine:0,
-  archHousesTotalPossibleCloth:0,
+  archHousesTotalPossible:[0,0,0,0,0,0],
 
   archRemCash:0,
   archRemBrick:0,
@@ -48,14 +55,8 @@ let dataArch = {
 }
 
 let fieldValues = {
-  storeCurrentCash:0,
-  storeCurrentBrick:0,
-  storeCurrentFood:0,
-  storeCurrentTool:0,
-  storeCurrentWine:0,
-  storeCurrentCloth:0,
-
-
+  storeCurrent:[0,0,0,0,0,0],
+  
   mercBuyBrick:0,
   mercBuyFood:0,
   mercBuyTool:0,
@@ -104,11 +105,31 @@ let fieldValues = {
   archFreeMode:false,
   archModeFirstPass:true,
 
-  preMercCash:0,
-  preMercBrick:0,
-  preMercFood:0,
-  preMercTool:0,
-  preMercWine:0,
-  preMercCloth:0,
+
+}
+
+let mercGlobal = {
+
+  trade1RemCash:0,
+  trade1RemBrick:0,
+  trade1RemFood:0,
+  trade1RemTool:0,
+  trade1RemWine:0,
+  trade1RemCloth:0,
+
+  trade2RemCash:0,
+  trade2RemBrick:0,
+  trade2RemFood:0,
+  trade2RemTool:0,
+  trade2RemWine:0,
+  trade2RemCloth:0,
+
+  mercStore:[0,0,0,0,0,0],
+  mercStorePreTrade:[0,0,0,0,0,0],
+  mercStoreRunOut:[false,false,false,false,false],
+
+  preMercCashValue:[0,0,0,0,0,0],
+  preMercStore:[0,0,0,0,0,0],
+
 
 }

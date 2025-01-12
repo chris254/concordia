@@ -1442,7 +1442,8 @@ function UpdateGUIMerc() {
         {
           elemBtnMercBuy[resourceIndex].classList.remove("buy-not-available");
           elemBtnMercBuy[resourceIndex].classList.add("buy-available");
-          elemBtnMercBuy[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+          elemBtnMercBuy[resourceIndex].textContent = 
+            mercGlobal.mercBuyCount[resourceIndex] + " / " + mercGlobal.mercBuyPot[resourceIndex] ;
         }
       }
 
@@ -1458,7 +1459,8 @@ function UpdateGUIMerc() {
         {
           elemBtnMercSell[resourceIndex].classList.remove("sell-not-available");
           elemBtnMercSell[resourceIndex].classList.add("sell-available");
-          elemBtnMercSell[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+          elemBtnMercSell[resourceIndex].textContent = 
+            mercGlobal.mercSellCount[resourceIndex] + " / " + mercGlobal.mercStorePostTrade[resourceIndex];
         }
       }
 

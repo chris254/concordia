@@ -125,25 +125,23 @@ const elemIdsMercStore =
 const elemNumMercStore = elemIdsMercStore.map(id => document.getElementById(id));
 
 
-const elemIdsPreMerc = 
-  ['num-pre-merc-cash',
-   'num-pre-merc-brick',
-   'num-pre-merc-food',
-   'num-pre-merc-tool',
-   'num-pre-merc-wine',
-   'num-pre-merc-cloth'];
+const elemIdsPreMercStore = 
+  ['num-pre-merc-cash', 'num-pre-merc-brick', 'num-pre-merc-food',
+   'num-pre-merc-tool', 'num-pre-merc-wine', 'num-pre-merc-cloth'];
 
-const elemNumPreMerc = elemIdsPreMerc.map(id => document.getElementById(id));
+const elemNumPreMercStore = elemIdsPreMercStore.map(id => document.getElementById(id));
 
-const elemIdsPreMercCashValue = 
-  ['num-pre-merc-cashvalue-cash',
-   'num-pre-merc-cashvalue-brick',
-   'num-pre-merc-cashvalue-food',
-   'num-pre-merc-cashvalue-tool',
-   'num-pre-merc-cashvalue-wine',
-   'num-pre-merc-cashvalue-cloth'];
+const elemIdsMercStorePostTrade = 
+  ['num-post-merc-cash', 'num-post-merc-brick', 'num-post-merc-food',
+   'num-post-merc-tool', 'num-post-merc-wine', 'num-post-merc-cloth'];
 
-const elemNumPreMercCashValue = elemIdsPreMercCashValue.map(id => document.getElementById(id));
+const elemNumMercStorePostTrade = elemIdsMercStorePostTrade.map(id => document.getElementById(id));
+
+const elemIdsPreMercSellValue = 
+  ['num-pre-merc-cashvalue-cash', 'num-pre-merc-cashvalue-brick', 'num-pre-merc-cashvalue-food', 
+   'num-pre-merc-cashvalue-tool', 'num-pre-merc-cashvalue-wine', 'num-pre-merc-cashvalue-cloth'];
+
+const elemNumPreMercSellValue = elemIdsPreMercSellValue.map(id => document.getElementById(id));
 
 const elemIdsMercBuyPot = 
   ['num-pre-merc-buypot-cash',
@@ -157,12 +155,8 @@ const elemNumMercBuyPot = elemIdsMercBuyPot.map(id => document.getElementById(id
 
 
 const elemIdsBtnMercBuy = 
-  ['btn-merc-buy-cash',
-   'btn-merc-buy-brick',
-   'btn-merc-buy-food',
-   'btn-merc-buy-tool',
-   'btn-merc-buy-wine',
-   'btn-merc-buy-cloth'];
+  ['btn-merc-buy-cash', 'btn-merc-buy-brick', 'btn-merc-buy-food',
+   'btn-merc-buy-tool', 'btn-merc-buy-wine', 'btn-merc-buy-cloth'];
 
 const elemBtnMercBuy = elemIdsBtnMercBuy.map(id => document.getElementById(id));
 
@@ -354,15 +348,6 @@ document.addEventListener("DOMContentLoaded", function () {
   elemBtnTrade2Wine = document.getElementById("btn-merc-trade1-wine");
   elemBtnTrade2Cloth = document.getElementById("btn-merc-trade1-cloth");
 
-
-  elemMercStore[0] = document.getElementById("num-storecurrent-cash");
-  elemMercStore[1]  = document.getElementById("num-storecurrent-brick");
-  elemMercStore[2]  = document.getElementById("num-storecurrent-food");
-  elemMercStore[3]  = document.getElementById("num-storecurrent-tool");
-  elemMercStore[4]  = document.getElementById("num-storecurrent-wine");
-  elemMercStore[5]  = document.getElementById("num-storecurrent-cloth");
-
-
   UpdateAll();
 });
 
@@ -395,8 +380,14 @@ function IncMercStore(resourceIndex_) {
 
 
 function DecMercStore(resourceIndex_) {
-  if (!mercGlobal.mercStoreRunOut[resourceIndex_]) 
-    mercGlobal.mercStorePreTrade[resourceIndex_] = Max(0, mercGlobal.mercStorePreTrade[resourceIndex_]-1);
+  if (resourceIndex_ === 0) {
+    mercGlobal.mercStore[resourceIndex_] = Max(0, mercGlobal.mercStore[resourceIndex_]-1);
+  }
+  else {
+    if (!mercGlobal.mercStoreRunOut[resourceIndex_]) 
+      mercGlobal.mercStorePreTrade[resourceIndex_] = Max(0, mercGlobal.mercStorePreTrade[resourceIndex_]-1);
+
+  }
 
   UpdateAll();
 }
@@ -886,25 +877,43 @@ function DisplayDelta(elem, value) {
 
 }
 
+function mercBuy(resourceId) {
+
+
+}
+
 
 function ProcessMerc() {
 
+  // Add 3 or 5 coins for merc type
   if (mercActive === CardType.MERC3) mercGlobal.mercStorePreTrade[0] = mercGlobal.mercStore[indexCash] + 3;
   if (mercActive === CardType.MERC5) mercGlobal.mercStorePreTrade[0] = mercGlobal.mercStore[indexCash] + 5;
 
-  let totalCashValue = 0;
+  // Calculate (for resource only, and not cash):
+  //   mercGlobal.preMercCashValue
+  //   mercGlobal.mercBuyPot
   let currentCashValue = 0;
-  mercGlobal.preMercCashValue[0] = mercGlobal.mercStorePreTrade[0];
+  let deltaCashThisResource = 0; 
+  mercGlobal.preMercSellValue[0] = mercGlobal.mercStorePreTrade[0];
+  mercGlobal.mercStorePostTrade[0] = mercGlobal.mercStorePreTrade[0];
   for (let index = 1; index <=5; index++) {
 
+    // currentCashValue is the value if all of this resource was sold
     currentCashValue = mercGlobal.mercStorePreTrade[index] * resourceValue[index];
-    mercGlobal.preMercCashValue[index] = currentCashValue;
+    mercGlobal.preMercSellValue[index] = currentCashValue;
 
-    mercGlobal.preMercCashValue[0] += currentCashValue;
+    mercGlobal.preMercSellValue[0] += currentCashValue;
 
-    mercGlobal.mercBuyPot[index] = Math.floor(mercGlobal.mercStorePreTrade[0] / resourceValue[index]);
+    // Calculate mercGlobal.mercStorePostTrade
+    let mercDelta = mercGlobal.mercBuyCount[index] - mercGlobal.mercSellCount[index];
+    mercGlobal.mercStorePostTrade[index] = mercGlobal.mercStorePreTrade[index] + mercDelta; 
 
-    // Calculat but potential
+    mercGlobal.mercBuyPot[index] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[index]);
+    
+    // Calculate post merc cash
+    deltaCashThisResource = mercGlobal.mercSellCount[index] - mercGlobal.mercBuyCount[index];
+    mercGlobal.mercStorePostTrade[0] += deltaCashThisResource;
+
   }
 
 
@@ -1390,17 +1399,17 @@ function UpdateGUIMerc() {
 
     for (let resourceIndex = 0; resourceIndex <= 5; resourceIndex++) {
       if (mercGlobal.mercStorePreTrade[resourceIndex] === 0) {
-        elemNumPreMerc[resourceIndex].textContent = ''; 
+        elemNumPreMercStore[resourceIndex].textContent = ''; 
       }
       else {
-        elemNumPreMerc[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex];
+        elemNumPreMercStore[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex];
       }
 
-      if (mercGlobal.preMercCashValue[resourceIndex] === 0) {
-        elemNumPreMercCashValue[resourceIndex].textContent = ''; 
+      if (mercGlobal.preMercSellValue[resourceIndex] === 0) {
+        elemNumPreMercSellValue[resourceIndex].textContent = ''; 
       }
       else {
-        elemNumPreMercCashValue[resourceIndex].textContent = mercGlobal.preMercCashValue[resourceIndex];
+        elemNumPreMercSellValue[resourceIndex].textContent = mercGlobal.preMercSellValue[resourceIndex];
       }
 
       // BUY POTENTIAL
@@ -1412,6 +1421,45 @@ function UpdateGUIMerc() {
           elemNumMercBuyPot[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
         }
 
+      }
+
+      if (mercGlobal.mercStorePostTrade[resourceIndex] === 0) {
+        elemNumMercStorePostTrade[resourceIndex].textContent = ''; 
+      }
+      else {
+        elemNumMercStorePostTrade[resourceIndex].textContent = mercGlobal.mercStorePostTrade[resourceIndex];
+      }
+
+      // Merc Buy button colouring
+      if (resourceIndex != 0) {
+        if (mercGlobal.mercBuyPot[resourceIndex] === 0)
+        {
+          elemBtnMercBuy[resourceIndex].classList.remove("buy-available");
+          elemBtnMercBuy[resourceIndex].classList.add("buy-not-available");
+          elemBtnMercBuy[resourceIndex].textContent = '';
+        }
+        else
+        {
+          elemBtnMercBuy[resourceIndex].classList.remove("buy-not-available");
+          elemBtnMercBuy[resourceIndex].classList.add("buy-available");
+          elemBtnMercBuy[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+        }
+      }
+
+      // Merc Sell button colouring
+      if (resourceIndex != 0) {
+        if (mercGlobal.mercStorePostTrade[resourceIndex] === 0)
+        {
+          elemBtnMercSell[resourceIndex].classList.remove("sell-available");
+          elemBtnMercSell[resourceIndex].classList.add("sell-not-available");
+          elemBtnMercSell[resourceIndex].textContent = '';
+        }
+        else
+        {
+          elemBtnMercSell[resourceIndex].classList.remove("sell-not-available");
+          elemBtnMercSell[resourceIndex].classList.add("sell-available");
+          elemBtnMercSell[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+        }
       }
 
     }

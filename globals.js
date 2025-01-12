@@ -128,8 +128,10 @@ let mercGlobal = {
   mercStorePreTrade:[0,0,0,0,0,0],
   mercStoreRunOut:[false,false,false,false,false],
 
-  preMercCashValue:[0,0,0,0,0,0],
-  preMercStore:[0,0,0,0,0,0],
+  preMercSellValue:[0,0,0,0,0,0],
+  mercBuyCount:[0,0,0,0,0,0],
+  mercSellCount:[0,0,0,0,0,0],
+  mercStorePostTrade:[0,0,0,0,0,0],
 
   mercBuyPot:[0,0,0,0,0,0],
 

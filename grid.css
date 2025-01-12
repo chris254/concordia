@@ -210,9 +210,29 @@ body {
   pointer-events: none; /* Prevent the element from interfering with grid items */
 }
 
+.buy-not-available {
+  border: none;
+  background-color: transparent;
+}
+
+.buy-available {
+  border: 2px solid black;
+  background-color: lightgreen;
+}
+
+.sell-not-available {
+  border: none;
+  background-color: transparent;
+}
+
+.sell-available {
+  border: 2px solid black;
+  background-color: lightgreen;
+}
+
+
 .red-background {
   background-color: red
-
 }
 
 .grey-background {

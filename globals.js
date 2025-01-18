@@ -89,8 +89,6 @@ let fieldValues = {
   mercBuyAvailWine:0,
   mercBuyAvailCloth:0,
 
-  mercTradeCount:0,
-
   mercTradeActiveBrick:false,
   mercTradeActiveFood:false,
   mercTradeActiveTool:false,
@@ -107,6 +105,12 @@ let fieldValues = {
 
 
 }
+
+const TradeType = Object.freeze({
+  BUY: "BUY",
+  SELL : "SELL",
+  NONE: "NONE"
+});
 
 let mercGlobal = {
 
@@ -130,10 +134,18 @@ let mercGlobal = {
 
   preMercSellValue:[0,0,0,0,0,0],
   mercBuyCount:[0,0,0,0,0,0],
-  mercSellCount:[0,0,0,0,0,0],
+  mercSellAct:[0,0,0,0,0,0],
   mercStorePostTrade:[0,0,0,0,0,0],
 
   mercBuyPot:[0,0,0,0,0,0],
+  mercBuyAvail:[0,0,0,0,0,0],
+  mercBuyAct:[0,0,0,0,0,0],
+
+  mercTradeArray:[{trade : TradeType.NONE, resourceIndex: 0, resourceDelta: 0, cashDelta: 0},
+              {trade: TradeType.NONE, resourceIndex: 0, resourceDelta: 0, cashDelta: 0}],
+
+  mercTradeCount:0,
+
 
 
 }

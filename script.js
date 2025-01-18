@@ -173,18 +173,6 @@ const elemIdsStoreCurrent =
 const elemNumStoreCurrent = elemIdsStoreCurrent.map(id => document.getElementById(id));
 
 
-let elemBtnTrade1Brick;
-let elemBtnTrade1Food;
-let elemBtnTrade1Tool;
-let elemBtnTrade1Wine;
-let elemBtnTrade1Cloth;
-
-let elemBtnTrade2Brick;
-let elemBtnTrade2Food;
-let elemBtnTrade2Tool;
-let elemBtnTrade2Wine;
-let elemBtnTrade2Cloth;
-
 let elemMercStore = [0,0,0,0,0];
 
 
@@ -336,18 +324,6 @@ document.addEventListener("DOMContentLoaded", function () {
   mercTrade1Mode = "SELL";
   mercTrade2Mode = "BUY";
 
-  elemBtnTrade1Brick = document.getElementById("btn-merc-trade1-brick");
-  elemBtnTrade1Food = document.getElementById("btn-merc-trade1-food");
-  elemBtnTrade1Tool = document.getElementById("btn-merc-trade1-tool");
-  elemBtnTrade1Wine = document.getElementById("btn-merc-trade1-wine");
-  elemBtnTrade1Cloth = document.getElementById("btn-merc-trade1-cloth");
-
-  elemBtnTrade2Brick = document.getElementById("btn-merc-trade1-brick");
-  elemBtnTrade2Food = document.getElementById("btn-merc-trade1-food");
-  elemBtnTrade2Tool = document.getElementById("btn-merc-trade1-tool");
-  elemBtnTrade2Wine = document.getElementById("btn-merc-trade1-wine");
-  elemBtnTrade2Cloth = document.getElementById("btn-merc-trade1-cloth");
-
   UpdateAll();
 });
 
@@ -487,55 +463,6 @@ function Inc(idItem, idButton) {
   UpdateAll();
 }
 
-function BuyBrick() {
-
-  /* Allow if buy is already in progress OR we haven't got the max trades */
-  if ((fieldValues.mercBuyBrick > 0 || fieldValues.mercTradeCount < 2) && fieldValues.mercRemCash >= 3) {
-    if (!IsGreyBackground(btnBuyMercBrick)) fieldValues.mercBuyBrick += 1; 
-
-  }
-  UpdateAll();
-
-}
-
-function BuyFood() {
-
-  if ((fieldValues.mercBuyFood > 0 || fieldValues.mercTradeCount < 2) && fieldValues.mercRemCash >= 4) {
-    if (!IsGreyBackground(btnBuyMercFood)) fieldValues.mercBuyFood += 1; 
-  }
-  UpdateAll();
-
-}
-
-function BuyTool() {
-
-  if ((fieldValues.mercBuyTool > 0 || fieldValues.mercTradeCount < 2) && fieldValues.mercRemCash >= 5) {
-    if (!IsGreyBackground(btnBuyMercTool)) fieldValues.mercBuyTool += 1; 
-  }
-
-  UpdateAll();
-
-}
-
-function BuyWine() {
-
-  if ((fieldValues.mercBuyWine > 0 || fieldValues.mercTradeCount < 2) && fieldValues.mercRemCash >= 6) {
-  
-    if (!IsGreyBackground(btnBuyMercWine)) fieldValues.mercBuyWine += 1; 
-  }
-  UpdateAll();
-
-}
-
-function BuyCloth() {
-
-  if ((fieldValues.mercBuyCloth > 0 || fieldValues.mercTradeCount < 2) && fieldValues.mercRemCash >= 7) {
-
-    if (!IsGreyBackground(btnBuyMercCloth)) fieldValues.mercBuyCloth += 1; 
-  }
-  UpdateAll();
-
-}
 
 
 function GetTotalResourceValue(
@@ -792,29 +719,6 @@ function GetMercTradeActive(buy, sell) {
   return buy > 0 || sell > 0;
 }
 
-/* ------------------------------------------------------------------------------------ */
-/* MERC 3 */
-/* ------------------------------------------------------------------------------------ */
-function SetMercTradeStatus() {
-
-  let tradeCount = 0;
-  fieldValues.mercTradeActiveBrick = GetMercTradeActive(fieldValues.mercBuyBrick, fieldValues.mercSellBrick);
-  fieldValues.mercTradeActiveFood = GetMercTradeActive(fieldValues.mercBuyFood, fieldValues.mercSellFood);
-  fieldValues.mercTradeActiveTool = GetMercTradeActive(fieldValues.mercBuyTool, fieldValues.mercSellTool);
-  fieldValues.mercTradeActiveWine = GetMercTradeActive(fieldValues.mercBuyWine, fieldValues.mercSellWine);
-  fieldValues.mercTradeActiveCloth = GetMercTradeActive(fieldValues.mercBuyCloth, fieldValues.mercSellCloth);
-
-  if (fieldValues.mercTradeActiveBrick) tradeCount += 1;
-  if (fieldValues.mercTradeActiveFood) tradeCount += 1;
-  if (fieldValues.mercTradeActiveTool) tradeCount += 1;
-  if (fieldValues.mercTradeActiveWine) tradeCount += 1;
-  if (fieldValues.mercTradeActiveCloth) tradeCount += 1;
-
-  fieldValues.mercTradeCount = tradeCount;
-
-}
-
-
 
 function Min3(value1, value2, value3) {
 
@@ -877,11 +781,116 @@ function DisplayDelta(elem, value) {
 
 }
 
-function mercBuy(resourceId) {
+function CanBuyResource(resourceId) {
 
+  // Money is available to buy a single resource
+  return (mercGlobal.mercStorePostTrade[0] >= resourceValue[resourceId]);
+    
+}
+
+function CanSellResource(resourceId) {
+
+  // Post trade resouirce count is > 0
+  return (mercGlobal.mercStorePostTrade[resourceId] > 0);
+    
+}
+
+
+function GetActiveTrade(resourceId) {
+
+  let tradeId;
+  let tradeType = TradeType.NONE;
+
+  for (tradeId = 0; tradeId < mercGlobal.mercTradeCount; tradeId++) {
+    if (ResourceBeingTraded(resourceId, tradeId)) {
+       tradeType = mercGlobal.mercTradeArray[tradeId].trade;
+    }
+
+  }
+
+  return tradeType;
 
 }
 
+function ResourceBeingTraded(resourceId, tradeId) {
+
+  return mercGlobal.mercTradeArray[tradeId].resourceIndex === resourceId;
+}
+
+function GetTradeIdForResource(resourceId_) {
+  // Only call this if you have called GetActiveTrade before!
+
+  let tradeIdReturn = -1;
+  for (tradeId = 0; tradeId < mercGlobal.mercTradeCount; tradeId++) {
+    if (mercGlobal.mercTradeArray[tradeId].resourceId === resourceId_) {
+      tradeIdReturn = tradeId;
+    }
+  }
+
+  return tradeIdReturn;
+}
+
+
+function MercBuy(resourceId) {
+
+  let tradeId = -1;
+
+  // Check if this purchase can be made and 
+  MercCalcPostValues();
+
+  // Check if this is a trade already in progress
+  if (GetActiveTrade(resourceId) === TradeType.BUY) {
+
+     // Buy is already active. Now check if enough cash to buy another
+     if (CanBuyResource(resourceId)) {
+        tradeId = GetTradeIdForResource(resourceId);
+        mercGlobal.mercTradeArray[tradeId].resourceDelta += 1;
+        mercGlobal.mercTradeArray[tradeId].cashDelta -= resourceValue[resourceId];
+     }
+
+  }
+  else {
+    // New trade, but only if tradeCount is < 2
+    if (mercGlobal.mercTradeCount < 2 && CanBuyResource(resourceId)) {
+      mercGlobal.mercTradeCount += 1;
+      let tradeId = mercGlobal.mercTradeCount - 1;
+      mercGlobal.mercTradeArray[tradeId].trade = TradeType.BUY;
+      mercGlobal.mercTradeArray[tradeId].resourceIndex = resourceId;
+      mercGlobal.mercTradeArray[tradeId].resourceDelta = 1;
+      mercGlobal.mercTradeArray[tradeId].cashDelta = -resourceValue[resourceId];
+
+    }
+
+  }
+
+  MercCalcPostValues();
+  UpdateAll();
+
+}
+
+function MercSell(resourceId) {
+
+  let tradeId = -1;
+
+  // Check if this purchase can be made and 
+  MercCalcPostValues();
+
+
+  if (GetActiveTrade(resourceId) === TradeType.SELL) {
+
+     // Sell is already active. Now check if enough resource to sell another
+     if (CanSellResource(resourceId)) {
+        tradeId = GetTradeIdForResource(resourceId);
+        mercGlobal.mercTradeArray[tradeId].resourceDelta -= 1;
+        mercGlobal.mercTradeArray[tradeId].cashDelta += resourceValue[resourceId];
+
+     }
+  }
+
+  MercCalcPostValues();
+  UpdateAll();
+
+}
 
 function ProcessMerc() {
 
@@ -905,105 +914,18 @@ function ProcessMerc() {
     mercGlobal.preMercSellValue[0] += currentCashValue;
 
     // Calculate mercGlobal.mercStorePostTrade
-    let mercDelta = mercGlobal.mercBuyCount[index] - mercGlobal.mercSellCount[index];
+    let mercDelta = mercGlobal.mercBuyCount[index] - mercGlobal.mercSellAct[index];
     mercGlobal.mercStorePostTrade[index] = mercGlobal.mercStorePreTrade[index] + mercDelta; 
 
-    mercGlobal.mercBuyPot[index] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[index]);
+    // mercGlobal.mercBuyAvail[index] = mercGlobal.mercBuyPot[index] - mercGlobal.mercBuyAct[index];
     
     // Calculate post merc cash
-    deltaCashThisResource = mercGlobal.mercSellCount[index] - mercGlobal.mercBuyCount[index];
+    deltaCashThisResource = mercGlobal.mercSellAct[index] - mercGlobal.mercBuyCount[index];
     mercGlobal.mercStorePostTrade[0] += deltaCashThisResource;
 
+    MercCalcPostValues();    
+
   }
-
-
-
-  let brickCost = 3;
-  let foodCost = 4;
-  let toolCost = 5;
-  let wineCost = 6;
-  let clothCost = 7;
-
-  fieldValues.mercBuyAvailBrick = fieldValues.mercRemCash
-  
-  /* mercBuy... and mercSell... updated from buttons */
-  /* Handlers are in BuyBrick etc. */
-  fieldValues.mercDeltaBrick = fieldValues.mercBuyBrick - fieldValues.mercSellBrick;
-  fieldValues.mercDeltaFood = fieldValues.mercBuyFood - fieldValues.mercSellFood;
-  fieldValues.mercDeltaTool = fieldValues.mercBuyTool - fieldValues.mercSellTool;
-  fieldValues.mercDeltaWine = fieldValues.mercBuyWine - fieldValues.mercSellWine;
-  fieldValues.mercDeltaCloth = fieldValues.mercBuyCloth - fieldValues.mercSellCloth;
-
-  fieldValues.mercRemBrick = fieldValues.storeCurrent[1] + fieldValues.mercDeltaBrick; 
-  fieldValues.mercRemFood = fieldValues.storeCurrent[2] + fieldValues.mercDeltaFood;
-  fieldValues.mercRemTool = fieldValues.storeCurrent[3] + fieldValues.mercDeltaTool;
-  fieldValues.mercRemWine = fieldValues.storeCurrent[4] + fieldValues.mercDeltaWine;
-  fieldValues.mercRemCloth = fieldValues.storeCurrent[5] + fieldValues.mercDeltaCloth;
-
-  let mercStartCash;
-  if (mercActive === MercType.MERC3) {
-    mercStartCash = 3;
-  }
-  else
-  {
-    mercStartCash = 5;
-  }
-
-  fieldValues.mercDeltaCash = mercStartCash - 
-    GetTotalResourceValue(
-      fieldValues.mercDeltaBrick, 
-      fieldValues.mercDeltaFood, 
-      fieldValues.mercDeltaTool,
-      fieldValues.mercDeltaWine, 
-      fieldValues.mercDeltaCloth);
-
-  fieldValues.mercRemCash = fieldValues.storeCurrent[0] + fieldValues.mercDeltaCash; 
-
-  fieldValues.mercBuyAvailBrick = Math.floor(fieldValues.mercRemCash/brickCost);
-  fieldValues.mercBuyAvailFood = Math.floor(fieldValues.mercRemCash/foodCost);
-  fieldValues.mercBuyAvailTool = Math.floor(fieldValues.mercRemCash/toolCost);
-  fieldValues.mercBuyAvailWine = Math.floor(fieldValues.mercRemCash/wineCost);
-  fieldValues.mercBuyAvailCloth = Math.floor(fieldValues.mercRemCash/clothCost);
-
-  /* ------------------------------------------------------------------ */
-
-  let buyValue = fieldValues.mercBuyBrick*3 + fieldValues.mercBuyFood*4 + fieldValues.mercBuyTool*5 + fieldValues.mercBuyWine*6 + fieldValues.mercBuyCloth*7;
-  let sellValue = fieldValues.mercSellBrick*3 + fieldValues.mercSellFood*4 + fieldValues.mercSellTool*5 + fieldValues.mercSellWine*6 + fieldValues.mercSellCloth*7;
-
-  fieldValues.mercToBankCash = buyValue;  
-
-  fieldValues.mercFromBankCash = mercStartCash + sellValue;
-
-
-   /* calculate future cash */
-   /*elemNumMercStoreOutCash.textContent = fieldValues.mercToBankCash;
-   elemNumMercStoreInCash.textContent = fieldValues.mercFromBankCash;
-
-   elemNumMercStoreOutBrick.textContent = fieldValues.mercSellBrick;
-   elemNumMercStoreOutFood.textContent = fieldValues.mercSellTool;
-   elemNumMercStoreOutTool.textContent = fieldValues.mercSellFood;
-   elemNumMercStoreOutWine.textContent = fieldValues.mercSellWine;
-   elemNumMercStoreOutCloth.textContent = fieldValues.mercSellCloth;
-   
-   elemNumMercStoreInBrick.textContent = fieldValues.mercBuyBrick;
-   elemNumMercStoreInFood.textContent = fieldValues.mercBuyFood;
-   elemNumMercStoreInTool.textContent = fieldValues.mercBuyTool;
-   elemNumMercStoreInWine.textContent = fieldValues.mercBuyWine;
-   elemNumMercStoreInCloth.textContent = fieldValues.mercBuyCloth;
-      
-   DisplayDelta(elemNumMercDeltaBrick,fieldValues.mercRemBrick );
-   DisplayDelta(elemNumMercDeltaFood, fieldValues.mercRemFood);
-   DisplayDelta(elemNumMercDeltaTool, fieldValues.mercRemTool);
-   DisplayDelta(elemNumMercDeltaWine, fieldValues.mercRemWine);
-   DisplayDelta(elemNumMercDeltaCloth, fieldValues.mercRemCloth);
-   
-   elemNumMercRemaining2Cash.textContent = fieldValues.mercRemCash;
-   elemNumMercRemaining2Brick.textContent = fieldValues.mercRemBrick;
-   elemNumMercRemaining2Food.textContent = fieldValues.mercRemFood;
-   elemNumMercRemaining2Tool.textContent = fieldValues.mercRemTool;
-   elemNumMercRemaining2Wine.textContent = fieldValues.mercRemWine;
-   elemNumMercRemaining2Cloth.textContent = fieldValues.mercRemCloth;
-   */
   
 }
 
@@ -1307,8 +1229,6 @@ function UpdateAll() {
 
   ProcessMerc();
 
-  SetMercTradeStatus();
-
   UpdateGUIArch(); 
   UpdateGUIMerc();
   
@@ -1392,42 +1312,67 @@ function BuyIsValid(currentCash, required, resourceValue) {
 /* ------------------------------------------------------------------------------- */
 function UpdateGUIMerc() {
 
-    elemBtnTrade1Mode.textContent = mercTrade1Mode;
-    elemBtnTrade2Mode.textContent = mercTrade2Mode;
-
     elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 
+    let resourceLookup=['cash', 'brick', 'food', 'tool', 'wine', 'cloth']
+    let resourceName = ''
+
     for (let resourceIndex = 0; resourceIndex <= 5; resourceIndex++) {
+
+      resourceName = resourceLookup[resourceIndex];
+
+      //--------------------------------------------------------------------
+      // Pre
+      //--------------------------------------------------------------------
       if (mercGlobal.mercStorePreTrade[resourceIndex] === 0) {
         elemNumPreMercStore[resourceIndex].textContent = ''; 
+        elemNumPreMercStore[resourceIndex].classList.remove(resourceName);
+
       }
       else {
         elemNumPreMercStore[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex];
+        elemNumPreMercStore[resourceIndex].classList.add(resourceName);
       }
 
-      if (mercGlobal.preMercSellValue[resourceIndex] === 0) {
-        elemNumPreMercSellValue[resourceIndex].textContent = ''; 
-      }
-      else {
-        elemNumPreMercSellValue[resourceIndex].textContent = mercGlobal.preMercSellValue[resourceIndex];
-      }
-
-      // BUY POTENTIAL
+      //--------------------------------------------------------------------
+      // Buy??
+      //--------------------------------------------------------------------
       if (resourceIndex != 0) {
+        
         if (mercGlobal.mercBuyPot[resourceIndex] === 0) {
           elemNumMercBuyPot[resourceIndex].textContent = '';
+          elemNumMercBuyPot[resourceIndex].classList.remove(resourceName);
+          
         }
         else {
           elemNumMercBuyPot[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
+          elemNumMercBuyPot[resourceIndex].classList.add(resourceName);
         }
 
       }
 
+      //--------------------------------------------------------------------
+      // £??
+      //--------------------------------------------------------------------
+      if (mercGlobal.preMercSellValue[resourceIndex] === 0) {
+        elemNumPreMercSellValue[resourceIndex].textContent = ''; 
+        elemNumPreMercSellValue[resourceIndex].classList.remove(resourceName);
+      }
+      else {
+        elemNumPreMercSellValue[resourceIndex].textContent = mercGlobal.preMercSellValue[resourceIndex];
+        elemNumPreMercSellValue[resourceIndex].classList.add(resourceName);
+      }
+
+      //--------------------------------------------------------------------
+      // Post
+      //--------------------------------------------------------------------
       if (mercGlobal.mercStorePostTrade[resourceIndex] === 0) {
         elemNumMercStorePostTrade[resourceIndex].textContent = ''; 
+        elemNumMercStorePostTrade[resourceIndex].classList.remove(resourceName);
       }
       else {
         elemNumMercStorePostTrade[resourceIndex].textContent = mercGlobal.mercStorePostTrade[resourceIndex];
+        elemNumMercStorePostTrade[resourceIndex].classList.add(resourceName);
       }
 
       // Merc Buy button colouring
@@ -1460,7 +1405,7 @@ function UpdateGUIMerc() {
           elemBtnMercSell[resourceIndex].classList.remove("sell-not-available");
           elemBtnMercSell[resourceIndex].classList.add("sell-available");
           elemBtnMercSell[resourceIndex].textContent = 
-            mercGlobal.mercSellCount[resourceIndex] + " / " + mercGlobal.mercStorePostTrade[resourceIndex];
+            mercGlobal.mercSellAct[resourceIndex] + " / " + mercGlobal.mercStorePostTrade[resourceIndex];
         }
       }
 
@@ -1485,8 +1430,37 @@ function onMercTrade(idItem_) {
   }
 }
 
-function ProcessTrade1Buy() {
 
-  /* Calculate total possible */    
+function MercCalcPostValues()
+{
+  let tradeIndex;
+  // mercGlobal.mercStorePreTrade
+  let tradeResourceIndex;
+  let resourceDelta;
+  let cashDeltaThisTrade;
+  let cashPreTrade = mercGlobal.mercStorePreTrade[0];
+  let cashTotalDelta = 0;
+
+  // Start with pre trade cash
+
+  for (tradeIndex = 0; tradeIndex < mercGlobal.mercTradeCount; tradeIndex++) {
+
+    tradeResourceIndex = mercGlobal.mercTradeArray[tradeIndex].resourceIndex;
+    resourceDelta = mercGlobal.mercTradeArray[tradeIndex].resourceDelta; 
+    cashDeltaThisTrade = mercGlobal.mercTradeArray[tradeIndex].cashDelta; 
+
+    mercGlobal.mercStorePostTrade[tradeResourceIndex] = 
+      mercGlobal.mercStorePreTrade[tradeResourceIndex] +  resourceDelta;
+
+    cashTotalDelta += cashDeltaThisTrade;  
+
+  }
+
+  mercGlobal.mercStorePostTrade[0] = cashPreTrade + cashTotalDelta;
+
+  for (tradeResourceIndex = 1; tradeResourceIndex <=5; tradeResourceIndex++) {
+    mercGlobal.mercBuyPot[tradeResourceIndex] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[tradeResourceIndex]);
+
+  }
 
 }

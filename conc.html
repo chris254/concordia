@@ -14,7 +14,6 @@
 
 
     <div class="grid-container" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-
       <!-- ========================================================================== -->
       <!-- Top Row: -->
       <div class = "card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
@@ -49,7 +48,7 @@
       <div class="grid-item cloth-filled">
         <img src="Cloth.png">
       </div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 3: RESET button and Current Store values -->
       <div class="grid-item-no-border"></div>
@@ -59,7 +58,7 @@
       <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 4: Inc Buttons for current store -->
       <div class="grid-item-no-border"></div>
@@ -69,7 +68,7 @@
       <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-tool')">+</div>
       <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-wine')">+</div>
       <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-cloth')">+</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
@@ -79,7 +78,7 @@
       <div class="grid-item button-dec" id="btn-dec-storecurrent-tool" onclick="Dec('num-storecurrent-tool')">-</div>
       <div class="grid-item button-dec" id="btn-dec-storecurrent-wine" onclick="Dec('num-storecurrent-wine')">-</div>
       <div class="grid-item button-dec" id="btn-dec-storecurrent-cloth" onclick="Dec('num-storecurrent-cloth')">-</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Cost</div>
@@ -89,7 +88,7 @@
       <div class="grid-item tool" id="num-arch-store-cost-tool">0</div>
       <div class="grid-item wine" id="num-arch-store-cost-wine">0</div>
       <div class="grid-item cloth" id="num-arch-store-cost-cloth">0</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 7: Arch Store Rem -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Rem</div>
@@ -99,7 +98,7 @@
       <div class="grid-item tool" id="num-arch-remaining-tool" style="font-weight: bolder; font-size: 16pt;"">0</div>
       <div class="grid-item wine" id="num-arch-remaining-wine" style="font-weight: bolder; font-size: 16pt;">0</div>
       <div class="grid-item cloth" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 16pt;">0</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 8: Padding between Remaining and Build -->
       <div class="grid-item-no-border"></div>
@@ -109,11 +108,11 @@
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">3/B/T</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">4/B/W</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">5/B/C</div>
-
+      
       <!-- ******************************************************************************** -->
       <!-- **************************************** ARCHITECT ***************************** -->
       <!-- ******************************************************************************** -->
-
+      
       <!-- ========================================================================== -->
       <!-- Row 9: Arch numbers -->
       <div class = "sub-title">BUILD</div>
@@ -123,7 +122,7 @@
       <div class="grid-item tool" id="num-arch-toolhouses-actual" style="font-weight: bolder;">0</div>
       <div class="grid-item wine" id="num-arch-winehouses-actual" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-arch-clothhouses-actual" style="font-weight: bolder;">0</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 10: Arch potentials -->
       <div class="grid-item-no-border"></div>
@@ -133,7 +132,7 @@
       <div class="grid-item tool" id="num-arch-toolhouses-potential" style="font-weight: lighter; color: black; font-size: 10pt;">0</div>
       <div class="grid-item wine" id="num-arch-winehouses-potential" style="font-weight: lighter; color: black; font-size: 10pt;">0</div>
       <div class="grid-item cloth" id="num-arch-clothhouses-potential" style="font-weight: lighter; color: black; font-size: 10pt;">0</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 11: Arch Build Inc -->
       <div class="grid-item-no-border"></div>
@@ -143,7 +142,7 @@
       <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-toolhouses-actual','btn-inc-arch-tool')">+</div>
       <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-winehouses-actual','btn-inc-arch-wine')">+</div>
       <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-clothhouses-actual','btn-inc-arch-cloth')">+</div>
-
+      
       <!-- ========================================================================== -->
       <!-- Row 12: Arch Build Dec -->
       <div class="grid-item-no-border"></div>
@@ -163,18 +162,18 @@
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">5</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">6</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">7</div>
-
+    
       
       <!-- ========================================================================== -->
       <!-- Row 14: Cost of resource (for Mercator) -->
       <div class = "card-title" onclick="SetCardMerc()" id="btn-merc">MERC3</div>
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Trades</div>
+      <div class="grid-item" id="num-trades"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-
+    
       <div class = "sub-title">STORE</div>
       <div class="grid-item cash-filled">£</div>
       <div class="grid-item brick-filled">
@@ -188,10 +187,10 @@
       <div class="grid-item cloth-filled">
         <img src="Cloth.png">
       </div>
-
-
+    
+    
       <!-- ******************************************** MERC *************************************************** -->
-
+    
       <!-- Pre-Merc values -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Curr</div>
       <div class="grid-item cash" id="num-store-merc-cash" style="font-weight: bolder;">0</div>
@@ -201,6 +200,14 @@
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
 
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Pre</div>
+      <div class="grid-item-no-border cash" id="num-pre-merc-cash" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border brick" id="num-pre-merc-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border food" id="num-pre-merc-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border tool" id="num-pre-merc-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border wine" id="num-pre-merc-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cloth" id="num-pre-merc-cloth" style="font-weight: bolder;">0</div>
+    
       <!-- ========================================================================== -->
       <!-- Row 4: Inc Buttons for merc store -->
       <div class="grid-item-no-border"></div>
@@ -210,7 +217,7 @@
       <div class="grid-item button-inc" onclick="IncMercStore(3)">+</div>
       <div class="grid-item button-inc" onclick="IncMercStore(4)">+</div>
       <div class="grid-item button-inc" onclick="IncMercStore(5)">+</div>
-
+    
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
@@ -220,15 +227,7 @@
       <div class="grid-item button-dec" id="btn-dec-store-merc-tool" onclick="DecMercStore(3)">-</div>
       <div class="grid-item button-dec" id="btn-dec-store-merc-wine" onclick="DecMercStore(4)">-</div>
       <div class="grid-item button-dec" id="btn-dec-store-merc-cloth" onclick="DecMercStore(5)">-</div>
-
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Pre</div>
-      <div class="grid-item-no-border cash" id="num-pre-merc-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border brick" id="num-pre-merc-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border food" id="num-pre-merc-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border tool" id="num-pre-merc-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border wine" id="num-pre-merc-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border cloth" id="num-pre-merc-cloth" style="font-weight: bolder;">0</div>
-
+    
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
       <div class="grid-item-no-border cash" id="num-pre-merc-cashvalue-cash" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border brick" id="num-pre-merc-cashvalue-brick" style="font-weight: bolder;">0</div>
@@ -236,15 +235,48 @@
       <div class="grid-item-no-border tool" id="num-pre-merc-cashvalue-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border wine" id="num-pre-merc-cashvalue-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border cloth" id="num-pre-merc-cashvalue-cloth" style="font-weight: bolder;">0</div>
+    
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">BUY</button>
+      </div> 
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Pot</div>
+      <div class="grid-item-no-border brick" id="num-merc-buypot-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border food" id="num-merc-buypot-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border tool" id="num-merc-buypot-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border wine" id="num-merc-buypot-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cloth" id="num-merc-buypot-cloth" style="font-weight: bolder;">0</div>
 
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Buy??</div>
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;"></div>
-      <div class="grid-item-no-border brick" id="num-pre-merc-buypot-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border food" id="num-pre-merc-buypot-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border tool" id="num-pre-merc-buypot-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border wine" id="num-pre-merc-buypot-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border cloth" id="num-pre-merc-buypot-cloth" style="font-weight: bolder;">0</div>
-
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">BUY</button>
+      </div> 
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Act</div>
+      <div class="grid-item-no-border brick" id="num-merc-buyact-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border food" id="num-merc-buyact-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border tool" id="num-merc-buyact-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border wine" id="num-merc-buyact-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cloth" id="num-merc-buyact-cloth" style="font-weight: bolder;">0</div>
+    
+      <!-- ========================================================================== -->
+      <!-- Row 11: Arch Build Inc -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item button-inc" id="btn-inc-merc-brick" onclick="BuyResource(1)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-merc-food" onclick="BuyResource(2)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-merc-tool" onclick="BuyResource(3)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-merc-wine" onclick="BuyResource(4)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-merc-cloth" onclick="BuyResource(5)">+</div>
+      
+      <!-- ========================================================================== -->
+      <!-- Row 11: Arch Build Inc -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item button-dec" id="btn-dec-merc-brick" onclick="SellResource(1)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-merc-food" onclick="SellResource(2)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-merc-tool" onclick="SellResource(3)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-merc-wine" onclick="SellResource(4)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-merc-cloth" onclick="SellResource(5)">-</div>
+      
+      
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Post</div>
       <div class="grid-item-no-border cash" id="num-post-merc-cash" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border brick" id="num-post-merc-brick" style="font-weight: bolder;">0</div>
@@ -252,20 +284,20 @@
       <div class="grid-item-no-border tool" id="num-post-merc-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border wine" id="num-post-merc-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border cloth" id="num-post-merc-cloth" style="font-weight: bolder;">0</div>
-
-
+    
+    
       <!-- ========================================================================== -->
       <!-- Row x: Merc Buy -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">BUY</button>
       </div> 
       <div class="grid-item-no-border" id="btn-merc-buy-cash"></div>
-      <div class="grid-item button-inc" id="btn-merc-buy-brick" onclick="MercBuy(1)">BUY</div>
-      <div class="grid-item button-inc" id="btn-merc-buy-food" onclick="MercBuy(2)">BUY</div>
-      <div class="grid-item button-inc" id="btn-merc-buy-tool" onclick="MercBuy(3)">BUY</div>
-      <div class="grid-item button-inc" id="btn-merc-buy-wine" onclick="MercBuy(4)">BUY</div>
-      <div class="grid-item button-inc" id="btn-merc-buy-cloth" onclick="MercBuy(5)">BUY</div>
-
+      <div class="grid-item button-inc" id="btn-merc-buy-brick" onclick="MercBuy(1,1)">BUY</div>
+      <div class="grid-item button-inc" id="btn-merc-buy-food" onclick="MercBuy(2,1)">BUY</div>
+      <div class="grid-item button-inc" id="btn-merc-buy-tool" onclick="MercBuy(3,1)">BUY</div>
+      <div class="grid-item button-inc" id="btn-merc-buy-wine" onclick="MercBuy(4,1)">BUY</div>
+      <div class="grid-item button-inc" id="btn-merc-buy-cloth" onclick="MercBuy(5,1)">BUY</div>
+    
       <!-- ========================================================================== -->
       <!-- Row x: Merc Sell -->
       <div class="grid-item-no-border">
@@ -277,8 +309,8 @@
       <div class="grid-item button-inc" id="btn-merc-sell-tool" onclick="MercSell(3)">SELL</div>
       <div class="grid-item button-inc" id="btn-merc-sell-wine" onclick="MercSell(4)">SELL</div>
       <div class="grid-item button-inc" id="btn-merc-sell-cloth" onclick="MercSell(5)">SELL</div>
-
-
+    
+    
       <!-- After-Merc1 values -->
       <div class="grid-item-no-border">POST 1</div>
       <div class="grid-item cash" id="num-after-merc1-cash" style="font-weight: bolder;">0</div>
@@ -287,9 +319,9 @@
       <div class="grid-item tool" id="num-after-merc1-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item wine" id="num-after-merc1-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-after-merc1-cloth" style="font-weight: bolder;">0</div>
-
-
-
+    
+    
+    
       <!-- After-Merc1 values -->
       <div class="grid-item-no-border">FINAL</div>
       <div class="grid-item cash" id="num-after-merc1-cash" style="font-weight: bolder;">0</div>
@@ -298,8 +330,8 @@
       <div class="grid-item tool" id="num-after-merc1-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item wine" id="num-after-merc1-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-after-merc1-cloth" style="font-weight: bolder;">0</div>
-
-
+    
+    
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected" onclick="ResetMerc()" style="background-color: orange;">RESET</button>
       </div> 
@@ -309,7 +341,7 @@
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-
+    
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
@@ -317,7 +349,7 @@
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-
+    
       <!-- Row 6: Store Delta -->
       <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Current</div>
       <div class="grid-item" id="num-storecurrent-merc-cash">0</div>
@@ -326,7 +358,7 @@
       <div class="grid-item" id="num-storecurrent-merc-tool">0</div>
       <div class="grid-item" id="num-storecurrent-merc-wine">0</div>
       <div class="grid-item" id="num-storecurrent-merc-cloth">0</div>
-
+    
       <!-- Row 6: Store Delta -->
       <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Store Out</div>
       <div class="grid-item" id="num-merc-store-out-cash">0</div>
@@ -335,7 +367,7 @@
       <div class="grid-item" id="num-merc-store-out-tool">0</div>
       <div class="grid-item" id="num-merc-store-out-wine">0</div>
       <div class="grid-item" id="num-merc-store-out-cloth">0</div>
-
+    
       <!-- Row 7: Remaining -->
       <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Store In</div>
       <div class="grid-item" id="num-merc-store-in-cash">0</div>
@@ -344,7 +376,7 @@
       <div class="grid-item" id="num-merc-store-in-tool">0</div>
       <div class="grid-item" id="num-merc-store-in-wine">0</div>
       <div class="grid-item" id="num-merc-store-in-cloth">0</div>
-
+    
       <!-- Row 7: Remaining -->
       <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Rem</div>
       <div class="grid-item" id="num-merc-remaining2-cash" style="font-weight: bolder;">0</div>
@@ -353,8 +385,7 @@
       <div class="grid-item" id="num-merc-remaining2-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item" id="num-merc-remaining2-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item" id="num-merc-remaining2-cloth" style="font-weight: bolder;">0</div>
-
-
+    
     </div>
 
     <script src="globals.js"></script>

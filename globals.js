@@ -139,12 +139,11 @@ let mercGlobal = {
 
   mercBuyPot:[0,0,0,0,0,0],
   mercBuyAvail:[0,0,0,0,0,0],
-  mercBuyAct:[0,0,0,0,0,0],
-
-  mercTradeArray:[{trade : TradeType.NONE, resourceIndex: 0, resourceDelta: 0, cashDelta: 0},
-              {trade: TradeType.NONE, resourceIndex: 0, resourceDelta: 0, cashDelta: 0}],
 
   mercTradeCount:0,
+  mercDeltaResource:[0,0,0,0,0,0],
+
+  lastTimeMercStore:[0,0,0,0,0,0],
 
 
 

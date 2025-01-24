@@ -138,7 +138,9 @@ let mercGlobal = {
   mercStorePostTrade:[0,0,0,0,0,0],
 
   mercBuyPot:[0,0,0,0,0,0],
-  mercBuyAvail:[0,0,0,0,0,0],
+  mercBuyAct:[0,0,0,0,0,0],
+  mercSellPot:[0,0,0,0,0,0],
+  mercSellAct:[0,0,0,0,0,0],
 
   mercTradeCount:0,
   mercDeltaResource:[0,0,0,0,0,0],

@@ -18,13 +18,6 @@ let elemNumArchRemainingTool;
 let elemNumArchRemainingWine;
 let elemNumArchRemainingCloth;
 
-let elemNumStorecurrentMercCash;
-let elemNumStorecurrentMercBrick;
-let elemNumStorecurrentMercFood;
-let elemNumStorecurrentMercTool;
-let elemNumStorecurrentMercWine;
-let elemNumStorecurrentMercCloth;
-
 let elemNumMercStoreOutCash;
 let elemNumMercStoreOutBrick;
 let elemNumMercStoreOutFood;
@@ -144,16 +137,6 @@ const elemIdsPreMercSellValue =
 
 const elemNumPreMercSellValue = elemIdsPreMercSellValue.map(id => document.getElementById(id));
 
-const elemIdsMercBuyPot = 
-  ['num-merc-buypot-cash',
-   'num-merc-buypot-brick',
-   'num-merc-buypot-food',
-   'num-merc-buypot-tool',
-   'num-merc-buypot-wine',
-   'num-merc-buypot-cloth'];
-
-const elemNumMercBuyPot = elemIdsMercBuyPot.map(id => document.getElementById(id));
-
 const elemIdsMercBuyAct = 
   ['num-merc-buyact-cash',
    'num-merc-buyact-brick',
@@ -183,7 +166,6 @@ const elemIdsStoreCurrent =
 
 const elemNumStoreCurrent = elemIdsStoreCurrent.map(id => document.getElementById(id));
 
-
 let elemMercStore = [0,0,0,0,0];
 
 let elemNumTrades;
@@ -200,13 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
   elemBtnResetStoreCurrent = document.getElementById("btn-reset-storecurrent");
   elemBtnResetArchitect = document.getElementById("btn-reset-architect");
   elemBtnResetMerc3 = document.getElementById("btn-reset-merc3");
-
-  elemNumStorecurrentMercCash = document.getElementById("num-storecurrent-merc-cash");
-  elemNumStorecurrentMercBrick = document.getElementById("num-storecurrent-merc-brick");
-  elemNumStorecurrentMercFood = document.getElementById("num-storecurrent-merc-food");
-  elemNumStorecurrentMercTool = document.getElementById("num-storecurrent-merc-tool");
-  elemNumStorecurrentMercWine = document.getElementById("num-storecurrent-merc-wine");
-  elemNumStorecurrentMercCloth = document.getElementById("num-storecurrent-merc-cloth");
 
   elemNumArchStoreCostCash = document.getElementById("num-arch-store-cost-cash");
   elemNumArchStoreCostBrick = document.getElementById("num-arch-store-cost-brick");
@@ -332,42 +307,42 @@ function Dec(idNum) {
   UpdateAll();
 }
 
-function IncMercStore(resourceIndex_) {
+function IncMercStore(resourceId_) {
 
-  if (resourceIndex_ === 0) {
-    mercGlobal.mercStore[resourceIndex_] += 1;
-    mercGlobal.mercStorePreTrade[resourceIndex_] += 1;
-    mercGlobal.mercStorePostTrade[resourceIndex_] += 1;
+  if (resourceId_ === 0) {
+    mercGlobal.mercStore[resourceId_] += 1;
+    mercGlobal.mercStorePreTrade[resourceId_] += 1;
+    mercGlobal.mercStorePostTrade[resourceId_] += 1;
 
   }
   else {
-    mercGlobal.mercStorePreTrade[resourceIndex_] +=1;
-    mercGlobal.mercStorePostTrade[resourceIndex_] += 1;
+    mercGlobal.mercStorePreTrade[resourceId_] +=1;
+    mercGlobal.mercStorePostTrade[resourceId_] += 1;
   }
 
   UpdateAll();
 }
 
 
-function DecMercStore(resourceIndex_) {
-  if (resourceIndex_ === 0) {
-    if (mercGlobal.mercStorePostTrade[0] > 0 && mercGlobal.mercStore[resourceIndex_] > 0) {
+function DecMercStore(resourceId_) {
+  if (resourceId_ === 0) {
+    if (mercGlobal.mercStorePostTrade[0] > 0 && mercGlobal.mercStore[resourceId_] > 0) {
 
-      mercGlobal.mercStore[resourceIndex_] -= 1;
-      mercGlobal.mercStorePreTrade[resourceIndex_] -= 1;
-      mercGlobal.mercStorePostTrade[resourceIndex_] -= 1;
+      mercGlobal.mercStore[resourceId_] -= 1;
+      mercGlobal.mercStorePreTrade[resourceId_] -= 1;
+      mercGlobal.mercStorePostTrade[resourceId_] -= 1;
 
     }
   }
   else {
     // Normal resource
-    if (mercGlobal.mercStorePreTrade[resourceIndex_] > 0) {
+    if (mercGlobal.mercStorePreTrade[resourceId_] > 0) {
 
-      mercGlobal.mercStorePreTrade[resourceIndex_] -= 1;
+      mercGlobal.mercStorePreTrade[resourceId_] -= 1;
 
-      if (mercGlobal.mercStorePostTrade[resourceIndex_] > 0 ) mercGlobal.mercStorePostTrade[resourceIndex_] -= 1;
+      if (mercGlobal.mercStorePostTrade[resourceId_] > 0 ) mercGlobal.mercStorePostTrade[resourceId_] -= 1;
 
-      //mercGlobal.mercStorePreTrade[resourceIndex_] -= 1;
+      //mercGlobal.mercStorePreTrade[resourceId_] -= 1;
     }
   }
 
@@ -805,12 +780,22 @@ function CanSellResource(resourceId) {
     
 }
 
+function CalcTradeCount() {
+  let tradeCountLocal = 0
+  for (let resourceId = 1; resourceId <= 5; resourceId++) {
+    if (mercGlobal.mercStorePreTrade[resourceId] != mercGlobal.mercStorePostTrade[resourceId]) 
+      tradeCountLocal++;
+
+    mercGlobal.mercTradeCount = tradeCountLocal;  
+  }
+
+}
 function BuyResource(resourceId) {
 
   // Get all merc data up to date
   ProcessMerc();
 
-  if (TradeActive(resourceId)) {
+  if (BuyActive(resourceId)) {
 
     // Buy is already active for this resource.
     // Can another purchase be made?
@@ -818,22 +803,18 @@ function BuyResource(resourceId) {
       mercGlobal.mercStorePostTrade[resourceId] += 1;
       mercGlobal.mercStorePostTrade[0] -= resourceValue[resourceId];
 
-      // If resource delta now zero then remove a trade
-      if (MercTradeDelta(resourceId) === 0) {
-        mercGlobal.mercTradeCount -= 1;
-      }
     }
   }
   else {
     // Not a current active trade
     if (mercGlobal.mercTradeCount < 2 && CanBuyResource(resourceId)) {
-      mercGlobal.mercTradeCount += 1;
 
       mercGlobal.mercStorePostTrade[resourceId] += 1;
       mercGlobal.mercStorePostTrade[0] -= resourceValue[resourceId];
     }
   }
 
+  
   UpdateAll();
 }
 
@@ -842,14 +823,23 @@ function SellResource(resourceId) {
   // Get all merc data up to date
   ProcessMerc();
 
-  if (CanSellResource(resourceId)) {
-    mercGlobal.mercStorePostTrade[resourceId] -= 1;
-    mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
+  if (SellActive(resourceId)) {
 
-    // If resource delta now zero then remove a trade
-    if (MercTradeDelta(resourceId) === 0) {
-      mercGlobal.mercTradeCount -= 1;
+    // Sellis already active
+
+    if (CanSellResource(resourceId)) {
+      mercGlobal.mercStorePostTrade[resourceId] -= 1;
+      mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
     }
+  }
+  else {
+    // Not a current active trade
+    if (mercGlobal.mercTradeCount < 2 && CanSellResource(resourceId)) {
+
+      mercGlobal.mercStorePostTrade[resourceId] -= 1;
+      mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
+    }
+
 
   }
 
@@ -863,6 +853,8 @@ function TradeActive(resourceId) {
 let firstPass = true;
 
 function ProcessMerc() {
+
+  CalcTradeCount();
 
   let mercCardChangedThisPass = mercActive != lastMercActive;
 
@@ -900,27 +892,43 @@ function ProcessMerc() {
 
   }
 
+
+
   mercGlobal.preMercSellValue[0] = totalCashValue;
 
   // -------------------------------------------------------------------
   // Calculate trade data
   // -------------------------------------------------------------------
   // mercGlobal.mercStorePreTrade
-  let tradeResourceIndex;
+  let resourceId;
   let resourceDelta;
   let cashDeltaThisTrade;
   let cashPreTrade = mercGlobal.mercStorePreTrade[0];
   let cashTotalDelta = 0;
 
-  for (tradeResourceIndex = 1; tradeResourceIndex <=5; tradeResourceIndex++) {
-    mercGlobal.mercBuyPot[tradeResourceIndex] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[tradeResourceIndex]);
+  for (resourceId = 1; resourceId <=5; resourceId++) {
+    // Buy numbers
+    mercGlobal.mercBuyPot[resourceId] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[resourceId]);
+    mercGlobal.mercBuyAct[resourceId] = Math.max(mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId],0);
+
+    // Sell numbers  
+    mercGlobal.mercSellPot[resourceId] = mercGlobal.mercStorePostTrade[resourceId];
+    mercGlobal.mercSellAct[resourceId] = Math.max(mercGlobal.mercStorePreTrade[resourceId] - mercGlobal.mercStorePostTrade[resourceId],0);
 
   }
+
+  for (resourceId = 1; resourceId <=5; resourceId++) {
+
+  }
+
 
   lastMercActive = mercActive;
-  for (let resourceIndex = 0; resourceIndex <=5; resourceIndex++) {
-    mercGlobal.lastTimeMercStore = mercGlobal.mercStorePreTrade[resourceIndex];
+  for (let resourceId = 0; resourceId <=5; resourceId++) {
+    mercGlobal.lastTimeMercStore = mercGlobal.mercStorePreTrade[resourceId];
   }
+
+  CalcTradeCount();
+
 }
 
 
@@ -1290,152 +1298,172 @@ function Trade2ModeIsSell() {
     return mercTrade2Mode === "SELL";
 }
 
-/* ------------------------------------------------------------------------------- */
-function Trade1Toggle() {
 
-  if (mercTrade1Mode  === "BUY") mercTrade1Mode = "SELL"; 
-  else if (mercTrade1Mode  === "SELL") mercTrade1Mode = "BUY";  
-
-  UpdateAll();
+function BuyActive(resourceId) {
+  return mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
 }
 
-/* ------------------------------------------------------------------------------- */
-function Trade2Toggle() {
-
-  if (mercTrade2Mode  === "BUY") mercTrade2Mode = "SELL"; 
-  else if (mercTrade2Mode  === "SELL") mercTrade2Mode = "BUY"; 
-  
-  UpdateAll();
-}
-
-function BuyIsValid(currentCash, required, resourceValue) {
-
-
+function SellActive(resourceId) {
+  return mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
 }
 
 /* ------------------------------------------------------------------------------- */
 function UpdateGUIMerc() {
+
+    let styleTradeAvailable = ['', 'trade-avail-brick', 'trade-avail-food', 'trade-avail-tool', 'trade-avail-wine',  'trade-avail-cloth'];
+    let styleTradeFull = ['', 'trade-full-brick', 'trade-full-food', 'trade-full-tool', 'trade-full-wine',  'trade-full-cloth'];
+    let styleMinus = ['', 'minus-brick', 'minus-food', 'minus-tool', 'minus-wine',  'minus-cloth'];
 
     elemNumTrades.textContent = mercGlobal.mercTradeCount;
 
     elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 
     let resourceLookup=['cash', 'brick', 'food', 'tool', 'wine', 'cloth']
-    let resourceName = ''
+    let styleResourceName = ''
 
-    for (let resourceIndex = 0; resourceIndex <= 5; resourceIndex++) {
+    for (let resourceId = 0; resourceId <= 5; resourceId++) {
 
-      resourceName = resourceLookup[resourceIndex];
+      styleResourceName = resourceLookup[resourceId];
 
       //--------------------------------------------------------------------
       // Pre
       //--------------------------------------------------------------------
-      if (mercGlobal.mercStorePreTrade[resourceIndex] === 0) {
-        elemNumPreMercStore[resourceIndex].textContent = ''; 
-        elemNumPreMercStore[resourceIndex].classList.remove(resourceName);
+      if (mercGlobal.mercStorePreTrade[resourceId] === 0) {
+        elemNumPreMercStore[resourceId].textContent = ''; 
+        elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
 
       }
       else {
-        elemNumPreMercStore[resourceIndex].textContent = mercGlobal.mercStorePreTrade[resourceIndex];
-        elemNumPreMercStore[resourceIndex].classList.add(resourceName);
-      }
-
-      //--------------------------------------------------------------------
-      // Buy??
-      //--------------------------------------------------------------------
-      if (resourceIndex != 0) {
-        
-        if (mercGlobal.mercBuyPot[resourceIndex] === 0) {
-          elemNumMercBuyPot[resourceIndex].textContent = '';
-          elemNumMercBuyPot[resourceIndex].classList.remove(resourceName);
-          
-        }
-        else {
-          elemNumMercBuyPot[resourceIndex].textContent = mercGlobal.mercBuyPot[resourceIndex];
-          elemNumMercBuyPot[resourceIndex].classList.add(resourceName);
-        }
-
+        elemNumPreMercStore[resourceId].textContent = mercGlobal.mercStorePreTrade[resourceId];
+        elemNumPreMercStore[resourceId].classList.add(styleResourceName);
       }
 
       //--------------------------------------------------------------------
       // £??
       //--------------------------------------------------------------------
-      if (mercGlobal.preMercSellValue[resourceIndex] === 0) {
-        elemNumPreMercSellValue[resourceIndex].textContent = ''; 
-        elemNumPreMercSellValue[resourceIndex].classList.remove(resourceName);
+      if (mercGlobal.preMercSellValue[resourceId] === 0) {
+        elemNumPreMercSellValue[resourceId].textContent = ''; 
+        elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
       }
       else {
-        elemNumPreMercSellValue[resourceIndex].textContent = mercGlobal.preMercSellValue[resourceIndex];
-        elemNumPreMercSellValue[resourceIndex].classList.add(resourceName);
+        elemNumPreMercSellValue[resourceId].textContent = mercGlobal.preMercSellValue[resourceId];
+        elemNumPreMercSellValue[resourceId].classList.add(styleResourceName);
       }
 
       //--------------------------------------------------------------------
       // Buy Actual
       //--------------------------------------------------------------------
-      if (resourceIndex != 0) {
-        if (MercTradeDelta(resourceIndex) <= 0) {
-          elemNumMercBuyAct[resourceIndex].textContent = '';
-          elemNumMercBuyAct[resourceIndex].classList.remove(resourceName);
+      if (resourceId != 0) {
+        if (MercTradeDelta(resourceId) <= 0) {
+          elemNumMercBuyAct[resourceId].textContent = '';
+          elemNumMercBuyAct[resourceId].classList.remove(styleResourceName);
         } 
         else {
-          elemNumMercBuyAct[resourceIndex].textContent = MercTradeDelta(resourceIndex);
-          elemNumMercBuyAct[resourceIndex].classList.add(resourceName);
+          elemNumMercBuyAct[resourceId].textContent = MercTradeDelta(resourceId);
+          elemNumMercBuyAct[resourceId].classList.add(styleResourceName);
         }
 
 
 
       }
+
       //--------------------------------------------------------------------
       // Post
       //--------------------------------------------------------------------
-      if (resourceIndex === 0) {
-          elemNumMercStorePostTrade[resourceIndex].classList.add(resourceName);
-          elemNumMercStorePostTrade[resourceIndex].textContent = mercGlobal.mercStorePostTrade[resourceIndex];
+      if (resourceId === 0) {
+          elemNumMercStorePostTrade[resourceId].classList.add(styleResourceName);
+          elemNumMercStorePostTrade[resourceId].textContent = mercGlobal.mercStorePostTrade[resourceId];
       }
       else {
-        if (mercGlobal.mercStorePostTrade[resourceIndex] === 0) {
-          elemNumMercStorePostTrade[resourceIndex].textContent = ''; 
-          elemNumMercStorePostTrade[resourceIndex].classList.remove(resourceName);
+        if (mercGlobal.mercStorePostTrade[resourceId] === 0) {
+          elemNumMercStorePostTrade[resourceId].textContent = ''; 
+          elemNumMercStorePostTrade[resourceId].classList.remove(styleResourceName);
         }
         else {
-          elemNumMercStorePostTrade[resourceIndex].textContent = mercGlobal.mercStorePostTrade[resourceIndex];
-          elemNumMercStorePostTrade[resourceIndex].classList.add(resourceName);
+          elemNumMercStorePostTrade[resourceId].textContent = mercGlobal.mercStorePostTrade[resourceId];
+          elemNumMercStorePostTrade[resourceId].classList.add(styleResourceName);
         }
       }
 
+      //--------------------------------------------------------------------
       // Merc Buy button colouring
-      if (resourceIndex != 0) {
-        if (mercGlobal.mercBuyPot[resourceIndex] === 0)
+      //--------------------------------------------------------------------
+      if (resourceId != 0) {
+
+        if (SellActive(resourceId)) {
+
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+          elemBtnMercBuy[resourceId].classList.add(styleMinus[resourceId]);
+
+          elemBtnMercBuy[resourceId].textContent = '-' ;
+
+        }
+        else if (mercGlobal.mercBuyPot[resourceId] > 0)
         {
-          elemBtnMercBuy[resourceIndex].classList.remove("buy-available");
-          elemBtnMercBuy[resourceIndex].classList.add("buy-not-available");
-          elemBtnMercBuy[resourceIndex].textContent = '';
+          /* style = 'trade-avail-' */
+          elemBtnMercBuy[resourceId].classList.add(styleTradeAvailable[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+
+          elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyPot[resourceId] ;
         }
         else
         {
-          elemBtnMercBuy[resourceIndex].classList.remove("buy-not-available");
-          elemBtnMercBuy[resourceIndex].classList.add("buy-available");
-          elemBtnMercBuy[resourceIndex].textContent = 
-            mercGlobal.mercBuyCount[resourceIndex] + " / " + mercGlobal.mercBuyPot[resourceIndex] ;
+          // BuyPot will be zero
+          if (mercGlobal.mercBuyAct[resourceId] > 0) {
+            
+            // Full
+            elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+            elemBtnMercBuy[resourceId].classList.add(styleTradeFull[resourceId]);
+            elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+
+            elemBtnMercBuy[resourceId].textContent = 'X' ;
+
+          }
+          else {
+
+            // None available to buy
+            elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+            elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+            elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+
+            elemBtnMercBuy[resourceId].textContent = '';
+
+          }
         }
       }
 
+      //-----------------------------------------------------------------------
       // Merc Sell button colouring
-      if (resourceIndex != 0) {
-        if (mercGlobal.mercStorePostTrade[resourceIndex] === 0)
+      //-----------------------------------------------------------------------
+      if (resourceId != 0) {
+
+        if (BuyActive(resourceId)) {
+          elemBtnMercSell[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+          elemBtnMercSell[resourceId].classList.add(styleTradeFull[resourceId]);
+          elemBtnMercSell[resourceId].classList.remove(styleMinus[resourceId]);
+          // elemBtnMercSell[resourceId].style.backgroundColor = '#999';
+          
+          elemBtnMercSell[resourceId].textContent = '-';
+
+        }
+        else if (mercGlobal.mercSellPot[resourceId] > 0)
         {
-          elemBtnMercSell[resourceIndex].classList.remove("sell-available");
-          elemBtnMercSell[resourceIndex].classList.add("sell-not-available");
-          elemBtnMercSell[resourceIndex].textContent = '';
+          elemBtnMercSell[resourceId].classList.add(styleTradeAvailable[resourceId]);
+          elemBtnMercSell[resourceId].classList.remove(styleTradeFull[resourceId]);
+          elemBtnMercSell[resourceId].classList.remove(styleMinus[resourceId]);
+
+          elemBtnMercSell[resourceId].textContent = mercGlobal.mercSellPot[resourceId];
         }
         else
         {
-          elemBtnMercSell[resourceIndex].classList.remove("sell-not-available");
-          elemBtnMercSell[resourceIndex].classList.add("sell-available");
-          elemBtnMercSell[resourceIndex].textContent = 
-            mercGlobal.mercSellAct[resourceIndex] + " / " + mercGlobal.mercStorePostTrade[resourceIndex];
+          elemBtnMercSell[resourceId].classList.remove("sell-not-available");
+          elemBtnMercSell[resourceId].classList.add("sell-available");
+          elemBtnMercSell[resourceId].textContent = '-';
         }
       }
+
 
     }
 

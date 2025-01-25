@@ -147,6 +147,9 @@ let mercGlobal = {
 
   lastTimeMercStore:[0,0,0,0,0,0],
 
+  mercBuyCash:0,
+  mercSellCash:0,
+
 
 
 }

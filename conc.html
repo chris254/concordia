@@ -209,12 +209,12 @@
       <div class="grid-item button-dec" id="btn-dec-store-merc-cloth" onclick="DecMercStore(5)">-</div>
     
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
-      <div class="grid-item-no-border cash" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;">0</div>
-      <div class="grid-item-no-border brick" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;">0</div>
-      <div class="grid-item-no-border food" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;">0</div>
-      <div class="grid-item-no-border tool" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;">0</div>
-      <div class="grid-item-no-border wine" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;">0</div>
-      <div class="grid-item-no-border cloth" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;">0</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;">0</div>
     
 
 
@@ -295,9 +295,6 @@
       <div class="grid-item-no-border" id="num-merc-buyact-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border" id="num-merc-buyact-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border" id="num-merc-buyact-cloth" style="font-weight: bolder;">0</div>
-
-    
-
       
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Post</div>
       <div class="grid-item-no-border cash" id="num-post-merc-cash" style="font-weight: bolder;">0</div>
@@ -307,28 +304,7 @@
       <div class="grid-item-no-border wine" id="num-post-merc-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border cloth" id="num-post-merc-cloth" style="font-weight: bolder;">0</div>
     
-    
-      <!-- After-Merc1 values -->
-      <div class="grid-item-no-border">POST 1</div>
-      <div class="grid-item cash" id="num-after-merc1-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item brick" id="num-after-merc1-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item food" id="num-after-merc1-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item tool" id="num-after-merc1-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item wine" id="num-after-merc1-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item cloth" id="num-after-merc1-cloth" style="font-weight: bolder;">0</div>
-    
-    
-    
-      <!-- After-Merc1 values -->
-      <div class="grid-item-no-border">FINAL</div>
-      <div class="grid-item cash" id="num-after-merc1-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item brick" id="num-after-merc1-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item food" id="num-after-merc1-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item tool" id="num-after-merc1-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item wine" id="num-after-merc1-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item cloth" id="num-after-merc1-cloth" style="font-weight: bolder;">0</div>
-    
-    
+        
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected" onclick="ResetMerc()" style="background-color: orange;">RESET</button>
       </div> 
@@ -346,33 +322,6 @@
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-    
-      <!-- Row 6: Store Delta -->
-      <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Store Out</div>
-      <div class="grid-item" id="num-merc-store-out-cash">0</div>
-      <div class="grid-item" id="num-merc-store-out-brick">0</div>
-      <div class="grid-item" id="num-merc-store-out-food">0</div>
-      <div class="grid-item" id="num-merc-store-out-tool">0</div>
-      <div class="grid-item" id="num-merc-store-out-wine">0</div>
-      <div class="grid-item" id="num-merc-store-out-cloth">0</div>
-    
-      <!-- Row 7: Remaining -->
-      <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Store In</div>
-      <div class="grid-item" id="num-merc-store-in-cash">0</div>
-      <div class="grid-item" id="num-merc-store-in-brick">0</div>
-      <div class="grid-item" id="num-merc-store-in-food">0</div>
-      <div class="grid-item" id="num-merc-store-in-tool">0</div>
-      <div class="grid-item" id="num-merc-store-in-wine">0</div>
-      <div class="grid-item" id="num-merc-store-in-cloth">0</div>
-    
-      <!-- Row 7: Remaining -->
-      <div class="grid-item" style="font-weight: bolder; font-size: 10pt;">Rem</div>
-      <div class="grid-item" id="num-merc-remaining2-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-merc-remaining2-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-merc-remaining2-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-merc-remaining2-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-merc-remaining2-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item" id="num-merc-remaining2-cloth" style="font-weight: bolder;">0</div>
     
     </div>
 

@@ -1266,6 +1266,15 @@ function UpdateGUIMerc() {
   ];
   let styleMinus = ["", "minus-brick", "minus-food", "minus-tool", "minus-wine", "minus-cloth"];
 
+  let styleNotSelectable = [
+    "",
+    "not-selectable-brick",
+    "not-selectable-food",
+    "not-selectable-tool",
+    "not-selectable-wine",
+    "not-selectable-cloth",
+  ];
+
   elemNumTrades.textContent = mercGlobal.mercTradeCount;
 
   elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
@@ -1295,11 +1304,11 @@ function UpdateGUIMerc() {
       elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
     } else {
       elemNumPreMercSellValue[resourceId].textContent = mercGlobal.preMercSellValue[resourceId];
-      elemNumPreMercSellValue[resourceId].classList.add(styleResourceName);
+      elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
     }
 
     //--------------------------------------------------------------------
-    // Buy Actual
+    // Buy Actual GUI
     //--------------------------------------------------------------------
     if (resourceId === 0) {
       if (mercGlobal.mercBuyCash === 0) {
@@ -1318,7 +1327,7 @@ function UpdateGUIMerc() {
     }
 
     //--------------------------------------------------------------------
-    // Sell Actual
+    // Sell Actual GUI
     //--------------------------------------------------------------------
     if (resourceId === 0) {
       if (mercGlobal.mercSellCash === 0) {
@@ -1358,26 +1367,83 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     if (resourceId != 0) {
       if (SellActive(resourceId)) {
-        // Grey
+        //
+        // minus button
         elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
         elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
         elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
 
         elemBtnMercBuy[resourceId].textContent = "";
-      } else if (mercGlobal.mercBuyPot[resourceId] > 0) {
+        //
+      } else if (BuyActive(resourceId) && mercGlobal.mercBuyPot[resourceId] > 0) {
+        //
+        // Sell not active
+        // Buy active
+        //
+        // Sell not active
+        // Buy active
+        // more available to buy
         /* style = 'trade-avail-' */
         elemBtnMercBuy[resourceId].classList.add(styleTradeAvailable[resourceId]);
         elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
         elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
 
         elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyPot[resourceId];
+        //
+      } else if (BuyActive(resourceId) && mercGlobal.mercBuyPot[resourceId] === 0) {
+        //
+        // Sell not active
+        // Buy active
+        // No more available to buy
+        elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+        elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+        elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
+
+        elemBtnMercBuy[resourceId].textContent = "x";
+        //
+      } else if (!BuyActive(resourceId) && mercGlobal.mercBuyPot[resourceId] > 0) {
+        //
+        // Sell not active
+        // Buy not active
+        // more available to buy
+        if (mercGlobal.mercTradeCount < 2) {
+          //
+          // Sell not active
+          // Buy not active
+          // more available to buy
+          // trade available
+          elemBtnMercBuy[resourceId].classList.add(styleTradeAvailable[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
+
+          elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyPot[resourceId];
+        } else {
+          //
+          // Sell not active
+          // Buy not active
+          // more available to buy
+          // trade not available
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+          elemBtnMercBuy[resourceId].classList.add(styleNotSelectable[resourceId]);
+
+          elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyPot[resourceId];
+        }
       } else {
-        // BuyPot will be zero
+        // Sell not active
+        // Buy not active
+        // BuyPot is zero
         if (mercGlobal.mercBuyAct[resourceId] > 0) {
           // Full
           elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
           elemBtnMercBuy[resourceId].classList.add(styleTradeFull[resourceId]);
           elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
 
           elemBtnMercBuy[resourceId].textContent = "x";
         } else {
@@ -1385,6 +1451,7 @@ function UpdateGUIMerc() {
           elemBtnMercBuy[resourceId].classList.remove(styleTradeAvailable[resourceId]);
           elemBtnMercBuy[resourceId].classList.remove(styleTradeFull[resourceId]);
           elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
+          elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
 
           elemBtnMercBuy[resourceId].textContent = "";
         }
@@ -1396,13 +1463,39 @@ function UpdateGUIMerc() {
     //-----------------------------------------------------------------------
     if (resourceId != 0) {
       if (BuyActive(resourceId)) {
-        // Grey
+        // empty
         elemBtnMercSell[resourceId].classList.remove(styleTradeAvailable[resourceId]);
         elemBtnMercSell[resourceId].classList.remove(styleTradeFull[resourceId]);
         elemBtnMercSell[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleNotSelectable[resourceId]);
 
         elemBtnMercSell[resourceId].textContent = "";
+        //
+      } else if (SellActive(resourceId) && mercGlobal.mercSellPot[resourceId] > 0) {
+        //
+        // sell active
+        // more available to sell
+        /* style = 'trade-avail-' */
+        elemBtnMercSell[resourceId].classList.add(styleTradeAvailable[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleTradeFull[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleNotSelectable[resourceId]);
+
+        elemBtnMercSell[resourceId].textContent = mercGlobal.mercSellPot[resourceId];
+        //
+      } else if (SellActive(resourceId) && mercGlobal.mercSellPot[resourceId] === 0) {
+        //
+        // Buy not active
+        // Sell active
+        // No more available to sell
+        elemBtnMercSell[resourceId].classList.remove(styleTradeAvailable[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleTradeFull[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleMinus[resourceId]);
+        elemBtnMercSell[resourceId].classList.remove(styleNotSelectable[resourceId]);
+
+        elemBtnMercSell[resourceId].textContent = "x";
       } else if (mercGlobal.mercSellPot[resourceId] > 0) {
+        //
         // Can still sell
         // Green
         elemBtnMercSell[resourceId].classList.add(styleTradeAvailable[resourceId]);

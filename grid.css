@@ -22,7 +22,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
-  grid-template-rows: repeat(23, 30px); /* Rows sized using pixels */
+  grid-template-rows: repeat(50, 30px); /* Rows sized using pixels */
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;
@@ -288,6 +288,30 @@ body {
 .minus-cloth {
   border: 2px solid rgb(62, 16, 189);
   background-color: orange;
+}
+/* ----------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------- */
+/* not-selectable- */
+.not-selectable-brick {
+  border: 2px solid rgb(183, 65, 14);
+  background-color: grey;
+}
+.not-selectable-food {
+  border: 2px solid rgb(226, 199, 23);
+  background-color: grey;
+}
+.not-selectable-tool {
+  border: 2px solid rgb(141, 141, 137);
+  background-color: grey;
+}
+.not-selectable-wine {
+  border: 2px solid rgb(241, 12, 12);
+  background-color: grey;
+}
+.not-selectable-cloth {
+  border: 2px solid rgb(62, 16, 189);
+  background-color: grey;
 }
 /* ----------------------------------------------------------------------- */
 

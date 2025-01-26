@@ -40,15 +40,14 @@ body {
 }
 
 .nested-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Split into two equal columns */
-    width: 100%;
-    height: 100%;
-    position:relative;
-    /*border: 1px solid black;    */
-    padding: none; 
-    column-gap: 5px; /* Space between grid items */
-
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Split into two equal columns */
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /*border: 1px solid black;    */
+  padding: none;
+  column-gap: 5px; /* Space between grid items */
 }
 
 .grid-item-no-border {
@@ -111,68 +110,54 @@ body {
 }
 
 .cash {
-
   border: 3px solid green;
 }
 
-
 .brick {
-
-  border: 3px solid rgb(183,65,14);
+  border: 3px solid rgb(183, 65, 14);
 }
 
 .food {
-
   border: 3px solid rgb(226, 199, 23);
 }
 
 .tool {
-
   border: 3px solid rgb(141, 141, 137);
 }
 
 .wine {
-
   border: 3px solid rgb(241, 12, 12);
 }
 
 .cloth {
-
   border: 3px solid rgb(62, 16, 189);
 }
 
 .cash-filled {
-
   border: 3px solid green;
 }
 
-
 .brick-filled {
-
-  border: 3px solid rgb(183,65,14);
-  background-color: rgb(183,65,14);
+  border: 3px solid rgb(183, 65, 14);
+  background-color: rgb(183, 65, 14);
 }
 
 .food-filled {
-
   border: 3px solid rgb(226, 199, 23);
   background-color: rgb(226, 199, 23);
 }
 
 .tool-filled {
-
   border: 3px solid rgb(141, 141, 137);
   background-color: rgb(141, 141, 137);
 }
 
 .wine-filled {
-
   border: 3px solid rgb(241, 12, 12);
   background-color: rgb(241, 12, 12);
 }
 
 .cloth-filled {
-
   border: 3px solid rgb(62, 16, 189);
   background-color: rgb(62, 16, 189);
 }
@@ -182,8 +167,6 @@ body {
   max-height: 100%;
   /*object-fit: contain;*/
 }
-
-
 
 .button-inc {
   display: flex;
@@ -234,7 +217,7 @@ body {
 /* -------------------------------------------------------------------- */
 /* trade-available */
 .trade-avail-brick {
-  border: 2px solid rgb(183,65,14);
+  border: 2px solid rgb(183, 65, 14);
   background-color: lightgreen;
   border-radius: 25%;
 }
@@ -263,7 +246,7 @@ body {
 /* -------------------------------------------------------------------- */
 /* trade-full */
 .trade-full-brick {
-  border: 2px solid rgb(183,65,14);
+  border: 2px solid rgb(183, 65, 14);
   background-color: transparent;
 }
 .trade-full-food {
@@ -287,27 +270,26 @@ body {
 /* -------------------------------------------------------------------- */
 /* minus- */
 .minus-brick {
-  border: 2px solid rgb(183,65,14);
-  background-color: grey;
+  border: 2px solid rgb(183, 65, 14);
+  background-color: orange;
 }
 .minus-food {
   border: 2px solid rgb(226, 199, 23);
-  background-color: grey;
+  background-color: orange;
 }
 .minus-tool {
   border: 2px solid rgb(141, 141, 137);
-  background-color: grey;
+  background-color: orange;
 }
 .minus-wine {
   border: 2px solid rgb(241, 12, 12);
-  background-color: grey;
+  background-color: orange;
 }
 .minus-cloth {
   border: 2px solid rgb(62, 16, 189);
-  background-color: grey;
+  background-color: orange;
 }
 /* ----------------------------------------------------------------------- */
-
 
 .sell-not-available {
   border: none;
@@ -345,23 +327,19 @@ body {
 }
 
 .red-background {
-  background-color: red
+  background-color: red;
 }
 
 .grey-background {
-  background-color: grey
-
+  background-color: grey;
 }
 
 .orange-background {
-  background-color: grey
-
+  background-color: grey;
 }
-
 
 .btn-full-selected {
   background-color: #007bff; /* Button background color */
   color: white; /* Button text color */
   border: none; /* Remove default button border */
 }
-

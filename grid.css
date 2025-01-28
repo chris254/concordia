@@ -96,7 +96,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10pt;
+  font-size: 12pt;
   font-weight: bolder;
   border: 1px solid black;
   height: 20px;
@@ -246,48 +246,54 @@ body {
 /* -------------------------------------------------------------------- */
 /* trade-full */
 .trade-full-brick {
-  border: 2px solid rgb(183, 65, 14);
+  border: 5px solid rgb(183, 65, 14);
   background-color: transparent;
+  font-weight: bolder;
 }
 .trade-full-food {
-  border: 2px solid rgb(226, 199, 23);
+  border: 5px solid rgb(226, 199, 23);
   background-color: transparent;
+  font-weight: bolder;
 }
+
 .trade-full-tool {
-  border: 2px solid rgb(141, 141, 137);
+  border: 5px solid rgb(141, 141, 137);
   background-color: transparent;
+  font-weight: bolder;
 }
 .trade-full-wine {
-  border: 2px solid rgb(241, 12, 12);
+  border: 5px solid rgb(241, 12, 12);
   background-color: transparent;
+  font-weight: bolder;
 }
 .trade-full-cloth {
-  border: 2px solid rgb(62, 16, 189);
+  border: 5px solid rgb(62, 16, 189);
   background-color: transparent;
+  font-weight: bolder;
 }
 /* ----------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------- */
 /* minus- */
 .minus-brick {
-  border: 2px solid rgb(183, 65, 14);
-  background-color: orange;
+  border: none;
+  background-color: transparent;
 }
 .minus-food {
-  border: 2px solid rgb(226, 199, 23);
-  background-color: orange;
+  border: 2px solid none;
+  background-color: transparent;
 }
 .minus-tool {
-  border: 2px solid rgb(141, 141, 137);
-  background-color: orange;
+  border: 2px solid none;
+  background-color: transparent;
 }
 .minus-wine {
-  border: 2px solid rgb(241, 12, 12);
-  background-color: orange;
+  border: 2px solid none;
+  background-color: transparent;
 }
 .minus-cloth {
-  border: 2px solid rgb(62, 16, 189);
-  background-color: orange;
+  border: 2px solid none;
+  background-color: transparent;
 }
 /* ----------------------------------------------------------------------- */
 
@@ -366,4 +372,12 @@ body {
   background-color: #007bff; /* Button background color */
   color: white; /* Button text color */
   border: none; /* Remove default button border */
+}
+
+.small-text {
+  font-size: 10pt;
+}
+
+.large-text {
+  font-size: 12pt;
 }

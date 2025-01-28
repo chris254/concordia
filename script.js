@@ -1521,7 +1521,7 @@ function UpdateSellButton(resourceId_, btnStatus_) {
 
     elemBtnMercSell[resourceId_].textContent = '';
     largeText.textContent = mercGlobal.mercSellAct[resourceId_];
-    let total = mercGlobal.mercSellPot[resourceId_] + mercGlobal.mercBuyAct[resourceId_];
+    let total = mercGlobal.mercStorePreTrade[resourceId_] + mercGlobal.mercBuyAct[resourceId_];
     smallText.textContent = "/" + total;
 
     elemBtnMercSell[resourceId_].appendChild(largeText);

@@ -18,6 +18,8 @@ let dataArch = {
   archHousesCurrentWine:0,
   archHousesCurrentCloth:0,
 
+  archHousesDeltaPossible:[0,0,0,0,0],
+
   archHousesDeltaPossibleBrick:0,
   archHousesDeltaPossibleFood:0,
   archHousesDeltaPossibleTool:0,
@@ -26,6 +28,7 @@ let dataArch = {
 
   archHousesTotalPossible:[0,0,0,0,0,0],
 
+  archRem:[0,0,0,0,0,0],
   archRemCash:0,
   archRemBrick:0,
   archRemFood:0,
@@ -33,12 +36,15 @@ let dataArch = {
   archRemWine:0,
   archRemCloth:0,
 
+  archMoreHousesAvailable:[0,0,0,0,0,0],
+
   archMoreHousesAvailableBrick:false,
   archMoreHousesAvailableFood:false,
   archMoreHousesAvailableTool:false,
   archMoreHousesAvailableWine:false,
   archMoreHousesAvailableCloth:false,
 
+  archBuildCost:[0,0,0,0,0,0],
   archBuildCostCash:0,
   archBuildCostBrick:0,
   archBuildCostFood:0,
@@ -46,6 +52,7 @@ let dataArch = {
   archBuildCostWine:0,
   archBuildCostCloth:0,
 
+  runOutOf:[true,true,true,true,true,true],
   runOutOfCash:false,
   runOutOfBrick:false,
   runOutOfFood:false,

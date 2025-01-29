@@ -117,11 +117,11 @@
       <!-- Row 9: Arch numbers -->
       <div class = "sub-title">BUILD</div>
       <div class="grid-item-no-border" style="font-size: 10pt;">Act</div>
-      <div class="grid-item brick" id="num-arch-brickhouses-actual" style="font-weight: bolder;">0</div>
-      <div class="grid-item food" id="num-arch-foodhouses-actual" style="font-weight: bolder;">0</div>
-      <div class="grid-item tool" id="num-arch-toolhouses-actual" style="font-weight: bolder;">0</div>
-      <div class="grid-item wine" id="num-arch-winehouses-actual" style="font-weight: bolder;">0</div>
-      <div class="grid-item cloth" id="num-arch-clothhouses-actual" style="font-weight: bolder;">0</div>
+      <div class="grid-item brick" id="num-arch-houses-act-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item food" id="num-arch-houses-act-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item tool" id="num-arch-houses-act-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item wine" id="num-arch-houses-act-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item cloth" id="num-arch-houses-act-cloth" style="font-weight: bolder;">0</div>
       
       <!-- ========================================================================== -->
       <!-- Row 10: Arch potentials -->
@@ -137,21 +137,21 @@
       <!-- Row 11: Arch Build Inc -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-inc" id="btn-inc-arch-brick" onclick="Inc('num-arch-brickhouses-actual','btn-inc-arch-brick')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-food" onclick="Inc('num-arch-foodhouses-actual','btn-inc-arch-food')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-toolhouses-actual','btn-inc-arch-tool')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-winehouses-actual','btn-inc-arch-wine')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-clothhouses-actual','btn-inc-arch-cloth')">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-brick" onclick="Inc('num-arch-houses-act-brick','btn-inc-arch-brick')">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-food" onclick="Inc('num-arch-houses-act-food','btn-inc-arch-food')">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-houses-act-tool','btn-inc-arch-tool')">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-houses-act-wine','btn-inc-arch-wine')">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-houses-act-cloth','btn-inc-arch-cloth')">+</div>
       
       <!-- ========================================================================== -->
       <!-- Row 12: Arch Build Dec -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="button-dec" id="btn-dec-arch-brick" onclick="Dec('num-arch-brickhouses-actual')">-</div>
-      <div class="button-dec" id="btn-dec-arch-food" onclick="Dec('num-arch-foodhouses-actual')">-</div>
-      <div class="button-dec" id="btn-dec-arch-tool" onclick="Dec('num-arch-toolhouses-actual')">-</div>
-      <div class="button-dec" id="btn-dec-arch-wine" onclick="Dec('num-arch-winehouses-actual')">-</div>
-      <div class="button-dec" id="btn-dec-arch-cloth" onclick="Dec('num-arch-clothhouses-actual')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-brick" onclick="Dec('num-arch-houses-act-brick')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-food" onclick="Dec('num-arch-houses-act-food')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-tool" onclick="Dec('num-arch-houses-act-tool')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-wine" onclick="Dec('num-arch-houses-act-wine')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-cloth" onclick="Dec('num-arch-houses-act-cloth')">-</div>
 
       <!-- ========================================================================== -->
       <!-- Row 13: Padding row -->
@@ -188,6 +188,14 @@
         <img src="Cloth.png">
       </div>
     
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
+    
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
@@ -197,14 +205,6 @@
       <div class="grid-item button-dec" id="btn-dec-store-merc-tool" onclick="DecMercStore(3)">-</div>
       <div class="grid-item button-dec" id="btn-dec-store-merc-wine" onclick="DecMercStore(4)">-</div>
       <div class="grid-item button-dec" id="btn-dec-store-merc-cloth" onclick="DecMercStore(5)">-</div>
-    
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
     
 
 

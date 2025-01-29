@@ -303,6 +303,17 @@ const elemIdsStoreCurrent = [
 
 const elemNumStoreCurrent = elemIdsStoreCurrent.map((id) => document.getElementById(id));
 
+const elemIdsStoreCost = [
+  "num-arch-store-cost-cash",
+  "num-arch-store-cost-brick",
+  "num-arch-store-cost-food",
+  "num-arch-store-cost-tool",
+  "num-arch-store-cost-wine",
+  "num-arch-store-cost-cloth",
+];
+
+const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
+
 let elemMercStore = [0, 0, 0, 0, 0];
 
 let elemNumTrades;
@@ -321,13 +332,6 @@ document.addEventListener("DOMContentLoaded", function () {
   elemBtnResetStoreCurrent = document.getElementById("btn-reset-storecurrent");
   elemBtnResetArchitect = document.getElementById("btn-reset-architect");
   elemBtnResetMerc3 = document.getElementById("btn-reset-merc3");
-
-  elemNumArchStoreCostCash = document.getElementById("num-arch-store-cost-cash");
-  elemNumArchStoreCostBrick = document.getElementById("num-arch-store-cost-brick");
-  elemNumArchStoreCostFood = document.getElementById("num-arch-store-cost-food");
-  elemNumArchStoreCostTool = document.getElementById("num-arch-store-cost-tool");
-  elemNumArchStoreCostWine = document.getElementById("num-arch-store-cost-wine");
-  elemNumArchStoreCostCloth = document.getElementById("num-arch-store-cost-cloth");
 
   elemNumArchRemainingCash = document.getElementById("num-arch-remaining-cash");
   elemNumArchRemainingBrick = document.getElementById("num-arch-remaining-brick");
@@ -550,9 +554,13 @@ function ArchInc(resourceId) {
     dataArch.archHousesCurrent[resourceId] += 1;
   }
   else {
-    
-
+    if (dataArch.archMoreHousesAvailable[resourceId]) {
+      dataArch.archHousesCurrent[resourceId] += 1;
+    }
   }
+
+  UpdateAll();
+
 }
 function Inc(idItem, idButton) {
   if (fieldValues.archFreeMode) {
@@ -581,13 +589,6 @@ function Inc(idItem, idButton) {
   UpdateAll();
 }
 
-function GetTotalResourceValue(brickCount, foodCount, toolCount, wineCount, clothCount) {
-  return brickCount * 3 + foodCount * 4 + toolCount * 5 + wineCount * 6 + clothCount * 7;
-}
-
-function GetTotalHouseCost(brickCount, foodCount, toolCount, wineCount, clothCount) {
-  return brickCount * 1 + foodCount * 2 + toolCount * 3 + wineCount * 4 + clothCount * 5;
-}
 
 function GetTotalBuildValue(brickCount, foodCount, toolCount, wineCount, clothCount) {
   return brickCount * 1 + foodCount * 2 + toolCount * 3 + wineCount * 4 + clothCount * 5;
@@ -600,18 +601,6 @@ function GetIntegerValue(str) {
 /* ---------------------------------------------------------  --------------------------- */
 /* STORE */
 /* ------------------------------------------------------------------------------------ */
-function GetStoreCashValue() {
-  /* calculate cash */
-
-  return GetTotalResourceValue(
-    fieldValues.storeCurrent[1],
-    fieldValues.storeCurrent[2],
-    fieldValues.storeCurrent[3],
-    fieldValues.storeCurrent[4],
-    fieldValues.storeCurrent[5]
-  );
-}
-
 function WriteFieldValueBlankZero(elem, value) {
   if (value === 0) {
     elem.textContent = "";
@@ -1265,13 +1254,10 @@ function UpdateGUIArch() {
   }
 
   /* calculate future cash */
+  for (let resourceId = 0; resourceId <=5; resourceId++) {
+    ConvertZeroesToBlank(elemNumArchStoreCost[resourceId], dataArch.archBuildCost[resourceId]);
 
-  ConvertZeroesToBlank(elemNumArchStoreCostCash, dataArch.archBuildCostCash);
-  ConvertZeroesToBlank(elemNumArchStoreCostBrick, dataArch.archBuildCostBrick);
-  ConvertZeroesToBlank(elemNumArchStoreCostFood, dataArch.archBuildCostFood);
-  ConvertZeroesToBlank(elemNumArchStoreCostTool, dataArch.archBuildCostTool);
-  ConvertZeroesToBlank(elemNumArchStoreCostWine, dataArch.archBuildCostWine);
-  ConvertZeroesToBlank(elemNumArchStoreCostCloth, dataArch.archBuildCostCloth);
+  }
 
   UpdateRemGui(elemNumArchRemainingCash, fieldValues.storeCurrent[0], dataArch.archRemCash, fieldValues.archFreeMode);
   UpdateRemGui(elemNumArchRemainingBrick, fieldValues.storeCurrent[1], dataArch.archRemBrick, fieldValues.archFreeMode);

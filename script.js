@@ -1320,7 +1320,9 @@ function UpdateGUIMerc() {
   // -------------------------------------------------------------------------------
 
   const smallText = document.createElement('span');
+  const smallTextGrey = document.createElement('span');
   smallText.className = 'small-text';
+  smallTextGrey.className = 'small-text-grey';
   const largeText = document.createElement('span');
   largeText.className = 'large-text';
 
@@ -1339,11 +1341,11 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     if (resourceId === 0) {
 
-      smallText.textContent = mercGlobal.mercStore[resourceId];
+      smallTextGrey.textContent = mercGlobal.mercStore[resourceId];
       largeText.textContent = "/" + mercGlobal.mercStorePreTrade[resourceId];
 
       elemNumPreMercStore[resourceId].textContent = '';
-      elemNumPreMercStore[resourceId].appendChild(smallText);
+      elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
       elemNumPreMercStore[resourceId].appendChild(largeText);
 
     }

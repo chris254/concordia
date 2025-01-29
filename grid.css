@@ -374,6 +374,10 @@ body {
   border: none; /* Remove default button border */
 }
 
+.small-text-grey {
+  font-size: 8pt;
+  color: grey;
+}
 .small-text {
   font-size: 10pt;
 }

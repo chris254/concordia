@@ -1438,11 +1438,12 @@ function UpdateGUIMerc() {
 
       UpdateBuyButton(resourceId, localBuyStatus);
 
-      if (mercGlobal.mercBuyPot[resourceId] === 0) {
-        elemNumMercBuyPot[resourceId].textContent = "";
-      } else {
-        elemNumMercBuyPot[resourceId].textContent = mercGlobal.mercBuyPot[resourceId];
-      }
+      //if (mercGlobal.mercBuyPot[resourceId] === 0) {
+       // elemNumMercBuyPot[resourceId].textContent = "";
+      //} 
+      //else {
+      //  elemNumMercBuyPot[resourceId].textContent = mercGlobal.mercBuyPot[resourceId];
+     // }
     }
 
     //-----------------------------------------------------------------------
@@ -1610,7 +1611,15 @@ function UpdateBuyButton(resourceId_, btnStatus_) {
     elemBtnMercBuy[resourceId_].classList.remove(styleMinus[resourceId_]);
     elemBtnMercBuy[resourceId_].classList.add(styleNotSelectable[resourceId_]);
 
-    elemBtnMercBuy[resourceId_].textContent = mercGlobal.mercBuyAct[resourceId_];
+    elemBtnMercBuy[resourceId_].textContent = '';
+    smallText.textContent = mercGlobal.mercBuyAct[resourceId_];
+    let total = mercGlobal.mercBuyPot[resourceId_] - mercGlobal.mercSellAct[resourceId_];
+    largeText.textContent = "/" + total;
+
+    elemBtnMercBuy[resourceId_].appendChild(smallText);
+    elemBtnMercBuy[resourceId_].appendChild(largeText);
+
+//    elemBtnMercBuy[resourceId_].textContent = mercGlobal.mercBuyAct[resourceId_];
 
   }
 

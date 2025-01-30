@@ -36,16 +36,16 @@
       <!-- ========================================================================== -->
       <!-- Row 2: Headers -->
       <div class = "sub-title">STORE</div>
-      <div class="grid-item cash-filled">£</div>
-      <div class="grid-item brick-filled">
+      <div class="grid-item cash-filled onclick="ArchStoreInc(0)">£</div>
+      <div class="grid-item brick-filled onclick="ArchStoreInc(1)">
         <img src="brick.PNG">
       </div>
-      <div class="grid-item food-filled">
+      <div class="grid-item food-filled onclick="ArchStoreInc(2)">
         <img src="Food.png">
       </div>
-      <div class="grid-item tool-filled">Tool</div>
-      <div class="grid-item wine-filled">Wine</div>
-      <div class="grid-item cloth-filled">
+      <div class="grid-item tool-filled onclick="ArchStoreInc(3)">Tool</div>
+      <div class="grid-item wine-filled onclick="ArchStoreInc(4)">Wine</div>
+      <div class="grid-item cloth-filled onclick="ArchStoreInc(5)">
         <img src="Cloth.png">
       </div>
       
@@ -62,22 +62,22 @@
       <!-- ========================================================================== -->
       <!-- Row 4: Inc Buttons for current store -->
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-cash') ">+</div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-brick')">+</div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-food')">+</div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-tool')">+</div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-wine')">+</div>
-      <div class="grid-item button-inc" onclick="IncStore('num-storecurrent-cloth')">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(0)">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(1)">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(2)">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(3)">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(4)">+</div>
+      <div class="grid-item button-inc" onclick="ArchStoreInc(5)">+</div>
       
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-cash" onclick="Dec('num-storecurrent-cash')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-brick" onclick="Dec('num-storecurrent-brick')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-food" onclick="Dec('num-storecurrent-food')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-tool" onclick="Dec('num-storecurrent-tool')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-wine" onclick="Dec('num-storecurrent-wine')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-storecurrent-cloth" onclick="Dec('num-storecurrent-cloth')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-food" onclick="ArchStoreDec(2)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)">-</div>
       
       <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
@@ -137,21 +137,21 @@
       <!-- Row 11: Arch Build Inc -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-inc" id="btn-inc-arch-brick" onclick="Inc('num-arch-houses-act-brick','btn-inc-arch-brick')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-food" onclick="Inc('num-arch-houses-act-food','btn-inc-arch-food')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="Inc('num-arch-houses-act-tool','btn-inc-arch-tool')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="Inc('num-arch-houses-act-wine','btn-inc-arch-wine')">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="Inc('num-arch-houses-act-cloth','btn-inc-arch-cloth')">+</div>
-      
+      <div class="grid-item button-inc" id="btn-inc-arch-brick" onclick="ArchHousesInc(1)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-food" onclick="ArchHousesInc(2)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="ArchHousesInc(3)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="ArchHousesInc(4)">+</div>
+      <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="ArchHousesInc(5)">+</div>
+
       <!-- ========================================================================== -->
       <!-- Row 12: Arch Build Dec -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-dec" id="btn-dec-arch-brick" onclick="Dec('num-arch-houses-act-brick')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-arch-food" onclick="Dec('num-arch-houses-act-food')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-arch-tool" onclick="Dec('num-arch-houses-act-tool')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-arch-wine" onclick="Dec('num-arch-houses-act-wine')">-</div>
-      <div class="grid-item button-dec" id="btn-dec-arch-cloth" onclick="Dec('num-arch-houses-act-cloth')">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-brick" onclick="ArchHousesDec(1)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-food" onclick="ArchHousesDec(2)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-tool" onclick="ArchHousesDec(3)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)">-</div>
 
       <!-- ========================================================================== -->
       <!-- Row 13: Padding row -->
@@ -175,16 +175,16 @@
       <div class="grid-item-no-border"></div>
     
       <div class = "sub-title">STORE</div>
-      <div class="grid-item cash-filled " onclick="IncMercStore(0)">£</div>
-      <div class="grid-item brick-filled" onclick="IncMercStore(1)">
+      <div class="grid-item cash-filled " onclick="MercStoreInc(0)">£</div>
+      <div class="grid-item brick-filled" onclick="MercStoreInc(1)">
         <img src="brick.PNG">
       </div>
-      <div class="grid-item food-filled" onclick="IncMercStore(2)">
+      <div class="grid-item food-filled" onclick="MercStoreInc(2)">
         <img src="Food.png">
       </div>
-      <div class="grid-item tool-filled" onclick="IncMercStore(3)">Tool</div>
-      <div class="grid-item wine-filled" onclick="IncMercStore(4)">Wine</div>
-      <div class="grid-item cloth-filled" onclick="IncMercStore(5)">
+      <div class="grid-item tool-filled" onclick="MercStoreInc(3)">Tool</div>
+      <div class="grid-item wine-filled" onclick="MercStoreInc(4)">Wine</div>
+      <div class="grid-item cloth-filled" onclick="MercStoreInc(5)">
         <img src="Cloth.png">
       </div>
     
@@ -199,12 +199,12 @@
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-cash" onclick="DecMercStore(0)">-</div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-brick" onclick="DecMercStore(1)">-</div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-food" onclick="DecMercStore(2)">-</div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-tool" onclick="DecMercStore(3)">-</div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-wine" onclick="DecMercStore(4)">-</div>
-      <div class="grid-item button-dec" id="btn-dec-store-merc-cloth" onclick="DecMercStore(5)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-cash" onclick="MercStoreDec(0)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-brick" onclick="MercStoreDec(1)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-food" onclick="MercStoreDec(2)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-tool" onclick="MercStoreDec(3)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-wine" onclick="MercStoreDec(4)">-</div>
+      <div class="grid-item button-dec" id="btn-dec-store-merc-cloth" onclick="MercStoreDec(5)">-</div>
     
 
 

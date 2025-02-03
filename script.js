@@ -885,6 +885,10 @@ function ResetAll() {
 }
 
 function ResetMerc() {
+
+  for (let resourceId = 0; resourceId <=5; resourceId++) {
+    mercGlobal.mercStorePostTrade[resourceId] = mercGlobal.mercStorePreTrade[resourceId];
+  }
   UpdateAll();
 }
 
@@ -1174,7 +1178,7 @@ function UpdateGUIMerc() {
     }
     else 
     {
-      elemNumMercDeltaAct[resourceId].textContent = mercGlobal.mercDeltaResource[resourceId];
+      elemNumMercDeltaAct[5].textContent = mercGlobal.mercDeltaResource[resourceId];
     }
 
     //--------------------------------------------------------------------

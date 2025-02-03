@@ -22,7 +22,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
-  grid-template-rows: repeat(7, 30px) 20px repeat(40, 30px); /* Rows sized using pixels */
+  grid-template-rows: repeat(100, 30px); /* Rows sized using pixels */
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;

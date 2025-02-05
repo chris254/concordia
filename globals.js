@@ -150,13 +150,10 @@ let mercGlobal = {
   mercSellAct:[0,0,0,0,0,0],
 
   mercTradeCount:0,
-  mercDeltaResource:[0,0,0,0,0,0],
+  mercTotalDelta:[0,0,0,0,0,0],
 
   lastTimeMercStore:[0,0,0,0,0,0],
 
-  mercBuyCash:0,
-  mercSellCash:0,
-
-
-
+  mercSellDelta:[0,0,0,0,0,0],
+  mercBuyDelta:[0,0,0,0,0,0],
 }

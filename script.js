@@ -207,16 +207,42 @@ const elemIdsPreMercSellValue = [
 const elemNumPreMercSellValue = elemIdsPreMercSellValue.map((id) => document.getElementById(id));
 
 //---------------------------------------------------------------------------------
-const elemIdsMercDeltaAct = [
-  "num-merc-delta-cash",
-  "num-merc-delta-brick",
-  "num-merc-delta-food",
-  "num-merc-delta-tool",
-  "num-merc-delta-wine",
-  "num-merc-delta-cloth",
+const elemIdsMercDeltaTotal = [
+  "num-merc-delta-total-cash",
+  "num-merc-delta-total-brick",
+  "num-merc-delta-total-food",
+  "num-merc-delta-total-tool",
+  "num-merc-delta-total-wine",
+  "num-merc-delta-total-cloth",
 ];
 
-const elemNumMercDeltaAct = elemIdsMercDeltaAct.map((id) => document.getElementById(id));
+const elemNumMercDeltaTotal = elemIdsMercDeltaTotal.map((id) => document.getElementById(id));
+
+//---------------------------------------------------------------------------------
+const elemIdsMercDeltaSell = [
+  "num-merc-delta-sell-cash",
+  "num-merc-delta-sell-brick",
+  "num-merc-delta-sell-food",
+  "num-merc-delta-sell-tool",
+  "num-merc-delta-sell-wine",
+  "num-merc-delta-sell-cloth",
+];
+
+const elemNumMercDeltaSell = elemIdsMercDeltaSell.map((id) => document.getElementById(id));
+
+
+//---------------------------------------------------------------------------------
+const elemIdsMercDeltaBuy = [
+  "num-merc-delta-buy-cash",
+  "num-merc-delta-buy-brick",
+  "num-merc-delta-buy-food",
+  "num-merc-delta-buy-tool",
+  "num-merc-delta-buy-wine",
+  "num-merc-delta-buy-cloth",
+];
+
+const elemNumMercDeltaBuy = elemIdsMercDeltaBuy.map((id) => document.getElementById(id));
+
 
 //---------------------------------------------------------------------------------
 const elemIdsBtnMercBuy = [
@@ -692,27 +718,37 @@ function CanSellResource(resourceId) {
 function CalcTradeCount() {
   let tradeCountLocal = 0;
 
-  mercGlobal.mercBuyCash = 0;
-  mercGlobal.mercSellCash = 0;
+  mercGlobal.mercTotalDelta[0] = 0;
+  mercGlobal.mercBuyDelta[0] = 0;
+  mercGlobal.mercSellDelta[0] = 0;
 
   for (let resourceId = 1; resourceId <= 5; resourceId++) {
-    mercGlobal.mercDeltaResource[resourceId] =
-      mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId];
 
-    if (mercGlobal.mercDeltaResource[resourceId] > 0) {
-      mercGlobal.mercBuyCash += mercGlobal.mercDeltaResource[resourceId] * resourceValue[resourceId];
-    } else if (mercGlobal.mercDeltaResource[resourceId] < 0) {
-      mercGlobal.mercSellCash += -mercGlobal.mercDeltaResource[resourceId] * resourceValue[resourceId];
-    }
+    let deltaResource = mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId];
 
-    if (mercGlobal.mercDeltaResource[resourceId] != 0) {
+    let sellActive = deltaResource < 0;
+    let buyActive = deltaResource > 0;
+
+    mercGlobal.mercBuyDelta[resourceId] = Math.max(deltaResource,0);
+    mercGlobal.mercSellDelta[resourceId] = Math.min(deltaResource,0);
+
+    mercGlobal.mercTotalDelta[resourceId] = deltaResource;
+
+    let deltaCash = -mercGlobal.mercTotalDelta[resourceId] * resourceValue[resourceId];
+    mercGlobal.mercTotalDelta[0] += deltaCash;
+
+    if (sellActive) mercGlobal.mercSellDelta[0] += deltaCash;
+    if (buyActive) mercGlobal.mercBuyDelta[0] += deltaCash;
+
+  
+    if (mercGlobal.mercTotalDelta[resourceId] != 0) {
       tradeCountLocal++;
     }
+
 
     mercGlobal.mercTradeCount = tradeCountLocal;
   }
 
-  mercGlobal.mercDeltaResource[0] = mercGlobal.mercSellCash - mercGlobal.mercBuyCash;
 }
 
 // -------------------------------------------------------------------------
@@ -746,14 +782,14 @@ function BuyMinus(resourceId) {
   mercGlobal.mercStorePostTrade[resourceId] -= 1;
   mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
 
-  CalcTradeCount();
+  UpdateAll();
 }
 
 function SellMinus(resourceId) {
   mercGlobal.mercStorePostTrade[resourceId] += 1;
   mercGlobal.mercStorePostTrade[0] -= resourceValue[resourceId];
 
-  CalcTradeCount();
+  UpdateAll();
 }
 
 function SellResource(resourceId) {
@@ -858,7 +894,7 @@ function ProcessMerc() {
     mercGlobal.lastTimeMercStore = mercGlobal.mercStorePreTrade[resourceId];
   }
 
-  CalcTradeCount();
+  //CalcTradeCount();
 }
 
 function ResetArchitect() {
@@ -1093,7 +1129,7 @@ function SellActive(resourceId) {
 function MercSellMinus(resourceId) {
   ProcessMerc();
 
-  if (SellActive(resourceId)) {
+  if (SellActive(resourceId) && mercGlobal.mercStorePostTrade[0] >= resourceValue[resourceId]) {
     SellMinus(resourceId);
   }
   UpdateAll();
@@ -1168,17 +1204,41 @@ function UpdateGUIMerc() {
     }
 
     //--------------------------------------------------------------------
-    // Delta Actual GUI
+    // Delta Sell GUI
     //--------------------------------------------------------------------
-    let delta = 0;
-    if (mercGlobal.mercDeltaResource[resourceId] === 0) {
-      elemNumMercDeltaAct[resourceId].textContent = "";
-    } else if (mercGlobal.mercDeltaResource[resourceId] > 0) {
-      elemNumMercDeltaAct[resourceId].textContent = "+" + mercGlobal.mercDeltaResource[resourceId];
+    if (mercGlobal.mercSellDelta[resourceId] === 0) {
+      elemNumMercDeltaSell[resourceId].textContent = "";
+    } else if (mercGlobal.mercSellDelta[resourceId] > 0) {
+      elemNumMercDeltaSell[resourceId].textContent = "+" + mercGlobal.mercSellDelta[resourceId];
     }
     else 
     {
-      elemNumMercDeltaAct[5].textContent = mercGlobal.mercDeltaResource[resourceId];
+      elemNumMercDeltaSell[resourceId].textContent = mercGlobal.mercSellDelta[resourceId];
+    }
+    //--------------------------------------------------------------------
+    // Delta Buy GUI
+    //--------------------------------------------------------------------
+    if (mercGlobal.mercBuyDelta[resourceId] === 0) {
+      elemNumMercDeltaBuy[resourceId].textContent = "";
+    } else if (mercGlobal.mercBuyDelta[resourceId] > 0) {
+      elemNumMercDeltaBuy[resourceId].textContent = "+" + mercGlobal.mercBuyDelta[resourceId];
+    }
+    else 
+    {
+      elemNumMercDeltaBuy[resourceId].textContent = mercGlobal.mercBuyDelta[resourceId];
+    }
+
+    //--------------------------------------------------------------------
+    // Delta Actual GUI
+    //--------------------------------------------------------------------
+    if (mercGlobal.mercTotalDelta[resourceId] === 0) {
+      elemNumMercDeltaTotal[resourceId].textContent = "";
+    } else if (mercGlobal.mercTotalDelta[resourceId] > 0) {
+      elemNumMercDeltaTotal[resourceId].textContent = "+" + mercGlobal.mercTotalDelta[resourceId];
+    }
+    else 
+    {
+      elemNumMercDeltaTotal[resourceId].textContent = mercGlobal.mercTotalDelta[resourceId];
     }
 
     //--------------------------------------------------------------------
@@ -1197,6 +1257,9 @@ function UpdateGUIMerc() {
       }
     }
 
+    let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
+    let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
+
     //--------------------------------------------------------------------
     // Merc Buy button colouring
     //--------------------------------------------------------------------
@@ -1204,10 +1267,10 @@ function UpdateGUIMerc() {
 
       let localBuyStatus = 
         CalcMercBuyStatus(resourceId, 
-                          SellActive(resourceId), 
-                          BuyActive(resourceId), 
-                          mercGlobal.mercBuyPot[resourceId], 
-                          mercGlobal.mercTradeCount);
+          sellActive, 
+          buyActive, 
+          mercGlobal.mercBuyPot[resourceId], 
+          mercGlobal.mercTradeCount);
 
       UpdateBuyButton(resourceId, localBuyStatus);
 
@@ -1226,8 +1289,8 @@ function UpdateGUIMerc() {
 
       let localSellStatus = 
         CalcMercSellStatus(resourceId, 
-                          SellActive(resourceId), 
-                          BuyActive(resourceId), 
+                          sellActive, 
+                          buyActive, 
                           mercGlobal.mercSellPot[resourceId], 
                           mercGlobal.mercTradeCount);
 
@@ -1398,7 +1461,7 @@ function CalcMercBuyStatus(resourceId_, sellActive_, buyActive_, buyPot_, tradeC
   // AVAILABLE: "AVAILABLE",
   // NOT_AVAILABLE: "NOT_AVAILABLE",
 
-  if (sellActive_) statusLocal = MercBuyStatus.NOT_AVAILABLE;
+  if (sellActive_) statusLocal = MercBuyStatus.SELL_ACTIVE;
   else if (buyActive_ && buyPot_ === 0) statusLocal = MercBuyStatus.ACTIVE_FULL;
   else if (buyActive_ && buyPot_ > 0) statusLocal = MercBuyStatus.ACTIVE_NOT_FULL;
   else if (!buyActive_ && (tradeCount_ >= 2 || buyPot_ === 0)) statusLocal = MercBuyStatus.NOT_AVAILABLE;
@@ -1416,7 +1479,7 @@ function CalcMercSellStatus(resourceId_, sellActive_, buyActive_, sellPot_, trad
   // AVAILABLE: "AVAILABLE",
   // NOT_AVAILABLE: "NOT_AVAILABLE",
 
-  if (buyActive_) statusLocal = MercBuyStatus.NOT_AVAILABLE;
+  if (buyActive_) statusLocal = MercBuyStatus.BUY_ACTIVE;
   else if (sellActive_ && sellPot_ === 0) statusLocal = MercBuyStatus.ACTIVE_FULL;
   else if (sellActive_ && sellPot_ > 0) statusLocal = MercBuyStatus.ACTIVE_NOT_FULL;
   else if (!sellActive_ && (tradeCount_ >= 2 || sellPot_ === 0)) statusLocal = MercBuyStatus.NOT_AVAILABLE;

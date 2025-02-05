@@ -216,27 +216,27 @@ body {
 
 /* -------------------------------------------------------------------- */
 /* trade-available */
-.trade-avail-brick {
+.green-background-brick {
   border: 2px solid rgb(183, 65, 14);
   background-color: lightgreen;
   border-radius: 25%;
 }
-.trade-avail-food {
+.green-background-food {
   border: 2px solid rgb(226, 199, 23);
   background-color: lightgreen;
   border-radius: 25%;
 }
-.trade-avail-tool {
+.green-background-tool {
   border: 2px solid rgb(141, 141, 137);
   background-color: lightgreen;
   border-radius: 25%;
 }
-.trade-avail-wine {
+.green-background-wine {
   border: 2px solid rgb(241, 12, 12);
   background-color: lightgreen;
   border-radius: 25%;
 }
-.trade-avail-cloth {
+.green-background-cloth {
   border: 2px solid rgb(62, 16, 189);
   background-color: lightgreen;
   border-radius: 25%;
@@ -245,29 +245,34 @@ body {
 
 /* -------------------------------------------------------------------- */
 /* trade-full */
-.trade-full-brick {
+.clear-brick {
   border: 5px solid rgb(183, 65, 14);
   background-color: transparent;
   font-weight: bolder;
 }
-.trade-full-food {
+.clear-food {
   border: 5px solid rgb(226, 199, 23);
   background-color: transparent;
   font-weight: bolder;
 }
 
-.trade-full-tool {
+.clear-tool {
   border: 5px solid rgb(141, 141, 137);
   background-color: transparent;
   font-weight: bolder;
 }
-.trade-full-wine {
+.clear-wine {
   border: 5px solid rgb(241, 12, 12);
   background-color: transparent;
   font-weight: bolder;
 }
-.trade-full-cloth {
+.clear-cloth {
   border: 5px solid rgb(62, 16, 189);
+  background-color: transparent;
+  font-weight: bolder;
+}
+
+.clear-no-border {
   background-color: transparent;
   font-weight: bolder;
 }

@@ -390,3 +390,7 @@ body {
 .large-text {
   font-size: 12pt;
 }
+
+.normal-text {
+  font-weight: lighter;
+}

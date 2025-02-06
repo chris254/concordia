@@ -48,7 +48,12 @@ const MercType = Object.freeze({
   MERC5: "MERC5",
 });
 
-const ArchActState = Object.freeze({
+const ArchCostRemType = Object.freeze({
+  ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  NOT_ZERO: ["cash","brick","food","tool","wine","cloth"],
+
+})
+const ArchStateType = Object.freeze({
   NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
 });
@@ -873,17 +878,33 @@ function ResetMerc() {
   UpdateAll();
 }
 
-function UpdateRemGui(elem, storeCurrent, storeRem, archFreeMode) {
+function UpdateRemGui(elem, storeCurrent, storeRem, archFreeMode, resourceId) {
+  let archRemState = ArchCostRemType.ZERO;
+  let archRemStyle = archRemState[resourceId];
+
   if (archFreeMode) {
     elem.textContent = "";
-  } else {
+    archRemState = ArchCostRemType.ZERO;    
+    SetArchStyle(elem,archRemStyle);
+
+  } 
+  else {
     if ((storeRem === 0 && storeCurrent > 0) || storeRem > 0) {
       /* Must have spent it all */
       elem.textContent = storeRem;
+      archRemState = ArchCostRemType.NOT_ZERO;
+      archRemStyle = archRemState[resourceId];
     } else {
       elem.textContent = "";
+      archRemState = ArchCostRemType.ZERO;
+      archRemStyle = archRemState[resourceId];
     }
+
+    SetArchStyle(elem,archRemStyle);
+
   }
+
+  
 }
 
 function UpdateActGui(elem, actual) {
@@ -922,6 +943,27 @@ function SetArchBuilActColour(elem, delta, valueCurrent) {
   else SetBackgroundColor(elem, "gray");
 }
 
+function WriteSlash(elem_, leftNumber_, leftFontSize_, rightNumber_, rightFontSize_) {
+
+  const leftText = document.createElement('span');
+  leftText.className = 'normal-text';
+  const rightText = document.createElement('span');
+  leftText.className = 'normal-text';
+
+  let leftFontSizeStr = leftFontSize_ + "px";
+  let rightFontSizeStr = rightFontSize_ + "px";
+
+  leftText.style.fontSize = leftFontSizeStr;
+  rightText.style.fontSize = rightFontSizeStr;
+
+  leftText.textContent = leftNumber_;
+  rightText.textContent = "/" + rightNumber_;
+
+  elem_.textContent = '';
+  elem_.appendChild(leftText);
+  elem_.appendChild(rightText);
+
+}
 function WriteSlashLargeSmall(elem_, left_, right_) {
 
   const largeText = document.createElement('span');
@@ -978,27 +1020,28 @@ function UpdateGUIArch() {
     WriteFieldValueBlankZero(elemNumStoreCurrent[resourceId], fieldValues.storeCurrent[resourceId]);
 
     if (resourceId != 0) {
-      ClearAllArchActStyles(elemNumArchHousesAct[resourceId],resourceId);
+      ClearAllArchStyles(elemNumArchHousesAct[resourceId],resourceId);
 
-      let archActState = ArchActState.NONE_AVAILABLE;
-      if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archActState = ArchActState.AVAILABLE;
-      else if (dataArch.archHousesCurrent[resourceId] > 0) archActState = ArchActState.AVAILABLE;
+      let archState = ArchStateType.NONE_AVAILABLE;
+      if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.AVAILABLE;
+      else if (dataArch.archHousesCurrent[resourceId] > 0) archState = ArchStateType.AVAILABLE;
       else {
-        archActState = ArchActState.NONE_AVAILABLE;
+        archState = ArchStateType.NONE_AVAILABLE;
       }
 
-      let newStyleAct = archActState[resourceId];
+      let newStyleAct = archState[resourceId];
       // ARCH ACT GUI
-      SetArchActStyle(elemNumArchHousesAct[resourceId],newStyleAct); 
+      SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct); 
 
       if (dataArch.archHousesTotalPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
       } else {
-        WriteSlashLargeSmall(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId],
-          dataArch.archHousesTotalPossible[resourceId]);
-        //elemNumArchHousesAct[resourceId].textContent = 
-        //  dataArch.archHousesCurrent[resourceId] + "/" + dataArch.archHousesTotalPossible[resourceId];
+        WriteSlash(elemNumArchHousesAct[resourceId],
+          dataArch.archHousesCurrent[resourceId], 16,
+          dataArch.archHousesTotalPossible[resourceId], 10);
+        //WriteSlashLargeSmall(elemNumArchHousesAct[resourceId],
+        //  dataArch.archHousesCurrent[resourceId],
+        //  dataArch.archHousesTotalPossible[resourceId]);
       }
     
       // ARCH POT GUI
@@ -1014,19 +1057,17 @@ function UpdateGUIArch() {
       elemNumArchRemaining[resourceId].classList.remove("red-background");
     }
 
+    // ARCH COST
+    let archCostState = ArchCostRemType.ZERO;
+    if (dataArch.archBuildCost[resourceId] === 0) archCostState = ArchCostRemType.ZERO;
+    else archCostState = ArchCostRemType.NOT_ZERO;
+
+    let archCostStyle = archCostState[resourceId];
+    SetArchStyle(elemNumArchStoreCost[resourceId],archCostStyle);
+
     ConvertZeroesToBlank(elemNumArchStoreCost[resourceId], dataArch.archBuildCost[resourceId]);
 
-    UpdateRemGui(elemNumArchRemaining[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archRem[resourceId], fieldValues.archFreeMode);
-
-    if (resourceId != 0) {
-      if (dataArch.archMoreHousesAvailable[resourceId]) {
-        elemBtnIncArch[resourceId].classList.remove("grey-background");
-      }
-      else {
-        elemBtnIncArch[resourceId].classList.add("grey-background");
-      }  
-
-    }
+    UpdateRemGui(elemNumArchRemaining[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archRem[resourceId], fieldValues.archFreeMode, resourceId);
 
   }
 
@@ -1282,20 +1323,20 @@ function UpdateGUIMerc() {
 }
 
 //------------------------------------------------------------------
-// ClearAllArchActStyles
+// ClearAllArchStyles
 //------------------------------------------------------------------
-function ClearAllArchActStyles(elem, resourceId) {
+function ClearAllArchStyles(elem, resourceId) {
 
-  elem.classList.remove(ArchActState.NONE_AVAILABLE[resourceId]);
-  elem.classList.remove(ArchActState.AVAILABLE[resourceId]);
+  elem.classList.remove(ArchStateType.NONE_AVAILABLE[resourceId]);
+  elem.classList.remove(ArchStateType.AVAILABLE[resourceId]);
 }
 
 //------------------------------------------------------------------
-// SetArchActStyle
+// SetArchStyle
 //------------------------------------------------------------------
-function SetArchActStyle(elem, newStyle, resourceId) {
+function SetArchStyle(elem, newStyle, resourceId) {
 
-  ClearAllArchActStyles(elem, resourceId);
+  ClearAllArchStyles(elem, resourceId);
   
   elem.classList.add(newStyle);
 

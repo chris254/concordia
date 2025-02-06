@@ -72,22 +72,22 @@
       <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Cost</div>
-      <div class="grid-item cash" id="num-arch-store-cost-cash" >0</div>
-      <div class="grid-item brick" id="num-arch-store-cost-brick">0</div>
-      <div class="grid-item food" id="num-arch-store-cost-food">0</div>
-      <div class="grid-item tool" id="num-arch-store-cost-tool">0</div>
-      <div class="grid-item wine" id="num-arch-store-cost-wine">0</div>
-      <div class="grid-item cloth" id="num-arch-store-cost-cloth">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-cash" >0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-brick">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-food">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-tool">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-wine">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-cloth">0</div>
       
       <!-- ========================================================================== -->
       <!-- Row 7: Arch Store Rem -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Rem</div>
-      <div class="grid-item cash" id="num-arch-remaining-cash" style="font-weight: bolder; font-size: 16pt;">0</div>
-      <div class="grid-item brick" id="num-arch-remaining-brick" style="font-weight: bolder; font-size: 16pt;">0</div>
-      <div class="grid-item food" id="num-arch-remaining-food" style="font-weight: bolder; font-size: 16pt;">0</div>
-      <div class="grid-item tool" id="num-arch-remaining-tool" style="font-weight: bolder; font-size: 16pt;"">0</div>
-      <div class="grid-item wine" id="num-arch-remaining-wine" style="font-weight: bolder; font-size: 16pt;">0</div>
-      <div class="grid-item cloth" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 16pt;">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-cash" style="font-weight: bolder; font-size: 16pt;">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-brick" style="font-weight: bolder; font-size: 16pt;">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-food" style="font-weight: bolder; font-size: 16pt;">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-tool" style="font-weight: bolder; font-size: 16pt;"">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-wine" style="font-weight: bolder; font-size: 16pt;">0</div>
+      <div class="grid-item-no-border" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 16pt;">0</div>
       
       <!-- ========================================================================== -->
       <!-- Row 8: Padding between Remaining and Build -->
@@ -107,21 +107,12 @@
       <!-- Row 9: Arch numbers -->
       <div class = "sub-title">BUILD</div>
       <div class="grid-item-no-border" style="font-size: 10pt;"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-brick" >0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-food" >0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-tool" >0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-wine" >0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" >0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)">0</div>
       
-      <!-- ========================================================================== -->
-      <!-- Row 11: Arch Build Inc -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item button-inc" id="btn-inc-arch-brick" onclick="ArchHousesInc(1)">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-food" onclick="ArchHousesInc(2)">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-tool" onclick="ArchHousesInc(3)">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-wine" onclick="ArchHousesInc(4)">+</div>
-      <div class="grid-item button-inc" id="btn-inc-arch-cloth" onclick="ArchHousesInc(5)">+</div>
 
       <!-- ========================================================================== -->
       <!-- Row 12: Arch Build Dec -->

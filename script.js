@@ -319,7 +319,7 @@ const elemIdsNumArchPos = [
   "num-arch-clothhouses-potential",
 ];
 
-const elemNumArchTotalPos = elemIdsNumArchPos.map((id) => document.getElementById(id));
+const elemNumArchPot = elemIdsNumArchPos.map((id) => document.getElementById(id));
 
 
 
@@ -976,19 +976,43 @@ function UpdateGUIArch() {
 
       let archActState = ArchActState.NONE_AVAILABLE;
       if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archActState = ArchActState.AVAILABLE;
-      else archActState = ArchActState.NONE_AVAILABLE;
+      else if (dataArch.archHousesCurrent[resourceId] > 0) archActState = ArchActState.AVAILABLE;
+      else {
+        archActState = ArchActState.NONE_AVAILABLE;
+      }
 
+      let newStyleAct = archActState[resourceId];
       // ARCH ACT GUI
-      SetArchActStyle(elemNumArchHousesAct[resourceId],archActState[resourceId]);      
-      UpdateActGui(elemNumArchHousesAct[resourceId], dataArch.archHousesCurrent[resourceId]);
+      SetArchActStyle(elemNumArchHousesAct[resourceId],newStyleAct); 
 
+      if (dataArch.archHousesTotalPossible[resourceId] === 0) {
+        elemNumArchHousesAct[resourceId].textContent = "";
+      } else {
+        elemNumArchHousesAct[resourceId].textContent = 
+          dataArch.archHousesCurrent[resourceId] + "/" + dataArch.archHousesTotalPossible[resourceId];
+      }
+    
       // ARCH POT GUI
-      SetArchActStyle(elemNumArchTotalPos[resourceId],archActState[resourceId]);      
+
+      let archPotState = ArchActState.NONE_AVAILABLE;
+      if (dataArch.archHousesTotalPossible[resourceId] > 0 ) archActState = ArchActState.AVAILABLE;
+      else {
+        archActState = ArchActState.NONE_AVAILABLE;
+      }
+
+      let newStylePot = archPotState[resourceId];
+
+      SetArchActStyle(elemNumArchPot[resourceId],newStylePot);      
       if (fieldValues.archFreeMode) {
-        elemNumArchTotalPos[resourceId].textContent = "";
+        elemNumArchPot[resourceId].textContent = "";
       }
       else {
-        elemNumArchTotalPos[resourceId].textContent = dataArch.archHousesTotalPossible[resourceId];
+        if (dataArch.archHousesTotalPossible[resourceId] === 0) {
+          elemNumArchPot[resourceId].textContent = "";
+        }
+        else {
+          elemNumArchPot[resourceId].textContent = dataArch.archHousesTotalPossible[resourceId];
+        }
 
       }
 

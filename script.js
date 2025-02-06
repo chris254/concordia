@@ -48,10 +48,14 @@ const MercType = Object.freeze({
   MERC5: "MERC5",
 });
 
+const ArchActState = Object.freeze({
+  NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+});
+
 const MercBtnState = Object.freeze({
   NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  BUY_SELL_ACTIVE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  SELL_BUY_ACTIVE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  OTHER_ACTIVE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   ACTIVE_NOT_FULL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"], 
   ACTIVE_FULL: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
   NOT_ACTIVE_AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
@@ -649,18 +653,6 @@ function ApplyBackground(elem) {
   /* elem.classList.add('grey-background');*/
 }
 
-function UpdateBuySellButton(elemBuyBtn, elemSellBtn, buyCount, sellCount, avail, rem) {
-  if (buyCount > 0) {
-    /* grey out the sell button */
-    ApplyGreyBackground(elemSellBtn);
-  } else if (sellCount > 0) {
-    ApplyGreyBackground(elemBuyBtn);
-  }
-
-  elemBuyBtn.textContent = avail;
-  elemSellBtn.textContent = rem;
-}
-
 
 function MercTradeDelta(resourceId) {
   return mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId];
@@ -676,6 +668,9 @@ function CanSellResource(resourceId) {
   return mercGlobal.mercStorePostTrade[resourceId] > 0;
 }
 
+// -------------------------------------------------------------------------
+// FUNCTION CalcTradeCount
+// -------------------------------------------------------------------------
 function CalcTradeCount() {
   let tradeCountLocal = 0;
 
@@ -977,12 +972,20 @@ function UpdateGUIArch() {
     WriteFieldValueBlankZero(elemNumStoreCurrent[resourceId], fieldValues.storeCurrent[resourceId]);
 
     if (resourceId != 0) {
-      SetArchBuilActColour(elemNumArchHousesAct[resourceId], dataArch.archHousesDeltaPossible[resourceId], dataArch.archRem[resourceId]);
+      ClearAllArchActStyles(elemNumArchHousesAct[resourceId],resourceId);
+
+      let archActState = ArchActState.NONE_AVAILABLE;
+      if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archActState = ArchActState.AVAILABLE;
+      else archActState = ArchActState.NONE_AVAILABLE;
+
+      // ARCH ACT GUI
+      SetArchActStyle(elemNumArchHousesAct[resourceId],archActState[resourceId]);      
       UpdateActGui(elemNumArchHousesAct[resourceId], dataArch.archHousesCurrent[resourceId]);
 
+      // ARCH POT GUI
+      SetArchActStyle(elemNumArchTotalPos[resourceId],archActState[resourceId]);      
       if (fieldValues.archFreeMode) {
         elemNumArchTotalPos[resourceId].textContent = "";
-
       }
       else {
         elemNumArchTotalPos[resourceId].textContent = dataArch.archHousesTotalPossible[resourceId];
@@ -1221,29 +1224,20 @@ function UpdateGUIMerc() {
     let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
     let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
 
-    //--------------------------------------------------------------------
-    // Merc Buy button colouring
-    //--------------------------------------------------------------------
-    if (resourceId != 0) {
-
-      let localBuyStatus = 
-        CalcMercBuyBtnState(resourceId, 
-          sellActive, 
-          buyActive, 
-          mercGlobal.mercBuyPot[resourceId], 
-          mercGlobal.mercTradeCount);
-
-      UpdateBuyButton(resourceId, localBuyStatus);
-
-    }
-
     //-----------------------------------------------------------------------
-    // Merc Sell button colouring
+    // Merc Sell and Buy button colouring
     //-----------------------------------------------------------------------
     if (resourceId != 0) {
 
-      UpdateSellButton(resourceId);
-      console.log ("-----------------------------------------------------------");
+      let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
+      let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
+    
+      // UPDATE SELL BUTTON
+      UpdateMercBuySellButton(elemBtnMercSell,  resourceId, sellActive, buyActive, mercGlobal.mercSellPot[resourceId], mercGlobal.mercSellAct[resourceId]);
+
+      // UPDATE BUY BUTTON
+      UpdateMercBuySellButton(elemBtnMercBuy,  resourceId, buyActive, sellActive, mercGlobal.mercBuyPot[resourceId], mercGlobal.mercBuyAct[resourceId]);
+      //console.log ("-----------------------------------------------------------");
 
 
     }
@@ -1276,18 +1270,45 @@ function UpdateGUIMerc() {
   }
 }
 
-function ClearAllStyles(elem, resourceId) {
-  elem.classList.remove(styleGreenWithBorder[resourceId]);
-  elem.classList.remove(styleClearWithBorder[resourceId]);
-  elem.classList.remove(styleMinus[resourceId]);
-  elem.classList.remove(styleNotSelectable[resourceId]);
-  elem.classList.remove("clear-no-border");
+//------------------------------------------------------------------
+// ClearAllArchActStyles
+//------------------------------------------------------------------
+function ClearAllArchActStyles(elem, resourceId) {
+
+  elem.classList.remove(ArchActState.NONE_AVAILABLE[resourceId]);
+  elem.classList.remove(ArchActState.AVAILABLE[resourceId]);
+}
+
+//------------------------------------------------------------------
+// SetArchActStyle
+//------------------------------------------------------------------
+function SetArchActStyle(elem, newStyle, resourceId) {
+
+  ClearAllArchActStyles(elem, resourceId);
+  
+  elem.classList.add(newStyle);
 
 }
 
-function SetStyle(elem, newStyle, resourceId, fontSize_) {
 
-  ClearAllStyles(elem, resourceId);
+//------------------------------------------------------------------
+// ClearAllMercBtnStyles
+//------------------------------------------------------------------
+function ClearAllMercBtnStyles(elem, resourceId) {
+
+  elem.classList.remove(MercBtnState.NONE_AVAILABLE[resourceId]);
+  elem.classList.remove(MercBtnState.OTHER_ACTIVE[resourceId]);
+  elem.classList.remove(MercBtnState.ACTIVE_FULL[resourceId]);
+  elem.classList.remove(MercBtnState.NOT_ACTIVE_AVAILABLE[resourceId]);
+  elem.classList.remove(MercBtnState.NOT_AVAILABLE[resourceId]);
+}
+
+//------------------------------------------------------------------
+// SetMercSellBuyStyle
+//------------------------------------------------------------------
+function SetMercSellBuyStyle(elem, newStyle, resourceId, fontSize_) {
+
+  ClearAllMercBtnStyles(elem, resourceId);
   
   elem.classList.add(newStyle);
 
@@ -1299,192 +1320,101 @@ function SetStyle(elem, newStyle, resourceId, fontSize_) {
 //------------------------------------------------------------------
 // UPDATE SELL BUTTON
 //------------------------------------------------------------------
-function UpdateSellButton(resourceId) {
+function UpdateMercBuySellButton(elemBtn_, resourceId, thisActive, otherActive, tradePotential_, tradeAct_) {
 
   const smallText = document.createElement('span');
   smallText.className = 'small-text';
   const largeText = document.createElement('span');
   largeText.className = 'large-text';
 
-  let sellPot = mercGlobal.mercSellPot[resourceId];
-  let buyPot = mercGlobal.mercBuyPot[resourceId];
   let tradeCount = mercGlobal.mercTradeCount;
-  let localSellStatus = MercBtnState.NOT_AVAILABLE;
+  let localStatus = MercBtnState.NOT_AVAILABLE;
 
-  let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
-  let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
-
-  if (!sellActive && sellPot === 0) {
-    localSellStatus = MercBtnState.NONE_AVAILABLE;
+  if (!thisActive && tradePotential_ === 0) {
+    localStatus = MercBtnState.NONE_AVAILABLE;
   }
-  else if (buyActive) {
-    localSellStatus = MercBtnState.SELL_BUY_ACTIVE;
+  else if (otherActive) {
+    localStatus = MercBtnState.OTHER_ACTIVE;
   }
   else {
-    if (sellActive) {
-      if (sellPot === 0) {
-        localSellStatus = MercBtnState.ACTIVE_FULL;
-        console.log("sdgfhskfgskghaskgasd");
+    if (thisActive) {
+      if (tradePotential_ === 0) {
+        localStatus = MercBtnState.ACTIVE_FULL;
+        //console.log("sdgfhskfgskghaskgasd");
       }
       else {
-        localSellStatus = MercBtnState.ACTIVE_NOT_FULL;
+        localStatus = MercBtnState.ACTIVE_NOT_FULL;
       }
     }
-    else if (!sellActive) {
-      if (tradeCount >= 2 || sellPot === 0)  {
-        localSellStatus = MercBtnState.NOT_AVAILABLE;
+    else if (!thisActive) {
+      if (tradeCount >= 2 || tradePotential_ === 0)  {
+        localStatus = MercBtnState.NOT_AVAILABLE;
       }
 
-      else if (sellPot > 0 && tradeCount < 2) {
-        localSellStatus = MercBtnState.NOT_ACTIVE_AVAILABLE;
+      else if (tradePotential_ > 0 && tradeCount < 2) {
+        localStatus = MercBtnState.NOT_ACTIVE_AVAILABLE;
       }
       else {
-        console.log ("ERROR") ;
+        //console.log ("ERROR") ;
       }
 
     }
   }
 
-  console.log("res: " + resourceId + ", Sell status: " + localSellStatus);
+  // WRITE TO BUTTON TEXT
+  if (localStatus === MercBtnState.NONE_AVAILABLE) {
 
-  if (localSellStatus === MercBtnState.NONE_AVAILABLE) {
+    let btnStyle = localStatus[resourceId];
 
-    let sellBtnStyle = localSellStatus[resourceId];
-
-    SetStyle(elemBtnMercSell[resourceId], sellBtnStyle, resourceId, 16);
-    elemBtnMercSell[resourceId].textContent = "";
+    SetMercSellBuyStyle(elemBtn_[resourceId], btnStyle, resourceId, 16);
+    elemBtn_[resourceId].textContent = "";
   }
-  else if (localSellStatus === MercBtnState.SELL_BUY_ACTIVE) {
+  else if (localStatus === MercBtnState.OTHER_ACTIVE) {
 
-    let sellBtnStyle = localSellStatus[resourceId];
+    let btnStyle = localStatus[resourceId];
 
-    SetStyle(elemBtnMercSell[resourceId], sellBtnStyle, resourceId, 16);
-    elemBtnMercSell[resourceId].textContent = "";
+    SetMercSellBuyStyle(elemBtn_[resourceId], btnStyle, resourceId, 16);
+    elemBtn_[resourceId].textContent = "";
 
   }
-  else if (localSellStatus === MercBtnState.ACTIVE_NOT_FULL || localSellStatus === MercBtnState.NOT_ACTIVE_AVAILABLE) {
+  else if (localStatus === MercBtnState.ACTIVE_NOT_FULL || localStatus === MercBtnState.NOT_ACTIVE_AVAILABLE) {
 
-    let sellBtnStyle = localSellStatus[resourceId];
+    let btnStyle = localStatus[resourceId];
     
     // Can sell some
-    SetStyle(elemBtnMercSell[resourceId], sellBtnStyle, resourceId, 16);
+    SetMercSellBuyStyle(elemBtn_[resourceId], btnStyle, resourceId, 16);
 
-    elemBtnMercSell[resourceId].textContent = '';
-    largeText.textContent = mercGlobal.mercSellAct[resourceId];
-    let total = mercGlobal.mercStorePreTrade[resourceId] + mercGlobal.mercBuyAct[resourceId];
+    elemBtn_[resourceId].textContent = '';
+    largeText.textContent = tradeAct_;
+    let total = tradePotential_ + tradeAct_;
     smallText.textContent = "/" + total;
 
-    elemBtnMercSell[resourceId].appendChild(largeText);
-    elemBtnMercSell[resourceId].appendChild(smallText);
+    elemBtn_[resourceId].appendChild(largeText);
+    elemBtn_[resourceId].appendChild(smallText);
 
   }
-  else if (localSellStatus === MercBtnState.ACTIVE_FULL) {
+  else if (localStatus === MercBtnState.ACTIVE_FULL) {
 
-    let sellBtnStyle = localSellStatus[resourceId];
-    SetStyle(elemBtnMercSell[resourceId], styleClearWithBorder[resourceId], resourceId, 16);
+    let btnStyle = localStatus[resourceId];
+    SetMercSellBuyStyle(elemBtn_[resourceId], styleClearWithBorder[resourceId], resourceId, 16);
 
-    elemBtnMercSell[resourceId].textContent = mercGlobal.mercSellAct[resourceId];
+    elemBtn_[resourceId].textContent = tradeAct_;
 
   }
-  else if (localSellStatus === MercBtnState.NOT_AVAILABLE) {
+  else if (localStatus === MercBtnState.NOT_AVAILABLE) {
 
-    let sellBtnStyle = localSellStatus[resourceId];
-    SetStyle(elemBtnMercSell[resourceId], sellBtnStyle, resourceId, 16);
+    let btnStyle = localStatus[resourceId];
+    SetMercSellBuyStyle(elemBtn_[resourceId], btnStyle, resourceId, 16);
     
-    elemBtnMercSell[resourceId].textContent = '';
-    largeText.textContent = mercGlobal.mercSellAct[resourceId];
-    let total = mercGlobal.mercStorePreTrade[resourceId];
+    elemBtn_[resourceId].textContent = '';
+    largeText.textContent = tradeAct_;
+    let total = tradePotential_ + tradeAct_;
     smallText.textContent = "/" + total;
 
-    elemBtnMercSell[resourceId].appendChild(largeText);
-    elemBtnMercSell[resourceId].appendChild(smallText);
+    elemBtn_[resourceId].appendChild(largeText);
+    elemBtn_[resourceId].appendChild(smallText);
 
   }
 
 
-}
-
-function UpdateBuyButton(resourceId, btnStatus_) {
-
-  const smallText = document.createElement('span');
-  smallText.className = 'small-text';
-  const largeText = document.createElement('span');
-  largeText.className = 'large-text';
-
-
-  if (btnStatus_ === MercBtnState.BUY_SELL_ACTIVE) {
-
-    elemBtnMercBuy[resourceId].classList.remove(styleGreenWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleClearWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
-
-    elemBtnMercBuy[resourceId].textContent = "";
-
-  }
-  else if (btnStatus_ === MercBtnState.ACTIVE_NOT_FULL || btnStatus_ === MercBtnState.NOT_ACTIVE_AVAILABLE) {
-
-    elemBtnMercBuy[resourceId].classList.add(styleGreenWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleClearWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
-
-    elemBtnMercBuy[resourceId].textContent = '';
-    largeText.textContent = mercGlobal.mercBuyAct[resourceId];
-    let total = mercGlobal.mercBuyPot[resourceId] + mercGlobal.mercBuyAct[resourceId];
-    smallText.textContent = "/" + total;
-
-    elemBtnMercBuy[resourceId].appendChild(largeText);
-    elemBtnMercBuy[resourceId].appendChild(smallText);
-
-    // elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyAct[resourceId];
-
-  }
-  else if (btnStatus_ === MercBtnState.ACTIVE_FULL) {
-
-    elemBtnMercBuy[resourceId].classList.remove(styleGreenWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.add(styleClearWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleNotSelectable[resourceId]);
-
-    elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyAct[resourceId];
-
-  }
-  else if (btnStatus_ === MercBtnState.NOT_AVAILABLE) {
-
-    elemBtnMercBuy[resourceId].classList.remove(styleGreenWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleClearWithBorder[resourceId]);
-    elemBtnMercBuy[resourceId].classList.remove(styleMinus[resourceId]);
-    elemBtnMercBuy[resourceId].classList.add(styleNotSelectable[resourceId]);
-
-    elemBtnMercBuy[resourceId].textContent = '';
-    smallText.textContent = mercGlobal.mercBuyAct[resourceId];
-    let total = mercGlobal.mercBuyPot[resourceId] - mercGlobal.mercSellAct[resourceId];
-    largeText.textContent = "/" + total;
-
-    elemBtnMercBuy[resourceId].appendChild(smallText);
-    elemBtnMercBuy[resourceId].appendChild(largeText);
-
-//    elemBtnMercBuy[resourceId].textContent = mercGlobal.mercBuyAct[resourceId];
-
-  }
-
-}
-
-function CalcMercBuyBtnState(resourceId, sellActive_, buyActive_, buyPot_, tradeCount_) {
-  statusLocal = MercBtnState.NOT_ACTIVE_AVAILABLE;
-
-  // SELL_ACTIVE: "SELL_ACTIVE",
-  // ACTIVE_NOT_FULL: "ACTIVE_NOT_FULL",
-  // ACTIVE_FULL: "ACTIVE_FULL",
-  // AVAILABLE: "AVAILABLE",
-  // NOT_AVAILABLE: "NOT_AVAILABLE",
-
-  if (sellActive_) statusLocal = MercBtnState.BUY_SELL_ACTIVE;
-  else if (buyActive_ && buyPot_ === 0) statusLocal = MercBtnState.ACTIVE_FULL;
-  else if (buyActive_ && buyPot_ > 0) statusLocal = MercBtnState.ACTIVE_NOT_FULL;
-  else if (!buyActive_ && (tradeCount_ >= 2 || buyPot_ === 0)) statusLocal = MercBtnState.NOT_AVAILABLE;
-  else if (!buyActive_ && buyPot_ > 0 && tradeCount_ < 2) statusLocal = MercBtnState.NOT_ACTIVE_AVAILABLE;
-
-  return statusLocal;
 }

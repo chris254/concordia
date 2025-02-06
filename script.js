@@ -310,17 +310,6 @@ const elemIdsNumArchHouses = [
 
 const elemNumArchHouses = elemIdsNumArchHouses.map((id) => document.getElementById(id));
 
-const elemIdsNumArchPos = [
-  "",
-  "num-arch-brickhouses-potential",
-  "num-arch-foodhouses-potential",
-  "num-arch-toolhouses-potential",
-  "num-arch-winehouses-potential",
-  "num-arch-clothhouses-potential",
-];
-
-const elemNumArchPot = elemIdsNumArchPos.map((id) => document.getElementById(id));
-
 
 
 document.getElementById("btn-inc-arch-cloth");
@@ -933,6 +922,23 @@ function SetArchBuilActColour(elem, delta, valueCurrent) {
   else SetBackgroundColor(elem, "gray");
 }
 
+function WriteSlashLargeSmall(elem_, left_, right_) {
+
+  const largeText = document.createElement('span');
+  largeText.className = 'large-text';
+  const smallText = document.createElement('span');
+  smallText.className = 'small-text';
+
+  largeText.textContent = left_.toString();
+  smallText.textContent = "/" + right_;
+
+  elem_.textContent = '';
+  elem_.appendChild(largeText);
+  elem_.appendChild(smallText);
+
+
+}
+
 function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
   /* Set architect build dec colour:                               */
@@ -988,33 +994,14 @@ function UpdateGUIArch() {
       if (dataArch.archHousesTotalPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
       } else {
-        elemNumArchHousesAct[resourceId].textContent = 
-          dataArch.archHousesCurrent[resourceId] + "/" + dataArch.archHousesTotalPossible[resourceId];
+        WriteSlashLargeSmall(elemNumArchHousesAct[resourceId],
+          dataArch.archHousesCurrent[resourceId],
+          dataArch.archHousesTotalPossible[resourceId]);
+        //elemNumArchHousesAct[resourceId].textContent = 
+        //  dataArch.archHousesCurrent[resourceId] + "/" + dataArch.archHousesTotalPossible[resourceId];
       }
     
       // ARCH POT GUI
-
-      let archPotState = ArchActState.NONE_AVAILABLE;
-      if (dataArch.archHousesTotalPossible[resourceId] > 0 ) archActState = ArchActState.AVAILABLE;
-      else {
-        archActState = ArchActState.NONE_AVAILABLE;
-      }
-
-      let newStylePot = archPotState[resourceId];
-
-      SetArchActStyle(elemNumArchPot[resourceId],newStylePot);      
-      if (fieldValues.archFreeMode) {
-        elemNumArchPot[resourceId].textContent = "";
-      }
-      else {
-        if (dataArch.archHousesTotalPossible[resourceId] === 0) {
-          elemNumArchPot[resourceId].textContent = "";
-        }
-        else {
-          elemNumArchPot[resourceId].textContent = dataArch.archHousesTotalPossible[resourceId];
-        }
-
-      }
 
     }
 

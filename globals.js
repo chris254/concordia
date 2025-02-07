@@ -53,12 +53,9 @@ let dataArch = {
   archBuildCostCloth:0,
 
   runOutOf:[true,true,true,true,true,true],
-  runOutOfCash:false,
-  runOutOfBrick:false,
-  runOutOfFood:false,
-  runOutOfTool:false,
-  runOutOfWine:false,
-  runOutOfCloth:false,
+
+  archSpareResource:[0,0,0,0,0,0],
+
 }
 
 let fieldValues = {
@@ -120,20 +117,6 @@ const TradeType = Object.freeze({
 });
 
 let mercGlobal = {
-
-  trade1RemCash:0,
-  trade1RemBrick:0,
-  trade1RemFood:0,
-  trade1RemTool:0,
-  trade1RemWine:0,
-  trade1RemCloth:0,
-
-  trade2RemCash:0,
-  trade2RemBrick:0,
-  trade2RemFood:0,
-  trade2RemTool:0,
-  trade2RemWine:0,
-  trade2RemCloth:0,
 
   mercStore:[0,0,0,0,0,0],
   mercStorePreTrade:[0,0,0,0,0,0],

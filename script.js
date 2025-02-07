@@ -41,8 +41,9 @@ const MercType = Object.freeze({
 const ArchCostRemType = Object.freeze({
   ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   NOT_ZERO: ["cash","brick","food","tool","wine","cloth"],
-
 })
+
+
 const ArchStateType = Object.freeze({
   NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
@@ -307,6 +308,24 @@ const elemIdsNumArchHouses = [
 
 const elemNumArchHouses = elemIdsNumArchHouses.map((id) => document.getElementById(id));
 
+const elemIdsBtnDecArch = [
+  "btn-dec-arch-cash",
+  "btn-dec-arch-brick",
+  "btn-dec-arch-food",
+  "btn-dec-arch-tool",
+  "btn-dec-arch-wine",
+  "btn-dec-arch-cloth",
+];
+
+const elemBtnDecArch = elemIdsBtnDecArch.map((id) => document.getElementById(id));
+
+btnDecArchBrick = document.getElementById("");
+btnDecArchFood = document.getElementById("");
+btnDecArchTool = document.getElementById("");
+btnDecArchWine = document.getElementById("");
+btnDecArchCloth = document.getElementById("");
+
+
 
 
 document.getElementById("btn-inc-arch-cloth");
@@ -341,12 +360,6 @@ document.addEventListener("DOMContentLoaded", function () {
   mercActive = MercType.MERC3;
   lastMercActive = MercType.MERC3;
 
-
-  btnDecArchBrick = document.getElementById("btn-dec-arch-brick");
-  btnDecArchFood = document.getElementById("btn-dec-arch-food");
-  btnDecArchTool = document.getElementById("btn-dec-arch-tool");
-  btnDecArchWine = document.getElementById("btn-dec-arch-wine");
-  btnDecArchCloth = document.getElementById("btn-dec-arch-cloth");
 
   btnDecStoreCash = document.getElementById("btn-dec-storecurrent-cash");
   btnDecStoreBrick = document.getElementById("btn-dec-storecurrent-brick");
@@ -385,7 +398,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function ArchStoreDec(resourceId) {
-  fieldValues.storeCurrent[resourceId] = Max(0, fieldValues.storeCurrent[resourceId] - 1);
+  
+  if (dataArch.archSpareResource[resourceId] > 0) {
+    fieldValues.storeCurrent[resourceId] = Max(0, fieldValues.storeCurrent[resourceId] - 1);
+  }
 
   UpdateAll();
 
@@ -607,6 +623,10 @@ function ProcessArchitectStrict() {
     dataArch.archHousesTotalPossible[resourceId] = dataArch.archHousesDeltaPossible[resourceId] + dataArch.archHousesCurrent[resourceId];
     dataArch.archMoreHousesAvailable[resourceId] = dataArch.archHousesDeltaPossible[resourceId] > 0;
 
+  }
+
+  for (let resourceId = 0; resourceId <= 5; resourceId++) {
+    dataArch.archSpareResource[resourceId] = fieldValues.storeCurrent[resourceId] - dataArch.archBuildCost[resourceId];
   }
 
 }
@@ -973,17 +993,6 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
 
 function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
-  /* Set architect build dec colour:                               */
-  /*   gray: zero                                                  */
-  /*   amber: non-zero                                             */
-  /* ------------------------------------------------------------- */
-  SetArchBuildDecColour(btnDecArchBrick, dataArch.archHousesCurrent[indexBrick]);
-  SetArchBuildDecColour(btnDecArchFood, dataArch.archHousesCurrent[indexFood]);
-  SetArchBuildDecColour(btnDecArchTool, dataArch.archHousesCurrent[indexTool]);
-  SetArchBuildDecColour(btnDecArchWine, dataArch.archHousesCurrent[indexWine]);
-  SetArchBuildDecColour(btnDecArchCloth, dataArch.archHousesCurrent[indexCloth]);
-
-  /* ------------------------------------------------------------- */
   /* Set store current decrement colour:                           */
   /*    orange - if none Left (it's all been spent)                */
   /*    transparent - all other times                              */
@@ -992,14 +1001,19 @@ function UpdateGUIArch() {
   for (let resourceId = 0; resourceId <=5; resourceId++) {
     SetArchStoreDecColour(elemBtnDecStore[resourceId], dataArch.runOutOf[resourceId], dataArch.archRem[resourceId]);
 
+    if (resourceId != 0)
+    {
+      //SetArchBuildDecColour(elemBtnDecArch[resourceId], dataArch.archHousesCurrent[resourceId]);
+      if (dataArch.archHousesCurrent[resourceId] > 0 ) {
+        elemBtnDecArch[resourceId].textContent = "\u25BC";
+      }
+      else {
+        elemBtnDecArch[resourceId].textContent = "";
+      }
+    }
+
   }
 
-  SetArchStoreDecColour(btnDecStoreCash, dataArch.runOutOfCash, dataArch.archRemCash);
-  SetArchStoreDecColour(btnDecStoreBrick, dataArch.runOutOfBrick, dataArch.archRemBrick);
-  SetArchStoreDecColour(btnDecStoreFood, dataArch.runOutOfFood, dataArch.archRemFood);
-  SetArchStoreDecColour(btnDecStoreTool, dataArch.runOutOfTool, dataArch.archRemTool);
-  SetArchStoreDecColour(btnDecStoreWine, dataArch.runOutOfWine, dataArch.archRemWine);
-  SetArchStoreDecColour(btnDecStoreCloth, dataArch.runOutOfCloth, dataArch.archRemCloth);
 
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
@@ -1043,7 +1057,6 @@ function UpdateGUIArch() {
     }
 
     WriteNormal(elemNumArchRemaining[resourceId],dataArch.archRem[resourceId],16,true);
-//    elemNumArchRemaining[resourceId].textContent = dataArch.archRem[resourceId];
 
     if (dataArch.archRem[resourceId] < 0) {
       elemNumArchRemaining[resourceId].classList.add("red-background");

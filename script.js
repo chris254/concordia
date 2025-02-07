@@ -22,16 +22,6 @@ const styleClearWithBorder = [
 ];
   const styleMinus = ["", "minus-brick", "minus-food", "minus-tool", "minus-wine", "minus-cloth"];
 
-  const styleNotSelectable = [
-    "",
-    "not-selectable-brick",
-    "not-selectable-food",
-    "not-selectable-tool",
-    "not-selectable-wine",
-    "not-selectable-cloth",
-  ];
-
-
 const houseCost = [0,1,2,3,4,5];
 
 let elemBtnArch;
@@ -56,6 +46,8 @@ const ArchCostRemType = Object.freeze({
 const ArchStateType = Object.freeze({
   NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+  FULL: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
+  FREE_MODE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
 });
 
 const MercBtnState = Object.freeze({
@@ -943,7 +935,16 @@ function SetArchBuilActColour(elem, delta, valueCurrent) {
   else SetBackgroundColor(elem, "gray");
 }
 
-function WriteSlash(elem_, leftNumber_, leftFontSize_, rightNumber_, rightFontSize_) {
+function WriteNormal(elem_, number_, fontSize_, bold_) {
+  elem_.style.fontSize = fontSize_ + "px";
+  if (bold_) elem_.style.fontWeight = "bold";
+  else elem_.style.fontWeight = "normal";
+
+  elem_.textContent = number_;
+}
+
+
+function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_) {
 
   const leftText = document.createElement('span');
   leftText.className = 'normal-text';
@@ -956,28 +957,17 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, rightNumber_, rightFontSi
   leftText.style.fontSize = leftFontSizeStr;
   rightText.style.fontSize = rightFontSizeStr;
 
+  if (leftBold_) leftText.style.fontWeight = "bold";
+  else leftText.style.fontWeight = "normal";
+  if (rightBold_) rightText.style.fontWeight = "bold";
+  else rightText.style.fontWeight = "normal";
+
   leftText.textContent = leftNumber_;
   rightText.textContent = "/" + rightNumber_;
 
   elem_.textContent = '';
   elem_.appendChild(leftText);
   elem_.appendChild(rightText);
-
-}
-function WriteSlashLargeSmall(elem_, left_, right_) {
-
-  const largeText = document.createElement('span');
-  largeText.className = 'large-text';
-  const smallText = document.createElement('span');
-  smallText.className = 'small-text';
-
-  largeText.textContent = left_.toString();
-  smallText.textContent = "/" + right_;
-
-  elem_.textContent = '';
-  elem_.appendChild(largeText);
-  elem_.appendChild(smallText);
-
 
 }
 
@@ -1022,8 +1012,12 @@ function UpdateGUIArch() {
     if (resourceId != 0) {
       ClearAllArchStyles(elemNumArchHousesAct[resourceId],resourceId);
 
+      // ARCH HOUSES ACTUAL
       let archState = ArchStateType.NONE_AVAILABLE;
-      if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.AVAILABLE;
+      
+      if (fieldValues.archFreeMode) archState = ArchStateType.FREE_MODE;
+      else if (dataArch.archHousesCurrent[resourceId] > 0 && dataArch.archHousesDeltaPossible[resourceId] === 0) archState = ArchStateType.FULL;
+      else if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.AVAILABLE;
       else if (dataArch.archHousesCurrent[resourceId] > 0) archState = ArchStateType.AVAILABLE;
       else {
         archState = ArchStateType.NONE_AVAILABLE;
@@ -1033,22 +1027,23 @@ function UpdateGUIArch() {
       // ARCH ACT GUI
       SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct); 
 
-      if (dataArch.archHousesTotalPossible[resourceId] === 0) {
+      if (archState === ArchStateType.FREE_MODE || archState === ArchStateType.FULL) {
+        WriteNormal(elemNumArchHousesAct[resourceId],
+          dataArch.archHousesCurrent[resourceId],16,true);
+      }
+      else if (dataArch.archHousesTotalPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
       } else {
         WriteSlash(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId], 16,
-          dataArch.archHousesTotalPossible[resourceId], 10);
-        //WriteSlashLargeSmall(elemNumArchHousesAct[resourceId],
-        //  dataArch.archHousesCurrent[resourceId],
-        //  dataArch.archHousesTotalPossible[resourceId]);
+          dataArch.archHousesCurrent[resourceId], 18, true,
+          dataArch.archHousesTotalPossible[resourceId], 10, false);
       }
     
-      // ARCH POT GUI
 
     }
 
-    elemNumArchRemaining[resourceId].textContent = dataArch.archRem[resourceId];
+    WriteNormal(elemNumArchRemaining[resourceId],dataArch.archRem[resourceId],16,true);
+//    elemNumArchRemaining[resourceId].textContent = dataArch.archRem[resourceId];
 
     if (dataArch.archRem[resourceId] < 0) {
       elemNumArchRemaining[resourceId].classList.add("red-background");
@@ -1065,7 +1060,13 @@ function UpdateGUIArch() {
     let archCostStyle = archCostState[resourceId];
     SetArchStyle(elemNumArchStoreCost[resourceId],archCostStyle);
 
-    ConvertZeroesToBlank(elemNumArchStoreCost[resourceId], dataArch.archBuildCost[resourceId]);
+    if (dataArch.archBuildCost[resourceId] === 0) {
+      elemNumArchStoreCost[resourceId].textContent = "";
+    }
+    else {
+      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true);
+    }
+    //ConvertZeroesToBlank(elemNumArchStoreCost[resourceId], dataArch.archBuildCost[resourceId]);
 
     UpdateRemGui(elemNumArchRemaining[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archRem[resourceId], fieldValues.archFreeMode, resourceId);
 
@@ -1329,6 +1330,8 @@ function ClearAllArchStyles(elem, resourceId) {
 
   elem.classList.remove(ArchStateType.NONE_AVAILABLE[resourceId]);
   elem.classList.remove(ArchStateType.AVAILABLE[resourceId]);
+  elem.classList.remove(ArchStateType.FULL[resourceId]);
+  elem.classList.remove(ArchStateType.FREE_MODE[resourceId]);
 }
 
 //------------------------------------------------------------------

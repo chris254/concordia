@@ -43,6 +43,11 @@ const ArchCostRemType = Object.freeze({
   NOT_ZERO: ["cash","brick","food","tool","wine","cloth"],
 })
 
+const MinusButtonType = Object.freeze({
+  ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  MINUS_AVAILABLE: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
+  MINUS_INVALID: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
+})
 
 const ArchStateType = Object.freeze({
   NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
@@ -943,12 +948,6 @@ function SetArchBuildDecColour(elem, valueCurrent) {
   else SetBackgroundColor(elem, "orange");
 }
 
-function SetArchStoreDecColour(elem, noneLeft, valueCurrent) {
-  if (noneLeft) SetBackgroundColor(elem, "red");
-  else if (valueCurrent === 0) SetBackgroundColor(elem, "gray");
-  else SetBackgroundColor(elem, "orange");
-}
-
 function SetArchBuilActColour(elem, delta, valueCurrent) {
   if (delta > 0) SetBackgroundColor(elem, "lightgreen");
   else if (delta === 0) SetBackgroundColor(elem, "red");
@@ -999,8 +998,27 @@ function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
-    SetArchStoreDecColour(elemBtnDecStore[resourceId], dataArch.runOutOf[resourceId], dataArch.archRem[resourceId]);
 
+    let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+    if (fieldValues.storeCurrent[resourceId] === 0) {
+      minusButtonState = MinusButtonType.ZERO;
+      elemBtnDecStore[resourceId].textContent = ""
+    }
+    else if (dataArch.runOutOf[resourceId]) {
+      minusButtonState = MinusButtonType.MINUS_INVALID;
+      elemBtnDecStore[resourceId].textContent = ""
+    }
+    else {
+      minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+      elemBtnDecStore[resourceId].textContent = "-"
+    }
+
+    let newStyle = minusButtonState[resourceId];
+    SetMinusStyle(elemBtnDecStore[resourceId],newStyle,resourceId);
+
+
+    
+    
     if (resourceId != 0)
     {
       //SetArchBuildDecColour(elemBtnDecArch[resourceId], dataArch.archHousesCurrent[resourceId]);
@@ -1334,6 +1352,28 @@ function UpdateGUIMerc() {
       }
     }
   }
+}
+
+//------------------------------------------------------------------
+// ClearAllMinusStyles
+//------------------------------------------------------------------
+function ClearAllMinusStyles(elem, resourceId) {
+
+  elem.classList.remove(MinusButtonType.MINUS_AVAILABLE[resourceId]);
+  elem.classList.remove(MinusButtonType.ZERO[resourceId]);
+  elem.classList.remove(MinusButtonType.MINUS_INVALID[resourceId]);
+
+}
+
+//------------------------------------------------------------------
+// SetMinusStyle
+//------------------------------------------------------------------
+function SetMinusStyle(elem, newStyle, resourceId) {
+
+  ClearAllMinusStyles(elem, resourceId);
+  
+  elem.classList.add(newStyle);
+
 }
 
 //------------------------------------------------------------------

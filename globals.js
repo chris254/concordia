@@ -28,13 +28,7 @@ let dataArch = {
 
   archHousesTotalPossible:[0,0,0,0,0,0],
 
-  archRem:[0,0,0,0,0,0],
-  archRemCash:0,
-  archRemBrick:0,
-  archRemFood:0,
-  archRemTool:0,
-  archRemWine:0,
-  archRemCloth:0,
+  archPost:[0,0,0,0,0,0],
 
   archMoreHousesAvailable:[0,0,0,0,0,0],
 
@@ -79,30 +73,6 @@ let fieldValues = {
   mercRemTool:0,
   mercRemWine:0,
   mercRemCloth:0,
-
-  mercDeltaCash:0,
-  mercDeltaBrick:0,
-  mercDeltaFood:0,
-  mercDeltaTool:0,
-  mercDeltaWine:0,
-  mercDeltaCloth:0,
-
-  mercBuyAvailBrick:0,
-  mercBuyAvailFood:0,
-  mercBuyAvailTool:0,
-  mercBuyAvailWine:0,
-  mercBuyAvailCloth:0,
-
-  mercTradeActiveBrick:false,
-  mercTradeActiveFood:false,
-  mercTradeActiveTool:false,
-  mercTradeActiveWine:false,
-  mercTradeActiveCloth:false,
-
-  archToBankCash:0,
-  archFromBankCash:0,
-  mercToBankCash:0,
-  mercFromBankCash:0,
 
   archFreeMode:false,
   archModeFirstPass:true,

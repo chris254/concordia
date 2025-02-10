@@ -38,9 +38,10 @@ const MercType = Object.freeze({
   MERC5: "MERC5",
 });
 
-const ArchCostRemType = Object.freeze({
+const ArchResNumType = Object.freeze({
   ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   NOT_ZERO: ["cash","brick","food","tool","wine","cloth"],
+  FREE_MODE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
 })
 
 const MinusButtonType = Object.freeze({
@@ -291,7 +292,7 @@ const elemIdsBtnIncArch = [
 
 const elemBtnIncArch = elemIdsBtnIncArch.map((id) => document.getElementById(id));
 
-const elemIdsNumArchRemaining = [
+const elemIdsNumArchPost = [
   "num-arch-remaining-cash",
   "num-arch-remaining-brick",
   "num-arch-remaining-food",
@@ -300,7 +301,7 @@ const elemIdsNumArchRemaining = [
   "num-arch-remaining-cloth",
 ];
 
-const elemNumArchRemaining = elemIdsNumArchRemaining.map((id) => document.getElementById(id));
+const elemNumArchPost = elemIdsNumArchPost.map((id) => document.getElementById(id));
 
 const elemIdsNumArchHouses = [
   "num-arch-houses-act-cash",
@@ -581,7 +582,7 @@ function ProcessArchitectStrict() {
   /* Write to .archRem */
   /* -------------------------------------------------------------- */
   for (let resourceId = 0; resourceId <=5; resourceId++) {
-    dataArch.archRem[resourceId] = fieldValues.storeCurrent[resourceId] - dataArch.archBuildCost[resourceId];
+    dataArch.archPost[resourceId] = fieldValues.storeCurrent[resourceId] - dataArch.archBuildCost[resourceId];
   }
 
   /* -------------------------------------------------------------- */
@@ -590,37 +591,37 @@ function ProcessArchitectStrict() {
   /* .archMoreHousesAvailable */
   /* -------------------------------------------------------------- */
   for (let resourceId = 0; resourceId <=5; resourceId++) {
-    dataArch.runOutOf[resourceId] = fieldValues.storeCurrent[resourceId] > 0 && dataArch.archRem[resourceId] <= 0;
+    dataArch.runOutOf[resourceId] = fieldValues.storeCurrent[resourceId] > 0 && dataArch.archPost[resourceId] <= 0;
   }
 
   /* --------------------------------------------------------------------- */
   /* BRICK HOUSES */
   /* --------------------------------------------------------------------- */
   for (let resourceId = 1; resourceId <= 5; resourceId++) {
-    dataArch.archHousesDeltaPossible[resourceId] = Min(Math.floor(dataArch.archRem[resourceId] / houseCost[resourceId]), dataArch.archRem[2]);
+    dataArch.archHousesDeltaPossible[resourceId] = Min(Math.floor(dataArch.archPost[resourceId] / houseCost[resourceId]), dataArch.archPost[2]);
   }
 
-  dataArch.archHousesDeltaPossible[indexBrick] = Min(Math.floor(dataArch.archRem[0] / houseCost[indexBrick]), dataArch.archRem[2]);
+  dataArch.archHousesDeltaPossible[indexBrick] = Min(Math.floor(dataArch.archPost[0] / houseCost[indexBrick]), dataArch.archPost[2]);
   dataArch.archHousesDeltaPossible[indexFood] = Min3(
-    Math.floor(dataArch.archRem[indexCash] / houseCost[indexFood]),
-    dataArch.archRem[indexBrick],
-    dataArch.archRem[indexFood]
+    Math.floor(dataArch.archPost[indexCash] / houseCost[indexFood]),
+    dataArch.archPost[indexBrick],
+    dataArch.archPost[indexFood]
   );
   dataArch.archHousesDeltaPossible[indexTool] = Min3(
-    Math.floor(dataArch.archRem[indexCash] / houseCost[indexTool]),
-    dataArch.archRem[indexBrick],
-    dataArch.archRem[indexTool]
+    Math.floor(dataArch.archPost[indexCash] / houseCost[indexTool]),
+    dataArch.archPost[indexBrick],
+    dataArch.archPost[indexTool]
   );
 
   dataArch.archHousesDeltaPossible[indexWine] = Min3(
-    Math.floor(dataArch.archRem[indexCash] / houseCost[indexWine]),
-    dataArch.archRem[indexBrick],
-    dataArch.archRem[indexWine]
+    Math.floor(dataArch.archPost[indexCash] / houseCost[indexWine]),
+    dataArch.archPost[indexBrick],
+    dataArch.archPost[indexWine]
   );
   dataArch.archHousesDeltaPossible[indexCloth] = Min3(
-    Math.floor(dataArch.archRem[indexCash] / houseCost[indexCloth]),
-    dataArch.archRem[indexBrick],
-    dataArch.archRem[indexCloth]
+    Math.floor(dataArch.archPost[indexCash] / houseCost[indexCloth]),
+    dataArch.archPost[indexBrick],
+    dataArch.archPost[indexCloth]
   );
 
   for (let resourceId = 1; resourceId <= 5; resourceId++) {
@@ -718,8 +719,15 @@ function CalcTradeCount() {
 
 }
 
+function CalcMercHouseBuild() {
+
+  for (let resourceId = 1; resourceId <=5; resourceId++) {
+
+
+  }
+}
 // -------------------------------------------------------------------------
-// FUNCTION BUYRESOURCE
+// FUNCTION BUY RESOURCE
 // -------------------------------------------------------------------------
 function BuyResource(resourceId) {
   // Get all merc data up to date
@@ -895,33 +903,31 @@ function ResetMerc() {
   UpdateAll();
 }
 
-function UpdateRemGui(elem, storeCurrent, storeRem, archFreeMode, resourceId) {
-  let archRemState = ArchCostRemType.ZERO;
-  let archRemStyle = archRemState[resourceId];
+function UpdateArchPostGui(elem, storeCurrent, storePost, archFreeMode, resourceId) {
+  let archPostState = ArchResNumType.ZERO;
+  let archPostStyle = archPostState[resourceId];
 
   if (archFreeMode) {
     elem.textContent = "";
-    archRemState = ArchCostRemType.ZERO;    
-    SetArchStyle(elem,archRemStyle);
+    archPostState = ArchResNumType.ZERO;    
 
   } 
   else {
-    if ((storeRem === 0 && storeCurrent > 0) || storeRem > 0) {
+    if ((storePost === 0 && storeCurrent > 0) || storePost > 0) {
       /* Must have spent it all */
-      elem.textContent = storeRem;
-      archRemState = ArchCostRemType.NOT_ZERO;
-      archRemStyle = archRemState[resourceId];
+      elem.textContent = storePost;
+      archPostState = ArchResNumType.NOT_ZERO;
     } else {
       elem.textContent = "";
-      archRemState = ArchCostRemType.ZERO;
-      archRemStyle = archRemState[resourceId];
+      archPostState = ArchResNumType.ZERO;
     }
-
-    SetArchStyle(elem,archRemStyle);
 
   }
 
-  
+  archPostStyle = archPostState[resourceId];
+  SetArchResNumStyle(elem,archPostStyle,resourceId);
+
+
 }
 
 function UpdateActGui(elem, actual) {
@@ -999,6 +1005,7 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
+    // ARCH STORE MINUS BUTTON
     let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
     if (fieldValues.storeCurrent[resourceId] === 0) {
       minusButtonState = MinusButtonType.ZERO;
@@ -1015,10 +1022,8 @@ function UpdateGUIArch() {
 
     let newStyle = minusButtonState[resourceId];
     SetMinusStyle(elemBtnDecStore[resourceId],newStyle,resourceId);
-
-
     
-    
+    // ARCH BUILD MINUS BUTTON
     if (resourceId != 0)
     {
       //SetArchBuildDecColour(elemBtnDecArch[resourceId], dataArch.archHousesCurrent[resourceId]);
@@ -1032,15 +1037,16 @@ function UpdateGUIArch() {
 
   }
 
-
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
   /*    red - if none Left (it's all been spent)                */
   /* ------------------------------------------------------------- */
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
 
+    // ARCH STORE CURRENT
     WriteFieldValueBlankZero(elemNumStoreCurrent[resourceId], fieldValues.storeCurrent[resourceId]);
 
+    // ARCH BUILD ACTUAL
     if (resourceId != 0) {
       ClearAllArchStyles(elemNumArchHousesAct[resourceId],resourceId);
 
@@ -1056,8 +1062,9 @@ function UpdateGUIArch() {
       }
 
       let newStyleAct = archState[resourceId];
+
       // ARCH ACT GUI
-      SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct); 
+      SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct,resourceId); 
 
       if (archState === ArchStateType.FREE_MODE || archState === ArchStateType.FULL) {
         WriteNormal(elemNumArchHousesAct[resourceId],
@@ -1074,32 +1081,31 @@ function UpdateGUIArch() {
 
     }
 
-    WriteNormal(elemNumArchRemaining[resourceId],dataArch.archRem[resourceId],16,true);
-
-    if (dataArch.archRem[resourceId] < 0) {
-      elemNumArchRemaining[resourceId].classList.add("red-background");
+    // ARCH POST
+    if (dataArch.archPost[resourceId] < 0) {
+      elemNumArchPost[resourceId].classList.add("red-background");
     } 
     else {
-      elemNumArchRemaining[resourceId].classList.remove("red-background");
+      elemNumArchPost[resourceId].classList.remove("red-background");
     }
 
     // ARCH COST
-    let archCostState = ArchCostRemType.ZERO;
-    if (dataArch.archBuildCost[resourceId] === 0) archCostState = ArchCostRemType.ZERO;
-    else archCostState = ArchCostRemType.NOT_ZERO;
+    let archCostState = ArchResNumType.ZERO;
+    if (fieldValues.archFreeMode) archCostState = ArchResNumType.ZERO;
+    else if (dataArch.archBuildCost[resourceId] === 0) archCostState = ArchResNumType.ZERO;
+    else archCostState = ArchResNumType.NOT_ZERO;
 
     let archCostStyle = archCostState[resourceId];
-    SetArchStyle(elemNumArchStoreCost[resourceId],archCostStyle);
+    SetArchCostStyle(elemNumArchStoreCost[resourceId],archCostStyle,resourceId);
 
-    if (dataArch.archBuildCost[resourceId] === 0) {
+    if (dataArch.archBuildCost[resourceId] === 0 || fieldValues.archFreeMode) {
       elemNumArchStoreCost[resourceId].textContent = "";
     }
     else {
       WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true);
     }
-    //ConvertZeroesToBlank(elemNumArchStoreCost[resourceId], dataArch.archBuildCost[resourceId]);
 
-    UpdateRemGui(elemNumArchRemaining[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archRem[resourceId], fieldValues.archFreeMode, resourceId);
+    UpdateArchPostGui(elemNumArchPost[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
 
   }
 
@@ -1377,6 +1383,47 @@ function SetMinusStyle(elem, newStyle, resourceId) {
 }
 
 //------------------------------------------------------------------
+// ClearAllArchResNumStyles
+//------------------------------------------------------------------
+function ClearAllArchResNumStyles(elem, resourceId) {
+
+  elem.classList.remove(ArchResNumType.NOT_ZERO[resourceId]);
+  elem.classList.remove(ArchResNumType.ZERO[resourceId]);
+}
+
+//------------------------------------------------------------------
+// SetArchResNumStyle
+//------------------------------------------------------------------
+function SetArchResNumStyle(elem, newStyle, resourceId) {
+
+  ClearAllArchResNumStyles(elem, resourceId);
+  
+  elem.classList.add(newStyle);
+
+}
+
+//------------------------------------------------------------------
+// ClearAllArchCostStyles
+//------------------------------------------------------------------
+function ClearAllArchCostStyles(elem, resourceId) {
+
+  elem.classList.remove(ArchResNumType.ZERO[resourceId]);
+  elem.classList.remove(ArchResNumType.NOT_ZERO[resourceId]);
+  elem.classList.remove(ArchResNumType.FREE_MODE[resourceId]);
+}
+
+//------------------------------------------------------------------
+// SetArchCostStyle
+//------------------------------------------------------------------
+function SetArchCostStyle(elem, newStyle, resourceId) {
+
+  ClearAllArchCostStyles(elem, resourceId);
+  
+  elem.classList.add(newStyle);
+
+}
+
+//------------------------------------------------------------------
 // ClearAllArchStyles
 //------------------------------------------------------------------
 function ClearAllArchStyles(elem, resourceId) {
@@ -1386,6 +1433,7 @@ function ClearAllArchStyles(elem, resourceId) {
   elem.classList.remove(ArchStateType.FULL[resourceId]);
   elem.classList.remove(ArchStateType.FREE_MODE[resourceId]);
 }
+
 
 //------------------------------------------------------------------
 // SetArchStyle

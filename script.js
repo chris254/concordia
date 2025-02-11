@@ -93,12 +93,6 @@ let mercToolDelta;
 let mercWineDelta;
 let mercClothDelta;
 
-let btnSellMercBrick;
-let btnSellMercFood;
-let btnSellMercTool;
-let btnSellMercWine;
-let btnSellMercCloth;
-
 /* MERC ELEMENTS */
 let elemBtnTrade1Mode;
 let elemBtnTrade2Mode;
@@ -117,6 +111,17 @@ const elemIdsArchHousesAct = [
 ];
 
  const elemNumArchHousesAct = elemIdsArchHousesAct.map((id) => document.getElementById(id));
+
+ const elemIdsArchReqd = [
+  "num-arch-reqd-cash",
+  "num-arch-reqd-brick",
+  "num-arch-reqd-food",
+  "num-arch-reqd-tool",
+  "num-arch-reqd-wine",
+  "num-arch-reqd-cloth",
+];
+
+ const elemNumArchReqd = elemIdsArchReqd.map((id) => document.getElementById(id));
 
 
 
@@ -366,25 +371,6 @@ document.addEventListener("DOMContentLoaded", function () {
   mercActive = MercType.MERC3;
   lastMercActive = MercType.MERC3;
 
-
-  btnDecStoreCash = document.getElementById("btn-dec-storecurrent-cash");
-  btnDecStoreBrick = document.getElementById("btn-dec-storecurrent-brick");
-  btnDecStoreFood = document.getElementById("btn-dec-storecurrent-food");
-  btnDecStoreTool = document.getElementById("btn-dec-storecurrent-tool");
-  btnDecStoreWine = document.getElementById("btn-dec-storecurrent-wine");
-  btnDecStoreCloth = document.getElementById("btn-dec-storecurrent-cloth");
-
-  btnBuyMercBrick = document.getElementById("btn-buy-merc-brick");
-  btnBuyMercFood = document.getElementById("btn-buy-merc-food");
-  btnBuyMercTool = document.getElementById("btn-buy-merc-tool");
-  btnBuyMercWine = document.getElementById("btn-buy-merc-wine");
-  btnBuyMercCloth = document.getElementById("btn-buy-merc-cloth");
-
-  btnSellMercBrick = document.getElementById("btn-dec-merc-brick");
-  btnSellMercFood = document.getElementById("btn-dec-merc-food");
-  btnSellMercTool = document.getElementById("btn-dec-merc-tool");
-  btnSellMercWine = document.getElementById("btn-dec-merc-wine");
-  btnSellMercCloth = document.getElementById("btn-dec-merc-cloth");
 
   dataArch.archHousesCurrent.fill(0);
   dataArch.archHousesCurrent[indexBrick] = 0;
@@ -930,29 +916,8 @@ function UpdateArchPostGui(elem, storeCurrent, storePost, archFreeMode, resource
 
 }
 
-function UpdateActGui(elem, actual) {
-  if (actual === 0) {
-    /* Must have spent it all */
-    elem.textContent = "";
-  } else {
-    elem.textContent = actual;
-  }
-}
 
-function SetArchStoreBackground(elem, valueCurrent, valueRemaining) {
-  if (valueCurrent === 0) SetBackgroundColor(elem, "transparent");
-  else if (valueRemaining === 0) SetBackgroundColor(elem, "red");
-}
 
-function SetArchStoreActColour(elem, noneLeft, valueCurrent) {
-  if (valueCurrent == 0) SetBackgroundColor(elem, "gray");
-  else SetBackgroundColor(elem, "white");
-}
-
-function SetArchBuildDecColour(elem, valueCurrent) {
-  if (valueCurrent === 0) SetBackgroundColor(elem, "gray");
-  else SetBackgroundColor(elem, "orange");
-}
 
 function SetArchBuilActColour(elem, delta, valueCurrent) {
   if (delta > 0) SetBackgroundColor(elem, "lightgreen");
@@ -966,6 +931,29 @@ function WriteNormal(elem_, number_, fontSize_, bold_) {
   else elem_.style.fontWeight = "normal";
 
   elem_.textContent = number_;
+}
+
+function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_) {
+  let arrayLength = numbers_.length;
+
+  const textArray = Array.from({ length: arrayLength }, () => document.createElement('span'));
+
+  elem_.textContent = '';
+
+  for (let index=0; index<=length; index++) {
+    
+    textArray[index].className = 'normal-text';
+    textArray[index].fontSize = fonts_[index] + "px";
+    if (bolds_[index]) textArray[index].style.fontWeight = "bold";
+    else textArray[index].style.fontWeight = "normal";
+ 
+    if (index===0 || index === length-1) elem_.append(textArray[index]);
+    else elem_.append(separator_ + textArray[index]);
+    
+
+  }
+
+
 }
 
 
@@ -1026,7 +1014,6 @@ function UpdateGUIArch() {
     // ARCH BUILD MINUS BUTTON
     if (resourceId != 0)
     {
-      //SetArchBuildDecColour(elemBtnDecArch[resourceId], dataArch.archHousesCurrent[resourceId]);
       if (dataArch.archHousesCurrent[resourceId] > 0 ) {
         elemBtnDecArch[resourceId].textContent = "\u25BC";
       }
@@ -1106,6 +1093,9 @@ function UpdateGUIArch() {
     }
 
     UpdateArchPostGui(elemNumArchPost[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
+
+    // ARCH REQD
+
 
   }
 

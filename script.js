@@ -124,6 +124,19 @@ const elemIdsArchHousesAct = [
  const elemNumArchReqd = elemIdsArchReqd.map((id) => document.getElementById(id));
 
 
+ // btn-dec-store-merc-brick
+
+ const elemIdsBtnDecMercStore = [
+  "btn-dec-store-merc-cash",
+  "btn-dec-store-merc-brick",
+  "btn-dec-store-merc-food",
+  "btn-dec-store-merc-tool",
+  "btn-dec-store-merc-wine",
+  "btn-dec-store-merc-cloth",
+];
+
+const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getElementById(id));
+
 
   const elemIdsBtnDecStore = [
     "btn-dec-storecurrent-cash",
@@ -1211,6 +1224,34 @@ function UpdateGUIMerc() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
     styleResourceName = resourceLookup[resourceId];
+
+    // MERC STORE MINUS BUTTON
+    let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+
+    // use different store values dependent upon cash or resource
+    let storeValue = 0;
+    if (resourceId === 0) {
+      storeValue = mercGlobal.mercStore[resourceId];
+    }
+    else {
+      storeValue = mercGlobal.mercStorePreTrade[resourceId];
+    }
+
+    if (storeValue === 0) {
+      minusButtonState = MinusButtonType.ZERO;
+      elemBtnDecMercStore[resourceId].textContent = ""
+    }
+    //else if (dataArch.runOutOf[resourceId]) {
+    //  minusButtonState = MinusButtonType.MINUS_INVALID;
+    //  elemBtnDecMercStore[resourceId].textContent = ""
+   // }
+    else {
+      minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+      elemBtnDecMercStore[resourceId].textContent = "-"
+    }
+    
+    let newStyle = minusButtonState[resourceId];
+    SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
 
     //--------------------------------------------------------------------
     // Pre

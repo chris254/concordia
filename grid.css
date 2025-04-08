@@ -247,26 +247,32 @@ body {
 .orange-background-cash {
   border: 2px solid green;
   background-color: orange;
+  border-radius: 25%;
 }
 .orange-background-brick {
   border: 2px solid rgb(183, 65, 14);
   background-color: orange;
+  border-radius: 25%;
 }
 .orange-background-food {
   border: 2px solid rgb(226, 199, 23);
   background-color: orange;
+  border-radius: 25%;
 }
 .orange-background-tool {
   border: 2px solid rgb(141, 141, 137);
   background-color: orange;
+  border-radius: 25%;
 }
 .orange-background-wine {
   border: 2px solid rgb(241, 12, 12);
   background-color: orange;
+  border-radius: 25%;
 }
 .orange-background-cloth {
   border: 2px solid rgb(62, 16, 189);
   background-color: orange;
+  border-radius: 25%;
 }
 
 /* -------------------------------------------------------------------- */

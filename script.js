@@ -495,6 +495,8 @@ function WriteFieldValueBlankZero(elem, value) {
   }
 }
 function ResetStoreCurrent() {
+
+  ResetArchitect();
   fieldValues.storeCurrent[0] = 0;
   fieldValues.storeCurrent[1] = 0;
   fieldValues.storeCurrent[2] = 0;
@@ -1006,9 +1008,19 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
+    if (fieldValues.archFreeMode) {
+      // Selectable
+      elemBtnIncArch[resourceId].style.borderRadius = 0;
+    }
+    else {
+      // Not selectable
+      elemBtnIncArch[resourceId].style.borderRadius = 25;
+    }
+
+
     // ARCH STORE MINUS BUTTON
     let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
-    if (fieldValues.storeCurrent[resourceId] === 0) {
+    if (fieldValues.storeCurrent[resourceId] === 0 || fieldValues.archFreeMode) {
       minusButtonState = MinusButtonType.ZERO;
       elemBtnDecStore[resourceId].textContent = ""
     }
@@ -1027,12 +1039,24 @@ function UpdateGUIArch() {
     // ARCH BUILD MINUS BUTTON
     if (resourceId != 0)
     {
+      let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+
       if (dataArch.archHousesCurrent[resourceId] > 0 ) {
-        elemBtnDecArch[resourceId].textContent = "\u25BC";
+//        elemBtnDecArch[resourceId].textContent = "\u25BC";
+          elemBtnDecArch[resourceId].textContent = "-";
+
+          minusButtonState = MinusButtonType.MINUS_AVAILABLE;          
       }
       else {
         elemBtnDecArch[resourceId].textContent = "";
+        minusButtonState = MinusButtonType.ZERO;          
       }
+
+      let newStyle = minusButtonState[resourceId];
+      SetMinusStyle(elemBtnDecArch[resourceId],newStyle,resourceId);
+  
+
+
     }
 
   }

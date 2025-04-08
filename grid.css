@@ -60,6 +60,22 @@ body {
   height: 20px;
 }
 
+.grid-item-circle {
+  position: absolute;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 3px solid black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  place-items: center;
+  align-items: center;
+  height: 20px;
+
+
+}
+
 .thin-gap {
   background-color: transparent;
   color: black;

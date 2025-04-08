@@ -36,16 +36,16 @@
       <!-- ========================================================================== -->
       <!-- Row 2: Headers -->
       <div class = "sub-title">STORE</div>
-      <div class="grid-item cash-filled" onclick="ArchStoreInc(0)">£</div>
-      <div class="grid-item brick-filled" onclick="ArchStoreInc(1)">
+      <div class="grid-item cash-filled" id="btn-inc-arch-cash" onclick="ArchStoreInc(0)">£</div>
+      <div class="grid-item brick-filled" id="btn-inc-arch-brick"  onclick="ArchStoreInc(1)">
         <img src="brick.PNG">
       </div>
-      <div class="grid-item food-filled" onclick="ArchStoreInc(2)">
+      <div class="grid-item food-filled" id="btn-inc-arch-food"  onclick="ArchStoreInc(2)">
         <img src="Food.png">
       </div>
-      <div class="grid-item tool-filled" onclick="ArchStoreInc(3)">Tool</div>
-      <div class="grid-item wine-filled" onclick="ArchStoreInc(4)">Wine</div>
-      <div class="grid-item cloth-filled" onclick="ArchStoreInc(5)">
+      <div class="grid-item tool-filled" id="btn-inc-arch-tool" onclick="ArchStoreInc(3)">Tool</div>
+      <div class="grid-item wine-filled" id="btn-inc-arch-wine" onclick="ArchStoreInc(4)">Wine</div>
+      <div class="grid-item cloth-filled" id="btn-inc-arch-cloth" onclick="ArchStoreInc(5)">
         <img src="Cloth.png">
       </div>
       
@@ -138,6 +138,7 @@
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">6</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">7</div>
     
+      <!-- ******************************************** MERC *************************************************** -->
       
       <!-- ========================================================================== -->
       <!-- Row 14: Cost of resource (for Mercator) -->
@@ -163,13 +164,16 @@
         <img src="Cloth.png">
       </div>
     
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
+
+    
+    
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Store</div>
+      <div class="grid-item-no-border cash" id="num-pre-merc-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border brick" id="num-pre-merc-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border food" id="num-pre-merc-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border tool" id="num-pre-merc-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border wine" id="num-pre-merc-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border cloth" id="num-pre-merc-cloth" style="font-weight: bolder;"></div>
     
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
@@ -183,17 +187,15 @@
     
 
 
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
     
-      <!-- ******************************************** MERC *************************************************** -->
-    
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Store</div>
-      <div class="grid-item-no-border cash" id="num-pre-merc-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border brick" id="num-pre-merc-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border food" id="num-pre-merc-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border tool" id="num-pre-merc-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border wine" id="num-pre-merc-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border cloth" id="num-pre-merc-cloth" style="font-weight: bolder;"></div>
-    
+
       <!-- ========================================================================== -->
       <!-- Row x: Merc Sell -->
       <div class="grid-item-no-border">

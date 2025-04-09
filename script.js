@@ -574,7 +574,7 @@ function ProcessArchitectStrict() {
     dataArch.archHousesCurrent[indexWine] +
     dataArch.archHousesCurrent[indexCloth];
 
-  dataArch.archBuildCost[2] =  dataArch.archHousesCurrent[indexBrick] + dataArch.archHousesCurrent[indexFood];
+  dataArch.archBuildCost[2] = dataArch.archHousesCurrent[indexBrick] + dataArch.archHousesCurrent[indexFood];
   dataArch.archBuildCost[3] = dataArch.archHousesCurrent[indexTool]; 
   dataArch.archBuildCost[4] = dataArch.archHousesCurrent[indexWine]; 
   dataArch.archBuildCost[5] = dataArch.archHousesCurrent[indexCloth]; 
@@ -599,10 +599,10 @@ function ProcessArchitectStrict() {
   /* BRICK HOUSES */
   /* --------------------------------------------------------------------- */
   for (let resourceId = 1; resourceId <= 5; resourceId++) {
-    dataArch.archHousesDeltaPossible[resourceId] = Min(Math.floor(dataArch.archPost[resourceId] / houseCost[resourceId]), dataArch.archPost[2]);
+    dataArch.archHousesDeltaPossible[resourceId] = Math.min(Math.floor(dataArch.archPost[resourceId] / houseCost[resourceId]), dataArch.archPost[2]);
   }
 
-  dataArch.archHousesDeltaPossible[indexBrick] = Min(Math.floor(dataArch.archPost[0] / houseCost[indexBrick]), dataArch.archPost[2]);
+  dataArch.archHousesDeltaPossible[indexBrick] = Math.min(Math.floor(dataArch.archPost[0] / houseCost[indexBrick]), dataArch.archPost[2]);
   dataArch.archHousesDeltaPossible[indexFood] = Min3(
     Math.floor(dataArch.archPost[indexCash] / houseCost[indexFood]),
     dataArch.archPost[indexBrick],
@@ -722,10 +722,31 @@ function CalcTradeCount() {
 
 function CalcMercHouseBuild() {
 
-  for (let resourceId = 1; resourceId <=5; resourceId++) {
+  mercGlobal.mercBuild[indexBrick] = 
+    Math.min(Math.floor(mercGlobal.mercStorePostTrade[0] / houseCost[indexBrick]), mercGlobal.mercStorePostTrade[indexFood]);
 
+  mercGlobal.mercBuild[indexFood] = Min3(
+    Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexFood]),
+    mercGlobal.mercStorePostTrade[indexBrick],
+    mercGlobal.mercStorePostTrade[indexFood]
+  );
+  mercGlobal.mercBuild[indexTool] = Min3(
+    Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexTool]),
+    mercGlobal.mercStorePostTrade[indexBrick],
+    mercGlobal.mercStorePostTrade[indexTool]
+  );
 
-  }
+  mercGlobal.mercBuild[indexWine] = Min3(
+    Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexWine]),
+    mercGlobal.mercStorePostTrade[indexBrick],
+    mercGlobal.mercStorePostTrade[indexWine]
+  );
+  mercGlobal.mercBuild[indexCloth] = Min3(
+    Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexCloth]),
+    mercGlobal.mercStorePostTrade[indexBrick],
+    mercGlobal.mercStorePostTrade[indexCloth]
+  );
+
 }
 // -------------------------------------------------------------------------
 // FUNCTION BUY RESOURCE
@@ -861,6 +882,9 @@ function ProcessMerc() {
       mercGlobal.mercStorePreTrade[resourceId] - mercGlobal.mercStorePostTrade[resourceId],
       0
     );
+
+    CalcMercHouseBuild();
+        
   }
 
   for (resourceId = 1; resourceId <= 5; resourceId++) {}
@@ -896,11 +920,29 @@ function ResetAll() {
   ResetArchitect();
 }
 
-function ResetMerc() {
+function ResetMercTrades() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
     mercGlobal.mercStorePostTrade[resourceId] = mercGlobal.mercStorePreTrade[resourceId];
   }
+  UpdateAll();
+}
+
+function ResetMercStore() {
+
+  ResetMercTrades();
+
+  if (mercActive === MercType.MERC3) {
+    mercGlobal.mercStorePreTrade[0] = 3;
+  }
+  else {
+    mercGlobal.mercStorePreTrade[0] = 5;  
+  }
+
+  for (let resourceId = 1; resourceId <=5; resourceId++) {
+    mercGlobal.mercStorePreTrade[resourceId] = 0;
+  }
+
   UpdateAll();
 }
 

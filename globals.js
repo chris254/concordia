@@ -20,12 +20,6 @@ let dataArch = {
 
   archHousesDeltaPossible:[0,0,0,0,0],
 
-  archHousesDeltaPossibleBrick:0,
-  archHousesDeltaPossibleFood:0,
-  archHousesDeltaPossibleTool:0,
-  archHousesDeltaPossibleWine:0,
-  archHousesDeltaPossibleCloth:0,
-
   archHousesTotalPossible:[0,0,0,0,0,0],
 
   archPost:[0,0,0,0,0,0],
@@ -109,4 +103,6 @@ let mercGlobal = {
 
   mercSellDelta:[0,0,0,0,0,0],
   mercBuyDelta:[0,0,0,0,0,0],
+
+  mercBuild:[0,0,0,0,0,0],
 }

@@ -94,6 +94,19 @@ body {
   border: 1px solid black;
   height: 20px;
 }
+
+.grid-item-selectable {
+  background-color: transparent;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*font-size: 1rem;*/
+  border: 1px solid black;
+  height: 20px;
+  border-radius: 25%;
+}
+
 .card-title {
   background-color: lightblue;
   color: black;

@@ -104,5 +104,5 @@ let mercGlobal = {
   mercSellDelta:[0,0,0,0,0,0],
   mercBuyDelta:[0,0,0,0,0,0],
 
-  mercBuild:[0,0,0,0,0,0],
+  mercHouses:[0,0,0,0,0,0],
 }

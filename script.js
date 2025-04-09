@@ -171,6 +171,17 @@ const elemIdsMercStorePostTrade = [
 
 const elemNumMercStorePostTrade = elemIdsMercStorePostTrade.map((id) => document.getElementById(id));
 
+const elemIdsMercHouses = [
+  "num-merc-houses-cash",
+  "num-merc-houses-brick",
+  "num-merc-houses-food",
+  "num-merc-houses-tool",
+  "num-merc-houses-wine",
+  "num-merc-houses-cloth",
+];
+
+const elemNumMercHouses = elemIdsMercHouses.map((id) => document.getElementById(id));
+
 const elemIdsMercBuyPot = [
   "num-merc-buypot-cash",
   "num-merc-buypot-brick",
@@ -722,26 +733,26 @@ function CalcTradeCount() {
 
 function CalcMercHouseBuild() {
 
-  mercGlobal.mercBuild[indexBrick] = 
+  mercGlobal.mercHouses[indexBrick] = 
     Math.min(Math.floor(mercGlobal.mercStorePostTrade[0] / houseCost[indexBrick]), mercGlobal.mercStorePostTrade[indexFood]);
 
-  mercGlobal.mercBuild[indexFood] = Min3(
+  mercGlobal.mercHouses[indexFood] = Min3(
     Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexFood]),
     mercGlobal.mercStorePostTrade[indexBrick],
     mercGlobal.mercStorePostTrade[indexFood]
   );
-  mercGlobal.mercBuild[indexTool] = Min3(
+  mercGlobal.mercHouses[indexTool] = Min3(
     Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexTool]),
     mercGlobal.mercStorePostTrade[indexBrick],
     mercGlobal.mercStorePostTrade[indexTool]
   );
 
-  mercGlobal.mercBuild[indexWine] = Min3(
+  mercGlobal.mercHouses[indexWine] = Min3(
     Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexWine]),
     mercGlobal.mercStorePostTrade[indexBrick],
     mercGlobal.mercStorePostTrade[indexWine]
   );
-  mercGlobal.mercBuild[indexCloth] = Min3(
+  mercGlobal.mercHouses[indexCloth] = Min3(
     Math.floor(mercGlobal.mercStorePostTrade[indexCash] / houseCost[indexCloth]),
     mercGlobal.mercStorePostTrade[indexBrick],
     mercGlobal.mercStorePostTrade[indexCloth]
@@ -884,7 +895,7 @@ function ProcessMerc() {
     );
 
     CalcMercHouseBuild();
-        
+
   }
 
   for (resourceId = 1; resourceId <= 5; resourceId++) {}
@@ -922,15 +933,14 @@ function ResetAll() {
 
 function ResetMercTrades() {
 
-  for (let resourceId = 0; resourceId <=5; resourceId++) {
+  for (let resourceId = 1; resourceId <=5; resourceId++) {
     mercGlobal.mercStorePostTrade[resourceId] = mercGlobal.mercStorePreTrade[resourceId];
   }
+
   UpdateAll();
 }
 
 function ResetMercStore() {
-
-  ResetMercTrades();
 
   if (mercActive === MercType.MERC3) {
     mercGlobal.mercStorePreTrade[0] = 3;
@@ -942,6 +952,8 @@ function ResetMercStore() {
   for (let resourceId = 1; resourceId <=5; resourceId++) {
     mercGlobal.mercStorePreTrade[resourceId] = 0;
   }
+
+  ResetMercTrades();
 
   UpdateAll();
 }
@@ -1453,6 +1465,10 @@ function UpdateGUIMerc() {
 
         elemBtnMercSellMinus[resourceId].textContent = " ";
       }
+    }
+
+    if (resourceId != 0) {
+      elemNumMercHouses[resourceId].textContent = mercGlobal.mercHouses[resourceId];
     }
   }
 }

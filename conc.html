@@ -26,7 +26,7 @@
       </div> 
       <div class="grid-item" style="font-size: 8pt">MD</div>
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">S</button>
+        <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">F</button>
       </div> 
       <div class="grid-item-no-border" id="version"></div>
 
@@ -109,7 +109,7 @@
       <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)">0</div>
       <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)">0</div>
       <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)">0</div>
-      
+
       <!-- ========================================================================== -->
       <!-- Row 12: Arch Build Dec -->
       <div class="grid-item-no-border"></div>
@@ -120,6 +120,18 @@
       <div class="grid-item-no-border" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)">-</div>
       <div class="grid-item-no-border" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)">-</div>
 
+      <!-- ========================================================================== -->
+      <!-- Row 8: Padding between Remaining and Build -->
+      <div class="grid-item-no-border">HA</div>
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white;">RST</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)">0</div>
+      
 
 
       

@@ -12,11 +12,7 @@ const resourceValue = [0,3,4,5,6,7];
 
 let dataArch = {
   archHousesCurrent:[0,0,0,0,0,0],
-  archHousesCurrentBrick:0,
-  archHousesCurrentFood:0,
-  archHousesCurrentTool:0,
-  archHousesCurrentWine:0,
-  archHousesCurrentCloth:0,
+  archHousesAdd:[0,0,0,0,0,0],
 
   archHousesDeltaPossible:[0,0,0,0,0],
 
@@ -26,11 +22,6 @@ let dataArch = {
 
   archMoreHousesAvailable:[0,0,0,0,0,0],
 
-  archMoreHousesAvailableBrick:false,
-  archMoreHousesAvailableFood:false,
-  archMoreHousesAvailableTool:false,
-  archMoreHousesAvailableWine:false,
-  archMoreHousesAvailableCloth:false,
 
   archBuildCost:[0,0,0,0,0,0],
   archBuildCostCash:0,
@@ -68,7 +59,7 @@ let fieldValues = {
   mercRemWine:0,
   mercRemCloth:0,
 
-  archFreeMode:false,
+  archFreeMode:true,
   archModeFirstPass:true,
 
 

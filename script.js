@@ -3,24 +3,7 @@ let elemBtnResetStoreCurrent;
 let elemBtnResetArchitect;
 let elemBtnResetMerc3;
 
-const styleGreenWithBorder = [
-  "",
-  "green-background-brick",
-  "green-background-food",
-  "green-background-tool",
-  "green-background-wine",
-  "green-background-cloth",
-];
-
-const styleClearWithBorder = [
-  "",
-  "clear-brick",
-  "clear-food",
-  "clear-tool",
-  "clear-wine",
-  "clear-cloth",
-];
-  const styleMinus = ["", "minus-brick", "minus-food", "minus-tool", "minus-wine", "minus-cloth"];
+const styleMinus = ["", "minus-brick", "minus-food", "minus-tool", "minus-wine", "minus-cloth"];
 
 const houseCost = [0,1,2,3,4,5];
 
@@ -38,33 +21,42 @@ const MercType = Object.freeze({
   MERC5: "MERC5",
 });
 
-const ArchResNumType = Object.freeze({
-  ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  NOT_ZERO: ["cash","brick","food","tool","wine","cloth"],
-  FREE_MODE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+const StylesType = Object.freeze({
+
+  CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  CLEAR_NORMAL: ["cash","brick","food","tool","wine","cloth"],
+  CLEAR_THICK: ["clear-thick-cash","clear-thick-brick","clear-thick-food","clear-thick-tool","clear-thick-wine","clear-thick-cloth"],
+  CLEAR_NORMAL_BOLD: ["clear-normal-bold-cash","clear-normal-bold-brick","clear-normal-bold-ood","clear-normal-bold-tool","clear-normal-bold-wine","clear-normal-bold-cloth"],
+  CLEAR_THICK_BOLD: ["clear-thick-bold-cash","clear-thick-bold-brick","clear-thick-bold-food","clear-thick-bold-tool","clear-thick-bold-wine","clear-thick-bold-cloth"],
+
+
+  ORANGE_NORMAL: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
+  RED_NORMAL: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
+  GREEN_NORMAL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+
 })
 
 const HouseAddType = Object.freeze({
-  HOUSE_ADD_ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  HOUSE_ADD_NON_ZERO: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
-  HOUSE_ADD_INVALID: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
+  CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  CLEAR_THICK: ["clear-thick-cash","clear-thick-brick","clear-thick-food","clear-thick-tool","clear-thick-wine","clear-thick-cloth"],
+  RED_NORMAL: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
 })
 
 const MinusButtonType = Object.freeze({
-  ZERO: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  MINUS_AVAILABLE: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
-  MINUS_INVALID: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
+  CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  ORANGE_NORMAL: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
+  RED_NORMAL: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
 })
 
 const ArchStateType = Object.freeze({
-  NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
-  AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
-  FULL: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
-  FREE_MODE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+  CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  GREEN_NORMAL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+  CLEAR_THICK_BOLD: ["clear-thick-bold-cash","clear-thick-bold-brick","clear-thick-bold-food","clear-thick-bold-tool","clear-thick-bold-wine","clear-thick-bold-cloth"],
+  CLEAR: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
 });
 
 const MercBtnState = Object.freeze({
-  NONE_AVAILABLE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
+  CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   OTHER_ACTIVE: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   ACTIVE_NOT_FULL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"], 
   ACTIVE_FULL: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
@@ -106,6 +98,8 @@ let elemBtnTrade2Mode;
 /* MERC GLOBALS */
 let mercTrade1Mode;
 let mercTrade2Mode;
+
+const minusImgPath = 'minus_small2.png';
 
 const elemIdsArchHousesAct = [
   "num-arch-houses-act-cash",
@@ -178,16 +172,16 @@ const elemIdsPreMercStore = [
 
 const elemNumPreMercStore = elemIdsPreMercStore.map((id) => document.getElementById(id));
 
-const elemIdsMercStorePostTrade = [
-  "num-post-merc-cash",
-  "num-post-merc-brick",
-  "num-post-merc-food",
-  "num-post-merc-tool",
-  "num-post-merc-wine",
-  "num-post-merc-cloth",
+const elemIdsMercStoreFinal = [
+  "num-final-merc-cash",
+  "num-final-merc-brick",
+  "num-final-merc-food",
+  "num-final-merc-tool",
+  "num-final-merc-wine",
+  "num-final-merc-cloth",
 ];
 
-const elemNumMercStorePostTrade = elemIdsMercStorePostTrade.map((id) => document.getElementById(id));
+const elemNumMercStoreFinal = elemIdsMercStoreFinal.map((id) => document.getElementById(id));
 
 const elemIdsMercHouses = [
   "num-merc-houses-cash",
@@ -235,16 +229,16 @@ const elemIdsMercDeltaTotal = [
 const elemNumMercDeltaTotal = elemIdsMercDeltaTotal.map((id) => document.getElementById(id));
 
 //---------------------------------------------------------------------------------
-const elemIdsMercDeltaSell = [
-  "num-merc-delta-sell-cash",
-  "num-merc-delta-sell-brick",
-  "num-merc-delta-sell-food",
-  "num-merc-delta-sell-tool",
-  "num-merc-delta-sell-wine",
-  "num-merc-delta-sell-cloth",
+const elemIdsMercPreBuy = [
+  "num-merc-pre-buy-cash",
+  "num-merc-pre-buy-brick",
+  "num-merc-pre-buy-food",
+  "num-merc-pre-buy-tool",
+  "num-merc-pre-buy-wine",
+  "num-merc-pre-buy-cloth",
 ];
 
-const elemNumMercDeltaSell = elemIdsMercDeltaSell.map((id) => document.getElementById(id));
+const elemNumPreBuy = elemIdsMercPreBuy.map((id) => document.getElementById(id));
 
 
 //---------------------------------------------------------------------------------
@@ -261,7 +255,7 @@ const elemNumMercDeltaBuy = elemIdsMercDeltaBuy.map((id) => document.getElementB
 
 
 //---------------------------------------------------------------------------------
-const elemIdsBtnMercBuy = [
+const elemIdsBtnMercBuyPlus = [
   "btn-merc-buy-cash",
   "btn-merc-buy-brick",
   "btn-merc-buy-food",
@@ -270,7 +264,7 @@ const elemIdsBtnMercBuy = [
   "btn-merc-buy-cloth",
 ];
 
-const elemBtnMercBuy = elemIdsBtnMercBuy.map((id) => document.getElementById(id));
+const elemBtnMercBuyPlus = elemIdsBtnMercBuyPlus.map((id) => document.getElementById(id));
 
 const elemIdsBtnMercSell = [
   "btn-merc-sell-cash",
@@ -294,6 +288,7 @@ const elemIdsBtnMercBuyMinus = [
 
 const elemBtnMercBuyMinus = elemIdsBtnMercBuyMinus.map((id) => document.getElementById(id));
 
+//------------------------------------------------------
 const elemIdsBtnMercSellMinus = [
   "btn-merc-sell-minus-cash",
   "btn-merc-sell-minus-brick",
@@ -304,6 +299,18 @@ const elemIdsBtnMercSellMinus = [
 ];
 
 const elemBtnMercSellMinus = elemIdsBtnMercSellMinus.map((id) => document.getElementById(id));
+
+//------------------------------------------------------------------------
+const elemIdsMercSellDelta = [
+  "num-merc-sell-delta-cash",
+  "num-merc-sell-delta-brick",
+  "num-merc-sell-delta-food",
+  "num-merc-sell-delta-tool",
+  "num-merc-sell-delta-wine",
+  "num-merc-sell-delta-cloth",
+];
+
+const elemMercSellDelta = elemIdsMercSellDelta.map((id) => document.getElementById(id));
 
 
 const elemIdsStoreCurrent = [
@@ -431,6 +438,11 @@ document.addEventListener("DOMContentLoaded", function () {
   UpdateAll();
 });
 
+function SetNewStyle(fill_, borderSize_, fontSize_) {
+
+
+}
+
 function ArchStoreDec(resourceId) {
   
   if (dataArch.archSpareResource[resourceId] > 0) {
@@ -484,35 +496,22 @@ function ArchHousesAdd(resourceId) {
 
 
 function MercStoreInc(resourceId) {
-  if (resourceId === 0) {
-    mercGlobal.mercStore[resourceId] += 1;
-    mercGlobal.mercStorePreTrade[resourceId] += 1;
-    mercGlobal.mercStorePostTrade[resourceId] += 1;
-  } else {
-    mercGlobal.mercStorePreTrade[resourceId] += 1;
-    mercGlobal.mercStorePostTrade[resourceId] += 1;
-  }
-
+  mercGlobal.mercStore[resourceId] += 1;
   UpdateAll();
 }
 
 function MercStoreDec(resourceId) {
-  if (resourceId === 0) {
-    if (mercGlobal.mercStorePostTrade[0] > 0 && mercGlobal.mercStore[resourceId] > 0) {
+
+  let sellQty = 0;
+  if (mercGlobal.sellInProgress[resourceId]) {
+    sellQty = mercGlobal.sellQtyActual[resourceId]
+    if (mercGlobal.mercStore[resourceId] > sellQty && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
       mercGlobal.mercStore[resourceId] -= 1;
-      mercGlobal.mercStorePreTrade[resourceId] -= 1;
-      mercGlobal.mercStorePostTrade[resourceId] -= 1;
-    }
-  } else {
-    // Normal resource
-    if (mercGlobal.mercStorePreTrade[resourceId] > 0) {
-      mercGlobal.mercStorePreTrade[resourceId] -= 1;
-
-      if (mercGlobal.mercStorePostTrade[resourceId] > 0) mercGlobal.mercStorePostTrade[resourceId] -= 1;
-
-      //mercGlobal.mercStorePreTrade[resourceId] -= 1;
     }
   }
+  else if (mercGlobal.mercStore[resourceId] > 0) {
+    mercGlobal.mercStore[resourceId] -= 1;
+  } 
 
   UpdateAll();
 }
@@ -739,45 +738,6 @@ function CanSellResource(resourceId) {
   return mercGlobal.mercStorePostTrade[resourceId] > 0;
 }
 
-// -------------------------------------------------------------------------
-// FUNCTION CalcTradeCount
-// -------------------------------------------------------------------------
-function CalcTradeCount() {
-  let tradeCountLocal = 0;
-
-  mercGlobal.mercTotalDelta[0] = 0;
-  mercGlobal.mercBuyDelta[0] = 0;
-  mercGlobal.mercSellDelta[0] = 0;
-
-  for (let resourceId = 1; resourceId <= 5; resourceId++) {
-
-    let deltaResource = mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId];
-
-    let sellActive = deltaResource < 0;
-    let buyActive = deltaResource > 0;
-
-    mercGlobal.mercBuyDelta[resourceId] = Math.max(deltaResource,0);
-    mercGlobal.mercSellDelta[resourceId] = Math.min(deltaResource,0);
-
-    mercGlobal.mercTotalDelta[resourceId] = deltaResource;
-
-    let deltaCash = -mercGlobal.mercTotalDelta[resourceId] * resourceValue[resourceId];
-    mercGlobal.mercTotalDelta[0] += deltaCash;
-
-    if (sellActive) mercGlobal.mercSellDelta[0] += deltaCash;
-    if (buyActive) mercGlobal.mercBuyDelta[0] += deltaCash;
-
-  
-    if (mercGlobal.mercTotalDelta[resourceId] != 0) {
-      tradeCountLocal++;
-    }
-
-
-    mercGlobal.mercTradeCount = tradeCountLocal;
-  }
-
-}
-
 function CalcMercHouseBuild() {
 
   mercGlobal.mercHouses[indexBrick] = 
@@ -809,25 +769,22 @@ function CalcMercHouseBuild() {
 // -------------------------------------------------------------------------
 // FUNCTION BUY RESOURCE
 // -------------------------------------------------------------------------
-function BuyResource(resourceId) {
-  // Get all merc data up to date
-  ProcessMerc();
+function ClickMercBuyResourcePlus(resourceId) {
 
-  if (!SellActive(resourceId)) {
-    if (BuyActive(resourceId)) {
-      // Buy is already active for this resource.
-      // Can another purchase be made?
-      if (CanBuyResource(resourceId)) {
-        mercGlobal.mercStorePostTrade[resourceId] += 1;
-        mercGlobal.mercStorePostTrade[0] -= resourceValue[resourceId];
-      }
-    } else {
-      // Not a current active trade
-      if ((mercGlobal.mercTradeCount < 2 && CanBuyResource(resourceId)) || SellActive(resourceId)) {
-        mercGlobal.mercStorePostTrade[resourceId] += 1;
-        mercGlobal.mercStorePostTrade[0] -= resourceValue[resourceId];
-      }
+  let enoughCash = mercGlobal.storeFinal[0] >= resourceValue[resourceId];
+
+  if (enoughCash) {
+
+    if (mercGlobal.buyInProgress[resourceId]) {
+      mercGlobal.buyQtyActual[resourceId]++;
     }
+    else if (mercGlobal.totalTradeCount < 2) {
+
+      // Not in progress so a new trade is to be created
+      // if sellcount is zero, then place the new trade at the first element, i.e. zero
+      mercGlobal.buyQtyActual[resourceId]++;
+    }
+
   }
 
   UpdateAll();
@@ -849,7 +806,7 @@ function SellMinus(resourceId) {
 
 function SellResource(resourceId) {
   // Get all merc data up to date
-  ProcessMerc();
+  ProcessMercOld();
 
   if (!BuyActive(resourceId)) {
     if (SellActive(resourceId)) {
@@ -877,83 +834,7 @@ function TradeActive(resourceId) {
 
 let firstPass = true;
 
-function ProcessMerc() {
-  CalcTradeCount();
 
-  let mercCardChangedThisPass = mercActive != lastMercActive;
-
-  if (firstPass) {
-    mercGlobal.mercStorePreTrade[0] = 3;
-    mercGlobal.mercStorePostTrade[0] = 3;
-
-    firstPass = false;
-  }
-
-  // Add 3 or 5 coins for merc type
-  //if (mercActive === CardType.MERC3) mercGlobal.mercStorePreTrade[0] = mercGlobal.mercStore[indexCash] + 3;
-  //if (mercActive === CardType.MERC5) mercGlobal.mercStorePreTrade[0] = mercGlobal.mercStore[indexCash] + 5;
-
-  // Calculate (for resource only, and not cash):
-  //   mercGlobal.preMercCashValue
-  //   mercGlobal.mercBuyPot
-  let currentCashValue = 0;
-  let deltaCashThisResource = 0;
-  mercGlobal.preMercSellValue[0] = 0; // Start with zero before getting the sell value for all resources
-
-  if (mercGlobal.mercTradeCount === 0) mercGlobal.mercStorePostTrade[0] = mercGlobal.mercStorePreTrade[0];
-
-  // -------------------------------------------------------------------
-  // Calculate sell values for pre trade numbers
-  // -------------------------------------------------------------------
-  let totalCashValue = 0;
-  for (let index = 1; index <= 5; index++) {
-    // currentCashValue is the value if all of this resource was sold
-    currentCashValue = mercGlobal.mercStorePreTrade[index] * resourceValue[index];
-    mercGlobal.preMercSellValue[index] = currentCashValue;
-
-    totalCashValue += currentCashValue;
-  }
-
-  mercGlobal.preMercSellValue[0] = totalCashValue;
-
-  // -------------------------------------------------------------------
-  // Calculate trade data
-  // -------------------------------------------------------------------
-  // mercGlobal.mercStorePreTrade
-  let resourceId;
-  let resourceDelta;
-  let cashDeltaThisTrade;
-  let cashPreTrade = mercGlobal.mercStorePreTrade[0];
-  let cashTotalDelta = 0;
-
-  for (resourceId = 1; resourceId <= 5; resourceId++) {
-    // Buy numbers
-    mercGlobal.mercBuyPot[resourceId] = Math.floor(mercGlobal.mercStorePostTrade[0] / resourceValue[resourceId]);
-    mercGlobal.mercBuyAct[resourceId] = Math.max(
-      mercGlobal.mercStorePostTrade[resourceId] - mercGlobal.mercStorePreTrade[resourceId],
-      0
-    );
-
-    // Sell numbers
-    mercGlobal.mercSellPot[resourceId] = mercGlobal.mercStorePostTrade[resourceId];
-    mercGlobal.mercSellAct[resourceId] = Math.max(
-      mercGlobal.mercStorePreTrade[resourceId] - mercGlobal.mercStorePostTrade[resourceId],
-      0
-    );
-
-    CalcMercHouseBuild();
-
-  }
-
-  for (resourceId = 1; resourceId <= 5; resourceId++) {}
-
-  lastMercActive = mercActive;
-  for (let resourceId = 0; resourceId <= 5; resourceId++) {
-    mercGlobal.lastTimeMercStore = mercGlobal.mercStorePreTrade[resourceId];
-  }
-
-  //CalcTradeCount();
-}
 
 function ResetArchitect() {
   dataArch.archHousesCurrent[indexBrick] = 0;
@@ -1015,40 +896,32 @@ function ResetMercStore() {
   UpdateAll();
 }
 
-function UpdateArchPostGui(elem, storeCurrent, storePost, archFreeMode, resourceId) {
-  let archPostState = ArchResNumType.ZERO;
+function UpdateArchPostGui(elemArray, storeCurrent, storePost, archFreeMode, resourceId) {
+
+  let archPostState = StylesType.CLEAR;
   let archPostStyle = archPostState[resourceId];
 
   if (archFreeMode) {
-    elem.textContent = "";
-    archPostState = ArchResNumType.ZERO;    
+    elemArray[resourceId].textContent = "";
+    archPostState = StylesType.CLEAR;    
 
   } 
   else {
     if ((storePost === 0 && storeCurrent > 0) || storePost > 0) {
       /* Must have spent it all */
-      elem.textContent = storePost;
-      archPostState = ArchResNumType.NOT_ZERO;
+      elemArray[resourceId].textContent = storePost;
+      archPostState = StylesType.CLEAR_NORMAL;
     } else {
-      elem.textContent = "";
-      archPostState = ArchResNumType.ZERO;
+      elemArray[resourceId].textContent = "";
+      archPostState = StylesType.CLEAR;
     }
 
   }
 
   archPostStyle = archPostState[resourceId];
-  SetArchResNumStyle(elem,archPostStyle,resourceId);
+  SetStyle(elemArray,archPostStyle,resourceId);
 
 
-}
-
-
-
-
-function SetArchBuilActColour(elem, delta, valueCurrent) {
-  if (delta > 0) SetBackgroundColor(elem, "lightgreen");
-  else if (delta === 0) SetBackgroundColor(elem, "red");
-  else SetBackgroundColor(elem, "gray");
 }
 
 function WriteNormal(elem_, number_, fontSize_, bold_) {
@@ -1110,6 +983,9 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
 
 }
 
+//--------------------------------------------------------------------
+// FUNCTION: UpdateGUIArch
+//--------------------------------------------------------------------
 function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
   /* Set store current decrement colour:                           */
@@ -1130,43 +1006,36 @@ function UpdateGUIArch() {
 
 
     // ARCH STORE MINUS BUTTON
-    let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
     if (fieldValues.storeCurrent[resourceId] === 0 || fieldValues.archFreeMode) {
-      minusButtonState = MinusButtonType.ZERO;
+      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.CLEAR[resourceId],resourceId);
+
       elemBtnDecStore[resourceId].textContent = ""
     }
     else if (dataArch.runOutOf[resourceId]) {
-      minusButtonState = MinusButtonType.MINUS_INVALID;
+      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
+
       elemBtnDecStore[resourceId].textContent = ""
     }
     else {
-      minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.ORANGE_NORMAL[resourceId],resourceId);
       elemBtnDecStore[resourceId].textContent = "-"
     }
 
-    let newStyle = minusButtonState[resourceId];
-    SetMinusStyle(elemBtnDecStore[resourceId],newStyle,resourceId);
-    
     // ARCH BUILD MINUS BUTTON
     if (resourceId != 0)
     {
-      let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
 
       if (dataArch.archHousesCurrent[resourceId] > 0 ) {
 //        elemBtnDecArch[resourceId].textContent = "\u25BC";
           elemBtnDecArch[resourceId].textContent = "-";
 
-          minusButtonState = MinusButtonType.MINUS_AVAILABLE;          
+          SetMinusStyle(elemBtnDecArch[resourceId],MinusButtonType.ORANGE_NORMAL[resourceId],resourceId);
+
       }
       else {
         elemBtnDecArch[resourceId].textContent = "";
-        minusButtonState = MinusButtonType.ZERO;          
+        SetMinusStyle(elemBtnDecArch[resourceId],MinusButtonType.CLEAR[resourceId],resourceId);
       }
-
-      let newStyle = minusButtonState[resourceId];
-      SetMinusStyle(elemBtnDecArch[resourceId],newStyle,resourceId);
-  
-
 
     }
 
@@ -1190,21 +1059,21 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       ClearAllArchStyles(elemNumArchHousesAct[resourceId],resourceId);
 
-      let archState = ArchStateType.NONE_AVAILABLE;
+      let archState = ArchStateType.CLEAR;
       
-      if (fieldValues.archFreeMode) archState = ArchStateType.FREE_MODE;
-      else if (dataArch.archHousesCurrent[resourceId] > 0 && dataArch.archHousesDeltaPossible[resourceId] === 0) archState = ArchStateType.FULL;
-      else if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.AVAILABLE;
-      else if (dataArch.archHousesCurrent[resourceId] > 0) archState = ArchStateType.AVAILABLE;
+      if (fieldValues.archFreeMode) archState = ArchStateType.CLEAR;
+      else if (dataArch.archHousesCurrent[resourceId] > 0 && dataArch.archHousesDeltaPossible[resourceId] === 0) archState = ArchStateType.CLEAR_THICK_BOLD;
+      else if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.GREEN_NORMAL;
+      else if (dataArch.archHousesCurrent[resourceId] > 0) archState = ArchStateType.GREEN_NORMAL;
       else {
-        archState = ArchStateType.NONE_AVAILABLE;
+        archState = ArchStateType.CLEAR;
       }
 
       let newStyleAct = archState[resourceId];
 
       SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct,resourceId); 
 
-      if (archState === ArchStateType.FREE_MODE || archState === ArchStateType.FULL) {
+      if (archState === ArchStateType.CLEAR || archState === ArchStateType.CLEAR_THICK_BOLD) {
         WriteNormal(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId],16,true);
       }
@@ -1219,23 +1088,22 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       // ARCH BUILD ADDITIONAL
       //------------------------------------------------------------ 
-      ClearAllArchAddStyles(elemNumArchHousesAdd[resourceId],resourceId);
+      ClearAllArchAddStyles(elemNumArchHousesAdd,resourceId);
 
-      let archAddState = HouseAddType.HOUSE_ADD_ZERO;
+      let archAddStyle = HouseAddType.CLEAR[resourceId];
+      let archAddState = HouseAddType.CLEAR;
 
 
       if (dataArch.archHousesCurrent[resourceId] > 0) {
-        archAddState = HouseAddType.HOUSE_ADD_NON_ZERO;
+        archAddStyle = HouseAddType.CLEAR_THICK[resourceId];
       }
       else
       {
-        archAddState = HouseAddType.HOUSE_ADD_ZERO;
+        archAddStyle = HouseAddType.CLEAR[resourceId];
       }
 
-      let newStyleAdd = archAddState[resourceId];
-
       // Additional houses
-      SetArchStyle(elemNumArchHousesAdd[resourceId],newStyleAdd,resourceId); 
+      SetArchStyle(elemNumArchHousesAdd[resourceId],archAddStyle,resourceId); 
 
       if (dataArch.archHousesCurrent[resourceId] > 0) {
         if (dataArch.archHousesAdd[resourceId] > 0)
@@ -1267,10 +1135,10 @@ function UpdateGUIArch() {
     }
 
     // ARCH COST
-    let archCostState = ArchResNumType.ZERO;
-    if (fieldValues.archFreeMode) archCostState = ArchResNumType.ZERO;
-    else if (dataArch.archBuildCost[resourceId] === 0) archCostState = ArchResNumType.ZERO;
-    else archCostState = ArchResNumType.NOT_ZERO;
+    let archCostState = StylesType.CLEAR;
+    if (fieldValues.archFreeMode) archCostState = StylesType.CLEAR;
+    else if (dataArch.archBuildCost[resourceId] === 0) archCostState = StylesType.CLEAR;
+    else archCostState = StylesType.CLEAR_NORMAL;
 
     let archCostStyle = archCostState[resourceId];
     SetArchCostStyle(elemNumArchStoreCost[resourceId],archCostStyle,resourceId);
@@ -1282,7 +1150,7 @@ function UpdateGUIArch() {
       WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true);
     }
 
-    UpdateArchPostGui(elemNumArchPost[resourceId], fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
+    UpdateArchPostGui(elemNumArchPost, fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
 
     // ARCH REQD
 
@@ -1360,21 +1228,25 @@ function SellActive(resourceId) {
   return mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
 }
 
-function MercSellMinus(resourceId) {
-  ProcessMerc();
+function ClickMercSellResourceMinus(resourceId) {
 
-  if (SellActive(resourceId) && mercGlobal.mercStorePostTrade[0] >= resourceValue[resourceId]) {
-    SellMinus(resourceId);
+  // Only if there's an active sell already and you can afford to "unsell" this resource
+  if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
+
+    // sell is already in progress and there's enough cash left to "unsell" this resource 
+    // Delta array is -ve if sell is in progress
+    mercGlobal.sellQtyActual[resourceId]--;
+
   }
+
   UpdateAll();
 }
 
 function MercBuyMinus(resourceId) {
-  ProcessMerc();
 
-  if (BuyActive(resourceId)) {
+  if (mercGlobal.buyInProgress[resourceId]) {
     // Pressing this will sell resource
-    BuyMinus(resourceId);
+    mercGlobal.buyQtyActual[resourceId]--;
   }
 
   UpdateAll();
@@ -1392,7 +1264,7 @@ function UpdateGUIMerc() {
   const largeText = document.createElement('span');
   largeText.className = 'large-text';
 
-  elemNumTrades.textContent = mercGlobal.mercTradeCount;
+  elemNumTrades.textContent = mercGlobal.totalTradeCount;
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 
@@ -1403,27 +1275,18 @@ function UpdateGUIMerc() {
     styleResourceName = resourceLookup[resourceId];
 
     // MERC STORE MINUS BUTTON
-    let minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+    let minusButtonState = MinusButtonType.ORANGE_NORMAL;
 
     // use different store values dependent upon cash or resource
     let storeValue = 0;
-    if (resourceId === 0) {
-      storeValue = mercGlobal.mercStore[resourceId];
-    }
-    else {
-      storeValue = mercGlobal.mercStorePreTrade[resourceId];
-    }
+    storeValue = mercGlobal.storePreSell[resourceId];
 
     if (storeValue === 0) {
-      minusButtonState = MinusButtonType.ZERO;
+      minusButtonState = MinusButtonType.CLEAR;
       elemBtnDecMercStore[resourceId].textContent = ""
     }
-    //else if (dataArch.runOutOf[resourceId]) {
-    //  minusButtonState = MinusButtonType.MINUS_INVALID;
-    //  elemBtnDecMercStore[resourceId].textContent = ""
-   // }
     else {
-      minusButtonState = MinusButtonType.MINUS_AVAILABLE;
+      minusButtonState = MinusButtonType.ORANGE_NORMAL;
       elemBtnDecMercStore[resourceId].textContent = "-"
     }
     
@@ -1431,12 +1294,12 @@ function UpdateGUIMerc() {
     SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
 
     //--------------------------------------------------------------------
-    // Pre
+    // Pre Sell
     //--------------------------------------------------------------------
     if (resourceId === 0) {
 
       smallTextGrey.textContent = mercGlobal.mercStore[resourceId];
-      largeText.textContent = "/" + mercGlobal.mercStorePreTrade[resourceId];
+      largeText.textContent = "/" + mercGlobal.storePreSell[resourceId];
 
       elemNumPreMercStore[resourceId].textContent = '';
       elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
@@ -1444,11 +1307,11 @@ function UpdateGUIMerc() {
 
     }
     else {
-      if (mercGlobal.mercStorePreTrade[resourceId] === 0) {
+      if (mercGlobal.storePreSell[resourceId] === 0) {
         elemNumPreMercStore[resourceId].textContent = "";
         elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
       } else {
-        elemNumPreMercStore[resourceId].textContent = mercGlobal.mercStorePreTrade[resourceId];
+        elemNumPreMercStore[resourceId].textContent = mercGlobal.storePreSell[resourceId];
         elemNumPreMercStore[resourceId].classList.add(styleResourceName);
       }
 
@@ -1457,45 +1320,102 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     // £??
     //--------------------------------------------------------------------
-    if (mercGlobal.preMercSellValue[resourceId] === 0) {
+    if (mercGlobal.storePreSell[resourceId] === 0) {
       elemNumPreMercSellValue[resourceId].textContent = "";
       elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
     } else {
-      elemNumPreMercSellValue[resourceId].textContent = mercGlobal.preMercSellValue[resourceId];
+      elemNumPreMercSellValue[resourceId].textContent = mercGlobal.storeCashValue[resourceId];
       elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
     }
 
+    //-----------------------------------------------------------------------
+    // SELL PLUS BUTTON
+    //-----------------------------------------------------------------------
+    if (resourceId != 0) {
+
+      let sellActive = mercGlobal.sellQtyActual[resourceId] > 0;
+      let buyActive = mercGlobal.buyQtyActual[resourceId] > 0;
+    
+      WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,false,mercGlobal.storePreSell[resourceId],16,false);
+      // UPDATE SELL BUTTON
+      //UpdateMercBuySellButton(elemBtnMercSell,  resourceId, sellActive, buyActive, mercGlobal.storePreSell[resourceId], mercGlobal.sellQtyAttary[resourceId]);
+    }
+
+    //-----------------------------------------------------------------------
+    // SELL MINUS BUTTON
+    //-----------------------------------------------------------------------
+    if (resourceId != 0 && mercGlobal.sellQtyActual[resourceId] > 0) {
+      elemBtnMercSellMinus[resourceId].style.backgroundImage = "url(minus_small2.png)";
+    } 
+    else {
+      elemBtnMercSellMinus[resourceId].style.backgroundImage = 'none';
+    }
+
+    //-----------------------------------------------------------------------
+    // DELTA SELL
+    //-----------------------------------------------------------------------
+    let localDelta  = mercGlobal.storePreBuy[resourceId] - mercGlobal.storePreSell[resourceId];
+    if (localDelta > 0)  elemMercSellDelta[resourceId].textContent = "+" + localDelta;
+    else elemMercSellDelta[resourceId].textContent = localDelta;
+
+    //****************************************************************************************
+    // BUY BUY BUY BUY
+    //****************************************************************************************
     //--------------------------------------------------------------------
-    // Delta Sell GUI
+    // PRE BUY
     //--------------------------------------------------------------------
-    if (mercGlobal.mercSellDelta[resourceId] === 0) {
-      elemNumMercDeltaSell[resourceId].textContent = "";
-    } else if (mercGlobal.mercSellDelta[resourceId] > 0) {
-      elemNumMercDeltaSell[resourceId].textContent = "+" + mercGlobal.mercSellDelta[resourceId];
+    if (mercGlobal.storePreBuy[resourceId] === 0) {
+      elemNumPreBuy[resourceId].textContent = "";
+    } else if (mercGlobal.storePreBuy[resourceId] > 0) {
+      elemNumPreBuy[resourceId].textContent = mercGlobal.storePreBuy[resourceId];
     }
     else 
     {
-      elemNumMercDeltaSell[resourceId].textContent = mercGlobal.mercSellDelta[resourceId];
+      elemNumPreBuy[resourceId].textContent = mercGlobal.storePreBuy[resourceId];
     }
+
+    //-----------------------------------------------------------------------
+    // BUY PLUS
+    // -------------------------------------------
+    if (resourceId != 0) {
+
+      let sellActive = mercGlobal.sellQtyActual[resourceId] > 0;
+      let buyActive = mercGlobal.buyQtyActual[resourceId] > 0;
+    
+      // UPDATE BUY BUTTON
+      let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
+      WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,false,mercGlobal.buyQtyPossible[resourceId],16,false);
+
+    }
+
+    //-----------------------------------------------------------------------
+    // BUY MINUS
+    //-----------------------------------------------------------------------
+    if (resourceId != 0 && mercGlobal.buyQtyActual[resourceId] > 0) {
+      elemBtnMercBuyMinus[resourceId].style.backgroundImage = "url(minus_small2.png)";
+    } 
+    else {
+      elemBtnMercBuyMinus[resourceId].style.backgroundImage = 'none';
+    }
+
     //--------------------------------------------------------------------
-    // Delta Buy GUI
+    // BUY DELTA
     //--------------------------------------------------------------------
-    if (mercGlobal.mercBuyDelta[resourceId] === 0) {
-      elemNumMercDeltaBuy[resourceId].textContent = "";
-    } else if (mercGlobal.mercBuyDelta[resourceId] > 0) {
-      elemNumMercDeltaBuy[resourceId].textContent = "+" + mercGlobal.mercBuyDelta[resourceId];
-    }
-    else 
-    {
-      elemNumMercDeltaBuy[resourceId].textContent = mercGlobal.mercBuyDelta[resourceId];
-    }
+    let localDeltaBuy = 0;
+    if (resourceId === 0) localDeltaBuy = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
+    else localDeltaBuy = mercGlobal.buyQtyActual[resourceId];
+
+    if (localDeltaBuy > 0)  elemNumMercDeltaBuy[resourceId].textContent = "+" + localDeltaBuy;
+    else elemNumMercDeltaBuy[resourceId].textContent = localDeltaBuy;  
+
 
     //--------------------------------------------------------------------
     // Delta Actual GUI
     //--------------------------------------------------------------------
-    if (mercGlobal.mercTotalDelta[resourceId] === 0) {
+    localDeltaBuy = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreSell[resourceId]
+    if (localDeltaBuy === 0) {
       elemNumMercDeltaTotal[resourceId].textContent = "";
-    } else if (mercGlobal.mercTotalDelta[resourceId] > 0) {
+    } else if (localDeltaBuy > 0) {
       elemNumMercDeltaTotal[resourceId].textContent = "+" + mercGlobal.mercTotalDelta[resourceId];
     }
     else 
@@ -1507,64 +1427,18 @@ function UpdateGUIMerc() {
     // Post
     //--------------------------------------------------------------------
     if (resourceId === 0) {
-      elemNumMercStorePostTrade[resourceId].classList.add(styleResourceName);
-      elemNumMercStorePostTrade[resourceId].textContent = mercGlobal.mercStorePostTrade[resourceId];
+      elemNumMercStoreFinal[resourceId].classList.add(styleResourceName);
+      elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     } else {
-      if (mercGlobal.mercStorePostTrade[resourceId] === 0) {
-        elemNumMercStorePostTrade[resourceId].textContent = "";
-        elemNumMercStorePostTrade[resourceId].classList.remove(styleResourceName);
+      if (mercGlobal.storeFinal[resourceId] === 0) {
+        elemNumMercStoreFinal[resourceId].textContent = "";
+        elemNumMercStoreFinal[resourceId].classList.remove(styleResourceName);
       } else {
-        elemNumMercStorePostTrade[resourceId].textContent = mercGlobal.mercStorePostTrade[resourceId];
-        elemNumMercStorePostTrade[resourceId].classList.add(styleResourceName);
+        elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
+        elemNumMercStoreFinal[resourceId].classList.add(styleResourceName);
       }
     }
 
-    let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
-    let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
-
-    //-----------------------------------------------------------------------
-    // Merc Sell and Buy button colouring
-    //-----------------------------------------------------------------------
-    if (resourceId != 0) {
-
-      let sellActive = mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
-      let buyActive = mercGlobal.mercStorePostTrade[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
-    
-      // UPDATE SELL BUTTON
-      UpdateMercBuySellButton(elemBtnMercSell,  resourceId, sellActive, buyActive, mercGlobal.mercSellPot[resourceId], mercGlobal.mercSellAct[resourceId]);
-
-      // UPDATE BUY BUTTON
-      UpdateMercBuySellButton(elemBtnMercBuy,  resourceId, buyActive, sellActive, mercGlobal.mercBuyPot[resourceId], mercGlobal.mercBuyAct[resourceId]);
-      //console.log ("-----------------------------------------------------------");
-
-
-    }
-
-    //-----------------------------------------------------------------------
-    // Merc Minus button colouring
-    //-----------------------------------------------------------------------
-    if (resourceId != 0) {
-      if (BuyActive(resourceId)) {
-        elemBtnMercBuyMinus[resourceId].classList.add(styleMinus[resourceId]);
-
-        elemBtnMercBuyMinus[resourceId].textContent = "\u25BC";
-      } else {
-        elemBtnMercBuyMinus[resourceId].classList.remove(styleMinus[resourceId]);
-
-        elemBtnMercBuyMinus[resourceId].textContent = " ";
-      }
-    }
-    if (resourceId != 0) {
-      if (SellActive(resourceId)) {
-        elemBtnMercSellMinus[resourceId].classList.add(styleMinus[resourceId]);
-
-        elemBtnMercSellMinus[resourceId].textContent = "\u25BC";
-      } else {
-        elemBtnMercSellMinus[resourceId].classList.remove(styleMinus[resourceId]);
-
-        elemBtnMercSellMinus[resourceId].textContent = " ";
-      }
-    }
 
     if (resourceId != 0) {
       elemNumMercHouses[resourceId].textContent = mercGlobal.mercHouses[resourceId];
@@ -1577,9 +1451,9 @@ function UpdateGUIMerc() {
 //------------------------------------------------------------------
 function ClearAllMinusStyles(elem, resourceId) {
 
-  elem.classList.remove(MinusButtonType.MINUS_AVAILABLE[resourceId]);
-  elem.classList.remove(MinusButtonType.ZERO[resourceId]);
-  elem.classList.remove(MinusButtonType.MINUS_INVALID[resourceId]);
+  elem.classList.remove(MinusButtonType.ORANGE_NORMAL[resourceId]);
+  elem.classList.remove(MinusButtonType.CLEAR[resourceId]);
+  elem.classList.remove(MinusButtonType.RED_NORMAL[resourceId]);
 
 }
 
@@ -1599,8 +1473,8 @@ function SetMinusStyle(elem, newStyle, resourceId) {
 //------------------------------------------------------------------
 function ClearAllArchResNumStyles(elem, resourceId) {
 
-  elem.classList.remove(ArchResNumType.NOT_ZERO[resourceId]);
-  elem.classList.remove(ArchResNumType.ZERO[resourceId]);
+  elem.classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
+  elem.classList.remove(StylesType.CLEAR[resourceId]);
 }
 
 //------------------------------------------------------------------
@@ -1619,9 +1493,9 @@ function SetArchResNumStyle(elem, newStyle, resourceId) {
 //------------------------------------------------------------------
 function ClearAllArchCostStyles(elem, resourceId) {
 
-  elem.classList.remove(ArchResNumType.ZERO[resourceId]);
-  elem.classList.remove(ArchResNumType.NOT_ZERO[resourceId]);
-  elem.classList.remove(ArchResNumType.FREE_MODE[resourceId]);
+  elem.classList.remove(StylesType.CLEAR[resourceId]);
+  elem.classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
+  elem.classList.remove(StylesType.CLEAR[resourceId]);
 }
 
 //------------------------------------------------------------------
@@ -1635,20 +1509,41 @@ function SetArchCostStyle(elem, newStyle, resourceId) {
 
 }
 
-function ClearAllArchAddStyles(elem, resourceId) {
+function ClearAllArchAddStyles(elemArray, resourceId) {
 
-  elem.classList.remove(HouseAddType.HOUSE_ADD_INVALID[resourceId]);
-  elem.classList.remove(HouseAddType.HOUSE_ADD_NON_ZERO[resourceId]);
-  elem.classList.remove(HouseAddType.HOUSE_ADD_ZERO[resourceId]);
+  elemArray[resourceId].classList.remove(HouseAddType.RED_NORMAL[resourceId]);
+  elemArray[resourceId].classList.remove(HouseAddType.CLEAR_THICK[resourceId]);
+  elemArray[resourceId].classList.remove(HouseAddType.CLEAR[resourceId]);
 
 }
 
-//------------------------------------------------------------------
-// SetArchStyle
-//------------------------------------------------------------------
-function SetArchAddStyle(elem, newStyle, resourceId) {
+function ClearAllStyles(elemArray,resourceId) {
 
-  ClearAllArchAddStyles(elem, resourceId);
+  elemArray[resourceId].classList.remove(StylesType.CLEAR[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.CLEAR_THICK[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.CLEAR_NORMAL_BOLD[resourceId]);
+
+  elemArray[resourceId].classList.remove(StylesType.ORANGE_NORMAL[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.RED_NORMAL[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.GREEN_NORMAL[resourceId]);
+
+}
+
+function SetStyle(elemArray,newStyle, resourceId) {
+  ClearAllStyles(elemArray, resourceId);
+
+  elemArray[resourceId].classList.add(newStyle);
+
+}
+
+
+//------------------------------------------------------------------
+// SetArchAddStyle
+//------------------------------------------------------------------
+function SetArchAddStyle(elemArray, newStyle, resourceId) {
+
+  ClearAllArchAddStyles(elemArray, resourceId);
 
   elem.classList.add(newStyle);
 
@@ -1659,10 +1554,10 @@ function SetArchAddStyle(elem, newStyle, resourceId) {
 //------------------------------------------------------------------
 function ClearAllArchStyles(elem, resourceId) {
 
-  elem.classList.remove(ArchStateType.NONE_AVAILABLE[resourceId]);
-  elem.classList.remove(ArchStateType.AVAILABLE[resourceId]);
-  elem.classList.remove(ArchStateType.FULL[resourceId]);
-  elem.classList.remove(ArchStateType.FREE_MODE[resourceId]);
+  elem.classList.remove(ArchStateType.CLEAR[resourceId]);
+  elem.classList.remove(ArchStateType.GREEN_NORMAL[resourceId]);
+  elem.classList.remove(ArchStateType.CLEAR_THICK_BOLD[resourceId]);
+  elem.classList.remove(ArchStateType.CLEAR[resourceId]);
 }
 
 
@@ -1683,7 +1578,7 @@ function SetArchStyle(elem, newStyle, resourceId) {
 //------------------------------------------------------------------
 function ClearAllMercBtnStyles(elem, resourceId) {
 
-  elem.classList.remove(MercBtnState.NONE_AVAILABLE[resourceId]);
+  elem.classList.remove(MercBtnState.CLEAR[resourceId]);
   elem.classList.remove(MercBtnState.OTHER_ACTIVE[resourceId]);
   elem.classList.remove(MercBtnState.ACTIVE_FULL[resourceId]);
   elem.classList.remove(MercBtnState.NOT_ACTIVE_AVAILABLE[resourceId]);
@@ -1718,7 +1613,7 @@ function UpdateMercBuySellButton(elemBtn_, resourceId, thisActive, otherActive, 
   let localStatus = MercBtnState.NOT_AVAILABLE;
 
   if (!thisActive && tradePotential_ === 0) {
-    localStatus = MercBtnState.NONE_AVAILABLE;
+    localStatus = MercBtnState.CLEAR;
   }
   else if (otherActive) {
     localStatus = MercBtnState.OTHER_ACTIVE;
@@ -1749,7 +1644,7 @@ function UpdateMercBuySellButton(elemBtn_, resourceId, thisActive, otherActive, 
   }
 
   // WRITE TO BUTTON TEXT
-  if (localStatus === MercBtnState.NONE_AVAILABLE) {
+  if (localStatus === MercBtnState.CLEAR) {
 
     let btnStyle = localStatus[resourceId];
 
@@ -1783,7 +1678,7 @@ function UpdateMercBuySellButton(elemBtn_, resourceId, thisActive, otherActive, 
   else if (localStatus === MercBtnState.ACTIVE_FULL) {
 
     let btnStyle = localStatus[resourceId];
-    SetMercSellBuyStyle(elemBtn_[resourceId], styleClearWithBorder[resourceId], resourceId, 16);
+    SetMercSellBuyStyle(elemBtn_[resourceId], StylesType.CLEAR_NORMAL[resourceId], resourceId, 16);
 
     elemBtn_[resourceId].textContent = tradeAct_;
 
@@ -1804,4 +1699,155 @@ function UpdateMercBuySellButton(elemBtn_, resourceId, thisActive, otherActive, 
   }
 
 
+}
+
+function ProcessMerc() {
+
+  let localTradeId = 0;
+
+  // Calculate:
+  // mercGlobal.sellInProgress[resourceId]
+  // mercGlobal.sellTradeCount
+  // mercGlobal.buyTradeCount
+  // mercGlobal.totalTradeCount
+
+  let localSellCount = 0;
+  let localBuyCount = 0;
+
+  mercGlobal.sellInProgress.fill(false);
+  mercGlobal.buyInProgress.fill(false);
+
+  for (let resourceId=1; resourceId<=5; resourceId++) {
+    if (mercGlobal.sellQtyActual[resourceId] > 0) {
+      localSellCount++;
+      mercGlobal.sellInProgress[resourceId] = true;
+    }
+
+    if (mercGlobal.buyQtyActual[resourceId] > 0) {
+      localBuyCount++; 
+      mercGlobal.buyInProgress[resourceId] = true;
+    }
+
+  }
+
+  mercGlobal.sellTradeCount = localSellCount;
+  mercGlobal.buyTradeCount = localBuyCount;
+  mercGlobal.totalTradeCount = localSellCount + localBuyCount;
+
+
+
+  //-------------------------------------------------------
+  // Calculate mercGlobal.storePreSell
+  //-------------------------------------------------------
+  // mercGlobal.mercStore ->
+  //   mercGlobal.storePreSell ->
+  //     mercGlobal.storeTradeSellArray ->
+  //       mercGlobal.storePreBuy ->
+  //         mercGlobal.storeTradeBuyArray ->
+  //           mercGlobal.storeFinal ->
+  //      
+  // MERC3 or MERC5
+  let mercCashBonus = 0;
+  if (mercActive === MercType.MERC3) mercCashBonus = 3;
+  else mercCashBonus = 5;
+  
+  mercGlobal.storePreSell[0] = mercGlobal.mercStore[0] + mercCashBonus;     
+  
+  // Jst coopy all of teh resoyrce values across as not impacted by merc3 or merc5
+  for (let resourceId = 1; resourceId <=5; resourceId++) {
+    mercGlobal.storePreSell[resourceId] = mercGlobal.mercStore[resourceId];
+  }
+
+  let totalSellCashDelta = 0;
+  let totalBuyCashDelta = 0;
+  // Go through each phase of the merc: store, sell, buy
+  for (let resourceId = 1; resourceId <= 5; resourceId++) {
+
+    //-------------------------------------------------------
+    // Calculate mercGlobal.storePreBuy
+    //-------------------------------------------------------
+    let localSellQty = mercGlobal.sellQtyActual[resourceId];
+
+    // Remove the resource as it's been sold
+    mercGlobal.storePreBuy[resourceId] = mercGlobal.storePreSell[resourceId] - localSellQty;
+ 
+
+    // Cash is added as it's been sold
+    totalSellCashDelta = totalSellCashDelta + (localSellQty * resourceValue[resourceId]);  
+
+
+    //-------------------------------------------------------
+    // Calculate mercGlobal.storeFinal
+    //-------------------------------------------------------
+    let localBuyQty = mercGlobal.buyQtyActual[resourceId];
+    // Add the resource as it's been bought
+    mercGlobal.storeFinal[resourceId] = mercGlobal.storePreSell[resourceId] + localBuyQty;
+
+    // Take away the cash
+    totalBuyCashDelta = totalBuyCashDelta - (localBuyQty * resourceValue[resourceId])
+
+  }
+
+  mercGlobal.storePreBuy[0] = mercGlobal.storePreSell[0] + totalSellCashDelta;
+  mercGlobal.storeFinal[0] = mercGlobal.storePreBuy[0] + totalBuyCashDelta;
+
+  let currentCashValue = 0;
+  let totalCashValue = 0;
+  mercGlobal.storeCashValue[0] = 0; // Start with zero before getting the sell value for all resources
+
+  // -------------------------------------------------------------------
+  // Calculate sell values for pre trade numbers
+  // -------------------------------------------------------------------
+  for (let index = 1; index <= 5; index++) {
+    // currentCashValue is the value if all of this resource was sold
+    currentCashValue = mercGlobal.storePreSell[index] * resourceValue[index];
+    mercGlobal.storeCashValue[index] = currentCashValue;
+
+    totalCashValue += currentCashValue;
+
+    // Potential buy
+    mercGlobal.mercBuyPot[index] = 
+      Math.floor(mercGlobal.storeFinal[0] / resourceValue[index]);
+    mercGlobal.buyQtyPossible[index] = mercGlobal.buyQtyActual[index] + mercGlobal.mercBuyPot[index];
+
+
+  }
+
+  mercGlobal.storeCashValue[0] = totalCashValue;
+
+
+
+}
+
+
+
+function ClickMercSellResourcePlus(resourceId) {
+
+  if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storePreBuy[resourceId] > 0) {
+    mercGlobal.sellQtyActual[resourceId]++;
+  }
+  else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[resourceId] > 0) {
+    // Not in progress so a new trade is to be created
+    // if sellcount is zero, then place the new trade at the first element, i.e. zero
+    mercGlobal.sellQtyActual[resourceId]++;
+  }
+
+  UpdateAll();
+}
+
+function ClickBuyResource(resourceId) {
+
+  let localTradeId = 0;
+  if (mercGlobal.buyInProgress[resourceId] && mercGlobal.storePreBuy[0] > resourceValue[resourceId]) {
+    localTradeId = mercGlobal.buyInProgressTradeId[resourceId];
+    mercGlobal.storeTradeBuyArray[localTradeId][resourceId]++;
+  }
+  else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[0] > resourceValue[resourceId]) {
+    // Not in progress so a new trade is to be created
+    // if sellcount is zero, then place the new trade at the first element, i.e. zero
+    localTradeId = mercGlobal.buyTradeCount;
+    mercGlobal.storeTradeBuyArray[localTradeId][resourceId]++;
+  }
+
+  UpdateAll();
 }

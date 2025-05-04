@@ -52,12 +52,19 @@ body {
 
 .grid-item-no-border {
   background-color: transparent;
+  overflow: hidden;
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   height: 20px;
+}
+
+.grid-item-no-border img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .grid-item-circle {
@@ -139,26 +146,32 @@ body {
 }
 
 .cash {
+  background-color: transparent;
   border: 3px solid green;
 }
 
 .brick {
+  background-color: transparent;
   border: 3px solid rgb(183, 65, 14);
 }
 
 .food {
+  background-color: transparent;
   border: 3px solid rgb(226, 199, 23);
 }
 
 .tool {
+  background-color: transparent;
   border: 3px solid rgb(141, 141, 137);
 }
 
 .wine {
+  background-color: transparent;
   border: 3px solid rgb(241, 12, 12);
 }
 
 .cloth {
+  background-color: transparent;
   border: 3px solid rgb(62, 16, 189);
 }
 
@@ -335,32 +348,99 @@ body {
 
 /* -------------------------------------------------------------------- */
 /* trade-full */
-.clear-brick {
+.clear-thick-bold-brick {
   border: 5px solid rgb(183, 65, 14);
   background-color: transparent;
   font-weight: bolder;
 }
-.clear-food {
+.clear-thick-bold-food {
   border: 5px solid rgb(226, 199, 23);
   background-color: transparent;
   font-weight: bolder;
 }
 
-.clear-tool {
+.clear-thick-bold-tool {
   border: 5px solid rgb(141, 141, 137);
   background-color: transparent;
   font-weight: bolder;
 }
-.clear-wine {
+.clear-thick-bold-wine {
   border: 5px solid rgb(241, 12, 12);
   background-color: transparent;
   font-weight: bolder;
 }
-.clear-cloth {
+.clear-thick-bold-cloth {
   border: 5px solid rgb(62, 16, 189);
   background-color: transparent;
   font-weight: bolder;
 }
+
+/*--------------------------------------------------------*/
+.clear-normal-bold-brick {
+  border: 2px solid rgb(183, 65, 14);
+  background-color: transparent;
+  font-weight: bolder;
+}
+.clear-normal-bold-food {
+  border: 2px solid rgb(226, 199, 23);
+  background-color: transparent;
+  font-weight: bolder;
+}
+
+.clear-normal-bold-tool {
+  border: 2px solid rgb(141, 141, 137);
+  background-color: transparent;
+  font-weight: bolder;
+}
+.clear-normal-bold-wine {
+  border: 2px solid rgb(241, 12, 12);
+  background-color: transparent;
+  font-weight: bolder;
+}
+.clear-normal-bold-cloth {
+  border: 2px solid rgb(62, 16, 189);
+  background-color: transparent;
+  font-weight: bolder;
+}
+
+.down-arrow {
+  border: none;
+  background-image: url("minus_small2.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+}
+
+
+
+
+/*------------------------------------------------------*/
+.clear-thick-brick {
+  border: 5px solid rgb(183, 65, 14);
+  background-color: transparent;
+}
+.clear-thick-food {
+  border: 5px solid rgb(226, 199, 23);
+  background-color: transparent;
+}
+
+.clear-thick-tool {
+  border: 5px solid rgb(141, 141, 137);
+  background-color: transparent;
+}
+.clear-thick-wine {
+  border: 5px solid rgb(241, 12, 12);
+  background-color: transparent;
+}
+.clear-thick-cloth {
+  border: 5px solid rgb(62, 16, 189);
+  background-color: transparent;
+}
+
+
+
+
 
 .clear-no-border {
   background-color: transparent;

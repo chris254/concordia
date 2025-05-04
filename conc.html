@@ -219,35 +219,48 @@
         <button class="btn-full-not-selected">SELL</button>
       </div> 
       <div class="grid-item-no-border" id="btn-merc-sell-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-sell-brick" onclick="SellResource(1)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-food" onclick="SellResource(2)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-tool" onclick="SellResource(3)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-wine" onclick="SellResource(4)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-cloth" onclick="SellResource(5)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-brick" onclick="ClickMercSellResourcePlus(1)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-food" onclick="ClickMercSellResourcePlus(2)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-tool" onclick="ClickMercSellResourcePlus(3)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-wine" onclick="ClickMercSellResourcePlus(4)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-cloth" onclick="ClickMercSellResourcePlus(5)">0</div>
     
       <!-- ========================================================================== -->
-      <!-- Row x: Merc Buy -->
+      <!-- Row x: Merc Sell Minus -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">-</button>
       </div> 
       <div class="grid-item-no-border" id="btn-merc-sell-minus-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-sell-minus-brick" onclick="MercSellMinus(1)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-minus-food" onclick="MercSellMinus(2)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-minus-tool" onclick="MercSellMinus(3)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-minus-wine" onclick="MercSellMinus(4)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-minus-cloth" onclick="MercSellMinus(5)">-</div>
+      <div class="down-arrow" id="btn-merc-sell-minus-brick" onclick="ClickMercSellResourceMinus(1)"></div>
+      <div class="down-arrow" id="btn-merc-sell-minus-food" onclick="ClickMercSellResourceMinus(2)"></div>
+      <div class="down-arrow" id="btn-merc-sell-minus-tool" onclick="ClickMercSellResourceMinus(3)"></div>
+      <div class="down-arrow" id="btn-merc-sell-minus-wine" onclick="ClickMercSellResourceMinus(4)"></div>
+      <div class="down-arrow" id="btn-merc-sell-minus-cloth" onclick="ClickMercSellResourceMinus(5)"></div>
     
       <!-- ========================================================================== -->
       <!-- Row x: MERC DELTA SELL -->      
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">&#916SEL</button>
       </div> 
-      <div class="grid-item-no-border" id="num-merc-delta-sell-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-delta-sell-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-delta-sell-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-delta-sell-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-delta-sell-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-delta-sell-cloth" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-sell-delta-cloth" style="font-weight: bolder;"></div>
+    
+
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC DELTA SELL -->      
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">MID</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-merc-pre-buy-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-pre-buy-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-pre-buy-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-pre-buy-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-pre-buy-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-pre-buy-cloth" style="font-weight: bolder;"></div>
     
 
 
@@ -257,23 +270,23 @@
         <button class="btn-full-not-selected">BUY</button>
       </div> 
       <div class="grid-item-no-border" id="btn-merc-buy-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-buy-brick" onclick="BuyResource(1)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-food" onclick="BuyResource(2)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-tool" onclick="BuyResource(3)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-wine" onclick="BuyResource(4)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-cloth" onclick="BuyResource(5)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-brick" onclick="ClickMercBuyResourcePlus(1)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-food" onclick="ClickMercBuyResourcePlus(2)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-tool" onclick="ClickMercBuyResourcePlus(3)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-wine" onclick="ClickMercBuyResourcePlus(4)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-cloth" onclick="ClickMercBuyResourcePlus(5)">BUY</div>
 
       <!-- ========================================================================== -->
       <!-- Row x: Merc Buy MINUS -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">-</button>
       </div> 
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-brick" onclick="MercBuyMinus(1)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-food" onclick="MercBuyMinus(2)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-tool" onclick="MercBuyMinus(3)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-wine" onclick="MercBuyMinus(4)">-</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-minus-cloth" onclick="MercBuyMinus(5)">-</div>
+      <div class="down-arrow" id="btn-merc-buy-minus-cash"></div>
+      <div class="down-arrow" id="btn-merc-buy-minus-brick" onclick="MercBuyMinus(1)"></div>
+      <div class="down-arrow" id="btn-merc-buy-minus-food" onclick="MercBuyMinus(2)"></div>
+      <div class="down-arrow" id="btn-merc-buy-minus-tool" onclick="MercBuyMinus(3)"></div>
+      <div class="down-arrow" id="btn-merc-buy-minus-wine" onclick="MercBuyMinus(4)"></div>
+      <div class="down-arrow" id="btn-merc-buy-minus-cloth" onclick="MercBuyMinus(5)"></div>
 
       
 
@@ -304,14 +317,14 @@
 
      
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">POST</button>
+        <button class="btn-full-not-selected">FINAL</button>
       </div> 
-      <div class="grid-item-no-border cash" id="num-post-merc-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border brick" id="num-post-merc-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border food" id="num-post-merc-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border tool" id="num-post-merc-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border wine" id="num-post-merc-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border cloth" id="num-post-merc-cloth" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder;">0</div>
     
         
       <div class="grid-item-no-border">

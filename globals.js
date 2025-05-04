@@ -96,4 +96,30 @@ let mercGlobal = {
   mercBuyDelta:[0,0,0,0,0,0],
 
   mercHouses:[0,0,0,0,0,0],
+
+  storePreSell:[0,0,0,0,0,0],
+  sellInProgress:[false,false,false,false,false,false],
+  sellInProgressTradeId:[0,0,0,0,0,0],
+  tradeSellCount:[0,0,0,0,0,0],
+  sellTradeCount:0,
+  storeTradeSellArray:[[0,0,0,0,0,0],[0,0,0,0,0,0]],
+  sellQtyActual:[0,0,0,0,0,0],
+  sellQtyPossible:[0,0,0,0,0,0],
+
+  storeCashValue:[0,0,0,0,0,0],
+  storePreBuy:[0,0,0,0,0],
+  buyInProgress:[false,false,false,false,false,false],
+  buyInProgressTradeId:[0,0,0,0,0,0],
+  tradeBuyCount:[0,0,0,0,0,0],
+  buyTradeCount:0,
+  storeTradeBuyArray:[[0,0,0,0,0,0],[0,0,0,0,0,0]],
+  buyQtyActual:[0,0,0,0,0,0],
+  buyQtyPossible:[0,0,0,0,0,0],
+  storeFinal:[0,0,0,0,0,0],
+
+  totalTradeCount:0,
+  
+
+
+
 }

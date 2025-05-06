@@ -955,13 +955,32 @@ function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_) {
 
 }
 
+function WriteSingle(elem_, number_, fontSize_, bold_) {
+
+  const text = document.createElement('span');
+  text.className = 'normal-text';
+
+  let leftFontSizeStr = fontSize_ + "px";
+
+  text.style.fontSize = leftFontSizeStr;
+
+  if (bold_) text.style.fontWeight = "bold";
+  else text.style.fontWeight = "normal";
+
+  text.textContent = number_;
+
+  elem_.textContent = '';
+  elem_.appendChild(text);
+
+}
+
 
 function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_) {
 
   const leftText = document.createElement('span');
   leftText.className = 'normal-text';
   const rightText = document.createElement('span');
-  leftText.className = 'normal-text';
+  rightText.className = 'normal-text';
 
   let leftFontSizeStr = leftFontSize_ + "px";
   let rightFontSizeStr = rightFontSize_ + "px";
@@ -1336,7 +1355,18 @@ function UpdateGUIMerc() {
       let sellActive = mercGlobal.sellQtyActual[resourceId] > 0;
       let buyActive = mercGlobal.buyQtyActual[resourceId] > 0;
     
-      WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,false,mercGlobal.storePreSell[resourceId],16,false);
+      if (mercGlobal.storePreSell[resourceId] === 0) {
+        elemBtnMercSell[resourceId].textContent = "";
+      }
+      else {
+        if (mercGlobal.sellQtyActual[resourceId] === mercGlobal.storePreSell[resourceId]) {   
+          WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true);       
+        }
+        else {
+          WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false);
+        }
+
+      }
       // UPDATE SELL BUTTON
       //UpdateMercBuySellButton(elemBtnMercSell,  resourceId, sellActive, buyActive, mercGlobal.storePreSell[resourceId], mercGlobal.sellQtyAttary[resourceId]);
     }
@@ -1355,14 +1385,15 @@ function UpdateGUIMerc() {
     // DELTA SELL
     //-----------------------------------------------------------------------
     let localDelta  = mercGlobal.storePreBuy[resourceId] - mercGlobal.storePreSell[resourceId];
-    if (localDelta > 0)  elemMercSellDelta[resourceId].textContent = "+" + localDelta;
+    if (localDelta === 0) elemMercSellDelta[resourceId].textContent = "";
+    else if (localDelta > 0)  elemMercSellDelta[resourceId].textContent = "+" + localDelta;
     else elemMercSellDelta[resourceId].textContent = localDelta;
 
     //****************************************************************************************
     // BUY BUY BUY BUY
     //****************************************************************************************
     //--------------------------------------------------------------------
-    // PRE BUY
+    // PRE BUY / MID
     //--------------------------------------------------------------------
     if (mercGlobal.storePreBuy[resourceId] === 0) {
       elemNumPreBuy[resourceId].textContent = "";
@@ -1384,7 +1415,19 @@ function UpdateGUIMerc() {
     
       // UPDATE BUY BUTTON
       let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
-      WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,false,mercGlobal.buyQtyPossible[resourceId],16,false);
+      let buyPoss = mercGlobal.buyQtyPossible[resourceId];
+
+      if (buyPoss === 0) {
+        elemBtnMercBuyPlus[resourceId].textContent = "";
+      }
+      else {
+        if (buyAct === buyPoss) {   
+          WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true);       
+        }
+        else {
+          WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false);
+        }
+      }
 
     }
 
@@ -1405,7 +1448,8 @@ function UpdateGUIMerc() {
     if (resourceId === 0) localDeltaBuy = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
     else localDeltaBuy = mercGlobal.buyQtyActual[resourceId];
 
-    if (localDeltaBuy > 0)  elemNumMercDeltaBuy[resourceId].textContent = "+" + localDeltaBuy;
+    if (localDeltaBuy === 0)  elemNumMercDeltaBuy[resourceId].textContent = "";
+    else if (localDeltaBuy > 0)  elemNumMercDeltaBuy[resourceId].textContent = "+" + localDeltaBuy;
     else elemNumMercDeltaBuy[resourceId].textContent = localDeltaBuy;  
 
 

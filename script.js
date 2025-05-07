@@ -312,6 +312,42 @@ const elemIdsMercSellDelta = [
 
 const elemMercSellDelta = elemIdsMercSellDelta.map((id) => document.getElementById(id));
 
+//------------------------------------------------------------------------
+const elemIdsMercStoreStart = [
+  "num-merc-store-start-cash",
+  "num-merc-store-start-brick",
+  "num-merc-store-start-food",
+  "num-merc-store-start-tool",
+  "num-merc-store-start-wine",
+  "num-merc-store-start-cloth",
+];
+
+const elemMercStoreStart = elemIdsMercStoreStart.map((id) => document.getElementById(id));
+
+//------------------------------------------------------------------------
+const elemIdsMercStoreIn = [
+  "num-merc-store-in-cash",
+  "num-merc-store-in-brick",
+  "num-merc-store-in-food",
+  "num-merc-store-in-tool",
+  "num-merc-store-in-wine",
+  "num-merc-store-in-cloth",
+];
+
+const elemMercStoreIn = elemIdsMercStoreIn.map((id) => document.getElementById(id));
+
+//------------------------------------------------------------------------
+const elemIdsMercStoreOut = [
+  "num-merc-store-out-cash",
+  "num-merc-store-out-brick",
+  "num-merc-store-out-food",
+  "num-merc-store-out-tool",
+  "num-merc-store-out-wine",
+  "num-merc-store-out-cloth",
+];
+
+const elemMercStoreOut = elemIdsMercStoreOut.map((id) => document.getElementById(id));
+
 
 const elemIdsStoreCurrent = [
   "num-storecurrent-cash",
@@ -1456,8 +1492,7 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     // Delta Actual GUI
     //--------------------------------------------------------------------
-    localDeltaBuy = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreSell[resourceId]
-    if (localDeltaBuy === 0) {
+    if (mercGlobal.totalDelta[resourceId] === 0) {
       elemNumMercDeltaTotal[resourceId].textContent = "";
     } else if (localDeltaBuy > 0) {
       elemNumMercDeltaTotal[resourceId].textContent = "+" + mercGlobal.mercTotalDelta[resourceId];
@@ -1468,7 +1503,38 @@ function UpdateGUIMerc() {
     }
 
     //--------------------------------------------------------------------
-    // Post
+    // STORE START
+    //--------------------------------------------------------------------
+    if (mercGlobal.mercStore[resourceId] === 0) {
+      elemMercStoreStart[resourceId].textContent = "";
+    } 
+    else {
+      elemMercStoreStart[resourceId].textContent = mercGlobal.mercStore[resourceId];
+    }
+
+    //--------------------------------------------------------------------
+    // STORE IN
+    //--------------------------------------------------------------------
+    if (mercGlobal.storeIn[resourceId] === 0) {
+      elemMercStoreIn[resourceId].textContent = "";
+    } 
+    else {
+      elemMercStoreIn[resourceId].textContent = mercGlobal.storeIn[resourceId];
+    }
+
+    //--------------------------------------------------------------------
+    // STORE OUT
+    //--------------------------------------------------------------------
+    if (mercGlobal.storeOut[resourceId] === 0) {
+      elemMercStoreOut[resourceId].textContent = "";
+    } 
+    else {
+      elemMercStoreOut[resourceId].textContent = mercGlobal.storeOut[resourceId];
+    }
+
+
+    //--------------------------------------------------------------------
+    // Final
     //--------------------------------------------------------------------
     if (resourceId === 0) {
       elemNumMercStoreFinal[resourceId].classList.add(styleResourceName);
@@ -1791,11 +1857,10 @@ function ProcessMerc() {
   //           mercGlobal.storeFinal ->
   //      
   // MERC3 or MERC5
-  let mercCashBonus = 0;
-  if (mercActive === MercType.MERC3) mercCashBonus = 3;
-  else mercCashBonus = 5;
+  if (mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
+  else mercGlobal.cashBonus = 5;
   
-  mercGlobal.storePreSell[0] = mercGlobal.mercStore[0] + mercCashBonus;     
+  mercGlobal.storePreSell[0] = mercGlobal.mercStore[0] + mercGlobal.cashBonus;     
   
   // Jst coopy all of teh resoyrce values across as not impacted by merc3 or merc5
   for (let resourceId = 1; resourceId <=5; resourceId++) {
@@ -1828,12 +1893,23 @@ function ProcessMerc() {
     mercGlobal.storeFinal[resourceId] = mercGlobal.storePreSell[resourceId] + localBuyQty;
 
     // Take away the cash
-    totalBuyCashDelta = totalBuyCashDelta - (localBuyQty * resourceValue[resourceId])
+    totalBuyCashDelta = totalBuyCashDelta - (localBuyQty * resourceValue[resourceId]);
+
+    mercGlobal.storeOut[resourceId] = Math.max(localSellQty - localBuyQty,0);
+    mercGlobal.storeIn[resourceId] = Math.max(localBuyQty - localSellQty,0);
+
+    mercGlobal.totalDelta[resourceId] = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreSell[resourceId];
 
   }
 
   mercGlobal.storePreBuy[0] = mercGlobal.storePreSell[0] + totalSellCashDelta;
   mercGlobal.storeFinal[0] = mercGlobal.storePreBuy[0] + totalBuyCashDelta;
+
+  //+ve = money into the store
+  mercGlobal.totalDelta[0] = totalSellCashDelta + totalBuyCashDelta;
+
+  mercGlobal.storeOut[0] = Math.max(-mercGlobal.totalDelta[0],0);
+  mercGlobal.storeIn[0] = mercGlobal.cashBonus + Math.max(mercGlobal.totalDelta[0],0);
 
   let currentCashValue = 0;
   let totalCashValue = 0;

@@ -117,6 +117,12 @@ let mercGlobal = {
   buyQtyPossible:[0,0,0,0,0,0],
   storeFinal:[0,0,0,0,0,0],
 
+  storeOut:[0,0,0,0,0,0],
+  storeIn:[0,0,0,0,0,0],
+  totalDelta:[0,0,0,0,0,0],
+  cashBonus:0,
+
+
   totalTradeCount:0,
   
 

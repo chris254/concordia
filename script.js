@@ -99,7 +99,7 @@ let elemBtnTrade2Mode;
 let mercTrade1Mode;
 let mercTrade2Mode;
 
-const minusImgPath = 'minus_small2.png';
+const minusImgPath = 'minus_new.png';
 
 const elemIdsArchHousesAct = [
   "num-arch-houses-act-cash",
@@ -1411,7 +1411,7 @@ function UpdateGUIMerc() {
     // SELL MINUS BUTTON
     //-----------------------------------------------------------------------
     if (resourceId != 0 && mercGlobal.sellQtyActual[resourceId] > 0) {
-      elemBtnMercSellMinus[resourceId].style.backgroundImage = "url(minus_small2.png)";
+      elemBtnMercSellMinus[resourceId].style.backgroundImage = "url(minus_new.png)";
     } 
     else {
       elemBtnMercSellMinus[resourceId].style.backgroundImage = 'none';

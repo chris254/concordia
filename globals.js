@@ -88,7 +88,6 @@ let mercGlobal = {
   mercSellAct:[0,0,0,0,0,0],
 
   mercTradeCount:0,
-  mercTotalDelta:[0,0,0,0,0,0],
 
   lastTimeMercStore:[0,0,0,0,0,0],
 
@@ -119,7 +118,7 @@ let mercGlobal = {
 
   storeOut:[0,0,0,0,0,0],
   storeIn:[0,0,0,0,0,0],
-  totalDelta:[0,0,0,0,0,0],
+  totalTradeDelta:[0,0,0,0,0,0],
   cashBonus:0,
 
 

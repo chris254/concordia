@@ -13,7 +13,7 @@
   <body>
 
 
-    <div class="grid-container" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
       <!-- ========================================================================== -->
       <!-- Top Row: -->
       <div class = "card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
@@ -30,8 +30,10 @@
       </div> 
       <div class="grid-item-no-border" id="version"></div>
 
+  </div>  
 
 
+  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
 
       <!-- ========================================================================== -->
       <!-- Row 2: Headers -->
@@ -141,6 +143,13 @@
       <!-- **************************************** ARCHITECT ***************************** -->
       <!-- ******************************************************************************** -->
       
+    </div>  
+
+
+    <div class="divider"></div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+    
       <!-- ========================================================================== -->
       <!-- Row 13: Padding row -->
       <div class="grid-item-no-border"></div>
@@ -150,9 +159,11 @@
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">5</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">6</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">7</div>
-    
+
+        
       <!-- ******************************************** MERC *************************************************** -->
       
+
       <!-- ========================================================================== -->
       <!-- Row 14: Cost of resource (for Mercator) -->
       <div class = "card-title" onclick="SetCardMerc()" id="btn-merc">MERC3</div>
@@ -381,6 +392,8 @@
       <div class="grid-item-no-border"></div>
     
     </div>
+
+  </div>      
 
     <script src="globals.js"></script>
     <script src="utils.js"></script>

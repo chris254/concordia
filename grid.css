@@ -31,6 +31,17 @@ body {
   /*height: 100vh;*/
 }
 
+.title-divider {
+  height: 20px;
+  width: 100%;
+  display: flex;
+  background-color: grey;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bolder;
+}
+
 
 .divider {
   height: 5px;
@@ -285,6 +296,33 @@ body {
   background-color: lightgreen;
   border-radius: 25%;
 }
+
+.grey-background-brick {
+  border: 2px solid rgb(183, 65, 14);
+  background-color: grey;
+  border-radius: 25%;
+}
+.grey-background-food {
+  border: 2px solid rgb(226, 199, 23);
+  background-color: grey;
+  border-radius: 25%;
+}
+.grey-background-tool {
+  border: 2px solid rgb(141, 141, 137);
+  background-color: grey;
+  border-radius: 25%;
+}
+.grey-background-wine {
+  border: 2px solid rgb(241, 12, 12);
+  background-color: grey;
+  border-radius: 25%;
+}
+.grey-background-cloth {
+  border: 2px solid rgb(62, 16, 189);
+  background-color: grey;
+  border-radius: 25%;
+}
+
 
 /* -------------------------------------------------------------------- */
 /* minus alllowed */

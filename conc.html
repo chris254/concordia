@@ -10,25 +10,27 @@
     <title>Concordia</title>
   </head>
 
+
   <body>
 
+    <div class="title-divider">ARCHITECT</div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-      <!-- ========================================================================== -->
-      <!-- Top Row: -->
-      <div class = "card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
-      <div class="grid-item" style="font-size: 8pt">RST</div>
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetStoreCurrent()" style="background-color: red; color: white;">ST</button>
-      </div> 
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: red;color: white;">HO</button>
-      </div> 
-      <div class="grid-item" style="font-size: 8pt">MD</div>
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">F</button>
-      </div> 
-      <div class="grid-item-no-border" id="version"></div>
+  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+    <!-- ========================================================================== -->
+    <!-- Top Row: -->
+    <div class = "card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
+    <div class="grid-item" style="font-size: 8pt">RST</div>
+    <div class="grid-item-no-border">
+      <button class="btn-full-not-selected" onclick="ResetStoreCurrent()" style="background-color: red; color: white;">ST</button>
+    </div> 
+    <div class="grid-item-no-border">
+      <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: red;color: white;">HO</button>
+    </div> 
+    <div class="grid-item" style="font-size: 8pt">MD</div>
+    <div class="grid-item-no-border">
+      <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">F</button>
+    </div> 
+    <div class="grid-item-no-border" id="version"></div>
 
   </div>  
 
@@ -146,7 +148,7 @@
     </div>  
 
 
-    <div class="divider"></div>
+    <div class="title-divider">MERCATOR</div>
 
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
     
@@ -223,6 +225,64 @@
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
     
+    </div>  
+
+    <div class="divider"></div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE START -->      
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">PRE</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-merc-store-start-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-start-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-start-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-start-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-start-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-start-cloth" style="font-weight: bolder;"></div>
+      
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE OUT -->      
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">OUT</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-merc-store-out-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-cloth" style="font-weight: bolder;"></div>
+
+     
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->      
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">IN</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-merc-store-in-cash" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-brick" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-food" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-tool" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-wine" style="font-weight: bolder;"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-cloth" style="font-weight: bolder;"></div>
+    
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">FINAL</button>
+      </div> 
+      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder;">0</div>
+    
+    </div>  
+
+    <div class="divider"></div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
 
       <!-- ========================================================================== -->
       <!-- Row x: Merc Sell -->
@@ -248,32 +308,6 @@
       <div class="down-arrow" id="btn-merc-sell-minus-wine" onclick="ClickMercSellResourceMinus(4)"></div>
       <div class="down-arrow" id="btn-merc-sell-minus-cloth" onclick="ClickMercSellResourceMinus(5)"></div>
     
-      <!-- ========================================================================== -->
-      <!-- Row x: MERC DELTA SELL -->      
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">&#916SEL</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-sell-delta-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-sell-delta-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-sell-delta-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-sell-delta-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-sell-delta-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-sell-delta-cloth" style="font-weight: bolder;"></div>
-    
-
-      <!-- ========================================================================== -->
-      <!-- Row x: MERC DELTA SELL -->      
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">MID</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-pre-buy-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-pre-buy-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-pre-buy-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-pre-buy-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-pre-buy-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-pre-buy-cloth" style="font-weight: bolder;"></div>
-    
-
 
       <!-- ========================================================================== -->
       <!-- Row x: Merc Buy -->
@@ -325,54 +359,13 @@
       <div class="grid-item-no-border" id="num-merc-delta-total-wine" style="font-weight: bolder;"></div>
       <div class="grid-item-no-border" id="num-merc-delta-total-cloth" style="font-weight: bolder;"></div>
 
-      <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE START -->      
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">PRE</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-store-start-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-start-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-start-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-start-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-start-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-start-cloth" style="font-weight: bolder;"></div>
+    </div>
       
-      <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE OUT -->      
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">OUT</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-store-out-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-cloth" style="font-weight: bolder;"></div>
 
-     
-      <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE IN -->      
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">IN</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-store-in-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-cloth" style="font-weight: bolder;"></div>
+    <div class="divider"></div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
     
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">FINAL</button>
-      </div> 
-      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder;">0</div>
-    
-        
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">BUILD</button>
       </div> 

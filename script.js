@@ -33,6 +33,7 @@ const StylesType = Object.freeze({
   ORANGE_NORMAL: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
   RED_NORMAL: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
   GREEN_NORMAL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
+  GREY_NORMAL: ["gray-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
 
 })
 
@@ -1112,34 +1113,38 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       // ARCH BUILD ACTUAL
       //------------------------------------------------------------ 
-      ClearAllArchStyles(elemNumArchHousesAct[resourceId],resourceId);
+      ClearAllStyles(elemNumArchHousesAct,resourceId);
 
-      let archState = ArchStateType.CLEAR;
+      let archStyleState = StylesType.CLEAR;
       
-      if (fieldValues.archFreeMode) archState = ArchStateType.CLEAR;
-      else if (dataArch.archHousesCurrent[resourceId] > 0 && dataArch.archHousesDeltaPossible[resourceId] === 0) archState = ArchStateType.CLEAR_THICK_BOLD;
-      else if (dataArch.archHousesDeltaPossible[resourceId] > 0 ) archState = ArchStateType.GREEN_NORMAL;
-      else if (dataArch.archHousesCurrent[resourceId] > 0) archState = ArchStateType.GREEN_NORMAL;
-      else {
-        archState = ArchStateType.CLEAR;
-      }
-
-      let newStyleAct = archState[resourceId];
-
-      SetArchStyle(elemNumArchHousesAct[resourceId],newStyleAct,resourceId); 
-
-      if (archState === ArchStateType.CLEAR || archState === ArchStateType.CLEAR_THICK_BOLD) {
+      if (fieldValues.archFreeMode) {
+        archStyleState = ArchStateType.GREEN_NORMAL;
         WriteNormal(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId],16,true);
       }
-      else if (dataArch.archHousesTotalPossible[resourceId] === 0) {
-        elemNumArchHousesAct[resourceId].textContent = "";
-      } else {
+      else if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
+        archStyleState = StylesType.GREEN_NORMAL;
         WriteSlash(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId], 18, true,
           dataArch.archHousesTotalPossible[resourceId], 10, false);
       }
-    
+      else if (dataArch.archHousesCurrent[resourceId] > 0) {
+        archStyleState = ArchStateType.CLEAR_THICK_BOLD;
+        WriteNormal(elemNumArchHousesAct[resourceId],
+          dataArch.archHousesCurrent[resourceId],16,true);
+      }
+      else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
+        elemNumArchHousesAct[resourceId].textContent = "";
+      }
+      else {
+        archStyleState = StylesType.CLEAR;
+        elemNumArchHousesAct[resourceId].textContent = "";
+      }
+
+      let newStyle = archStyleState[resourceId];
+      SetStyle(elemNumArchHousesAct,newStyle,resourceId); 
+
+
       //------------------------------------------------------------ 
       // ARCH BUILD ADDITIONAL
       //------------------------------------------------------------ 
@@ -1417,6 +1422,7 @@ function UpdateGUIMerc() {
       elemBtnMercSellMinus[resourceId].style.backgroundImage = 'none';
     }
 
+    /*
     //-----------------------------------------------------------------------
     // DELTA SELL
     //-----------------------------------------------------------------------
@@ -1424,10 +1430,12 @@ function UpdateGUIMerc() {
     if (localDelta === 0) elemMercSellDelta[resourceId].textContent = "";
     else if (localDelta > 0)  elemMercSellDelta[resourceId].textContent = "+" + localDelta;
     else elemMercSellDelta[resourceId].textContent = localDelta;
+    */
 
     //****************************************************************************************
     // BUY BUY BUY BUY
     //****************************************************************************************
+    /*
     //--------------------------------------------------------------------
     // PRE BUY / MID
     //--------------------------------------------------------------------
@@ -1440,7 +1448,7 @@ function UpdateGUIMerc() {
     {
       elemNumPreBuy[resourceId].textContent = mercGlobal.storePreBuy[resourceId];
     }
-
+    */ 
     //-----------------------------------------------------------------------
     // BUY PLUS
     // -------------------------------------------
@@ -1690,7 +1698,6 @@ function ClearAllArchStyles(elem, resourceId) {
   elem.classList.remove(ArchStateType.CLEAR[resourceId]);
   elem.classList.remove(ArchStateType.GREEN_NORMAL[resourceId]);
   elem.classList.remove(ArchStateType.CLEAR_THICK_BOLD[resourceId]);
-  elem.classList.remove(ArchStateType.CLEAR[resourceId]);
 }
 
 

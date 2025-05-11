@@ -810,7 +810,7 @@ function ClickMercBuyResourcePlus(resourceId) {
 
   let enoughCash = mercGlobal.storeFinal[0] >= resourceValue[resourceId];
 
-  if (enoughCash) {
+  if (enoughCash && !mercGlobal.sellInProgress[resourceId]) {
 
     if (mercGlobal.buyInProgress[resourceId]) {
       mercGlobal.buyQtyActual[resourceId]++;
@@ -1974,13 +1974,17 @@ function ProcessMerc() {
 
 function ClickMercSellResourcePlus(resourceId) {
 
-  if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storePreBuy[resourceId] > 0) {
-    mercGlobal.sellQtyActual[resourceId]++;
-  }
-  else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[resourceId] > 0) {
-    // Not in progress so a new trade is to be created
-    // if sellcount is zero, then place the new trade at the first element, i.e. zero
-    mercGlobal.sellQtyActual[resourceId]++;
+  if (!mercGlobal.buyInProgress[resourceId]) {
+
+    if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storePreBuy[resourceId] > 0) {
+      mercGlobal.sellQtyActual[resourceId]++;
+    }
+    else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[resourceId] > 0) {
+      // Not in progress so a new trade is to be created
+      // if sellcount is zero, then place the new trade at the first element, i.e. zero
+      mercGlobal.sellQtyActual[resourceId]++;
+    }
+
   }
 
   UpdateAll();

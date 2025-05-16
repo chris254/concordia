@@ -162,6 +162,7 @@ const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getEleme
 
   const elemBtnDecStore = elemIdsBtnDecStore.map((id) => document.getElementById(id));
 
+//-------------------------------------------------------------------------
 const elemIdsPreMercStore = [
   "num-pre-merc-cash",
   "num-pre-merc-brick",
@@ -173,6 +174,7 @@ const elemIdsPreMercStore = [
 
 const elemNumPreMercStore = elemIdsPreMercStore.map((id) => document.getElementById(id));
 
+//-------------------------------------------------------------------------
 const elemIdsMercStoreFinal = [
   "num-final-merc-cash",
   "num-final-merc-brick",
@@ -1329,12 +1331,12 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     if (resourceId === 0) {
 
-      smallTextGrey.textContent = mercGlobal.mercStore[resourceId];
-      largeText.textContent = "/" + mercGlobal.storePreSell[resourceId];
+      largeText.textContent = mercGlobal.mercStore[resourceId];
+      smallTextGrey.textContent = "/" + mercGlobal.storePreSell[resourceId];
 
       elemNumPreMercStore[resourceId].textContent = '';
-      elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
       elemNumPreMercStore[resourceId].appendChild(largeText);
+      elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
 
     }
     else {
@@ -1364,10 +1366,13 @@ function UpdateGUIMerc() {
     //-----------------------------------------------------------------------
     if (resourceId != 0) {
 
-      let sellActive = mercGlobal.sellQtyActual[resourceId] > 0;
-      let buyActive = mercGlobal.buyQtyActual[resourceId] > 0;
+      let sellActive = mercGlobal.sellInProgress[resourceId];
+      let buyActive = mercGlobal.buyInProgress[resourceId];
     
-      if (mercGlobal.storePreSell[resourceId] === 0) {
+      if (buyActive) {
+        WriteSingle(elemBtnMercSell[resourceId],"x",12,false);       
+      }
+      else if (mercGlobal.storePreSell[resourceId] === 0) {
         elemBtnMercSell[resourceId].textContent = "";
       }
       else {
@@ -1379,8 +1384,6 @@ function UpdateGUIMerc() {
         }
 
       }
-      // UPDATE SELL BUTTON
-      //UpdateMercBuySellButton(elemBtnMercSell,  resourceId, sellActive, buyActive, mercGlobal.storePreSell[resourceId], mercGlobal.sellQtyAttary[resourceId]);
     }
 
     //-----------------------------------------------------------------------
@@ -1426,14 +1429,17 @@ function UpdateGUIMerc() {
     // -------------------------------------------
     if (resourceId != 0) {
 
-      let sellActive = mercGlobal.sellQtyActual[resourceId] > 0;
-      let buyActive = mercGlobal.buyQtyActual[resourceId] > 0;
+      let sellActive = mercGlobal.sellInProgress[resourceId];
+      let buyActive = mercGlobal.buyInProgress[resourceId];
     
       // UPDATE BUY BUTTON
       let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
       let buyPoss = mercGlobal.buyQtyPossible[resourceId];
 
-      if (buyPoss === 0) {
+      if (sellActive) {
+        WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false);       
+      }
+      else if (buyPoss === 0) {
         elemBtnMercBuyPlus[resourceId].textContent = "";
       }
       else {
@@ -1488,11 +1494,11 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     // STORE START
     //--------------------------------------------------------------------
-    if (mercGlobal.mercStore[resourceId] === 0) {
+    if (mercGlobal.storePreSell[resourceId] === 0) {
       elemMercStoreStart[resourceId].textContent = "";
-    } 
+    }   
     else {
-      elemMercStoreStart[resourceId].textContent = mercGlobal.mercStore[resourceId];
+      elemMercStoreStart[resourceId].textContent = mercGlobal.storePreSell[resourceId];
     }
 
     let storeInOutCash = mercGlobal.totalTradeDelta[0] + mercGlobal.cashBonus;
@@ -1540,20 +1546,16 @@ function UpdateGUIMerc() {
 
     //--------------------------------------------------------------------
     // Final
-    //--------------------------------------------------------------------
-    if (resourceId === 0) {
-      elemNumMercStoreFinal[resourceId].classList.add(styleResourceName);
-      elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-    } else {
-      if (mercGlobal.storeFinal[resourceId] === 0) {
-        elemNumMercStoreFinal[resourceId].textContent = "";
-        elemNumMercStoreFinal[resourceId].classList.remove(styleResourceName);
-      } else {
-        elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-        elemNumMercStoreFinal[resourceId].classList.add(styleResourceName);
-      }
-    }
+    //---------xxx-----------------------------------------------------------
+    if (mercGlobal.storeFinal[resourceId] === 0) {
+      SetStyle(elemNumMercStoreFinal,StylesType.CLEAR[resourceId],resourceId);
+      elemNumMercStoreFinal[resourceId].textContent = "";
+    } 
+    else {
+      SetStyle(elemNumMercStoreFinal,StylesType.CLEAR_NORMAL[resourceId],resourceId);
 
+      elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
+    }
 
     if (resourceId != 0) {
       elemNumMercHouses[resourceId].textContent = mercGlobal.mercHouses[resourceId];

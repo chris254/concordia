@@ -278,28 +278,18 @@ const elemIdsBtnMercSell = [
 
 const elemBtnMercSell = elemIdsBtnMercSell.map((id) => document.getElementById(id));
 
-const elemIdsBtnMercBuyMinus = [
-  "btn-merc-buy-minus-cash",
-  "btn-merc-buy-minus-brick",
-  "btn-merc-buy-minus-food",
-  "btn-merc-buy-minus-tool",
-  "btn-merc-buy-minus-wine",
-  "btn-merc-buy-minus-cloth",
-];
-
-const elemBtnMercBuyMinus = elemIdsBtnMercBuyMinus.map((id) => document.getElementById(id));
 
 //------------------------------------------------------
-const elemIdsBtnMercSellMinus = [
-  "btn-merc-sell-minus-cash",
-  "btn-merc-sell-minus-brick",
-  "btn-merc-sell-minus-food",
-  "btn-merc-sell-minus-tool",
-  "btn-merc-sell-minus-wine",
-  "btn-merc-sell-minus-cloth",
+const elemIdsBtnMercTradeMinus = [
+  "btn-merc-trade-minus-cash",
+  "btn-merc-trade-minus-brick",
+  "btn-merc-trade-minus-food",
+  "btn-merc-trade-minus-tool",
+  "btn-merc-trade-minus-wine",
+  "btn-merc-trade-minus-cloth",
 ];
 
-const elemBtnMercSellMinus = elemIdsBtnMercSellMinus.map((id) => document.getElementById(id));
+const elemBtnMercTradeMinus = elemIdsBtnMercTradeMinus.map((id) => document.getElementById(id));
 
 //------------------------------------------------------------------------
 const elemIdsMercSellDelta = [
@@ -841,30 +831,6 @@ function SellMinus(resourceId) {
   UpdateAll();
 }
 
-function SellResource(resourceId) {
-  // Get all merc data up to date
-  ProcessMercOld();
-
-  if (!BuyActive(resourceId)) {
-    if (SellActive(resourceId)) {
-      // Sell is already active
-
-      if (CanSellResource(resourceId)) {
-        mercGlobal.mercStorePostTrade[resourceId] -= 1;
-        mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
-      }
-    } else {
-      // Not a current active trade
-      if ((mercGlobal.mercTradeCount < 2 && CanSellResource(resourceId)) || BuyActive(resourceId)) {
-        mercGlobal.mercStorePostTrade[resourceId] -= 1;
-        mercGlobal.mercStorePostTrade[0] += resourceValue[resourceId];
-      }
-    }
-  }
-
-  UpdateAll();
-}
-
 function TradeActive(resourceId) {
   return MercTradeDelta(resourceId) != 0;
 }
@@ -1288,7 +1254,7 @@ function SellActive(resourceId) {
   return mercGlobal.mercStorePostTrade[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
 }
 
-function ClickMercSellResourceMinus(resourceId) {
+function ClickMercTradeMinus(resourceId) {
 
   // Only if there's an active sell already and you can afford to "unsell" this resource
   if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
@@ -1297,6 +1263,11 @@ function ClickMercSellResourceMinus(resourceId) {
     // Delta array is -ve if sell is in progress
     mercGlobal.sellQtyActual[resourceId]--;
 
+  }
+
+  if (mercGlobal.buyInProgress[resourceId]) {
+    // Pressing this will sell resource
+    mercGlobal.buyQtyActual[resourceId]--;
   }
 
   UpdateAll();
@@ -1413,13 +1384,14 @@ function UpdateGUIMerc() {
     }
 
     //-----------------------------------------------------------------------
-    // SELL MINUS BUTTON
+    // TRADE MINUS BUTTON
     //-----------------------------------------------------------------------
-    if (resourceId != 0 && mercGlobal.sellQtyActual[resourceId] > 0) {
-      elemBtnMercSellMinus[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+    if (resourceId != 0 && (mercGlobal.sellQtyActual[resourceId] > 0 || mercGlobal.buyQtyActual[resourceId] > 0)) {
+      elemBtnMercTradeMinus[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+
     } 
     else {
-      elemBtnMercSellMinus[resourceId].style.backgroundImage = 'none';
+      elemBtnMercTradeMinus[resourceId].style.backgroundImage = 'none';
     }
 
     /*
@@ -1475,6 +1447,7 @@ function UpdateGUIMerc() {
 
     }
 
+    /*
     //-----------------------------------------------------------------------
     // BUY MINUS
     //-----------------------------------------------------------------------
@@ -1485,6 +1458,7 @@ function UpdateGUIMerc() {
     else {
       elemBtnMercBuyMinus[resourceId].style.backgroundImage = 'none';
     }
+    */
 
     //--------------------------------------------------------------------
     // BUY DELTA

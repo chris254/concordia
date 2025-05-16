@@ -929,15 +929,18 @@ function UpdateArchPostGui(elemArray, storeCurrent, storePost, archFreeMode, res
 
 }
 
-function WriteNormal(elem_, number_, fontSize_, bold_) {
+function WriteNormal(elem_, number_, fontSize_, bold_, color_) {
   elem_.style.fontSize = fontSize_ + "px";
+
   if (bold_) elem_.style.fontWeight = "bold";
   else elem_.style.fontWeight = "normal";
+
+  elem_.style.color = color_;
 
   elem_.textContent = number_;
 }
 
-function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_) {
+function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_,color_) {
   let arrayLength = numbers_.length;
 
   const textArray = Array.from({ length: arrayLength }, () => document.createElement('span'));
@@ -956,6 +959,8 @@ function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_) {
     
 
   }
+
+  elem_.color = color_;
 
 
 }
@@ -980,12 +985,14 @@ function WriteSingle(elem_, number_, fontSize_, bold_) {
 }
 
 
-function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_) {
+function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_, color_) {
 
   const leftText = document.createElement('span');
   leftText.className = 'normal-text';
+  leftText.style.color = color_;
   const rightText = document.createElement('span');
   rightText.className = 'normal-text';
+  rightText.style.color = color_;
 
   let leftFontSizeStr = leftFontSize_ + "px";
   let rightFontSizeStr = rightFontSize_ + "px";
@@ -1004,6 +1011,8 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
   elem_.textContent = '';
   elem_.appendChild(leftText);
   elem_.appendChild(rightText);
+
+  elem_.color = color_
 
 }
 
@@ -1076,8 +1085,11 @@ function UpdateGUIArch() {
     //--------------------------------------------------------------
     WriteFieldValueBlankZero(elemNumStoreCurrent[resourceId], fieldValues.storeCurrent[resourceId]);
 
+    let tradeCountReached = mercGlobal.totalTradeCount >= 2;
+
     if (resourceId != 0) {
  
+
       //------------------------------------------------------------ 
       // ARCH BUILD ACTUAL
       //------------------------------------------------------------ 
@@ -1088,18 +1100,18 @@ function UpdateGUIArch() {
       if (fieldValues.archFreeMode) {
         archStyleState = ArchStateType.GREEN_NORMAL;
         WriteNormal(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId],16,true);
+          dataArch.archHousesCurrent[resourceId],16,true,"black");
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
         archStyleState = StylesType.GREEN_NORMAL;
         WriteSlash(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId], 18, true,
-          dataArch.archHousesTotalPossible[resourceId], 10, false);
+          dataArch.archHousesTotalPossible[resourceId], 10, false, "black");
       }
       else if (dataArch.archHousesCurrent[resourceId] > 0) {
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId],16,true);
+          dataArch.archHousesCurrent[resourceId],16,true,"black");
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
@@ -1137,12 +1149,12 @@ function UpdateGUIArch() {
         if (dataArch.archHousesAdd[resourceId] > 0)
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAdd[resourceId],16,true);
+            dataArch.archHousesAdd[resourceId],16,true,"black");
         }
         else 
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAdd[resourceId],10,false);
+            dataArch.archHousesAdd[resourceId],10,false,"black");
         }
 
       } 
@@ -1175,7 +1187,7 @@ function UpdateGUIArch() {
       elemNumArchStoreCost[resourceId].textContent = "";
     }
     else {
-      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true);
+      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black");
     }
 
     UpdateArchPostGui(elemNumArchPost, fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
@@ -1298,6 +1310,7 @@ function UpdateGUIMerc() {
   largeText.className = 'large-text';
 
   elemNumTrades.textContent = mercGlobal.totalTradeCount;
+  //elemNumTrades.style.color = "grey";
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 
@@ -1364,37 +1377,53 @@ function UpdateGUIMerc() {
     //-----------------------------------------------------------------------
     // SELL PLUS BUTTON
     //-----------------------------------------------------------------------
+    let newSellStyle = "";
+
     if (resourceId != 0) {
 
       let sellActive = mercGlobal.sellInProgress[resourceId];
       let buyActive = mercGlobal.buyInProgress[resourceId];
+
+      let fontColor = "";
+      if (mercGlobal.totalTradeCount >= 2 && !sellActive) fontColor = "grey" ;
+      else fontColor = "black";
     
       if (buyActive && mercGlobal.storePreSell[resourceId] > 0) {
-        WriteSingle(elemBtnMercSell[resourceId],"x",12,false);  
-        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+        WriteSingle(elemBtnMercSell[resourceId],"x",12,false,fontColor);  
 
+        newSellStyle = StylesType.CLEAR[resourceId];
       }
       else if (mercGlobal.storePreSell[resourceId] === 0) {
+        // none to sell
         elemBtnMercSell[resourceId].textContent = "";
-        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+        newSellStyle = StylesType.CLEAR[resourceId];
+
       }
       else {
         if (mercGlobal.sellQtyActual[resourceId] === mercGlobal.storePreSell[resourceId]) {   
-          WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true);    
-          SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+          WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,fontColor);
+
+          newSellStyle = StylesType.ORANGE_NORMAL[resourceId];
+
         }
         else {
           if (sellActive) {
-            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false);
-            SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false, fontColor);
+            newSellStyle = StylesType.ORANGE_NORMAL[resourceId];
+
           }
           else {
-            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true);
-            SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true,fontColor);
+            newSellStyle = StylesType.CLEAR[resourceId];
           }
         }
 
       }
+
+      if (mercGlobal.totalTradeCount >= 2 && !sellActive) { newSellStyle = StylesType.CLEAR[resourceId]} ;
+
+      SetStyle(elemBtnMercSell,newSellStyle,resourceId);
+
     }
 
     //-----------------------------------------------------------------------
@@ -1443,6 +1472,10 @@ function UpdateGUIMerc() {
       let sellActive = mercGlobal.sellInProgress[resourceId];
       let buyActive = mercGlobal.buyInProgress[resourceId];
     
+      let fontColor = "";
+      if (mercGlobal.totalTradeCount >= 2 && !buyActive) fontColor = "grey" ;
+      else fontColor = "black";
+
       // UPDATE BUY BUTTON
       let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
       let buyPoss = mercGlobal.buyQtyPossible[resourceId];
@@ -1452,22 +1485,23 @@ function UpdateGUIMerc() {
         SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
       }
       else if (sellActive && buyPoss > 0) {
-        WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false); 
         SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+        WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false,fontColor); 
       }
       else {
         if (buyAct === buyPoss) {   
-          WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true);    
           SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
+          WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true,fontColor);    
         }
         else {
           if (buyActive) {
-            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false);
+            SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
+            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false,fontColor);
           }
           else {
-            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true);
+            SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor);
           }
-          SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
         }
       }
 

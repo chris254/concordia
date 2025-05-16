@@ -1369,18 +1369,29 @@ function UpdateGUIMerc() {
       let sellActive = mercGlobal.sellInProgress[resourceId];
       let buyActive = mercGlobal.buyInProgress[resourceId];
     
-      if (buyActive) {
-        WriteSingle(elemBtnMercSell[resourceId],"x",12,false);       
+      if (buyActive && mercGlobal.storePreSell[resourceId] > 0) {
+        WriteSingle(elemBtnMercSell[resourceId],"x",12,false);  
+        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+
       }
       else if (mercGlobal.storePreSell[resourceId] === 0) {
         elemBtnMercSell[resourceId].textContent = "";
+        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
       }
       else {
         if (mercGlobal.sellQtyActual[resourceId] === mercGlobal.storePreSell[resourceId]) {   
-          WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true);       
+          WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true);    
+          SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
         }
         else {
-          WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false);
+          if (sellActive) {
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false);
+            SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+          }
+          else {
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true);
+            SetStyle(elemBtnMercBuyPlus,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+          }
         }
 
       }
@@ -1436,18 +1447,27 @@ function UpdateGUIMerc() {
       let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
       let buyPoss = mercGlobal.buyQtyPossible[resourceId];
 
-      if (sellActive) {
-        WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false);       
-      }
-      else if (buyPoss === 0) {
+      if (buyPoss === 0) {
         elemBtnMercBuyPlus[resourceId].textContent = "";
+        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+      }
+      else if (sellActive && buyPoss > 0) {
+        WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false); 
+        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
       }
       else {
         if (buyAct === buyPoss) {   
-          WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true);       
+          WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true);    
+          SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
         }
         else {
-          WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false);
+          if (buyActive) {
+            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false);
+          }
+          else {
+            WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true);
+          }
+          SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
         }
       }
 

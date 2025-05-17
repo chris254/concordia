@@ -1325,19 +1325,22 @@ function UpdateGUIMerc() {
 
     // use different store values dependent upon cash or resource
     let storeValue = 0;
-    storeValue = mercGlobal.storePreSell[resourceId];
+    storeValue = mercGlobal.mercStore[resourceId];
 
     if (storeValue === 0) {
-      minusButtonState = MinusButtonType.CLEAR;
-      elemBtnDecMercStore[resourceId].textContent = ""
+      elemBtnDecMercStore[resourceId].style.backgroundImage = 'none';
+      //minusButtonState = MinusButtonType.CLEAR;
+//      elemBtnDecMercStore[resourceId].textContent = ""
     }
     else {
-      minusButtonState = MinusButtonType.ORANGE_NORMAL;
-      elemBtnDecMercStore[resourceId].textContent = "-"
+      //minusButtonState = MinusButtonType.ORANGE_NORMAL;
+      //elemBtnDecMercStore[resourceId].textContent = "-"
+      elemBtnDecMercStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+
     }
     
-    let newStyle = minusButtonState[resourceId];
-    SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
+    //let newStyle = minusButtonState[resourceId];
+    //SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
 
     //--------------------------------------------------------------------
     // Pre Sell
@@ -1355,10 +1358,12 @@ function UpdateGUIMerc() {
     else {
       if (mercGlobal.storePreSell[resourceId] === 0) {
         elemNumPreMercStore[resourceId].textContent = "";
-        elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
+        //elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
       } else {
         elemNumPreMercStore[resourceId].textContent = mercGlobal.storePreSell[resourceId];
-        elemNumPreMercStore[resourceId].classList.add(styleResourceName);
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+        //elemNumPreMercStore[resourceId].classList.add(styleResourceName);
       }
 
     }

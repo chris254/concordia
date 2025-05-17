@@ -216,13 +216,13 @@
     
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-cash" onclick="MercStoreDec(0)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-brick" onclick="MercStoreDec(1)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-food" onclick="MercStoreDec(2)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-tool" onclick="MercStoreDec(3)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-wine" onclick="MercStoreDec(4)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-store-merc-cloth" onclick="MercStoreDec(5)">-</div>
+      <div class="down-arrow"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-cash" onclick="MercStoreDec(0)"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-brick" onclick="MercStoreDec(1)"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-food" onclick="MercStoreDec(2)"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-tool" onclick="MercStoreDec(3)"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-wine" onclick="MercStoreDec(4)"></div>
+      <div class="down-arrow" id="btn-dec-store-merc-cloth" onclick="MercStoreDec(5)"></div>
     
 
 
@@ -275,6 +275,19 @@
       <div class="grid-item-no-border" id="btn-merc-buy-wine" onclick="ClickMercBuyResourcePlus(4)">BUY</div>
       <div class="grid-item-no-border" id="btn-merc-buy-cloth" onclick="ClickMercBuyResourcePlus(5)">BUY</div>
 
+      <!-- ========================================================================== -->
+      <!-- Row x: Merc Trade Minus -->
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">-</button>
+      </div> 
+      <div class="grid-item-no-border" id="btn-merc-trade-minus-cash"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-brick" onclick="ClickMercTradeMinus(1)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-food" onclick="ClickMercTradeMinus(2)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-tool" onclick="ClickMercTradeMinus(3)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-wine" onclick="ClickMercTradeMinus(4)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-cloth" onclick="ClickMercTradeMinus(5)"></div>
+    
+
     </div>
 
     <div class="divider-small"></div>
@@ -322,18 +335,6 @@
       <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder;">0</div>
-    
-      <!-- ========================================================================== -->
-      <!-- Row x: Merc Trade Minus -->
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">-</button>
-      </div> 
-      <div class="grid-item-no-border" id="btn-merc-trade-minus-cash"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-brick" onclick="ClickMercTradeMinus(1)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-food" onclick="ClickMercTradeMinus(2)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-tool" onclick="ClickMercTradeMinus(3)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-wine" onclick="ClickMercTradeMinus(4)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-cloth" onclick="ClickMercTradeMinus(5)"></div>
     
 
     </div>  

@@ -277,7 +277,11 @@ body {
 }
 
 /* -------------------------------------------------------------------- */
-/* trade-available */
+.green-background-cash {
+  border: 4px solid green;
+  background-color: lightgreen;
+  border-radius: 25%;
+}
 .green-background-brick {
   border: 2px solid rgb(183, 65, 14);
   background-color: lightgreen;
@@ -332,7 +336,6 @@ body {
 
 
 /* -------------------------------------------------------------------- */
-/* minus alllowed */
 .orange-background-cash {
   border: 4px solid green;
   background-color: orange;
@@ -365,7 +368,6 @@ body {
 }
 
 /* -------------------------------------------------------------------- */
-/* minus alllowed */
 .red-background-cash {
   border: 2px solid green;
   background-color: red;
@@ -389,6 +391,32 @@ body {
 .red-background-cloth {
   border: 2px solid rgb(62, 16, 189);
   background-color: red;
+}
+
+/* -------------------------------------------------------------------- */
+.blue-background-cash {
+  border: 2px solid green;
+  background-color: lightskyblue;
+}
+.blue-background-brick {
+  border: 2px solid rgb(183, 65, 14);
+  background-color: lightskyblue;
+}
+.blue-background-food {
+  border: 2px solid rgb(226, 199, 23);
+  background-color: lightskyblue;
+}
+.blue-background-tool {
+  border: 2px solid rgb(141, 141, 137);
+  background-color: lightskyblue;
+}
+.blue-background-wine {
+  border: 2px solid rgb(241, 12, 12);
+  background-color: lightskyblue;
+}
+.blue-background-cloth {
+  border: 2px solid rgb(62, 16, 189);
+  background-color: lightskyblue;
 }
 
 /* ----------------------------------------------------------------------- */
@@ -452,7 +480,6 @@ body {
 
 .down-arrow {
   border: none;
-  background-image: url("minus_small2.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

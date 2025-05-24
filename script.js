@@ -74,8 +74,6 @@ let elemBtnMode;
 let editMode;
 let btnEditMode;
 
-let elemBtnMercSellBrick;
-
 let btnDecArchBrick;
 let btnDecArchFood;
 let btnDecArchTool;
@@ -427,8 +425,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
-
-  elemBtnMercSellBrick = document.getElementById("btn-merc-sell-brick");
 
   elemBtnResetAll = document.getElementById("btn-reset-all");
   elemBtnResetStoreCurrent = document.getElementById("btn-reset-storecurrent");
@@ -929,7 +925,7 @@ function UpdateArchPostGui(elemArray, storeCurrent, storePost, archFreeMode, res
 
 }
 
-function WriteNormal(elem_, number_, fontSize_, bold_, color_) {
+function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_) {
   elem_.style.fontSize = fontSize_ + "px";
 
   if (bold_) elem_.style.fontWeight = "bold";
@@ -937,7 +933,12 @@ function WriteNormal(elem_, number_, fontSize_, bold_, color_) {
 
   elem_.style.color = color_;
 
-  elem_.textContent = number_;
+  let signText = "";
+  if (displaySign_ && number_ > 0) {
+    signText = "+";
+  }
+
+  elem_.textContent = signText + number_;
 }
 
 function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_,color_) {
@@ -985,7 +986,7 @@ function WriteSingle(elem_, number_, fontSize_, bold_) {
 }
 
 
-function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_, color_) {
+function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_, color_, leftSign_, rightSign_) {
 
   const leftText = document.createElement('span');
   leftText.className = 'normal-text';
@@ -1005,8 +1006,14 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
   if (rightBold_) rightText.style.fontWeight = "bold";
   else rightText.style.fontWeight = "normal";
 
-  leftText.textContent = leftNumber_;
-  rightText.textContent = "/" + rightNumber_;
+  let leftSignText = "";
+  if (leftNumber_ > 0 && leftSign_) leftSignText = "+";
+  let rightSignText = "";
+  if (rightNumber_ > 0 && rightSign_) rightSignText = "+";
+
+
+  leftText.textContent = leftSignText + leftNumber_;
+  rightText.textContent = "/" + rightSignText + rightNumber_;
 
   elem_.textContent = '';
   elem_.appendChild(leftText);
@@ -1100,18 +1107,18 @@ function UpdateGUIArch() {
       if (fieldValues.archFreeMode) {
         archStyleState = ArchStateType.GREEN_NORMAL;
         WriteNormal(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId],16,true,"black");
+          dataArch.archHousesCurrent[resourceId],16,true,"black",false);
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
         archStyleState = StylesType.GREEN_NORMAL;
         WriteSlash(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId], 18, true,
-          dataArch.archHousesTotalPossible[resourceId], 10, false, "black");
+          dataArch.archHousesTotalPossible[resourceId], 10, false, "black", false, false);
       }
       else if (dataArch.archHousesCurrent[resourceId] > 0) {
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesAct[resourceId],
-          dataArch.archHousesCurrent[resourceId],16,true,"black");
+          dataArch.archHousesCurrent[resourceId],16,true,"black",false);
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
@@ -1145,12 +1152,12 @@ function UpdateGUIArch() {
         if (dataArch.archHousesAdd[resourceId] > 0)
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAdd[resourceId],16,true,"black");
+            dataArch.archHousesAdd[resourceId],16,true,"black",false);
         }
         else 
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAdd[resourceId],10,false,"black");
+            dataArch.archHousesAdd[resourceId],10,false,"black",false);
         }
 
       } 
@@ -1183,7 +1190,7 @@ function UpdateGUIArch() {
       elemNumArchStoreCost[resourceId].textContent = "";
     }
     else {
-      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black");
+      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black",false);
     }
 
     UpdateArchPostGui(elemNumArchPost, fieldValues.storeCurrent[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
@@ -1375,10 +1382,11 @@ function UpdateGUIMerc() {
     //-----------------------------------------------------------------------
     let newSellStyle = "";
 
+    let sellActive = mercGlobal.sellInProgress[resourceId];
+    let buyActive = mercGlobal.buyInProgress[resourceId];
+
     if (resourceId != 0) {
 
-      let sellActive = mercGlobal.sellInProgress[resourceId];
-      let buyActive = mercGlobal.buyInProgress[resourceId];
 
       let fontColor = "";
       if (mercGlobal.totalTradeCount >= 2 && !sellActive) fontColor = "grey" ;
@@ -1404,12 +1412,12 @@ function UpdateGUIMerc() {
         }
         else {
           if (sellActive) {
-            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false, fontColor);
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false, fontColor, false, false);
             newSellStyle = StylesType.ORANGE_NORMAL[resourceId];
 
           }
           else {
-            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true,fontColor);
+            WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true,fontColor, false, false);
             newSellStyle = StylesType.CLEAR[resourceId];
           }
         }
@@ -1419,6 +1427,19 @@ function UpdateGUIMerc() {
       if (mercGlobal.totalTradeCount >= 2 && !sellActive) { newSellStyle = StylesType.CLEAR[resourceId]} ;
 
       SetStyle(elemBtnMercSell,newSellStyle,resourceId);
+    }
+    else {
+      // cash entry
+      let deltaCash = mercGlobal.storePreBuy[resourceId] - mercGlobal.storePreSell[resourceId];
+
+      if (deltaCash != 0) {
+        WriteSlash(elemBtnMercSell[resourceId],deltaCash,12,false,mercGlobal.storePreBuy[resourceId],16,true,"black", true, false);
+        //WriteNormal(elemBtnMercSell[resourceId],deltaCash,16,false,"grey",true);
+//        WriteNormal(elemBtnMercSell[resourceId],deltaCash,16,false,"grey",true);
+      }
+      else {
+        elemBtnMercSell[resourceId].textContent = "";
+      }
 
     }
 
@@ -1433,33 +1454,6 @@ function UpdateGUIMerc() {
       elemBtnMercTradeMinus[resourceId].style.backgroundImage = 'none';
     }
 
-    /*
-    //-----------------------------------------------------------------------
-    // DELTA SELL
-    //-----------------------------------------------------------------------
-    let localDelta  = mercGlobal.storePreBuy[resourceId] - mercGlobal.storePreSell[resourceId];
-    if (localDelta === 0) elemMercSellDelta[resourceId].textContent = "";
-    else if (localDelta > 0)  elemMercSellDelta[resourceId].textContent = "+" + localDelta;
-    else elemMercSellDelta[resourceId].textContent = localDelta;
-    */
-
-    //****************************************************************************************
-    // BUY BUY BUY BUY
-    //****************************************************************************************
-    /*
-    //--------------------------------------------------------------------
-    // PRE BUY / MID
-    //--------------------------------------------------------------------
-    if (mercGlobal.storePreBuy[resourceId] === 0) {
-      elemNumPreBuy[resourceId].textContent = "";
-    } else if (mercGlobal.storePreBuy[resourceId] > 0) {
-      elemNumPreBuy[resourceId].textContent = mercGlobal.storePreBuy[resourceId];
-    }
-    else 
-    {
-      elemNumPreBuy[resourceId].textContent = mercGlobal.storePreBuy[resourceId];
-    }
-    */ 
     //-----------------------------------------------------------------------
     // BUY PLUS
     // -------------------------------------------
@@ -1501,6 +1495,17 @@ function UpdateGUIMerc() {
         }
       }
 
+    }
+    else {
+      // cas entry
+      let deltaCash = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
+
+      if (deltaCash != 0) {
+        WriteSlash(elemBtnMercBuyPlus[resourceId],deltaCash,12,false,mercGlobal.storeFinal[resourceId],16,true,"black", true, false);
+      }
+      else {
+        elemBtnMercBuyPlus[resourceId].textContent = "";
+      }
     }
 
     /*

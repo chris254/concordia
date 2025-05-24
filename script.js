@@ -863,7 +863,8 @@ function ResetAll() {
 function ResetMercTrades() {
 
   for (let resourceId = 1; resourceId <=5; resourceId++) {
-    mercGlobal.storeFinal[resourceId] = mercGlobal.mercStorePreTrade[resourceId];
+    mercGlobal.buyQtyActual[resourceId] = 0;
+    mercGlobal.sellQtyActual[resourceId] = 0;
   }
 
   UpdateAll();
@@ -881,18 +882,11 @@ function ResetStoreAdd()
 
 function ResetMercStore() {
 
-  if (mercActive === MercType.MERC3) {
-    mercGlobal.mercStorePreTrade[0] = 3;
-  }
-  else {
-    mercGlobal.mercStorePreTrade[0] = 5;  
-  }
+  ResetMercTrades();
 
   for (let resourceId = 1; resourceId <=5; resourceId++) {
-    mercGlobal.mercStorePreTrade[resourceId] = 0;
+    mercGlobal.mercStore[resourceId] = 0;
   }
-
-  ResetMercTrades();
 
   UpdateAll();
 }

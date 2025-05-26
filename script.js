@@ -1198,6 +1198,7 @@ function UpdateGUIArch() {
 
 }
 
+
 /* ---------------------------------------------------------------------------------------- */
 /* Function: UpdateAll
 /* ---------------------------------------------------------------------------------------- */
@@ -1216,6 +1217,8 @@ function UpdateAll() {
   UpdateGUIMerc();
 
   fieldValues.archModeFirstPass = false;
+
+  LoadDataFromJSON();
 }
 
 function SetCardArch() {

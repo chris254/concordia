@@ -196,7 +196,9 @@ body {
 }
 
 .cash-filled {
+  background-color: green;
   border: 3px solid green;
+
 }
 
 .brick-filled {

@@ -394,6 +394,33 @@ body {
 }
 
 /* -------------------------------------------------------------------- */
+.cash-background-black {
+  border: 2px solid black;
+  background-color: green;
+}
+.brick-background-black {
+  border: 2px solid black;
+  background-color: rgb(183, 65, 14);
+}
+.food-background-black {
+  border: 2px solid black;
+  background-color: rgb(226, 199, 23);
+}
+.tool-background-black {
+  border: 2px solid black;
+  background-color: rgb(141, 141, 137);
+}
+.wine-background-black {
+  border: 2px solid black;
+  background-color: rgb(241, 12, 12);
+}
+.cloth-background-black {
+  border: 2px solid black;
+  background-color: rgb(62, 16, 189);
+}
+
+
+/* -------------------------------------------------------------------- */
 .blue-background-cash {
   border: 2px solid green;
   background-color: lightskyblue;

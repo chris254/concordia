@@ -1,5 +1,5 @@
 function LoadDataFromJSON() {
-    fetch('cards.json')
+    fetch('cards/cards.json')
       .then(response => response.json())
       .then(json => {
         window.cards = json.cards;
@@ -24,8 +24,8 @@ function LoadDataFromJSON() {
   }
 
   function renderCards(cards) {
-    const container = document.getElementById('card-grid');
-    container.innerHTML = ''; // Clear if needed
+    //const container = document.getElementById('card-grid');
+    //container.innerHTML = ''; // Clear if needed
   
     cards.forEach(card => {
       const div = document.createElement('div');

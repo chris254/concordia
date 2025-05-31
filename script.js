@@ -36,6 +36,8 @@ const StylesType = Object.freeze({
   GREY_NORMAL: ["gray-background-cash","gray-background-brick","gray-background-food","gray-background-tool","gray-background-wine","gray-background-cloth"],
   BLUE_NORMAL: ["blue-background-cash","blue-background-brick","blue-background-food","blue-background-tool","blue-background-wine","blue-background-cloth"],
 
+  RESOURCE_SPECIFIC: ["cash-background-black","brick-background-black","food-background-black","tool-background-black","wine-background-black","cloth-background-black"],
+
 })
 
 
@@ -1217,8 +1219,6 @@ function UpdateAll() {
   UpdateGUIMerc();
 
   fieldValues.archModeFirstPass = false;
-
-  LoadDataFromJSON();
 }
 
 function SetCardArch() {
@@ -1604,7 +1604,7 @@ function UpdateGUIMerc() {
       elemNumMercStoreFinal[resourceId].textContent = "";
     } 
     else {
-      SetStyle(elemNumMercStoreFinal,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+      SetStyle(elemNumMercStoreFinal,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
 
       elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
@@ -1715,6 +1715,8 @@ function ClearAllStyles(elemArray,resourceId) {
   elemArray[resourceId].classList.remove(StylesType.RED_NORMAL[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.GREEN_NORMAL[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.BLUE_NORMAL[resourceId]);
+
+  elemArray[resourceId].classList.remove(StylesType.RESOURCE_SPECIFIC[resourceId]);
 
 }
 

@@ -1561,17 +1561,24 @@ function UpdateGUIMerc() {
     if (resourceId === 0) {
       if (storeInOutCash > 0) {
         elemMercStoreIn[resourceId].textContent = "+" + storeInOutCash;
+        SetStyle(elemMercStoreIn,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+
       }
       else {
         elemMercStoreIn[resourceId].textContent = "";
+        SetStyle(elemMercStoreIn,StylesType.CLEAR[resourceId],resourceId);
+
       }
     }
     else {
       if (mercGlobal.storeIn[resourceId] === 0) {
         elemMercStoreIn[resourceId].textContent = "";
+        SetStyle(elemMercStoreIn,StylesType.CLEAR[resourceId],resourceId);
       } 
       else {
         elemMercStoreIn[resourceId].textContent = "+" + mercGlobal.storeIn[resourceId];
+        SetStyle(elemMercStoreIn,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+
       }
     }
 
@@ -1581,18 +1588,25 @@ function UpdateGUIMerc() {
     if (resourceId === 0) {
       if (storeInOutCash < 0) {
         elemMercStoreOut[resourceId].textContent = storeInOutCash;
+        SetStyle(elemMercStoreOut,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+
       }
       else {
         elemMercStoreOut[resourceId].textContent = "";
+        SetStyle(elemMercStoreOut,StylesType.CLEAR[resourceId],resourceId);
       }
 
     }
     else {
       if (mercGlobal.storeOut[resourceId] === 0) {
         elemMercStoreOut[resourceId].textContent = "";
+        SetStyle(elemMercStoreOut,StylesType.CLEAR[resourceId],resourceId);
+
       } 
       else {
         elemMercStoreOut[resourceId].textContent = -mercGlobal.storeOut[resourceId];
+        SetStyle(elemMercStoreOut,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+
       }
     }
 

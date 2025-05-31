@@ -98,6 +98,20 @@ let mercTrade2Mode;
 
 const minusImgPath = 'minus_new.png';
 
+"btn-arch-store-brick"
+
+const elemIdsMercStore = [
+  "btn-merc-store-cash",
+  "btn-merc-store-brick",
+  "btn-merc-store-food",
+  "btn-merc-store-tool",
+  "btn-merc-store-wine",
+  "btn-merc-store-cloth",
+];
+
+ const elemBtnMercStore = elemIdsMercStore.map((id) => document.getElementById(id));
+
+
 const elemIdsArchHousesAct = [
   "num-arch-houses-act-cash",
   "num-arch-houses-act-brick",
@@ -108,6 +122,7 @@ const elemIdsArchHousesAct = [
 ];
 
  const elemNumArchHousesAct = elemIdsArchHousesAct.map((id) => document.getElementById(id));
+
 
  const elemIdsArchHousesAdd = [
   "num-arch-houses-add-cash",
@@ -362,12 +377,12 @@ const elemIdsStoreCost = [
 const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
 
 const elemIdsBtnIncArch = [
-  "btn-inc-arch-cash",
-  "btn-inc-arch-brick",
-  "btn-inc-arch-food",
-  "btn-inc-arch-tool",
-  "btn-inc-arch-wine",
-  "btn-inc-arch-cloth",
+  "btn-inc-archstore-cash",
+  "btn-inc-archstore-brick",
+  "btn-inc-archstore-food",
+  "btn-inc-archstore-tool",
+  "btn-inc-archstore-wine",
+  "btn-inc-archstore-cloth",
 ];
 
 const elemBtnIncArch = elemIdsBtnIncArch.map((id) => document.getElementById(id));
@@ -1033,19 +1048,19 @@ function UpdateGUIArch() {
 
     if (fieldValues.archFreeMode) {
       // Selectable
-      elemBtnIncArch[resourceId].style.borderRadius = 0;
+      SetBorderRadius(elemBtnIncArch[resourceId],'0%');
     }
     else {
       // Not selectable
-      elemBtnIncArch[resourceId].style.borderRadius = 25;
+      SetBorderRadius(elemBtnIncArch[resourceId],'25%');
     }
-
 
     // ARCH STORE MINUS BUTTON
     if (fieldValues.storeCurrent[resourceId] === 0 || fieldValues.archFreeMode) {
       SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.CLEAR[resourceId],resourceId);
 
       elemBtnDecStore[resourceId].textContent = ""
+
     }
     else if (dataArch.runOutOf[resourceId]) {
       SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
@@ -1077,6 +1092,7 @@ function UpdateGUIArch() {
 
   }
 
+
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
   /*    red - if none Left (it's all been spent)                */
@@ -1101,27 +1117,42 @@ function UpdateGUIArch() {
       let archStyleState = StylesType.CLEAR;
       
       if (fieldValues.archFreeMode) {
+
         archStyleState = ArchStateType.GREEN_NORMAL;
         WriteNormal(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId],16,true,"black",false);
+
+        // Alwas selectable in free mode  
+        SetBorderRadius(elemNumArchHousesAct[resourceId],'25%') ; 
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
+
         archStyleState = StylesType.GREEN_NORMAL;
         WriteSlash(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId], 18, true,
           dataArch.archHousesTotalPossible[resourceId], 10, false, "black", false, false);
+
+        if (dataArch.archHousesDeltaPossible[resourceId] > 0) {
+          SetBorderRadius(elemNumArchHousesAct[resourceId],'25%') ; 
+        } 
+        else {
+          SetBorderRadius(elemNumArchHousesAct[resourceId],'0%') ; 
+        }
       }
       else if (dataArch.archHousesCurrent[resourceId] > 0) {
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId],16,true,"black",false);
+        SetBorderRadius(elemNumArchHousesAct[resourceId],'0%') ; 
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
         elemNumArchHousesAct[resourceId].textContent = "";
+        SetBorderRadius(elemNumArchHousesAct[resourceId],'0%') ; 
       }
       else {
         archStyleState = StylesType.CLEAR;
         elemNumArchHousesAct[resourceId].textContent = "";
+        SetBorderRadius(elemNumArchHousesAct[resourceId],'0%') ; 
       }
 
       let newStyle = archStyleState[resourceId];
@@ -1313,6 +1344,9 @@ function UpdateGUIMerc() {
   let styleResourceName = "";
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
+
+    SetBorderRadius(elemBtnMercStore[resourceId],'25%');
+
     styleResourceName = resourceLookup[resourceId];
 
     // MERC STORE MINUS BUTTON
@@ -1968,3 +2002,9 @@ function ClickBuyResource(resourceId) {
 
   UpdateAll();
 }
+
+  function SetBorderRadius(elem_, radius_) {
+
+    elem_.style.borderRadius = radius_;
+  }
+

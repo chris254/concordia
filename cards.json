@@ -20,14 +20,14 @@
   {
     "section": 1,
     "name": "Farmer",
-    "god": "Min-Food",
+    "god": "MinFood",
     "cost": [0,0,1,0,0,0],
     "index": 2
   },
   {
     "section": 1,
     "name": "Smith",
-    "god": "Min-Tool",
+    "god": "MinTool",
     "cost": [0,1,0,1,0,0],
     "available": true,
     "owner": "",
@@ -64,7 +64,7 @@
   {
     "section": 2,
     "name": "Vintner",
-    "god": "Min-Wine",
+    "god": "MinWine",
     "cost": [0,1,0,0,1,0],
     "available": true,
     "owner": "",
@@ -73,7 +73,7 @@
   {
     "section": 2,
     "name": "Weaver",
-    "god": "Min-Cloth",
+    "god": "MinCloth",
     "cost": [0,1,0,0,0,1],
     "available": true,
     "owner": "",
@@ -82,7 +82,7 @@
   {
     "section": 2,
     "name": "Mason",
-    "god": "Min-Brick",
+    "god": "MinBrick",
     "cost": [0,1,0,0,0,0],
     "available": true,
     "owner": "",

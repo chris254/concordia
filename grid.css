@@ -665,7 +665,7 @@ body {
 /* CARDS */
 .grid-item-border {
   background-color: transparent;
-  /*overflow: hidden;*/
+  overflow: hidden;
   color: black;
   display: flex;
   justify-content: center;

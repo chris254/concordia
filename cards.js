@@ -15,9 +15,9 @@ async function fetchCardData() {
 
 const OwnerType = Object.freeze({
   NONE: " ",
-  A: "A",
-  B: "B",
-  C: "C",
+  A: "Ch",
+  B: "Si",
+  C: "St",
   D: "D",
 });
 

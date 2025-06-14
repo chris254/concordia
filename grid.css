@@ -80,6 +80,7 @@ body {
   /*height: 20px;*/
 }
 
+
 .grid-item-no-border img {
   width: 100%;
   height: 100%;
@@ -649,3 +650,26 @@ body {
 .normal-text {
   font-weight: lighter;
 }
+
+/* CARDS */
+.grid-item-border {
+  background-color: transparent;
+  /*overflow: hidden;*/
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  border: 1px solid black;
+}
+
+.grid-container-no-gap-cards {
+    display: grid;
+    grid-template-columns: 0.1fr 0.3fr 0.1fr 0.1fr 0.1fr; /* Columns sized using fr units */
+  
+    grid-auto-rows: 25px;
+    row-gap: 0px;
+    width: 100%;
+    height: auto;
+}
+

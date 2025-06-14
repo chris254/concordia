@@ -20,14 +20,14 @@
   {
     "section": 1,
     "name": "Farmer",
-    "god": "Minerva-Food",
+    "god": "Min-Food",
     "cost": [0,0,1,0,0,0],
     "index": 2
   },
   {
     "section": 1,
     "name": "Smith",
-    "god": "Minerva-Tool",
+    "god": "Min-Tool",
     "cost": [0,1,0,1,0,0],
     "available": true,
     "owner": "",
@@ -64,7 +64,7 @@
   {
     "section": 2,
     "name": "Vintner",
-    "god": "Minerva-Wine",
+    "god": "Min-Wine",
     "cost": [0,1,0,0,1,0],
     "available": true,
     "owner": "",
@@ -73,7 +73,7 @@
   {
     "section": 2,
     "name": "Weaver",
-    "god": "Minerva-Cloth",
+    "god": "Min-Cloth",
     "cost": [0,1,0,0,0,1],
     "available": true,
     "owner": "",
@@ -82,7 +82,7 @@
   {
     "section": 2,
     "name": "Mason",
-    "god": "Minerva-Brick",
+    "god": "Min-Brick",
     "cost": [0,1,0,0,0,0],
     "available": true,
     "owner": "",

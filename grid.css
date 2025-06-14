@@ -683,5 +683,6 @@ body {
     width: 100%;
     height: auto;
     overflow: hidden;
+    min-width: 5px;
 }
 

@@ -55,7 +55,7 @@ function displayCards() {
     if (cards[dataIndex].god === "Mars") {
       Elem("god",rowNumber).style.backgroundColor = "rgb(240, 165, 105)";
     };
-    if (cards[dataIndex].god.includes("Minerva")) {
+    if (cards[dataIndex].god.includes("Min-")) {
       Elem("god",rowNumber).style.backgroundColor = "rgb(189, 240, 166)";
     };
   }

@@ -45,7 +45,7 @@
   },
   {
     "section": 1,
-    "name": "Pref-Arch",
+    "name": "PrefArch",
     "god": "Venus",
     "cost": [0,0,0,0,1,0],
     "available": true,
@@ -126,7 +126,7 @@
   },
   {
     "section": 2,
-    "name": "Arch-Merc",
+    "name": "ArchMerc",
     "god": "Venus",
     "cost": [0,0,1,0,0,0],
     "available": true,
@@ -171,7 +171,7 @@
   },   
   {
     "section": 3,
-    "name": "Pref-Merc",
+    "name": "PrefMerc",
     "god": "Venus",
     "cost": [0,0,0,0,1,0],
     "available": true,

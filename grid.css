@@ -39,7 +39,10 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 16px;
+  color: white;
   font-weight: bolder;
+  border: 5px solid black;
+
 }
 
 
@@ -49,6 +52,14 @@ body {
   width: 100%;
   margin: 5px 0;
 }
+
+.row-gap {
+  height: 20px;
+  background-color: transparent;
+  width: 100%;
+  margin: 5px 0;
+}
+
 
 .divider-small {
   height: 1px;
@@ -665,7 +676,7 @@ body {
 
 .grid-container-no-gap-cards {
     display: grid;
-    grid-template-columns: 0.1fr 0.3fr 0.1fr 0.1fr 0.1fr; /* Columns sized using fr units */
+    grid-template-columns: 0.1fr 0.3fr 0.1fr 0.1fr 0.1fr 0.1fr 0.1fr 0.1fr 0.1fr; /* Columns sized using fr units */
   
     grid-auto-rows: 25px;
     row-gap: 0px;

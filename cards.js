@@ -13,6 +13,16 @@ async function fetchCardData() {
   }
 }
 
+const OwnerType = Object.freeze({
+  NONE: " ",
+  A: "A",
+  B: "B",
+  C: "C",
+  D: "D",
+});
+
+
+
 function Elem(column_, row_) {
   if (!Number.isInteger(row_)) {
     throw new Error("Error: function Elem");
@@ -22,7 +32,7 @@ function Elem(column_, row_) {
   }
 }
 
-function displayCards() {
+function DisplayCards() {
 
   for (let dataIndex=0; dataIndex <= window.lastCardsRowIndex; dataIndex++) {
     let rowNumber = dataIndex + 1;
@@ -58,6 +68,8 @@ function displayCards() {
     if (cards[dataIndex].god.includes("Min")) {
       Elem("god",rowNumber).style.backgroundColor = "rgb(189, 240, 166)";
     };
+
+    Elem("owner",rowNumber).textContent = cards[dataIndex].owner;
   }
 
   Elem("costadd",1).textContent = " ";
@@ -71,12 +83,41 @@ function displayCards() {
 
 }
 
+function SelectOwner(rowNumber_) {
+
+  if (rowNumber_ != 0) {
+    let index = rowNumber_-1;
+    if (cards[index].owner === OwnerType.NONE) {
+      cards[index].owner = OwnerType.A;
+    }
+    else if (cards[index].owner === OwnerType.A) {
+      cards[index].owner = OwnerType.B;
+    }
+    else if (cards[index].owner === OwnerType.B) {
+      cards[index].owner = OwnerType.C;
+    }
+    else if (cards[index].owner === OwnerType.C) {
+      cards[index].owner = OwnerType.D;
+    }
+    else if (cards[index].owner === OwnerType.D) {
+      cards[index].owner = OwnerType.NONE;
+    }
+  }
+
+  DisplayCards();
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
 
   cards = await fetchCardData();
   window.gridRowCount = cards.length;
   window.lastCardsRowIndex = cards.length - 1;
-  displayCards();
+
+cards.forEach(thisCard => {
+  thisCard.owner = OwnerType.NONE;
+});
+
+DisplayCards();
 
 });
 
@@ -124,7 +165,7 @@ function SelectCard(gridRowNumber_) {
         window.moveTo = gridRowNumber_;
         console.log ("swap state to row = " + gridRowNumber_);
         MoveRow(window.moveFromRow,window.moveTo);
-        displayCards();
+        DisplayCards();
 
 
 //        SwapTwoRows(window.swapStateRows[0],window.swapStateRows[1]);

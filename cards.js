@@ -65,26 +65,26 @@ function DisplayCards() {
       Elem("cost",rowNumber).style.backgroundColor = "rgb(255,255,255)";
       Elem("costadd",rowNumber).style.backgroundColor = "rgb(255,255,255)";
       Elem("owner",rowNumber).style.backgroundColor = "rgb(255,255,255)";
-
-      if (cards[dataIndex].god === "Saturnus") {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(236, 214, 90)";
-      };
-      if (cards[dataIndex].god === "Venus") {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(25, 141, 25)";
-      };
-      if (cards[dataIndex].god === "Jupiter") {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(117, 202, 223)";
-      };
-      if (cards[dataIndex].god === "Mercurius") {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(158, 105, 70)";
-      };
-      if (cards[dataIndex].god === "Mars") {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(240, 165, 105)";
-      };
-      if (cards[dataIndex].god.includes("Min")) {
-        Elem("god",rowNumber).style.backgroundColor = "rgb(189, 240, 166)";
-      };
     }
+
+    if (cards[dataIndex].god === "Saturnus") {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(236, 214, 90)";
+    };
+    if (cards[dataIndex].god === "Venus") {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(25, 141, 25)";
+    };
+    if (cards[dataIndex].god === "Jupiter") {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(117, 202, 223)";
+    };
+    if (cards[dataIndex].god === "Mercurius") {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(158, 105, 70)";
+    };
+    if (cards[dataIndex].god === "Mars") {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(240, 165, 105)";
+    };
+    if (cards[dataIndex].god.includes("Min")) {
+      Elem("god",rowNumber).style.backgroundColor = "rgb(189, 240, 166)";
+    };
     Elem("owner",rowNumber).textContent = cards[dataIndex].owner;
   }
 

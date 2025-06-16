@@ -207,7 +207,7 @@ body {
 }
 
 .cash-filled {
-  background-color: green;
+  background-color: rgb(128, 172, 128);
   border: 3px solid green;
 
 }
@@ -392,7 +392,7 @@ body {
 /* -------------------------------------------------------------------- */
 .cash-background-black {
   border: 2px solid black;
-  background-color: green;
+  background-color: rgb(128, 172, 128);
 }
 .brick-background-black {
   border: 2px solid black;
@@ -686,4 +686,26 @@ body {
     /*min-width: 25px;*/
     font-size: 8pt;
 }
+
+.line-with-text {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 5px 0;
+    }
+
+    .line-with-text::before,
+    .line-with-text::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #000;
+    }
+
+    .line-with-text:not(:empty)::before {
+      margin-right: 1em;
+    }
+
+    .line-with-text:not(:empty)::after {
+      margin-left: 1em;
+    }
 

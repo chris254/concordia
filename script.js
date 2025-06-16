@@ -17,6 +17,7 @@ const CardType = Object.freeze({
 });
 
 const MercType = Object.freeze({
+  MERC0: "MERC0",
   MERC3: "MERC3",
   MERC5: "MERC5",
 });
@@ -1258,15 +1259,19 @@ function SetCardArch() {
 
 function SetCardMerc() {
   /* Toggle between MERC3 and MERC5 */
-  if (mercActive === MercType.MERC3) {
-    mercActive = MercType.MERC5;
+  if (mercActive === MercType.MERC0) {
+    mercActive = MercType.MERC3;
   } 
-  else {
-    // Going to merc 3, but can we take two cash away?
-    if (mercGlobal.storeFinal[0] >= 2) {
-      mercActive = MercType.MERC3;
+  else if (mercActive === MercType.MERC3) {
+
+    mercActive = MercType.MERC5;
+  }
+  else {  
+    if (mercGlobal.storeFinal[0] >= 5) {
+      mercActive = MercType.MERC0;
     }
   }
+
 
   elemBtnMerc.textContent = mercActive;
 
@@ -1331,7 +1336,7 @@ function UpdateGUIMerc() {
   const smallText = document.createElement('span');
   const smallTextGrey = document.createElement('span');
   smallText.className = 'small-text';
-  smallTextGrey.className = 'small-text-grey';
+  smallTextGrey.className = 'small-text-black';
   const largeText = document.createElement('span');
   largeText.className = 'large-text';
 
@@ -1382,6 +1387,7 @@ function UpdateGUIMerc() {
       elemNumPreMercStore[resourceId].textContent = '';
       elemNumPreMercStore[resourceId].appendChild(largeText);
       elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
+        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
 
     }
     else {
@@ -1391,7 +1397,8 @@ function UpdateGUIMerc() {
         //elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
       } else {
         elemNumPreMercStore[resourceId].textContent = mercGlobal.storePreSell[resourceId];
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+
+        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
         //elemNumPreMercStore[resourceId].classList.add(styleResourceName);
       }
 
@@ -1438,18 +1445,18 @@ function UpdateGUIMerc() {
         if (mercGlobal.sellQtyActual[resourceId] === mercGlobal.storePreSell[resourceId]) {   
           WriteSingle(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,fontColor);
 
-          newSellStyle = StylesType.ORANGE_NORMAL[resourceId];
+          newSellStyle = StylesType.RESOURCE_SPECIFIC[resourceId];
 
         }
         else {
           if (sellActive) {
             WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],16,true,mercGlobal.storePreSell[resourceId],12,false, fontColor, false, false);
-            newSellStyle = StylesType.ORANGE_NORMAL[resourceId];
+            newSellStyle = StylesType.RESOURCE_SPECIFIC[resourceId];
 
           }
           else {
             WriteSlash(elemBtnMercSell[resourceId],mercGlobal.sellQtyActual[resourceId],12,false,mercGlobal.storePreSell[resourceId],16,true,fontColor, false, false);
-            newSellStyle = StylesType.CLEAR[resourceId];
+            newSellStyle = StylesType.CLEAR_NORMAL[resourceId];
           }
         }
 
@@ -1511,16 +1518,16 @@ function UpdateGUIMerc() {
       }
       else {
         if (buyAct === buyPoss) {   
-          SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
+          SetStyle(elemBtnMercBuyPlus,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
           WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true,fontColor);    
         }
         else {
           if (buyActive) {
-            SetStyle(elemBtnMercBuyPlus,StylesType.GREEN_NORMAL[resourceId],resourceId);
+            SetStyle(elemBtnMercBuyPlus,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
             WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false,fontColor);
           }
           else {
-            SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+            SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_NORMAL[resourceId],resourceId);
             WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor);
           }
         }
@@ -1580,12 +1587,13 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     // STORE START
     //--------------------------------------------------------------------
-    if (mercGlobal.storePreSell[resourceId] === 0) {
+    /*if (mercGlobal.storePreSell[resourceId] === 0) {
       elemMercStoreStart[resourceId].textContent = "";
     }   
     else {
       elemMercStoreStart[resourceId].textContent = mercGlobal.storePreSell[resourceId];
     }
+    */
 
     let storeInOutCash = mercGlobal.totalTradeDelta[0] + mercGlobal.cashBonus;
 
@@ -1882,7 +1890,8 @@ function ProcessMerc() {
   //           mercGlobal.storeFinal ->
   //      
   // MERC3 or MERC5
-  if (mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
+  if (mercActive === MercType.MERC0) mercGlobal.cashBonus = 0;
+  else if (mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
   else mercGlobal.cashBonus = 5;
   
   mercGlobal.storePreSell[0] = mercGlobal.mercStore[0] + mercGlobal.cashBonus;     

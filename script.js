@@ -1472,11 +1472,11 @@ function UpdateGUIMerc() {
 
       if (deltaCash != 0) {
         WriteSlash(elemBtnMercSell[resourceId],deltaCash,12,false,mercGlobal.storePreBuy[resourceId],16,true,"black", true, false);
-        //WriteNormal(elemBtnMercSell[resourceId],deltaCash,16,false,"grey",true);
-//        WriteNormal(elemBtnMercSell[resourceId],deltaCash,16,false,"grey",true);
+        SetStyle(elemBtnMercSell,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       }
       else {
         elemBtnMercSell[resourceId].textContent = "";
+        SetStyle(elemBtnMercSell,StylesType.CLEAR[resourceId],resourceId);
       }
 
     }
@@ -1540,9 +1540,12 @@ function UpdateGUIMerc() {
 
       if (deltaCash != 0) {
         WriteSlash(elemBtnMercBuyPlus[resourceId],deltaCash,12,false,mercGlobal.storeFinal[resourceId],16,true,"black", true, false);
+        SetStyle(elemBtnMercBuyPlus,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       }
       else {
         elemBtnMercBuyPlus[resourceId].textContent = "";
+        SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
+
       }
     }
 

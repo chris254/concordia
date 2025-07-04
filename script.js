@@ -549,7 +549,7 @@ function MercStoreDec(resourceId) {
       mercGlobal.mercStore[resourceId] -= 1;
     }
   }
-  else if (mercGlobal.mercStore[resourceId] > 0) {
+  else if (mercGlobal.mercStore[resourceId] > 0 && mercGlobal.storeFinal[0] > 0) {
     mercGlobal.mercStore[resourceId] -= 1;
   } 
 

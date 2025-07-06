@@ -543,16 +543,24 @@ function MercStoreInc(resourceId) {
 function MercStoreDec(resourceId) {
 
   let sellQty = 0;
-  if (mercGlobal.sellInProgress[resourceId]) {
-    sellQty = mercGlobal.sellQtyActual[resourceId]
-    if (mercGlobal.mercStore[resourceId] > sellQty && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
+
+  if (resourceId === 0) {
+    if (mercGlobal.storeFinal[0] > 0) {
       mercGlobal.mercStore[resourceId] -= 1;
     }
   }
-  else if (mercGlobal.mercStore[resourceId] > 0 && mercGlobal.storeFinal[0] > 0) {
-    mercGlobal.mercStore[resourceId] -= 1;
-  } 
-
+  else {
+    if (mercGlobal.sellInProgress[resourceId]) {
+      sellQty = mercGlobal.sellQtyActual[resourceId]
+      if (mercGlobal.mercStore[resourceId] > sellQty && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
+        mercGlobal.mercStore[resourceId] -= 1;
+      }
+    }
+   else if (mercGlobal.mercStore[resourceId] > 0 && mercGlobal.storeFinal[0] > 0) {
+      mercGlobal.mercStore[resourceId] -= 1;
+    } 
+  }
+  
   UpdateAll();
 }
 
@@ -1078,15 +1086,10 @@ function UpdateGUIArch() {
     {
 
       if (dataArch.archHousesCurrent[resourceId] > 0 ) {
-//        elemBtnDecArch[resourceId].textContent = "\u25BC";
-          elemBtnDecArch[resourceId].textContent = "-";
-
-          SetMinusStyle(elemBtnDecArch[resourceId],MinusButtonType.ORANGE_NORMAL[resourceId],resourceId);
-
+        elemBtnDecArch[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
       }
       else {
-        elemBtnDecArch[resourceId].textContent = "";
-        SetMinusStyle(elemBtnDecArch[resourceId],MinusButtonType.CLEAR[resourceId],resourceId);
+        elemBtnDecArch[resourceId].style.backgroundImage = 'none';
       }
 
     }
@@ -1123,8 +1126,16 @@ function UpdateGUIArch() {
         WriteNormal(elemNumArchHousesAct[resourceId],
           dataArch.archHousesCurrent[resourceId],16,true,"black",false);
 
+        if (dataArch.archHousesCurrent[resourceId] > 0) {
+          SetStyle(elemNumArchHousesAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        }
+        else
+        {
+          SetStyle(elemNumArchHousesAct,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+
+        }
         // Alwas selectable in free mode  
-        SetBorderRadius(elemNumArchHousesAct[resourceId],'25%') ; 
+        //SetBorderRadius(elemNumArchHousesAct[resourceId],'25%') ; 
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
 
@@ -1156,8 +1167,8 @@ function UpdateGUIArch() {
         SetBorderRadius(elemNumArchHousesAct[resourceId],'0%') ; 
       }
 
-      let newStyle = archStyleState[resourceId];
-      SetStyle(elemNumArchHousesAct,newStyle,resourceId); 
+      //let newStyle = archStyleState[resourceId];
+      //SetStyle(elemNumArchHousesAct,newStyle,resourceId); 
 
 
       //------------------------------------------------------------ 
@@ -1364,11 +1375,8 @@ function UpdateGUIMerc() {
     if (storeValue === 0) {
       elemBtnDecMercStore[resourceId].style.backgroundImage = 'none';
       //minusButtonState = MinusButtonType.CLEAR;
-//      elemBtnDecMercStore[resourceId].textContent = ""
     }
     else {
-      //minusButtonState = MinusButtonType.ORANGE_NORMAL;
-      //elemBtnDecMercStore[resourceId].textContent = "-"
       elemBtnDecMercStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
 
     }

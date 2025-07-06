@@ -34,7 +34,7 @@
 
   </div>  
 
-  <div class="line-with-text">BUILD</div>
+  <div class="line-with-text">STORE</div>
 
 
   <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
@@ -69,6 +69,56 @@
       <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
       <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
       
+  </div>
+
+  <div class="line-with-text">BUILD</div>
+  
+  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+
+      <!-- ========================================================================== -->
+      <!-- Row 9: Arch numbers -->
+      <div class="grid-item-no-border" style="font-size: 10pt;"></div>
+      <div class="grid-item-no-border" style="font-size: 10pt;"></div>
+      <div class="grid-item-no-border" id="num-arch-reqd-brick" style="font-size: 10pt; justify-content: left; margin-top: auto;">1/F</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-food" style="font-size: 10pt; justify-content: left; margin-top: auto;">2/B/F</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-tool" style="font-size: 10pt; justify-content: left; margin-top: auto;">3/B/T</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-wine" style="font-size: 10pt; justify-content: left; margin-top: auto;">4/B/W</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-cloth" style="font-size: 10pt; justify-content: left; margin-top: auto;">5/B/C</div>
+
+      <!-- ========================================================================== -->
+      <!-- Row 8: Padding between Remaining and Build -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)">0</div>
+
+      <!-- ========================================================================== -->
+      <!-- Row 12: Arch Build Dec -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="down-arrow" id="btn-dec-arch-brick" onclick="ArchHousesDec(1)"></div>
+      <div class="down-arrow" id="btn-dec-arch-food" onclick="ArchHousesDec(2)"></div>
+      <div class="down-arrow" id="btn-dec-arch-tool" onclick="ArchHousesDec(3)"></div>
+      <div class="down-arrow" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)"></div>
+      <div class="down-arrow" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)"></div>
+
+            <!-- ========================================================================== -->
+      <!-- Row 8: Padding between Remaining and Build -->
+      <div class="grid-item-no-border">HA</div>
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white;">RST</button>
+      </div> 
+      <div class="grid-item-no-border" id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)">0</div>
+      
+
+
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="grid-item-no-border"></div>
@@ -100,48 +150,6 @@
       <div class="grid-item-no-border" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 12pt;">0</div>
       
 
-      <!-- ========================================================================== -->
-      <!-- Row 9: Arch numbers -->
-      <div class = "sub-title">HOUSE</div>
-      <div class="grid-item-no-border" style="font-size: 10pt;"></div>
-      <div class="grid-item-no-border" id="num-arch-reqd-brick" style="font-size: 10pt; justify-content: left; margin-top: auto;">1/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-food" style="font-size: 10pt; justify-content: left; margin-top: auto;">2/B/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-tool" style="font-size: 10pt; justify-content: left; margin-top: auto;">3/B/T</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-wine" style="font-size: 10pt; justify-content: left; margin-top: auto;">4/B/W</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-cloth" style="font-size: 10pt; justify-content: left; margin-top: auto;">5/B/C</div>
-
-      <!-- ========================================================================== -->
-      <!-- Row 8: Padding between Remaining and Build -->
-      <div class="grid-item-no-border">BUILD</div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)">0</div>
-
-      <!-- ========================================================================== -->
-      <!-- Row 12: Arch Build Dec -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="btn-dec-arch-brick" onclick="ArchHousesDec(1)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-arch-food" onclick="ArchHousesDec(2)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-arch-tool" onclick="ArchHousesDec(3)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)">-</div>
-      <div class="grid-item-no-border" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)">-</div>
-
-      <!-- ========================================================================== -->
-      <!-- Row 8: Padding between Remaining and Build -->
-      <div class="grid-item-no-border">HA</div>
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white;">RST</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)">0</div>
-      
 
 
       

@@ -230,7 +230,7 @@ const elemIdsPreMercSellValue = [
   "num-pre-merc-cashvalue-cloth",
 ];
 
-const elemNumPreMercSellValue = elemIdsPreMercSellValue.map((id) => document.getElementById(id));
+const elemNumPreMercCashValue = elemIdsPreMercSellValue.map((id) => document.getElementById(id));
 
 //---------------------------------------------------------------------------------
 const elemIdsMercDeltaTotal = [
@@ -457,8 +457,8 @@ document.addEventListener("DOMContentLoaded", function () {
   editMode = EditModeType.FREE;
   btnEditMode = document.getElementById("btn-edit-mode");
 
-  mercActive = MercType.MERC3;
-  lastMercActive = MercType.MERC3;
+  mercActive = MercType.MERC0;
+  lastMercActive = MercType.MERC0;
 
 
   dataArch.archHousesCurrent.fill(0);
@@ -1381,13 +1381,20 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     if (resourceId === 0) {
 
-      largeText.textContent = mercGlobal.mercStore[resourceId];
-      smallTextGrey.textContent = "/" + mercGlobal.storePreSell[resourceId];
+      if (mercActive === MercType.MERC0) {
+        elemNumPreMercStore[resourceId].textContent = mercGlobal.mercStore[resourceId];
 
-      elemNumPreMercStore[resourceId].textContent = '';
-      elemNumPreMercStore[resourceId].appendChild(largeText);
-      elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
-        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      }
+      else {
+        largeText.textContent = mercGlobal.mercStore[resourceId];
+        smallTextGrey.textContent = "/" + mercGlobal.storePreSell[resourceId];
+
+        elemNumPreMercStore[resourceId].textContent = '';
+        elemNumPreMercStore[resourceId].appendChild(largeText);
+        elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
+      }
+
+      SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
 
     }
     else {
@@ -1407,12 +1414,22 @@ function UpdateGUIMerc() {
     //--------------------------------------------------------------------
     // £??
     //--------------------------------------------------------------------
-    if (mercGlobal.storePreSell[resourceId] === 0) {
-      elemNumPreMercSellValue[resourceId].textContent = "";
-      elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
-    } else {
-      elemNumPreMercSellValue[resourceId].textContent = mercGlobal.storeCashValue[resourceId];
-      elemNumPreMercSellValue[resourceId].classList.remove(styleResourceName);
+    if (resourceId === 0) {
+
+      let totalValue = mercGlobal.storePreSell[0] + mercGlobal.totalStoreCashValue;
+      elemNumPreMercCashValue[resourceId].textContent = 
+        mercGlobal.storePreSell[0] + "+" +
+          mercGlobal.totalStoreCashValue + "=" +
+          totalValue;
+
+    }
+    else if (mercGlobal.storePreSell[resourceId] === 0) {
+      elemNumPreMercCashValue[resourceId].textContent = "";
+      elemNumPreMercCashValue[resourceId].classList.remove(styleResourceName);
+    } 
+    else {
+      elemNumPreMercCashValue[resourceId].textContent = mercGlobal.storeCashValue[resourceId];
+      elemNumPreMercCashValue[resourceId].classList.remove(styleResourceName);
     }
 
     //-----------------------------------------------------------------------
@@ -1950,7 +1967,7 @@ function ProcessMerc() {
   mercGlobal.storeIn[0] = mercGlobal.cashBonus + Math.max(mercGlobal.totalTradeDelta[0],0);
 
   let currentCashValue = 0;
-  let totalCashValue = 0;
+  mercGlobal.totalStoreCashValue = 0;
   mercGlobal.storeCashValue[0] = 0; // Start with zero before getting the sell value for all resources
 
   // -------------------------------------------------------------------
@@ -1961,7 +1978,7 @@ function ProcessMerc() {
     currentCashValue = mercGlobal.storePreSell[index] * resourceValue[index];
     mercGlobal.storeCashValue[index] = currentCashValue;
 
-    totalCashValue += currentCashValue;
+    mercGlobal.totalStoreCashValue += currentCashValue;
 
     // Potential buy
     mercGlobal.mercBuyPot[index] = 
@@ -1972,7 +1989,7 @@ function ProcessMerc() {
 
   }
 
-  mercGlobal.storeCashValue[0] = totalCashValue;
+  mercGlobal.storeCashValue[0] = mercGlobal.totalStoreCashValue;
 
 
 

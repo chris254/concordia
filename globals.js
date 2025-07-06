@@ -124,7 +124,7 @@ let mercGlobal = {
 
   totalTradeCount:0,
   
-
+  totalStoreCashValue:0,
 
 
 }

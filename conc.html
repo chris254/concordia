@@ -13,7 +13,52 @@
 
   <body>
 
-    <div class="title-divider">ARCHITECT</div>
+  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+
+      <!-- ========================================================================== -->
+      <!-- Row 2: Headers -->
+      <div class = "sub-title">STORE</div>
+      <div class="grid-item cash-filled" id="btn-inc-store1-cash" onclick="ArchStoreInc(0)">£</div>
+      <div class="grid-item brick-filled" id="btn-inc-store1-brick"  onclick="ArchStoreInc(1)">
+        <img src="brick.PNG">
+      </div>
+      <div class="grid-item food-filled" id="btn-inc-store1-food"  onclick="ArchStoreInc(2)">
+        <img src="Food.png">
+      </div>
+      <div class="grid-item tool-filled" id="btn-inc-store1-tool" onclick="ArchStoreInc(3)">
+        <img src="Tool.png">
+      </div>
+      <div class="grid-item wine-filled" id="btn-inc-store1-wine" onclick="ArchStoreInc(4)">
+        <img src="Wine.png">
+      </div>
+      <div class="grid-item cloth-filled" id="btn-inc-store1-cloth" onclick="ArchStoreInc(5)">
+        <img src="Cloth.png">
+      </div>
+      
+      <!-- ========================================================================== -->
+      <!-- Row 3: RESET button and Current Store values -->
+      <div class="grid-item-no-border">Current</div>
+      <div class="grid-item cash" id="num-storecurrent-cash" style="font-weight: bolder;">0</div>
+      <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder;">0</div>
+      <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder;">0</div>
+      <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
+      <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
+      <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
+
+      <!-- ========================================================================== -->
+      <!-- Row 5: Dec Buttons for current store -->
+      <div class="grid-item-no-border"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-food" onclick="ArchStoreDec(2)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)"></div>
+      
+      
+  </div>
+
+  <div class="title-divider">ARCHITECT</div>
 
   <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
     <!-- ========================================================================== -->
@@ -37,39 +82,6 @@
   <div class="line-with-text">STORE</div>
 
 
-  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-
-      <!-- ========================================================================== -->
-      <!-- Row 2: Headers -->
-      <div class = "sub-title">STORE</div>
-      <div class="grid-item cash-filled" id="btn-inc-archstore-cash" onclick="ArchStoreInc(0)">£</div>
-      <div class="grid-item brick-filled" id="btn-inc-archstore-brick"  onclick="ArchStoreInc(1)">
-        <img src="brick.PNG">
-      </div>
-      <div class="grid-item food-filled" id="btn-inc-archstore-food"  onclick="ArchStoreInc(2)">
-        <img src="Food.png">
-      </div>
-      <div class="grid-item tool-filled" id="btn-inc-archstore-tool" onclick="ArchStoreInc(3)">
-        <img src="Tool.png">
-      </div>
-      <div class="grid-item wine-filled" id="btn-inc-archstore-wine" onclick="ArchStoreInc(4)">
-        <img src="Wine.png">
-      </div>
-      <div class="grid-item cloth-filled" id="btn-inc-archstore-cloth" onclick="ArchStoreInc(5)">
-        <img src="Cloth.png">
-      </div>
-      
-      <!-- ========================================================================== -->
-      <!-- Row 3: RESET button and Current Store values -->
-      <div class="grid-item-no-border">Current</div>
-      <div class="grid-item cash" id="num-storecurrent-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
-      
-  </div>
 
   <div class="line-with-text">BUILD</div>
   
@@ -119,16 +131,6 @@
       
 
 
-      <!-- ========================================================================== -->
-      <!-- Row 5: Dec Buttons for current store -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-food" onclick="ArchStoreDec(2)"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)"></div>
-      <div class="grid-item-no-border" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)"></div>
-      
       <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 8pt;">Cost</div>

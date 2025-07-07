@@ -378,12 +378,12 @@ const elemIdsStoreCost = [
 const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
 
 const elemIdsBtnIncArch = [
-  "btn-inc-archstore-cash",
-  "btn-inc-archstore-brick",
-  "btn-inc-archstore-food",
-  "btn-inc-archstore-tool",
-  "btn-inc-archstore-wine",
-  "btn-inc-archstore-cloth",
+  "btn-inc-store1-cash",
+  "btn-inc-store1-brick",
+  "btn-inc-store1-food",
+  "btn-inc-store1-tool",
+  "btn-inc-store1-wine",
+  "btn-inc-store1-cloth",
 ];
 
 const elemBtnIncArch = elemIdsBtnIncArch.map((id) => document.getElementById(id));
@@ -1066,7 +1066,7 @@ function UpdateGUIArch() {
 
     // ARCH STORE MINUS BUTTON
     if (fieldValues.storeCurrent[resourceId] === 0 || fieldValues.archFreeMode) {
-      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.CLEAR[resourceId],resourceId);
+        elemBtnDecStore[resourceId].style.backgroundImage = `none`;
 
       elemBtnDecStore[resourceId].textContent = ""
 
@@ -1074,11 +1074,10 @@ function UpdateGUIArch() {
     else if (dataArch.runOutOf[resourceId]) {
       SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
 
-      elemBtnDecStore[resourceId].textContent = ""
+        elemBtnDecStore[resourceId].style.backgroundImage = `none`;
     }
     else {
-      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.ORANGE_NORMAL[resourceId],resourceId);
-      elemBtnDecStore[resourceId].textContent = "-"
+        elemBtnDecStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
     }
 
     // ARCH BUILD MINUS BUTTON

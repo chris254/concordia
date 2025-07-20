@@ -19,6 +19,18 @@ body {
   min-height: 100vh;
 }
 
+.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
+  
+  grid-auto-rows: 25px;
+  column-gap: 2px; /* Space between grid items */
+  row-gap: 0px;
+  width: 100%;
+  height: auto;
+  /*height: 100vh;*/
+}
+
 .grid-container-no-gap {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */

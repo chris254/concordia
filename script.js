@@ -910,7 +910,7 @@ function ResetMercStore() {
 
   ResetMercTrades();
 
-  for (let resourceId = 1; resourceId <=5; resourceId++) {
+  for (let resourceId = 0; resourceId <=5; resourceId++) {
     mercGlobal.mercStore[resourceId] = 0;
   }
 
@@ -1287,6 +1287,25 @@ function SetCardMerc() {
 
   UpdateAll();
 }
+
+function HideShow(index_) {
+
+  if (index_ === 0)
+  {
+    mercGlobal.hideArchitect = !mercGlobal.hideArchitect;
+
+    if (mercGlobal.hideArchitect) {
+      document.getElementById("arch-strict-group").style.display = "none";
+    }
+    else {
+      document.getElementById("arch-strict-group").style.display = "block";
+  }
+}
+
+//  UpdateAll();
+
+}
+
 
 function ToggleEditMode() {
   if (fieldValues.archFreeMode) {

@@ -10,105 +10,201 @@
     <title>Concordia</title>
   </head>
 
-
   <body>
-
-  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-
-      <!-- ========================================================================== -->
-      <!-- Row 2: Headers -->
-      <div class = "sub-title">STORE</div>
-      <div class="grid-item cash-filled" id="btn-inc-store1-cash" onclick="ArchStoreInc(0)">£</div>
-      <div class="grid-item brick-filled" id="btn-inc-store1-brick"  onclick="ArchStoreInc(1)">
-        <img src="brick.PNG">
+    <!--    SHOW HIDE BUTTONS       -->
+    <div class="menu">
+      <div class="grid-item" id="menu-arch-strict" style="font-size: 8pt" onclick="HideShow(0)">ARCH-STRICT</div>
+      <div class="grid-item" id="menu-arch-free" style="font-size: 8pt">ARCH-FREE</div>
+      <div class="grid-item" id="menu-merc" style="font-size: 8pt">
+        MERACTOR
       </div>
-      <div class="grid-item food-filled" id="btn-inc-store1-food"  onclick="ArchStoreInc(2)">
-        <img src="Food.png">
+      <div class="grid-item" id="menu-cards" style="font-size: 8pt">CARDS</div>
+    </div>
+
+    <div id="arch-free-group">
+      <div class="title-divider" onClick="HideShow(0)">ARCHITECT-FREE</div>
+    </div>
+
+    <div id="arch-strict-group">
+      <div class="title-divider" onClick="HideShow(0)">ARCHITECT-STRICT</div>
+
+      <div class="line-with-text">STORE</div>
+
+      <div
+        class="grid-container-no-gap"
+        style="white-space: nowrap; overflow-x: auto; background-color: white"
+      >
+        <!-- ========================================================================== -->
+        <!-- COL1: ARCH STRICT STORE -->
+        <div class="sub-title">STORE</div>
+        <div class="grid-item cash-filled" id="btn-inc-store1-cash" onclick="ArchStoreInc(0)">£</div>
+        <div class="grid-item brick-filled" id="btn-inc-store1-brick" onclick="ArchStoreInc(1)">
+          <img src="brick.PNG" />
+        </div>
+        <div class="grid-item food-filled" id="btn-inc-store1-food" onclick="ArchStoreInc(2)">
+          <img src="Food.png" />
+        </div>
+        <div class="grid-item tool-filled" id="btn-inc-store1-tool" onclick="ArchStoreInc(3)">
+          <img src="Tool.png" />
+        </div>
+        <div class="grid-item wine-filled" id="btn-inc-store1-wine" onclick="ArchStoreInc(4)">
+          <img src="Wine.png" />
+        </div>
+        <div class="grid-item cloth-filled" id="btn-inc-store1-cloth" onclick="ArchStoreInc(5)"> 
+          <img src="Cloth.png" />
+        </div>
+
+        <!-- ========================================================================== -->
+        <!-- Row 3: RESET button and Current Store values -->
+        <div class="grid-item-no-border">Current</div>
+        <div
+          class="grid-item cash"
+          id="num-storecurrent-cash"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+        <div
+          class="grid-item brick"
+          id="num-storecurrent-brick"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+        <div
+          class="grid-item food"
+          id="num-storecurrent-food"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+        <div
+          class="grid-item tool"
+          id="num-storecurrent-tool"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+        <div
+          class="grid-item wine"
+          id="num-storecurrent-wine"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+        <div
+          class="grid-item cloth"
+          id="num-storecurrent-cloth"
+          style="font-weight: bolder"
+        >
+          0
+        </div>
+
+        <!-- ========================================================================== -->
+        <!-- Row 5: Dec Buttons for current store -->
+        <div class="grid-item-no-border"></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-cash"
+          onclick="ArchStoreDec(0)"
+        ></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-brick"
+          onclick="ArchStoreDec(1)"
+        ></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-food"
+          onclick="ArchStoreDec(2)"
+        ></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-tool"
+          onclick="ArchStoreDec(3)"
+        ></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-wine"
+          onclick="ArchStoreDec(4)"
+        ></div>
+        <div
+          class="down-arrow"
+          id="btn-dec-storecurrent-cloth"
+          onclick="ArchStoreDec(5)"
+        ></div>
       </div>
-      <div class="grid-item tool-filled" id="btn-inc-store1-tool" onclick="ArchStoreInc(3)">
-        <img src="Tool.png">
+
+      <div
+        class="grid-container-no-gap"
+        style="white-space: nowrap; overflow-x: auto; background-color: white"
+      >
+        <!-- ========================================================================== -->
+        <!-- Top Row: -->
+        <div class="card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
+        <div class="grid-item" style="font-size: 8pt">RST</div>
+        <div class="grid-item-no-border">
+          <button
+            class="btn-full-not-selected"
+            onclick="ResetStoreCurrent()"
+            style="background-color: red; color: white"
+          >
+            ST
+          </button>
+        </div>
+        <div class="grid-item-no-border">
+          <button
+            class="btn-full-not-selected"
+            onclick="ResetArchitect()"
+            style="background-color: red; color: white"
+          >
+            HO
+          </button>
+        </div>
+        <div class="grid-item" style="font-size: 8pt">MD</div>
+        <div class="grid-item-no-border">
+          <button
+            class="btn-full-not-selected"
+            onclick="ToggleEditMode()"
+            id="btn-edit-mode"
+            style="font-weight: bolder"
+          >
+            F
+          </button>
+        </div>
+        <div class="grid-item-no-border" id="version"></div>
       </div>
-      <div class="grid-item wine-filled" id="btn-inc-store1-wine" onclick="ArchStoreInc(4)">
-        <img src="Wine.png">
-      </div>
-      <div class="grid-item cloth-filled" id="btn-inc-store1-cloth" onclick="ArchStoreInc(5)">
-        <img src="Cloth.png">
-      </div>
-      
-      <!-- ========================================================================== -->
-      <!-- Row 3: RESET button and Current Store values -->
-      <div class="grid-item-no-border">Current</div>
-      <div class="grid-item cash" id="num-storecurrent-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder;">0</div>
+    </div>
+    <!-- END ARCHITECT-GROUP-->
 
-      <!-- ========================================================================== -->
-      <!-- Row 5: Dec Buttons for current store -->
-      <div class="grid-item-no-border"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-food" onclick="ArchStoreDec(2)"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)"></div>
-      <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)"></div>
-      
-      
-  </div>
+    <div class="line-with-text">STORE</div>
 
-  <div class="title-divider">ARCHITECT</div>
+    <div class="line-with-text">BUILD</div>
 
-  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-    <!-- ========================================================================== -->
-    <!-- Top Row: -->
-    <div class = "card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
-    <div class="grid-item" style="font-size: 8pt">RST</div>
-    <div class="grid-item-no-border">
-      <button class="btn-full-not-selected" onclick="ResetStoreCurrent()" style="background-color: red; color: white;">ST</button>
-    </div> 
-    <div class="grid-item-no-border">
-      <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: red;color: white;">HO</button>
-    </div> 
-    <div class="grid-item" style="font-size: 8pt">MD</div>
-    <div class="grid-item-no-border">
-      <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder;">F</button>
-    </div> 
-    <div class="grid-item-no-border" id="version"></div>
-
-  </div>  
-
-  <div class="line-with-text">STORE</div>
-
-
-
-  <div class="line-with-text">BUILD</div>
-  
-  <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
 
       <!-- ========================================================================== -->
       <!-- Row 9: Arch numbers -->
-      <div class="grid-item-no-border" style="font-size: 10pt;"></div>
-      <div class="grid-item-no-border" style="font-size: 10pt;"></div>
-      <div class="grid-item-no-border" id="num-arch-reqd-brick" style="font-size: 10pt; justify-content: left; margin-top: auto;">1/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-food" style="font-size: 10pt; justify-content: left; margin-top: auto;">2/B/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-tool" style="font-size: 10pt; justify-content: left; margin-top: auto;">3/B/T</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-wine" style="font-size: 10pt; justify-content: left; margin-top: auto;">4/B/W</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-cloth" style="font-size: 10pt; justify-content: left; margin-top: auto;">5/B/C</div>
+      <div class="grid-item-no-border" style="font-size: 10pt"></div>
+      <div class="grid-item-no-border" style="font-size: 10pt"></div>
+      <div class="grid-item-no-border" id="num-arch-reqd-brick" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-food" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-tool" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-wine" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
+      <div class="grid-item-no-border" id="num-arch-reqd-cloth" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
 
       <!-- ========================================================================== -->
-      <!-- Row 8: Padding between Remaining and Build -->
+      <!-- Row: Arch Free Build -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)">0</div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)"></div>
 
       <!-- ========================================================================== -->
-      <!-- Row 12: Arch Build Dec -->
+      <!-- Arch Free Build Dec -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
       <div class="down-arrow" id="btn-dec-arch-brick" onclick="ArchHousesDec(1)"></div>
@@ -117,455 +213,1102 @@
       <div class="down-arrow" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)"></div>
       <div class="down-arrow" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)"></div>
 
-            <!-- ========================================================================== -->
-      <!-- Row 8: Padding between Remaining and Build -->
+      <!-- ========================================================================== -->
+      <!-- Row : Additional Houses -->
       <div class="grid-item-no-border">HA</div>
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white;">RST</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)">0</div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)">0</div>
-      
-
+        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
+      </div>
+      <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)"></div>
 
       <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 8pt;">Cost</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-cash" style="font-weight: lighter; font-size: 8pt;" >0</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-brick" style="font-weight: lighter; font-size: 8pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-food" style="font-weight: lighter; font-size: 8pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-tool" style="font-weight: lighter; font-size: 8pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-wine" style="font-weight: lighter; font-size: 8pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-store-cost-cloth" style="font-weight: lighter; font-size: 8pt;">0</div>
-      
+      <div
+        class="grid-item-no-border"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        Cost
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-cash"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-brick"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-food"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-tool"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-wine"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-store-cost-cloth"
+        style="font-weight: lighter; font-size: 8pt"
+      >
+        0
+      </div>
+
       <!-- ========================================================================== -->
       <!-- Row 7: Arch Store Rem -->
-      <div class="grid-item-no-border" style="font-weight: bolder; font-size: 12pt;">Rem</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-cash" style="font-weight: bolder; font-size: 12pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-brick" style="font-weight: bolder; font-size: 12pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-food" style="font-weight: bolder; font-size: 12pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-tool" style="font-weight: bolder; font-size: 12pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-wine" style="font-weight: bolder; font-size: 12pt;">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 12pt;">0</div>
-      
-
-
-
-      
-
+      <div
+        class="grid-item-no-border"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        Rem
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-cash"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-brick"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-food"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-tool"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-wine"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-arch-remaining-cloth"
+        style="font-weight: bolder; font-size: 12pt"
+      >
+        0
+      </div>
 
       <!-- ******************************************************************************** -->
       <!-- **************************************** ARCHITECT ***************************** -->
       <!-- ******************************************************************************** -->
-      
-    </div>  
-
+    </div>
 
     <div class="title-divider">MERCATOR</div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-    
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <!-- ========================================================================== -->
       <!-- Row 13: Padding row -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">3</div>
-      <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">4</div>
-      <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">5</div>
-      <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">6</div>
-      <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto;">7</div>
+      <div
+        class="grid-item-no-border"
+        style="font-size: 10pt; justify-content: left; margin-top: auto"
+      >
+        3
+      </div>
+      <div
+        class="grid-item-no-border"
+        style="font-size: 10pt; justify-content: left; margin-top: auto"
+      >
+        4
+      </div>
+      <div
+        class="grid-item-no-border"
+        style="font-size: 10pt; justify-content: left; margin-top: auto"
+      >
+        5
+      </div>
+      <div
+        class="grid-item-no-border"
+        style="font-size: 10pt; justify-content: left; margin-top: auto"
+      >
+        6
+      </div>
+      <div
+        class="grid-item-no-border"
+        style="font-size: 10pt; justify-content: left; margin-top: auto"
+      >
+        7
+      </div>
 
-        
       <!-- ******************************************** MERC *************************************************** -->
-      
 
       <!-- ========================================================================== -->
       <!-- Row 14: Cost of resource (for Mercator) -->
       <div class="grid-item-no-border"></div>
-      <div class = "card-title" onclick="SetCardMerc()" id="btn-merc">MERC0</div>
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Trades</div>
+      <div class="card-title" onclick="SetCardMerc()" id="btn-merc">MERC0</div>
+      <div
+        class="grid-item-no-border"
+        style="font-weight: lighter; font-size: 10pt"
+      >
+        Trades
+      </div>
       <div class="grid-item" id="num-trades"></div>
       <div class="grid-item" style="font-size: 8pt">RST</div>
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetMercStore()" style="background-color: red; color: white;">ST</button>
-      </div> 
+        <button
+          class="btn-full-not-selected"
+          onclick="ResetMercStore()"
+          style="background-color: red; color: white"
+        >
+          ST
+        </button>
+      </div>
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetMercTrades()" style="background-color: red;color: white;">TR</button>
-      </div> 
-
+        <button
+          class="btn-full-not-selected"
+          onclick="ResetMercTrades()"
+          style="background-color: red; color: white"
+        >
+          TR
+        </button>
+      </div>
     </div>
-    
-    
+
     <div class="line-with-text">STORE</div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
+      <div
+        class="grid-item-no-border"
+        style="font-weight: lighter; font-size: 10pt"
+      >
+        £??
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-cash"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-brick"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-food"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-tool"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-wine"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-cloth"
+        style="font-size: 8pt"
+      ></div>
 
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">£??</div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-brick" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-food" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt;"></div>
-    
+      <div
+        class="grid-item-no-border"
+        id="num-pre-merc-cashvalue-tool"
+        style="font-size: 8pt"
+      ></div>
+      <div
+        class="grid-item cash-filled"
+        id="btn-merc-store-cash"
+        onclick="MercStoreInc(0)"
+      >
+        £
+      </div>
+      <div
+        class="grid-item brick-filled"
+        id="btn-merc-store-brick"
+        onclick="MercStoreInc(1)"
+      >
+        <img src="brick.PNG" />
+      </div>
+      <div
+        class="grid-item food-filled"
+        id="btn-merc-store-food"
+        onclick="MercStoreInc(2)"
+      >
+        <img src="Food.png" />
+      </div>
+      <div
+        class="grid-item tool-filled"
+        id="btn-merc-store-tool"
+        onclick="MercStoreInc(3)"
+      >
+        <img src="Tool.png" />
+      </div>
+      <div
+        class="grid-item wine-filled"
+        id="btn-merc-store-wine"
+        onclick="MercStoreInc(4)"
+      >
+        <img src="Wine.png" />
+      </div>
+      <div
+        class="grid-item cloth-filled"
+        id="btn-merc-store-cloth"
+        onclick="MercStoreInc(5)"
+      >
+        <img src="Cloth.png" />
+      </div>
 
-      <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt;"></div>
-      <div class="grid-item cash-filled " id="btn-merc-store-cash" onclick="MercStoreInc(0)">£</div>
-      <div class="grid-item brick-filled" id="btn-merc-store-brick"  onclick="MercStoreInc(1)">
-        <img src="brick.PNG">
+      <div
+        class="grid-item-no-border"
+        style="font-weight: lighter; font-size: 10pt"
+      >
+        Store
       </div>
-      <div class="grid-item food-filled" id="btn-merc-store-food"  onclick="MercStoreInc(2)">
-        <img src="Food.png">
-      </div>
-      <div class="grid-item tool-filled" id="btn-merc-store-tool"  onclick="MercStoreInc(3)">
-        <img src="Tool.png">
-      </div>
-      <div class="grid-item wine-filled" id="btn-merc-store-wine"  onclick="MercStoreInc(4)">
-        <img src="Wine.png">
-      </div>
-      <div class="grid-item cloth-filled" id="btn-merc-store-cloth"  onclick="MercStoreInc(5)">
-        <img src="Cloth.png">
-      </div>
-    
+      <div
+        class="grid-item-no-border cash"
+        id="num-pre-merc-cash"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border brick"
+        id="num-pre-merc-brick"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border food"
+        id="num-pre-merc-food"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border tool"
+        id="num-pre-merc-tool"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border wine"
+        id="num-pre-merc-wine"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border cloth"
+        id="num-pre-merc-cloth"
+        style="font-weight: bolder"
+      ></div>
 
-    
-    
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt;">Store</div>
-      <div class="grid-item-no-border cash" id="num-pre-merc-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border brick" id="num-pre-merc-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border food" id="num-pre-merc-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border tool" id="num-pre-merc-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border wine" id="num-pre-merc-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border cloth" id="num-pre-merc-cloth" style="font-weight: bolder;"></div>
-    
       <!-- ========================================================================== -->
       <!-- Row 5: Dec Buttons for current store -->
       <div class="down-arrow"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-cash" onclick="MercStoreDec(0)"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-brick" onclick="MercStoreDec(1)"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-food" onclick="MercStoreDec(2)"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-tool" onclick="MercStoreDec(3)"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-wine" onclick="MercStoreDec(4)"></div>
-      <div class="down-arrow" id="btn-dec-store-merc-cloth" onclick="MercStoreDec(5)"></div>
-    
-
-
-    </div>  
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-cash"
+        onclick="MercStoreDec(0)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-brick"
+        onclick="MercStoreDec(1)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-food"
+        onclick="MercStoreDec(2)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-tool"
+        onclick="MercStoreDec(3)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-wine"
+        onclick="MercStoreDec(4)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-dec-store-merc-cloth"
+        onclick="MercStoreDec(5)"
+      ></div>
+    </div>
 
     <div class="line-with-text">SELL</div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-
-    
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <!-- ========================================================================== -->
       <!-- Row x: Merc Sell -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">SELL</button>
-      </div> 
+      </div>
       <div class="grid-item-no-border" id="btn-merc-sell-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-sell-brick" onclick="ClickMercSellResourcePlus(1)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-food" onclick="ClickMercSellResourcePlus(2)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-tool" onclick="ClickMercSellResourcePlus(3)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-wine" onclick="ClickMercSellResourcePlus(4)">0</div>
-      <div class="grid-item-no-border" id="btn-merc-sell-cloth" onclick="ClickMercSellResourcePlus(5)">0</div>
-    
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-sell-brick"
+        onclick="ClickMercSellResourcePlus(1)"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-sell-food"
+        onclick="ClickMercSellResourcePlus(2)"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-sell-tool"
+        onclick="ClickMercSellResourcePlus(3)"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-sell-wine"
+        onclick="ClickMercSellResourcePlus(4)"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-sell-cloth"
+        onclick="ClickMercSellResourcePlus(5)"
+      >
+        0
+      </div>
     </div>
 
     <div class="line-with-text">BUY</div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <!-- ========================================================================== -->
       <!-- Row x: Merc Buy -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">BUY</button>
-      </div> 
+      </div>
       <div class="grid-item-no-border" id="btn-merc-buy-cash"></div>
-      <div class="grid-item-no-border" id="btn-merc-buy-brick" onclick="ClickMercBuyResourcePlus(1)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-food" onclick="ClickMercBuyResourcePlus(2)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-tool" onclick="ClickMercBuyResourcePlus(3)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-wine" onclick="ClickMercBuyResourcePlus(4)">BUY</div>
-      <div class="grid-item-no-border" id="btn-merc-buy-cloth" onclick="ClickMercBuyResourcePlus(5)">BUY</div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-buy-brick"
+        onclick="ClickMercBuyResourcePlus(1)"
+      >
+        BUY
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-buy-food"
+        onclick="ClickMercBuyResourcePlus(2)"
+      >
+        BUY
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-buy-tool"
+        onclick="ClickMercBuyResourcePlus(3)"
+      >
+        BUY
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-buy-wine"
+        onclick="ClickMercBuyResourcePlus(4)"
+      >
+        BUY
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="btn-merc-buy-cloth"
+        onclick="ClickMercBuyResourcePlus(5)"
+      >
+        BUY
+      </div>
 
       <!-- ========================================================================== -->
       <!-- Row x: Merc Trade Minus -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border" id="btn-merc-trade-minus-cash"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-brick" onclick="ClickMercTradeMinus(1)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-food" onclick="ClickMercTradeMinus(2)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-tool" onclick="ClickMercTradeMinus(3)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-wine" onclick="ClickMercTradeMinus(4)"></div>
-      <div class="down-arrow" id="btn-merc-trade-minus-cloth" onclick="ClickMercTradeMinus(5)"></div>
-    
-
+      <div
+        class="down-arrow"
+        id="btn-merc-trade-minus-brick"
+        onclick="ClickMercTradeMinus(1)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-merc-trade-minus-food"
+        onclick="ClickMercTradeMinus(2)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-merc-trade-minus-tool"
+        onclick="ClickMercTradeMinus(3)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-merc-trade-minus-wine"
+        onclick="ClickMercTradeMinus(4)"
+      ></div>
+      <div
+        class="down-arrow"
+        id="btn-merc-trade-minus-cloth"
+        onclick="ClickMercTradeMinus(5)"
+      ></div>
     </div>
 
     <div class="divider-small"></div>
-    
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
 
-
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE IN -->      
+      <!-- Row x: MERC STORE IN -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">IN</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-store-in-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-in-cloth" style="font-weight: bolder;"></div>
-    
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-cash"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-brick"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-food"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-tool"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-wine"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-in-cloth"
+        style="font-weight: bolder"
+      ></div>
+
       <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE OUT -->      
+      <!-- Row x: MERC STORE OUT -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">OUT</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-store-out-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-store-out-cloth" style="font-weight: bolder;"></div>
-
-     
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-cash"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-brick"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-food"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-tool"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-wine"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-store-out-cloth"
+        style="font-weight: bolder"
+      ></div>
     </div>
 
     <div class="divider-small"></div>
-    
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
 
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">FINAL</button>
-      </div> 
-      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder;">0</div>
-      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder;">0</div>
-    
-
-    </div>  
-
-    
+      </div>
+      <div
+        class="grid-item-no-border cash"
+        id="num-final-merc-cash"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border brick"
+        id="num-final-merc-brick"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border food"
+        id="num-final-merc-food"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border tool"
+        id="num-final-merc-tool"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border wine"
+        id="num-final-merc-wine"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+      <div
+        class="grid-item-no-border cloth"
+        id="num-final-merc-cloth"
+        style="font-weight: bolder"
+      >
+        0
+      </div>
+    </div>
 
     <div class="divider"></div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white;">
-    
+    <div
+      class="grid-container-no-gap"
+      style="white-space: nowrap; overflow-x: auto; background-color: white"
+    >
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">ARCH</button>
-      </div> 
-      <div class="grid-item-no-border" id="num-merc-arch-cash" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-arch-brick" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-arch-food" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-arch-tool" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-arch-wine" style="font-weight: bolder;"></div>
-      <div class="grid-item-no-border" id="num-merc-arch-cloth" style="font-weight: bolder;"></div>
-    
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-    
-    </div>
+      </div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-cash"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-brick"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-food"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-tool"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-wine"
+        style="font-weight: bolder"
+      ></div>
+      <div
+        class="grid-item-no-border"
+        id="num-merc-arch-cloth"
+        style="font-weight: bolder"
+      ></div>
 
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+    </div>
 
     <!-- CARDS -->
     <div class="title-divider">CARDS</div>
     <div class="row-gap"></div>
 
     <div class="grid-container-no-gap-cards">
-
-    
       <!-- ========================================================================== -->
-      <div class="grid-item-border" id="section-0" onclick="SelectCard(0)">S</div>
-      <div class="grid-item-border" id="name-0" onclick="SelectCard(0)">Name</div>
+      <div class="grid-item-border" id="section-0" onclick="SelectCard(0)">
+        S
+      </div>
+      <div class="grid-item-border" id="name-0" onclick="SelectCard(0)">
+        Name
+      </div>
       <div class="grid-item-border" id="god-0" onclick="SelectCard(0)">God</div>
-      <div class="grid-item-border" id="cost-0" onclick="SelectCard(0)">Cost</div>
-      <div class="grid-item-border" id="costadd-0" onclick="SelectCard(0)">++</div>
-      <div class="grid-item-border" id="owner-0" onclick="SelectOwner(0)">O</div>
+      <div class="grid-item-border" id="cost-0" onclick="SelectCard(0)">
+        Cost
+      </div>
+      <div class="grid-item-border" id="costadd-0" onclick="SelectCard(0)">
+        ++
+      </div>
+      <div class="grid-item-border" id="owner-0" onclick="SelectOwner(0)">
+        O
+      </div>
 
-      <div class="grid-item-border" id="section-1" onclick="SelectCard(1)"></div>
+      <div
+        class="grid-item-border"
+        id="section-1"
+        onclick="SelectCard(1)"
+      ></div>
       <div class="grid-item-border" id="name-1" onclick="SelectCard(1)"></div>
       <div class="grid-item-border" id="god-1" onclick="SelectCard(1)"></div>
       <div class="grid-item-border" id="cost-1" onclick="SelectCard(1)"></div>
-      <div class="grid-item-border" id="costadd-1" onclick="SelectCard(1)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-1"
+        onclick="SelectCard(1)"
+      ></div>
       <div class="grid-item-border" id="owner-1" onclick="SelectOwner(1)"></div>
 
-      <div class="grid-item-border" id="section-2" onclick="SelectCard(2)"></div>
+      <div
+        class="grid-item-border"
+        id="section-2"
+        onclick="SelectCard(2)"
+      ></div>
       <div class="grid-item-border" id="name-2" onclick="SelectCard(2)"></div>
       <div class="grid-item-border" id="god-2" onclick="SelectCard(2)"></div>
       <div class="grid-item-border" id="cost-2" onclick="SelectCard(2)"></div>
-      <div class="grid-item-border" id="costadd-2" onclick="SelectCard(2)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-2"
+        onclick="SelectCard(2)"
+      ></div>
       <div class="grid-item-border" id="owner-2" onclick="SelectOwner(2)"></div>
 
-      <div class="grid-item-border" id="section-3" onclick="SelectCard(3)"></div>
+      <div
+        class="grid-item-border"
+        id="section-3"
+        onclick="SelectCard(3)"
+      ></div>
       <div class="grid-item-border" id="name-3" onclick="SelectCard(3)"></div>
       <div class="grid-item-border" id="god-3" onclick="SelectCard(3)"></div>
       <div class="grid-item-border" id="cost-3" onclick="SelectCard(3)"></div>
-      <div class="grid-item-border" id="costadd-3" onclick="SelectCard(3)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-3"
+        onclick="SelectCard(3)"
+      ></div>
       <div class="grid-item-border" id="owner-3" onclick="SelectOwner(3)"></div>
 
-      <div class="grid-item-border" id="section-4" onclick="SelectCard(4)"></div>
+      <div
+        class="grid-item-border"
+        id="section-4"
+        onclick="SelectCard(4)"
+      ></div>
       <div class="grid-item-border" id="name-4" onclick="SelectCard(4)"></div>
       <div class="grid-item-border" id="god-4" onclick="SelectCard(4)"></div>
       <div class="grid-item-border" id="cost-4" onclick="SelectCard(4)"></div>
-      <div class="grid-item-border" id="costadd-4" onclick="SelectCard(4)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-4"
+        onclick="SelectCard(4)"
+      ></div>
       <div class="grid-item-border" id="owner-4" onclick="SelectOwner(4)"></div>
 
-      <div class="grid-item-border" id="section-5" onclick="SelectCard(5)"></div>
+      <div
+        class="grid-item-border"
+        id="section-5"
+        onclick="SelectCard(5)"
+      ></div>
       <div class="grid-item-border" id="name-5" onclick="SelectCard(5)"></div>
       <div class="grid-item-border" id="god-5" onclick="SelectCard(5)"></div>
       <div class="grid-item-border" id="cost-5" onclick="SelectCard(5)"></div>
-      <div class="grid-item-border" id="costadd-5" onclick="SelectCard(5)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-5"
+        onclick="SelectCard(5)"
+      ></div>
       <div class="grid-item-border" id="owner-5" onclick="SelectOwner(5)"></div>
 
-      <div class="grid-item-border" id="section-6" onclick="SelectCard(6)"></div>
+      <div
+        class="grid-item-border"
+        id="section-6"
+        onclick="SelectCard(6)"
+      ></div>
       <div class="grid-item-border" id="name-6" onclick="SelectCard(6)"></div>
       <div class="grid-item-border" id="god-6" onclick="SelectCard(6)"></div>
       <div class="grid-item-border" id="cost-6" onclick="SelectCard(6)"></div>
-      <div class="grid-item-border" id="costadd-6" onclick="SelectCard(6)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-6"
+        onclick="SelectCard(6)"
+      ></div>
       <div class="grid-item-border" id="owner-6" onclick="SelectOwner(6)"></div>
 
-      <div class="grid-item-border" id="section-7" onclick="SelectCard(7)"></div>
+      <div
+        class="grid-item-border"
+        id="section-7"
+        onclick="SelectCard(7)"
+      ></div>
       <div class="grid-item-border" id="name-7" onclick="SelectCard(7)"></div>
       <div class="grid-item-border" id="god-7" onclick="SelectCard(7)"></div>
       <div class="grid-item-border" id="cost-7" onclick="SelectCard(7)"></div>
-      <div class="grid-item-border" id="costadd-7" onclick="SelectCard(7)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-7"
+        onclick="SelectCard(7)"
+      ></div>
       <div class="grid-item-border" id="owner-7" onclick="SelectOwner(7)"></div>
-
     </div>
-     
+
     <div class="divider"></div>
 
     <div class="grid-container-no-gap-cards">
-    
-      <div class="grid-item-border" id="section-8" onclick="SelectCard(8)"></div>
+      <div
+        class="grid-item-border"
+        id="section-8"
+        onclick="SelectCard(8)"
+      ></div>
       <div class="grid-item-border" id="name-8" onclick="SelectCard(8)"></div>
       <div class="grid-item-border" id="god-8" onclick="SelectCard(8)"></div>
       <div class="grid-item-border" id="cost-8" onclick="SelectCard(8)"></div>
-      <div class="grid-item-border" id="costadd-8" onclick="SelectCard(8)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-8"
+        onclick="SelectCard(8)"
+      ></div>
       <div class="grid-item-border" id="owner-8" onclick="SelectOwner(8)"></div>
 
-      <div class="grid-item-border" id="section-9" onclick="SelectCard(9)"></div>
+      <div
+        class="grid-item-border"
+        id="section-9"
+        onclick="SelectCard(9)"
+      ></div>
       <div class="grid-item-border" id="name-9" onclick="SelectCard(9)"></div>
       <div class="grid-item-border" id="god-9" onclick="SelectCard(9)"></div>
       <div class="grid-item-border" id="cost-9" onclick="SelectCard(9)"></div>
-      <div class="grid-item-border" id="costadd-9" onclick="SelectCard(9)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-9"
+        onclick="SelectCard(9)"
+      ></div>
       <div class="grid-item-border" id="owner-9" onclick="SelectOwner(9)"></div>
 
-      <div class="grid-item-border" id="section-10" onclick="SelectCard(10)"></div>
+      <div
+        class="grid-item-border"
+        id="section-10"
+        onclick="SelectCard(10)"
+      ></div>
       <div class="grid-item-border" id="name-10" onclick="SelectCard(10)"></div>
       <div class="grid-item-border" id="god-10" onclick="SelectCard(10)"></div>
       <div class="grid-item-border" id="cost-10" onclick="SelectCard(10)"></div>
-      <div class="grid-item-border" id="costadd-10" onclick="SelectCard(10)"></div>
-      <div class="grid-item-border" id="owner-10" onclick="SelectOwner(10)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-10"
+        onclick="SelectCard(10)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-10"
+        onclick="SelectOwner(10)"
+      ></div>
 
-      <div class="grid-item-border" id="section-11" onclick="SelectCard(11)"></div>
+      <div
+        class="grid-item-border"
+        id="section-11"
+        onclick="SelectCard(11)"
+      ></div>
       <div class="grid-item-border" id="name-11" onclick="SelectCard(11)"></div>
       <div class="grid-item-border" id="god-11" onclick="SelectCard(11)"></div>
       <div class="grid-item-border" id="cost-11" onclick="SelectCard(11)"></div>
-      <div class="grid-item-border" id="costadd-11" onclick="SelectCard(11)"></div>
-      <div class="grid-item-border" id="owner-11" onclick="SelectOwner(11)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-11"
+        onclick="SelectCard(11)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-11"
+        onclick="SelectOwner(11)"
+      ></div>
 
-      <div class="grid-item-border" id="section-12" onclick="SelectCard(12)"></div>
+      <div
+        class="grid-item-border"
+        id="section-12"
+        onclick="SelectCard(12)"
+      ></div>
       <div class="grid-item-border" id="name-12" onclick="SelectCard(12)"></div>
       <div class="grid-item-border" id="god-12" onclick="SelectCard(12)"></div>
       <div class="grid-item-border" id="cost-12" onclick="SelectCard(12)"></div>
-      <div class="grid-item-border" id="costadd-12" onclick="SelectCard(12)"></div>
-      <div class="grid-item-border" id="owner-12" onclick="SelectOwner(12)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-12"
+        onclick="SelectCard(12)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-12"
+        onclick="SelectOwner(12)"
+      ></div>
 
-      <div class="grid-item-border" id="section-13" onclick="SelectCard(13)"></div>
+      <div
+        class="grid-item-border"
+        id="section-13"
+        onclick="SelectCard(13)"
+      ></div>
       <div class="grid-item-border" id="name-13" onclick="SelectCard(13)"></div>
       <div class="grid-item-border" id="god-13" onclick="SelectCard(13)"></div>
       <div class="grid-item-border" id="cost-13" onclick="SelectCard(13)"></div>
-      <div class="grid-item-border" id="costadd-13" onclick="SelectCard(13)"></div>
-      <div class="grid-item-border" id="owner-13" onclick="SelectOwner(13)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-13"
+        onclick="SelectCard(13)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-13"
+        onclick="SelectOwner(13)"
+      ></div>
 
-      <div class="grid-item-border" id="section-14" onclick="SelectCard(14)"></div>
+      <div
+        class="grid-item-border"
+        id="section-14"
+        onclick="SelectCard(14)"
+      ></div>
       <div class="grid-item-border" id="name-14" onclick="SelectCard(14)"></div>
       <div class="grid-item-border" id="god-14" onclick="SelectCard(14)"></div>
       <div class="grid-item-border" id="cost-14" onclick="SelectCard(14)"></div>
-      <div class="grid-item-border" id="costadd-14" onclick="SelectCard(14)"></div>
-      <div class="grid-item-border" id="owner-14" onclick="SelectOwner(14)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-14"
+        onclick="SelectCard(14)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-14"
+        onclick="SelectOwner(14)"
+      ></div>
 
-      <div class="grid-item-border" id="section-15" onclick="SelectCard(15)"></div>
+      <div
+        class="grid-item-border"
+        id="section-15"
+        onclick="SelectCard(15)"
+      ></div>
       <div class="grid-item-border" id="name-15" onclick="SelectCard(15)"></div>
       <div class="grid-item-border" id="god-15" onclick="SelectCard(15)"></div>
       <div class="grid-item-border" id="cost-15" onclick="SelectCard(15)"></div>
-      <div class="grid-item-border" id="costadd-15" onclick="SelectCard(15)"></div>
-      <div class="grid-item-border" id="owner-15" onclick="SelectOwner(15)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-15"
+        onclick="SelectCard(15)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-15"
+        onclick="SelectOwner(15)"
+      ></div>
 
-      <div class="grid-item-border" id="section-16" onclick="SelectCard(16)"></div>
+      <div
+        class="grid-item-border"
+        id="section-16"
+        onclick="SelectCard(16)"
+      ></div>
       <div class="grid-item-border" id="name-16" onclick="SelectCard(16)"></div>
       <div class="grid-item-border" id="god-16" onclick="SelectCard(16)"></div>
       <div class="grid-item-border" id="cost-16" onclick="SelectCard(16)"></div>
-      <div class="grid-item-border" id="costadd-16" onclick="SelectCard(16)"></div>
-      <div class="grid-item-border" id="owner-16" onclick="SelectOwner(16)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-16"
+        onclick="SelectCard(16)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-16"
+        onclick="SelectOwner(16)"
+      ></div>
 
-      <div class="grid-item-border" id="section-17" onclick="SelectCard(17)"></div>
+      <div
+        class="grid-item-border"
+        id="section-17"
+        onclick="SelectCard(17)"
+      ></div>
       <div class="grid-item-border" id="name-17" onclick="SelectCard(17)"></div>
       <div class="grid-item-border" id="god-17" onclick="SelectCard(17)"></div>
       <div class="grid-item-border" id="cost-17" onclick="SelectCard(17)"></div>
-      <div class="grid-item-border" id="costadd-17" onclick="SelectCard(17)"></div>
-      <div class="grid-item-border" id="owner-17" onclick="SelectOwner(17)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-17"
+        onclick="SelectCard(17)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-17"
+        onclick="SelectOwner(17)"
+      ></div>
 
-      <div class="grid-item-border" id="section-18" onclick="SelectCard(18)"></div>
+      <div
+        class="grid-item-border"
+        id="section-18"
+        onclick="SelectCard(18)"
+      ></div>
       <div class="grid-item-border" id="name-18" onclick="SelectCard(18)"></div>
       <div class="grid-item-border" id="god-18" onclick="SelectCard(18)"></div>
       <div class="grid-item-border" id="cost-18" onclick="SelectCard(18)"></div>
-      <div class="grid-item-border" id="costadd-18" onclick="SelectCard(18)"></div>
-      <div class="grid-item-border" id="owner-18" onclick="SelectOwner(18)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-18"
+        onclick="SelectCard(18)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-18"
+        onclick="SelectOwner(18)"
+      ></div>
 
-      <div class="grid-item-border" id="section-19" onclick="SelectCard(19)"></div>
+      <div
+        class="grid-item-border"
+        id="section-19"
+        onclick="SelectCard(19)"
+      ></div>
       <div class="grid-item-border" id="name-19" onclick="SelectCard(19)"></div>
       <div class="grid-item-border" id="god-19" onclick="SelectCard(19)"></div>
       <div class="grid-item-border" id="cost-19" onclick="SelectCard(19)"></div>
-      <div class="grid-item-border" id="costadd-19" onclick="SelectCard(19)"></div>
-      <div class="grid-item-border" id="owner-19" onclick="SelectOwner(19)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-19"
+        onclick="SelectCard(19)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-19"
+        onclick="SelectOwner(19)"
+      ></div>
 
-      <div class="grid-item-border" id="section-20" onclick="SelectCard(20)"></div>
+      <div
+        class="grid-item-border"
+        id="section-20"
+        onclick="SelectCard(20)"
+      ></div>
       <div class="grid-item-border" id="name-20" onclick="SelectCard(20)"></div>
       <div class="grid-item-border" id="god-20" onclick="SelectCard(20)"></div>
       <div class="grid-item-border" id="cost-20" onclick="SelectCard(20)"></div>
-      <div class="grid-item-border" id="costadd-20" onclick="SelectCard(20)"></div>
-      <div class="grid-item-border" id="owner-20" onclick="SelectOwner(20)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-20"
+        onclick="SelectCard(20)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-20"
+        onclick="SelectOwner(20)"
+      ></div>
 
-      <div class="grid-item-border" id="section-21" onclick="SelectCard(21)"></div>
+      <div
+        class="grid-item-border"
+        id="section-21"
+        onclick="SelectCard(21)"
+      ></div>
       <div class="grid-item-border" id="name-21" onclick="SelectCard(21)"></div>
       <div class="grid-item-border" id="god-21" onclick="SelectCard(21)"></div>
       <div class="grid-item-border" id="cost-21" onclick="SelectCard(21)"></div>
-      <div class="grid-item-border" id="costadd-21" onclick="SelectCard(21)"></div>
-      <div class="grid-item-border" id="owner-21" onclick="SelectOwner(21)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-21"
+        onclick="SelectCard(21)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-21"
+        onclick="SelectOwner(21)"
+      ></div>
 
-      <div class="grid-item-border" id="section-22" onclick="SelectCard(22)"></div>
+      <div
+        class="grid-item-border"
+        id="section-22"
+        onclick="SelectCard(22)"
+      ></div>
       <div class="grid-item-border" id="name-22" onclick="SelectCard(22)"></div>
       <div class="grid-item-border" id="god-22" onclick="SelectCard(22)"></div>
       <div class="grid-item-border" id="cost-23" onclick="SelectCard(23)"></div>
-      <div class="grid-item-border" id="costadd-22" onclick="SelectCard(22)"></div>
-      <div class="grid-item-border" id="owner-22" onclick="SelectOwner(22)"></div>
+      <div
+        class="grid-item-border"
+        id="costadd-22"
+        onclick="SelectCard(22)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-22"
+        onclick="SelectOwner(22)"
+      ></div>
 
-      <div class="grid-item-border" id="section-23" onclick="SelectCard(23)"></div>
+      <div
+        class="grid-item-border"
+        id="section-23"
+        onclick="SelectCard(23)"
+      ></div>
       <div class="grid-item-border" id="name-23" onclick="SelectCard(23)"></div>
       <div class="grid-item-border" id="god-23" onclick="SelectCard(23)"></div>
       <div class="grid-item-border" id="cost-23" onclick="SelectCard(23)"></div>
-      <div class="grid-item-border" id="costadd-23" onclick="SelectCard(23)"></div>
-      <div class="grid-item-border" id="owner-23" onclick="SelectOwner(23)"></div>
-
-
+      <div
+        class="grid-item-border"
+        id="costadd-23"
+        onclick="SelectCard(23)"
+      ></div>
+      <div
+        class="grid-item-border"
+        id="owner-23"
+        onclick="SelectOwner(23)"
+      ></div>
     </div>
 
-
-  </div>      
+    <!-- </div>      -->
 
     <script src="globals.js"></script>
     <script src="utils.js"></script>
@@ -573,6 +1316,5 @@
 
     <script src="cards.js"></script>
     <script src="cards_globals.js"></script>
-    
   </body>
 </html>

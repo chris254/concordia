@@ -126,5 +126,7 @@ let mercGlobal = {
   
   totalStoreCashValue:0,
 
+  hideArchitect:false,
+
 
 }

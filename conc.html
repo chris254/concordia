@@ -13,8 +13,8 @@
   <body>
     <!--    SHOW HIDE BUTTONS       -->
     <div class="menu">
-      <div class="grid-item" id="menu-arch-strict" style="font-size: 8pt" onclick="HideShow(0)">ARCH-STRICT</div>
-      <div class="grid-item" id="menu-arch-free" style="font-size: 8pt">ARCH-FREE</div>
+      <div class="grid-item" id="menu-arch-free" style="font-size: 8pt" onclick="HideShow(0)">ARCH-FREE</div>
+      <div class="grid-item" id="menu-arch-free" style="font-size: 8pt" onclick="HideShow(1)">ARCH-STRICT</div>
       <div class="grid-item" id="menu-merc" style="font-size: 8pt">
         MERACTOR
       </div>
@@ -25,15 +25,14 @@
       <div class="title-divider" onClick="HideShow(0)">ARCHITECT-FREE</div>
     </div>
 
+
     <div id="arch-strict-group">
-      <div class="title-divider" onClick="HideShow(0)">ARCHITECT-STRICT</div>
+      <div class="title-divider" onClick="HideShow(1)">ARCHITECT-STRICT</div>
 
       <div class="line-with-text">STORE</div>
 
-      <div
-        class="grid-container-no-gap"
-        style="white-space: nowrap; overflow-x: auto; background-color: white"
-      >
+      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+
         <!-- ========================================================================== -->
         <!-- COL1: ARCH STRICT STORE -->
         <div class="sub-title">STORE</div>
@@ -57,125 +56,47 @@
         <!-- ========================================================================== -->
         <!-- Row 3: RESET button and Current Store values -->
         <div class="grid-item-no-border">Current</div>
-        <div
-          class="grid-item cash"
-          id="num-storecurrent-cash"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
-        <div
-          class="grid-item brick"
-          id="num-storecurrent-brick"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
-        <div
-          class="grid-item food"
-          id="num-storecurrent-food"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
-        <div
-          class="grid-item tool"
-          id="num-storecurrent-tool"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
-        <div
-          class="grid-item wine"
-          id="num-storecurrent-wine"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
-        <div
-          class="grid-item cloth"
-          id="num-storecurrent-cloth"
-          style="font-weight: bolder"
-        >
-          0
-        </div>
+        <div class="grid-item cash" id="num-storecurrent-cash" style="font-weight: bolder"></div>
+        <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder"></div>
+        <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder"></div>
+        <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder"></div>
+        <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder"></div>
+        <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder"></div>
 
         <!-- ========================================================================== -->
         <!-- Row 5: Dec Buttons for current store -->
         <div class="grid-item-no-border"></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-cash"
-          onclick="ArchStoreDec(0)"
-        ></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-brick"
-          onclick="ArchStoreDec(1)"
-        ></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-food"
-          onclick="ArchStoreDec(2)"
-        ></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-tool"
-          onclick="ArchStoreDec(3)"
-        ></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-wine"
-          onclick="ArchStoreDec(4)"
-        ></div>
-        <div
-          class="down-arrow"
-          id="btn-dec-storecurrent-cloth"
-          onclick="ArchStoreDec(5)"
-        ></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-food"  onclick="ArchStoreDec(2)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)"></div>
       </div>
 
-      <div
-        class="grid-container-no-gap"
-        style="white-space: nowrap; overflow-x: auto; background-color: white"
-      >
+      <!-- *************************************************************************************** -->
+      <!-- ROW: -->
+      <!-- *************************************************************************************** -->
+      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
         <!-- ========================================================================== -->
         <!-- Top Row: -->
         <div class="card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
         <div class="grid-item" style="font-size: 8pt">RST</div>
         <div class="grid-item-no-border">
-          <button
-            class="btn-full-not-selected"
-            onclick="ResetStoreCurrent()"
-            style="background-color: red; color: white"
-          >
-            ST
-          </button>
+          <button class="btn-full-not-selected" onclick="ResetStoreCurrent()"style="background-color: red; color: white">ST</button>
         </div>
         <div class="grid-item-no-border">
-          <button
-            class="btn-full-not-selected"
-            onclick="ResetArchitect()"
-            style="background-color: red; color: white"
-          >
-            HO
-          </button>
+          <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: red; color: white">HO</button>
         </div>
         <div class="grid-item" style="font-size: 8pt">MD</div>
         <div class="grid-item-no-border">
-          <button
-            class="btn-full-not-selected"
-            onclick="ToggleEditMode()"
-            id="btn-edit-mode"
-            style="font-weight: bolder"
-          >
-            F
-          </button>
+          <button class="btn-full-not-selected" onclick="ToggleEditMode()" id="btn-edit-mode" style="font-weight: bolder">F</button>
         </div>
         <div class="grid-item-no-border" id="version"></div>
       </div>
     </div>
     <!-- END ARCHITECT-GROUP-->
+
 
     <div class="line-with-text">STORE</div>
 

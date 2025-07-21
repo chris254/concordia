@@ -1292,9 +1292,21 @@ function HideShow(index_) {
 
   if (index_ === 0)
   {
-    mercGlobal.hideArchitect = !mercGlobal.hideArchitect;
+    mercGlobal.hideArchFree = !mercGlobal.hideArchFree;
 
-    if (mercGlobal.hideArchitect) {
+    if (mercGlobal.hideArchFree) {
+      document.getElementById("arch-free-group").style.display = "none";
+    }
+    else {
+      document.getElementById("arch-free-group").style.display = "block";
+    }
+  }
+
+  if (index_ === 1)
+  {
+    mercGlobal.hideArchStrict = !mercGlobal.hideArchStrict;
+
+    if (mercGlobal.hideArchStrict) {
       document.getElementById("arch-strict-group").style.display = "none";
     }
     else {

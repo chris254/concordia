@@ -22,8 +22,95 @@
     </div>
 
     <div id="arch-free-group">
+
       <div class="title-divider" onClick="HideShow(0)">ARCHITECT-FREE</div>
+      <div class="line-with-text">BUILD</div>
+
+      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+ 
+        <!-- ========================================================================== -->
+        <!-- Row 9: Arch numbers -->
+        <div class="grid-item-no-border" style="font-size: 10pt"></div>
+        <div class="grid-item-no-border" style="font-size: 10pt"></div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
+
+        <!-- ========================================================================== -->
+        <!-- Row: Arch Free Build -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-free-brick" onclick="ArchHousesIncFree(1)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-free-food" onclick="ArchHousesIncFree(2)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-free-tool" onclick="ArchHousesIncFree(3)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-free-wine" onclick="ArchHousesIncFree(4)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-free-cloth" onclick="ArchHousesIncFree(5)"></div>
+
+        <!-- ========================================================================== -->
+        <!-- Arch Free Build Dec -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border"></div>
+        <div class="down-arrow" id="btn-dec-arch-free-brick" onclick="ArchHousesDecFree(1)"></div>
+        <div class="down-arrow" id="btn-dec-arch-free-food" onclick="ArchHousesDecFree(2)"></div>
+        <div class="down-arrow" id="btn-dec-arch-free-tool" onclick="ArchHousesDecFree(3)"></div>
+        <div class="down-arrow" id="btn-dec-arch-free-wine" onclick="ArchHousesDecFree(4)"></div>
+        <div class="down-arrow" id="btn-dec-arch-free-cloth" onclick="ArchHousesDecFree(5)"></div>
+
+        <!-- ========================================================================== -->
+        <!-- Row : Additional Houses -->
+        <div class="grid-item-no-border">HA</div>
+        <div class="grid-item-no-border">
+          <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
+        </div>
+        <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAddFree(1)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAddFree(2)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAddFree(3)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAddFree(4)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAddFree(5)"></div>
+        
+      </div>
+
+      <div class="line-with-text">STORE</div>
+
+      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+
+        <!-- ========================================================================== -->
+        <!-- COL1: ARCH STRICT STORE -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item cash-filled" id="btn-inc-store-free-cash">£</div>
+        <div class="grid-item brick-filled" id="btn-inc-store-free-brick"">
+          <img src="brick.PNG" />
+        </div>
+        <div class="grid-item food-filled" id="btn-inc-store-free-food"">
+          <img src="Food.png" />
+        </div>
+        <div class="grid-item tool-filled" id="btn-inc-store-free-tool"">
+          <img src="Tool.png" />
+        </div>
+        <div class="grid-item wine-filled" id="btn-inc-store-free-wine"">
+          <img src="Wine.png" />
+        </div>
+        <div class="grid-item cloth-filled" id="btn-inc-store-free-cloth""> 
+          <img src="Cloth.png" />
+        </div>
+
+        <!-- ========================================================================== -->
+        <!-- Row 3: RESET button and Current Store values -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item cash" id="num-storecurrent-free-cash" style="font-weight: bolder"></div>
+        <div class="grid-item brick" id="num-storecurrent-free-brick" style="font-weight: bolder"></div>
+        <div class="grid-item food" id="num-storecurrent-free-food" style="font-weight: bolder"></div>
+        <div class="grid-item tool" id="num-storecurrent-free-tool" style="font-weight: bolder"></div>
+        <div class="grid-item wine" id="num-storecurrent-free-wine" style="font-weight: bolder"></div>
+        <div class="grid-item cloth" id="num-storecurrent-free-cloth" style="font-weight: bolder"></div>
+
+      </div>
+
+
     </div>
+    <!-- END ARCH-FREE-GROUP       -->
 
 
     <div id="arch-strict-group">
@@ -36,42 +123,90 @@
         <!-- ========================================================================== -->
         <!-- COL1: ARCH STRICT STORE -->
         <div class="sub-title">STORE</div>
-        <div class="grid-item cash-filled" id="btn-inc-store1-cash" onclick="ArchStoreInc(0)">£</div>
-        <div class="grid-item brick-filled" id="btn-inc-store1-brick" onclick="ArchStoreInc(1)">
+        <div class="grid-item cash-filled" id="btn-inc-store1-cash" onclick="ArchStoreStrictInc(0)">£</div>
+        <div class="grid-item brick-filled" id="btn-inc-store1-brick" onclick="ArchStoreStrictInc(1)">
           <img src="brick.PNG" />
         </div>
-        <div class="grid-item food-filled" id="btn-inc-store1-food" onclick="ArchStoreInc(2)">
+        <div class="grid-item food-filled" id="btn-inc-store1-food" onclick="ArchStoreStrictInc(2)">
           <img src="Food.png" />
         </div>
-        <div class="grid-item tool-filled" id="btn-inc-store1-tool" onclick="ArchStoreInc(3)">
+        <div class="grid-item tool-filled" id="btn-inc-store1-tool" onclick="ArchStoreStrictInc(3)">
           <img src="Tool.png" />
         </div>
-        <div class="grid-item wine-filled" id="btn-inc-store1-wine" onclick="ArchStoreInc(4)">
+        <div class="grid-item wine-filled" id="btn-inc-store1-wine" onclick="ArchStoreStrictInc(4)">
           <img src="Wine.png" />
         </div>
-        <div class="grid-item cloth-filled" id="btn-inc-store1-cloth" onclick="ArchStoreInc(5)"> 
+        <div class="grid-item cloth-filled" id="btn-inc-store1-cloth" onclick="ArchStoreStrictInc(5)"> 
           <img src="Cloth.png" />
         </div>
 
         <!-- ========================================================================== -->
         <!-- Row 3: RESET button and Current Store values -->
         <div class="grid-item-no-border">Current</div>
-        <div class="grid-item cash" id="num-storecurrent-cash" style="font-weight: bolder"></div>
-        <div class="grid-item brick" id="num-storecurrent-brick" style="font-weight: bolder"></div>
-        <div class="grid-item food" id="num-storecurrent-food" style="font-weight: bolder"></div>
-        <div class="grid-item tool" id="num-storecurrent-tool" style="font-weight: bolder"></div>
-        <div class="grid-item wine" id="num-storecurrent-wine" style="font-weight: bolder"></div>
-        <div class="grid-item cloth" id="num-storecurrent-cloth" style="font-weight: bolder"></div>
+        <div class="grid-item cash" id="num-storecurrent-strict-cash" style="font-weight: bolder"></div>
+        <div class="grid-item brick" id="num-storecurrent-strict-brick" style="font-weight: bolder"></div>
+        <div class="grid-item food" id="num-storecurrent-strict-food" style="font-weight: bolder"></div>
+        <div class="grid-item tool" id="num-storecurrent-strict-tool" style="font-weight: bolder"></div>
+        <div class="grid-item wine" id="num-storecurrent-strict-wine" style="font-weight: bolder"></div>
+        <div class="grid-item cloth" id="num-storecurrent-strict-cloth" style="font-weight: bolder"></div>
 
         <!-- ========================================================================== -->
         <!-- Row 5: Dec Buttons for current store -->
         <div class="grid-item-no-border"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreDec(0)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreDec(1)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-food"  onclick="ArchStoreDec(2)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreDec(3)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreDec(4)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreDec(5)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreStrictDec(0)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreStrictDec(1)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-food"  onclick="ArchStoreStrictDec(2)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreStrictDec(3)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreStrictDec(4)"></div>
+        <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreStrictDec(5)"></div>
+      </div>
+
+      <div class="line-with-text">BUILD</div>
+
+      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+ 
+        <!-- ========================================================================== -->
+        <!-- Row 9: Arch numbers -->
+        <div class="grid-item-no-border" style="font-size: 10pt"></div>
+        <div class="grid-item-no-border" style="font-size: 10pt"></div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
+        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
+
+        <!-- ========================================================================== -->
+        <!-- Row: Arch Strict Build -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-strict-brick" onclick="ArchHousesIncStrict(1)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-strict-food" onclick="ArchHousesIncStrict(2)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-strict-tool" onclick="ArchHousesIncStrict(3)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-strict-wine" onclick="ArchHousesIncStrict(4)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-strict-cloth" onclick="ArchHousesIncStrict(5)"></div>
+
+        <!-- ========================================================================== -->
+        <!-- Arch Strict Build Dec -->
+        <div class="grid-item-no-border"></div>
+        <div class="grid-item-no-border"></div>
+        <div class="down-arrow" id="btn-dec-arch-brick" onclick="ArchHousesDecStrict(1)"></div>
+        <div class="down-arrow" id="btn-dec-arch-food" onclick="ArchHousesDecStrict(2)"></div>
+        <div class="down-arrow" id="btn-dec-arch-tool" onclick="ArchHousesDecStrict(3)"></div>
+        <div class="down-arrow" id="btn-dec-arch-wine" onclick="ArchHousesDecStrict(4)"></div>
+        <div class="down-arrow" id="btn-dec-arch-cloth" onclick="ArchHousesDecStrict(5)"></div>
+
+        <!-- ========================================================================== -->
+        <!-- Row : Additional Houses -->
+        <div class="grid-item-no-border">HA</div>
+        <div class="grid-item-no-border">
+          <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
+        </div>
+        <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAddStrict(1)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAddStrict(2)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAddStrict(3)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAddStrict(4)"></div>
+        <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAddStrict(5)"></div>
+        
       </div>
 
       <!-- *************************************************************************************** -->
@@ -83,7 +218,7 @@
         <div class="card-title" onclick="SetCardArch()" id="btn-arch">ARCH</div>
         <div class="grid-item" style="font-size: 8pt">RST</div>
         <div class="grid-item-no-border">
-          <button class="btn-full-not-selected" onclick="ResetStoreCurrent()"style="background-color: red; color: white">ST</button>
+          <button class="btn-full-not-selected" onclick="ResetStoreCurrentStrict()"style="background-color: red; color: white">ST</button>
         </div>
         <div class="grid-item-no-border">
           <button class="btn-full-not-selected" onclick="ResetArchitect()" style="background-color: red; color: white">HO</button>
@@ -100,102 +235,18 @@
 
     <div class="line-with-text">STORE</div>
 
-    <div class="line-with-text">BUILD</div>
 
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
 
       <!-- ========================================================================== -->
-      <!-- Row 9: Arch numbers -->
-      <div class="grid-item-no-border" style="font-size: 10pt"></div>
-      <div class="grid-item-no-border" style="font-size: 10pt"></div>
-      <div class="grid-item-no-border" id="num-arch-reqd-brick" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-food" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-tool" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-wine" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
-      <div class="grid-item-no-border" id="num-arch-reqd-cloth" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
-
-      <!-- ========================================================================== -->
-      <!-- Row: Arch Free Build -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-brick" onclick="ArchHousesInc(1)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-food" onclick="ArchHousesInc(2)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-tool" onclick="ArchHousesInc(3)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-wine" onclick="ArchHousesInc(4)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-act-cloth" onclick="ArchHousesInc(5)"></div>
-
-      <!-- ========================================================================== -->
-      <!-- Arch Free Build Dec -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="down-arrow" id="btn-dec-arch-brick" onclick="ArchHousesDec(1)"></div>
-      <div class="down-arrow" id="btn-dec-arch-food" onclick="ArchHousesDec(2)"></div>
-      <div class="down-arrow" id="btn-dec-arch-tool" onclick="ArchHousesDec(3)"></div>
-      <div class="down-arrow" id="btn-dec-arch-wine" onclick="ArchHousesDec(4)"></div>
-      <div class="down-arrow" id="btn-dec-arch-cloth" onclick="ArchHousesDec(5)"></div>
-
-      <!-- ========================================================================== -->
-      <!-- Row : Additional Houses -->
-      <div class="grid-item-no-border">HA</div>
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
-      </div>
-      <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAdd(1)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAdd(2)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAdd(3)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAdd(4)"></div>
-      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAdd(5)"></div>
-
-      <!-- ========================================================================== -->
       <!-- Row 6: Arch Store Cost -->
-      <div
-        class="grid-item-no-border"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        Cost
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-cash"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-brick"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-food"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-tool"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-wine"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-arch-store-cost-cloth"
-        style="font-weight: lighter; font-size: 8pt"
-      >
-        0
-      </div>
+      <div class="grid-item-no-border"style="font-weight: lighter; font-size: 8pt">Cost</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-cash" style="font-weight: lighter; font-size: 8pt">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-brick" style="font-weight: lighter; font-size: 8pt">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-food" style="font-weight: lighter; font-size: 8pt">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-tool" style="font-weight: lighter; font-size: 8pt">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-wine" style="font-weight: lighter; font-size: 8pt">0</div>
+      <div class="grid-item-no-border" id="num-arch-store-cost-cloth" style="font-weight: lighter; font-size: 8pt">0</div>
 
       <!-- ========================================================================== -->
       <!-- Row 7: Arch Store Rem -->

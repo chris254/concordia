@@ -12,7 +12,12 @@ const resourceValue = [0,3,4,5,6,7];
 
 let dataArch = {
   archHousesCurrent:[0,0,0,0,0,0],
+  archHousesCurrentFree:[0,0,0,0,0,0],
+  archHousesCurrentStrict:[0,0,0,0,0,0],
+
   archHousesAdd:[0,0,0,0,0,0],
+  archHousesAddFree:[0,0,0,0,0,0],
+  archHousesAddStrict:[0,0,0,0,0,0],
 
   archHousesDeltaPossible:[0,0,0,0,0],
 
@@ -39,6 +44,8 @@ let dataArch = {
 
 let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],
+  storeCurrentFree:[0,0,0,0,0,0],
+  storeCurrentStrict:[0,0,0,0,0,0],
 
   mercBuyBrick:0,
   mercBuyFood:0,

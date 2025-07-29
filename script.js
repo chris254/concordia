@@ -97,7 +97,8 @@ let elemBtnTrade2Mode;
 let mercTrade1Mode;
 let mercTrade2Mode;
 
-const minusImgPath = 'minus_new.png';
+const minusImgPath = 'minus.png';
+const minusInvalidImgPath = 'minus_invalid.png';
 
 "btn-arch-store-brick"
 
@@ -609,11 +610,8 @@ function ResetStoreCurrentStrict() {
 /* ------------------------------------------------------------------------------------ */
 
 function ResetArchitect() {
-  dataArch.archHousesCurrent[indexBrick] = 0;
-  dataArch.archHousesCurrent[indexFood] = 0;
-  dataArch.archHousesCurrent[indexTool] = 0;
-  dataArch.archHousesCurrent[indexWine] = 0;
-  dataArch.archHousesCurrent[indexCloth] = 0;
+  dataArch.archHousesCurrentFree.fill(0);
+  dataArch.archHousesCurrentStrict.fill(0);
 
   UpdateAll();
 }
@@ -660,7 +658,7 @@ function ProcessArchitectFree() {
 
   fieldValues.storeCurrentFree[3] = dataArch.archHousesCurrentFree[indexTool];
 
-  fieldValues.storeCurrentFree[4] = dataArch.archHousesCurrent[indexWine];
+  fieldValues.storeCurrentFree[4] = dataArch.archHousesCurrentFree[indexWine];
 
   fieldValues.storeCurrentFree[5] = dataArch.archHousesCurrentFree[indexCloth];
 
@@ -674,21 +672,21 @@ function ProcessArchitectStrict() {
   for (let resourceId=1; resourceId <= 5; resourceId++)
   {
     buildCostTotal = buildCostTotal + 
-      (dataArch.archHousesCurrent[resourceId] * (dataArch.archHousesAddStrict[resourceId] + 1) * houseCost[resourceId]);
+      (dataArch.archHousesCurrentStrict[resourceId] * (dataArch.archHousesAddStrict[resourceId] + 1) * houseCost[resourceId]);
   }
   
   dataArch.archBuildCost[0] = buildCostTotal;
 
   dataArch.archBuildCost[indexBrick] = 
-    dataArch.archHousesCurrent[indexFood] +
-    dataArch.archHousesCurrent[indexTool] +
-    dataArch.archHousesCurrent[indexWine] +
-    dataArch.archHousesCurrent[indexCloth];
+    dataArch.archHousesCurrentStrict[indexFood] +
+    dataArch.archHousesCurrentStrict[indexTool] +
+    dataArch.archHousesCurrentStrict[indexWine] +
+    dataArch.archHousesCurrentStrict[indexCloth];
 
-  dataArch.archBuildCost[indexFood] = dataArch.archHousesCurrent[indexBrick] + dataArch.archHousesCurrent[indexFood];
-  dataArch.archBuildCost[indexTool] = dataArch.archHousesCurrent[indexTool]; 
-  dataArch.archBuildCost[indexWine] = dataArch.archHousesCurrent[indexWine]; 
-  dataArch.archBuildCost[indexCloth] = dataArch.archHousesCurrent[indexCloth]; 
+  dataArch.archBuildCost[indexFood] = dataArch.archHousesCurrentStrict[indexBrick] + dataArch.archHousesCurrentStrict[indexFood];
+  dataArch.archBuildCost[indexTool] = dataArch.archHousesCurrentStrict[indexTool]; 
+  dataArch.archBuildCost[indexWine] = dataArch.archHousesCurrentStrict[indexWine]; 
+  dataArch.archBuildCost[indexCloth] = dataArch.archHousesCurrentStrict[indexCloth]; 
 
   /* -------------------------------------------------------------- */
   /* Write to .archRem */
@@ -738,7 +736,7 @@ function ProcessArchitectStrict() {
 
   for (let resourceId = 1; resourceId <= 5; resourceId++) {
     
-    dataArch.archHousesTotalPossible[resourceId] = dataArch.archHousesDeltaPossible[resourceId] + dataArch.archHousesCurrent[resourceId];
+    dataArch.archHousesTotalPossible[resourceId] = dataArch.archHousesDeltaPossible[resourceId] + dataArch.archHousesCurrentStrict[resourceId];
     dataArch.archMoreHousesAvailable[resourceId] = dataArch.archHousesDeltaPossible[resourceId] > 0;
 
   }
@@ -870,12 +868,8 @@ let firstPass = true;
 
 
 function ResetArchitect() {
-  dataArch.archHousesCurrent[indexBrick] = 0;
-  dataArch.archHousesCurrent[indexFood] = 0;
-  dataArch.archHousesCurrent[indexTool] = 0;
-  dataArch.archHousesCurrent[indexWine] = 0;
-  dataArch.archHousesCurrent[indexCloth] = 0;
-
+  dataArch.archHousesCurrentFree.fill(0);
+  dataArch.archHousesCurrentStrict.fill(0);
   UpdateAll();
 }
 
@@ -1078,9 +1072,9 @@ function UpdateGUIArch() {
 
     }
     else if (dataArch.runOutOf[resourceId]) {
-      SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
+      elemBtnDecStore[resourceId].style.backgroundImage = `url('${minusInvalidImgPath}')`;
+      // SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
 
-        elemBtnDecStore[resourceId].style.backgroundImage = `none`;
     }
     else {
         elemBtnDecStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
@@ -1138,11 +1132,11 @@ function UpdateGUIArch() {
         SetStyle(elemNumArchHousesFree,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
 
-      if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrent[resourceId] > 0) {
+      if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrentStrict[resourceId] > 0) {
 
         archStyleState = StylesType.GREEN_NORMAL;
         WriteSlash(elemNumArchHousesStrict[resourceId],
-          dataArch.archHousesCurrent[resourceId], 18, true,
+          dataArch.archHousesCurrentStrict[resourceId], 18, true,
           dataArch.archHousesTotalPossible[resourceId], 10, false, "black", false, false);
 
         if (dataArch.archHousesDeltaPossible[resourceId] > 0) {
@@ -1152,10 +1146,10 @@ function UpdateGUIArch() {
           SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
         }
       }
-      else if (dataArch.archHousesCurrent[resourceId] > 0) {
+      else if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesStrict[resourceId],
-          dataArch.archHousesCurrent[resourceId],16,true,"black",false);
+          dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false);
         SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {

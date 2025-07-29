@@ -11,7 +11,7 @@ const resourceValue = [0,3,4,5,6,7];
 
 
 let dataArch = {
-  archHousesCurrent:[0,0,0,0,0,0],
+  //archHousesCurrent:[0,0,0,0,0,0],
   archHousesCurrentFree:[0,0,0,0,0,0],
   archHousesCurrentStrict:[0,0,0,0,0,0],
 

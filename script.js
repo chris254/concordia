@@ -1116,7 +1116,7 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       // ARCH BUILD ACTUAL
       //------------------------------------------------------------ 
-      ClearAllStyles(elemNumArchHousesStrict,resourceId);
+//      ClearAllStyles(elemNumArchHousesStrict,resourceId);
 
       let archStyleState = StylesType.CLEAR;
       
@@ -1132,9 +1132,17 @@ function UpdateGUIArch() {
         SetStyle(elemNumArchHousesFree,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
 
+      // Arch strict
       if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrentStrict[resourceId] > 0) {
 
-        archStyleState = StylesType.GREEN_NORMAL;
+        // 
+        if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
+          SetStyle(elemNumArchHousesStrict,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        } 
+        else {
+          SetStyle(elemNumArchHousesStrict,StylesType.CLEAR_NORMAL[resourceId],resourceId);          
+        }
+
         WriteSlash(elemNumArchHousesStrict[resourceId],
           dataArch.archHousesCurrentStrict[resourceId], 18, true,
           dataArch.archHousesTotalPossible[resourceId], 10, false, "black", false, false);
@@ -1147,12 +1155,15 @@ function UpdateGUIArch() {
         }
       }
       else if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
+        // Not possible
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesStrict[resourceId],
           dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false);
         SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
+        // Can't build
+        SetStyle(elemNumArchHousesStrict,StylesType.CLEAR[resourceId],resourceId);          
         elemNumArchHousesStrict[resourceId].textContent = "";
         SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
       }

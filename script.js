@@ -161,7 +161,7 @@ const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getEleme
     "btn-dec-storecurrent-cloth",
   ];
 
-  const elemBtnDecStore = elemIdsBtnDecStore.map((id) => document.getElementById(id));
+  const elemBtnDecStrictStore = elemIdsBtnDecStore.map((id) => document.getElementById(id));
 
 //-------------------------------------------------------------------------
 const elemIdsPreMercStore = [
@@ -380,16 +380,16 @@ const elemIdsStoreCost = [
 
 const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
 
-const elemIdsBtnIncArch = [
-  "btn-inc-store1-cash",
-  "btn-inc-store1-brick",
-  "btn-inc-store1-food",
-  "btn-inc-store1-tool",
-  "btn-inc-store1-wine",
-  "btn-inc-store1-cloth",
+const elemIdsBtnIncStrictStoreArch = [
+  "btn-inc-strict-store1-cash",
+  "btn-inc-strict-store1-brick",
+  "btn-inc-strict-store1-food",
+  "btn-inc-strict-store1-tool",
+  "btn-inc-strict-store1-wine",
+  "btn-inc-strict-store1-cloth",
 ];
 
-const elemBtnIncArch = elemIdsBtnIncArch.map((id) => document.getElementById(id));
+const elemBtnIncStrictStoreArch = elemIdsBtnIncStrictStoreArch.map((id) => document.getElementById(id));
 
 const elemIdsNumArchPost = [
   "num-arch-remaining-cash",
@@ -430,6 +430,17 @@ btnDecArchFood = document.getElementById("");
 btnDecArchTool = document.getElementById("");
 btnDecArchWine = document.getElementById("");
 btnDecArchCloth = document.getElementById("");
+
+const elemIdsBtnDecArchStrict = [
+  "btn-dec-arch-strict-cash",
+  "btn-dec-arch-strict-brick",
+  "btn-dec-arch-strict-food",
+  "btn-dec-arch-strict-tool",
+  "btn-dec-arch-strict-wine",
+  "btn-dec-arch-strict-cloth",
+];
+
+const elemBtnDecArchStrict = elemIdsBtnDecArchStrict.map((id) => document.getElementById(id));
 
 
 
@@ -1055,29 +1066,22 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
-    if (fieldValues.archFreeMode) {
-      // Selectable
-      SetBorderRadius(elemBtnIncArch[resourceId],'0%');
-    }
-    else {
-      // Not selectable
-      SetBorderRadius(elemBtnIncArch[resourceId],'25%');
-    }
+    SetBorderRadius(elemBtnIncStrictStoreArch[resourceId],'15px');
 
     // ARCH STORE MINUS BUTTON
     if (fieldValues.storeCurrentStrict[resourceId] === 0) {
-        elemBtnDecStore[resourceId].style.backgroundImage = `none`;
+        elemBtnDecStrictStore[resourceId].style.backgroundImage = `none`;
 
-      elemBtnDecStore[resourceId].textContent = ""
+      elemBtnDecStrictStore[resourceId].textContent = ""
 
     }
     else if (dataArch.runOutOf[resourceId]) {
-      elemBtnDecStore[resourceId].style.backgroundImage = `url('${minusInvalidImgPath}')`;
-      // SetMinusStyle(elemBtnDecStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
+      elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusInvalidImgPath}')`;
+      // SetMinusStyle(elemBtnDecStrictStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
 
     }
     else {
-        elemBtnDecStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+        elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
     }
 
     // ARCH BUILD MINUS BUTTON
@@ -1092,6 +1096,20 @@ function UpdateGUIArch() {
       }
 
     }
+
+    // ARCH BUILD MINUS BUTTON
+    if (resourceId != 0)
+    {
+
+      if (dataArch.archHousesCurrentStrict[resourceId] > 0 ) {
+        elemBtnDecArchStrict[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+      }
+      else {
+        elemBtnDecArchStrict[resourceId].style.backgroundImage = 'none';
+      }
+
+    }
+
 
   }
 
@@ -1121,7 +1139,7 @@ function UpdateGUIArch() {
       let archStyleState = StylesType.CLEAR;
       
       elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
-      
+
       archStyleState = ArchStateType.GREEN_NORMAL;
       WriteNormal(elemNumArchHousesFree[resourceId],
         dataArch.archHousesCurrentFree[resourceId],16,true,"black",false);
@@ -1150,10 +1168,10 @@ function UpdateGUIArch() {
           dataArch.archHousesTotalPossible[resourceId], 10, false, "black", false, false);
 
         if (dataArch.archHousesDeltaPossible[resourceId] > 0) {
-          SetBorderRadius(elemNumArchHousesStrict[resourceId],'25%') ; 
+        elemNumArchHousesStrict[resourceId].style.borderRadius = '15px';
         } 
         else {
-          SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
+          elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
         }
       }
       else if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
@@ -1161,18 +1179,18 @@ function UpdateGUIArch() {
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesStrict[resourceId],
           dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false);
-        SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
+        elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
         // Can't build
         SetStyle(elemNumArchHousesStrict,StylesType.CLEAR[resourceId],resourceId);          
         elemNumArchHousesStrict[resourceId].textContent = "";
-        SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
+        elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
       else {
         archStyleState = StylesType.CLEAR;
         elemNumArchHousesStrict[resourceId].textContent = "";
-        SetBorderRadius(elemNumArchHousesStrict[resourceId],'0%') ; 
+        elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
 
 
@@ -1183,10 +1201,12 @@ function UpdateGUIArch() {
 
       if (dataArch.archHousesCurrentFree[resourceId] > 0) {
         archAddStyle = StylesType.CLEAR_THICK[resourceId];
+        elemNumArchHousesAdd[resourceId].style.borderRadius = '15px' ;
       }
       else
       {
         archAddStyle = StylesType.CLEAR[resourceId];
+        elemNumArchHousesAdd[resourceId].style.borderRadius = '0px' ;
       }
 
       // Additional houses

@@ -1120,6 +1120,8 @@ function UpdateGUIArch() {
 
       let archStyleState = StylesType.CLEAR;
       
+      elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
+      
       archStyleState = ArchStateType.GREEN_NORMAL;
       WriteNormal(elemNumArchHousesFree[resourceId],
         dataArch.archHousesCurrentFree[resourceId],16,true,"black",false);

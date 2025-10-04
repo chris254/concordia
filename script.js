@@ -907,6 +907,24 @@ function ResetMercTrades() {
   UpdateAll();
 }
 
+function ResetStoreFree() 
+{
+  for (let resourceId=0; resourceId <= 5; resourceId++)
+  {
+    dataArch.archHousesCurrentFree[resourceId] = 0;
+    if (resourceId != 0) {
+      fieldValues.storeCurrentFree[resourceId]  = 0;   
+    }
+  }
+
+
+  ResetStoreAdd();
+
+
+  UpdateAll();
+}
+
+
 function ResetStoreAdd() 
 {
   for (let resourceId=1; resourceId <= 5; resourceId++)
@@ -956,7 +974,7 @@ function UpdateArchPostGui(elemArray, storeCurrent, storePost, archFreeMode, res
 
 }
 
-function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_) {
+function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_,displayZero_) {
   elem_.style.fontSize = fontSize_ + "px";
 
   if (bold_) elem_.style.fontWeight = "bold";
@@ -969,7 +987,12 @@ function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_) {
     signText = "+";
   }
 
-  elem_.textContent = signText + number_;
+  if (number_ === 0 && !displayZero_) {
+    elem_.textContent = "";
+  }
+  else {
+    elem_.textContent = signText + number_;
+  }
 }
 
 function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_,color_) {
@@ -1124,7 +1147,22 @@ function UpdateGUIArch() {
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
     WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId], fieldValues.storeCurrentFree[resourceId]);
+    if (fieldValues.storeCurrentFree[resourceId] === 0) {
+      SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else 
+    {
+      SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+
     WriteFieldValueBlankZero(elemNumStoreStrictCurrent[resourceId], fieldValues.storeCurrentStrict[resourceId]);
+
+    if (fieldValues.storeCurrentStrict[resourceId] === 0) {
+      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else {
+      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+    }
 
     let tradeCountReached = mercGlobal.totalTradeCount >= 2;
 
@@ -1142,10 +1180,10 @@ function UpdateGUIArch() {
 
       archStyleState = ArchStateType.GREEN_NORMAL;
       WriteNormal(elemNumArchHousesFree[resourceId],
-        dataArch.archHousesCurrentFree[resourceId],16,true,"black",false);
+        dataArch.archHousesCurrentFree[resourceId],16,true,"black",false,false);
 
       if (dataArch.archHousesCurrentFree[resourceId] > 0) {
-        SetStyle(elemNumArchHousesFree,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        SetStyle(elemNumArchHousesFree,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
       else
       {
@@ -1178,7 +1216,7 @@ function UpdateGUIArch() {
         // Not possible
         archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesStrict[resourceId],
-          dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false);
+          dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false,false);
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
       else if (dataArch.archHousesDeltaPossible[resourceId] === 0) {
@@ -1216,12 +1254,12 @@ function UpdateGUIArch() {
         if (dataArch.archHousesAddFree[resourceId] > 0)
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAddFree[resourceId],16,true,"black",false);
+            dataArch.archHousesAddFree[resourceId],16,true,"black",false,false);
         }
         else 
         {
           WriteNormal(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAddFree[resourceId],10,false,"black",false);
+            dataArch.archHousesAddFree[resourceId],10,false,"black",false,false);
         }
 
       } 
@@ -1254,7 +1292,7 @@ function UpdateGUIArch() {
       elemNumArchStoreCost[resourceId].textContent = "";
     }
     else {
-      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black",false);
+      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black",false,true);
     }
 
     UpdateArchPostGui(elemNumArchPost, fieldValues.storeCurrentStrict[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);

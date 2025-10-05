@@ -38,7 +38,7 @@ let dataArch = {
 
   runOutOf:[true,true,true,true,true,true],
 
-  archSpareResource:[0,0,0,0,0,0],
+  archStrictStoreRemaining:[0,0,0,0,0,0],
 
 }
 

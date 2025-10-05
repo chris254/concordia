@@ -137,6 +137,17 @@ const elemIdsArchHousesStrict = [
 
  const elemNumArchHousesAdd = elemIdsArchHousesAdd.map((id) => document.getElementById(id));
 
+ const elemIdsStoreRemainingStrict = [
+  "num-storeremaining-strict-cash",
+  "num-storeremaining-strict-brick",
+  "num-storeremaining-strict-food",
+  "num-storeremaining-strict-tool",
+  "num-storeremaining-strict-wine",
+  "num-storeremaining-strict-cloth",
+];
+
+ const elemNumStoreRemainingStrict = elemIdsStoreRemainingStrict.map((id) => document.getElementById(id));
+
 
  // btn-dec-store-merc-brick
 
@@ -485,7 +496,7 @@ function SetNewStyle(fill_, borderSize_, fontSize_) {
 
 function ArchStoreStrictDec(resourceId) {
   
-  if (dataArch.archSpareResource[resourceId] > 0) {
+  if (dataArch.archStrictStoreRemaining[resourceId] > 0) {
     fieldValues.storeCurrentStrict[resourceId] = Max(0, fieldValues.storeCurrentStrict[resourceId] - 1);
   }
 
@@ -742,7 +753,7 @@ function ProcessArchitectStrict() {
   }
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
-    dataArch.archSpareResource[resourceId] = fieldValues.storeCurrentStrict[resourceId] - dataArch.archBuildCost[resourceId];
+    dataArch.archStrictStoreRemaining[resourceId] = fieldValues.storeCurrentStrict[resourceId] - dataArch.archBuildCost[resourceId];
   }
 
 }
@@ -1131,6 +1142,17 @@ function UpdateGUIArch() {
 
     }
 
+    if (dataArch.archStrictStoreRemaining[resourceId] === 0) {
+        elemNumStoreRemainingStrict[resourceId].textContent = "";
+        SetStyle(elemNumStoreRemainingStrict,StylesType.CLEAR[resourceId],resourceId)
+
+    }
+    else {
+
+      elemNumStoreRemainingStrict[resourceId].textContent = dataArch.archStrictStoreRemaining[resourceId];
+        SetStyle(elemNumStoreRemainingStrict,StylesType.CLEAR_NORMAL[resourceId],resourceId)
+
+    }
 
   }
 

@@ -380,17 +380,6 @@ const elemIdsStoreCost = [
 
 const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
 
-const elemIdsBtnIncStrictStoreArch = [
-  "btn-inc-strict-store1-cash",
-  "btn-inc-strict-store1-brick",
-  "btn-inc-strict-store1-food",
-  "btn-inc-strict-store1-tool",
-  "btn-inc-strict-store1-wine",
-  "btn-inc-strict-store1-cloth",
-];
-
-const elemBtnIncStrictStoreArch = elemIdsBtnIncStrictStoreArch.map((id) => document.getElementById(id));
-
 const elemIdsNumArchPost = [
   "num-arch-remaining-cash",
   "num-arch-remaining-brick",
@@ -1089,7 +1078,16 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
-    SetBorderRadius(elemBtnIncStrictStoreArch[resourceId],'15px');
+    SetBorderRadius(elemNumStoreStrictCurrent[resourceId],'15px');
+    WriteFieldValueBlankZero(elemNumStoreStrictCurrent[resourceId], fieldValues.storeCurrentStrict[resourceId]);
+
+    if (fieldValues.storeCurrentStrict[resourceId] > 0) {
+      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+    }
+    else
+    {
+      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+    }
 
     // ARCH STORE MINUS BUTTON
     if (fieldValues.storeCurrentStrict[resourceId] === 0) {
@@ -1155,14 +1153,6 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
 
-    WriteFieldValueBlankZero(elemNumStoreStrictCurrent[resourceId], fieldValues.storeCurrentStrict[resourceId]);
-
-    if (fieldValues.storeCurrentStrict[resourceId] === 0) {
-      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR[resourceId],resourceId);
-    }
-    else {
-      SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
-    }
 
     let tradeCountReached = mercGlobal.totalTradeCount >= 2;
 
@@ -1493,7 +1483,13 @@ function UpdateGUIMerc() {
         elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
       }
 
-      SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      if (mercGlobal.storePreSell[resourceId] === 0 && mercActive === MercType.MERC0) {
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
+        elemNumPreMercStore[resourceId].textContent = '';
+      }
+      else {
+        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      }
 
     }
     else {

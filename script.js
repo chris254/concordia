@@ -649,7 +649,6 @@ function ProcessArchitectFree() {
   {
 
     currentCashValue = 
-      dataArch.archHousesCurrentFree[resourceId] * 
         houseCost[resourceId]*(dataArch.archHousesAddFree[resourceId]+1);
 
     storeCurrentLocal = storeCurrentLocal + currentCashValue;

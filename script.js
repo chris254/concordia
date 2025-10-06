@@ -454,7 +454,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V4.0";
+  document.getElementById("version").textContent = "V4.1";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -644,12 +644,13 @@ function ProcessArchitectFree() {
 
   /* Calculate store values from houses */
   let storeCurrentLocal = 0;
-  let currentCashValue = 0
+  let currentCashValue = 0;
   for (let resourceId = 1; resourceId<=5; resourceId++)
   {
 
     currentCashValue = 
-        houseCost[resourceId]*(dataArch.archHousesAddFree[resourceId]+1);
+        dataArch.archHousesCurrentFree[resourceId]*houseCost[resourceId] + 
+        houseCost[resourceId]*(dataArch.archHousesAddFree[resourceId]);
 
     storeCurrentLocal = storeCurrentLocal + currentCashValue;
 

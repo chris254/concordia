@@ -1092,11 +1092,18 @@ function UpdateGUIArch() {
     //--------------------------------------------------------------
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
-    WriteSlash(elemNumStoreFreeCurrent[resourceId],
-      fieldValues.storeCurrentFree[resourceId], 18, true,
-      fieldValues.storeCurrentStrict[resourceId], 18, false, "black", false, false);
 
-    //WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId], fieldValues.storeCurrentFree[resourceId]);
+    let allZero = (fieldValues.storeCurrentFree[resourceId] === 0 && fieldValues.storeCurrentStrict[resourceId] === 0);
+    if (allZero) {
+      elemNumStoreFreeCurrent[resourceId].textContent = "";
+    }
+    else {
+      WriteSlash(elemNumStoreFreeCurrent[resourceId],
+        fieldValues.storeCurrentFree[resourceId], 18, true,
+        fieldValues.storeCurrentStrict[resourceId], 18, true, "black", false, false);
+
+    }
+
     if (fieldValues.storeCurrentFree[resourceId] === 0) {
       SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
     }
@@ -1106,7 +1113,7 @@ function UpdateGUIArch() {
     }
 
     if (fieldValues.storeStrictMinusFree[resourceId] >=0) {
-      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.4;
+      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.8;
     }
     else {
       elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;

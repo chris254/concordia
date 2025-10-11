@@ -1128,6 +1128,14 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
 
+    if (fieldValues.storeStrictMinusFree[resourceId] >=0) {
+      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.4;
+    }
+    else {
+      elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;
+
+    }
+
 
     let tradeCountReached = mercGlobal.totalTradeCount >= 2;
 

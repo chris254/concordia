@@ -137,18 +137,6 @@ const elemIdsArchHousesStrict = [
 
  const elemNumArchHousesAdd = elemIdsArchHousesAdd.map((id) => document.getElementById(id));
 
- const elemIdsStoreRemainingStrict = [
-  "num-storeremaining-strict-cash",
-  "num-storeremaining-strict-brick",
-  "num-storeremaining-strict-food",
-  "num-storeremaining-strict-tool",
-  "num-storeremaining-strict-wine",
-  "num-storeremaining-strict-cloth",
-];
-
- const elemNumStoreRemainingStrict = elemIdsStoreRemainingStrict.map((id) => document.getElementById(id));
-
-
  // btn-dec-store-merc-brick
 
  const elemIdsBtnDecMercStore = [
@@ -443,7 +431,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V4.1";
+  document.getElementById("version").textContent = "V5.0";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1095,18 +1083,6 @@ function UpdateGUIArch() {
 
     }
 
-    if (dataArch.archStrictStoreRemaining[resourceId] === 0) {
-        elemNumStoreRemainingStrict[resourceId].textContent = "";
-        SetStyle(elemNumStoreRemainingStrict,StylesType.CLEAR[resourceId],resourceId)
-
-    }
-    else {
-
-      elemNumStoreRemainingStrict[resourceId].textContent = dataArch.archStrictStoreRemaining[resourceId];
-        SetStyle(elemNumStoreRemainingStrict,StylesType.CLEAR_NORMAL[resourceId],resourceId)
-
-    }
-
   }
 
 
@@ -1251,16 +1227,6 @@ function UpdateGUIArch() {
     if (fieldValues.archFreeMode) archCostState = StylesType.CLEAR;
     else if (dataArch.archBuildCost[resourceId] === 0) archCostState = StylesType.CLEAR;
     else archCostState = StylesType.CLEAR_NORMAL;
-
-    let archCostStyle = archCostState[resourceId];
-    SetArchCostStyle(elemNumArchStoreCost[resourceId],archCostStyle,resourceId);
-
-    if (dataArch.archBuildCost[resourceId] === 0 || fieldValues.archFreeMode) {
-      elemNumArchStoreCost[resourceId].textContent = "";
-    }
-    else {
-      WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black",false,true);
-    }
 
   }
 

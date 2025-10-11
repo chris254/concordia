@@ -70,6 +70,72 @@
       <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreStrictDec(5)"></div>
     </div>
 
+    <div class="line-with-text">YOU CAN BUILD</div>
+    
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+    
+      <!-- ========================================================================== -->
+      <!-- Row: Arch Strict Build -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-strict-brick" onclick="ArchHousesIncStrict(1)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-strict-food" onclick="ArchHousesIncStrict(2)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-strict-tool" onclick="ArchHousesIncStrict(3)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-strict-wine" onclick="ArchHousesIncStrict(4)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-strict-cloth" onclick="ArchHousesIncStrict(5)"></div>
+    
+      <!-- ========================================================================== -->
+      <!-- Arch Strict Build Dec -->
+      <div class="grid-item-no-border">-</div>
+      <div class="grid-item-no-border"></div>
+      <div class="down-arrow" id="btn-dec-arch-strict-brick" onclick="ArchHousesDecStrict(1)"></div>
+      <div class="down-arrow" id="btn-dec-arch-strict-food" onclick="ArchHousesDecStrict(2)"></div>
+      <div class="down-arrow" id="btn-dec-arch-strict-tool" onclick="ArchHousesDecStrict(3)"></div>
+      <div class="down-arrow" id="btn-dec-arch-strict-wine" onclick="ArchHousesDecStrict(4)"></div>
+      <div class="down-arrow" id="btn-dec-arch-strict-cloth" onclick="ArchHousesDecStrict(5)"></div>
+    
+    </div>
+
+        <div class="line-with-text">I WANT TO BUILD</div>
+    
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+    
+      <!-- ========================================================================== -->
+      <!-- Row: Arch Free Build -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetStoreFree()" style="background-color: red; color: white">RST</button>
+      </div>
+      <div class="grid-item-no-border" id="num-arch-houses-free-brick" onclick="ArchHousesIncFree(1)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-free-food" onclick="ArchHousesIncFree(2)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-free-tool" onclick="ArchHousesIncFree(3)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-free-wine" onclick="ArchHousesIncFree(4)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-free-cloth" onclick="ArchHousesIncFree(5)"></div>
+    
+      <!-- ========================================================================== -->
+      <!-- Arch Free Build Dec -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="down-arrow" id="btn-dec-arch-free-brick" onclick="ArchHousesDecFree(1)"></div>
+      <div class="down-arrow" id="btn-dec-arch-free-food" onclick="ArchHousesDecFree(2)"></div>
+      <div class="down-arrow" id="btn-dec-arch-free-tool" onclick="ArchHousesDecFree(3)"></div>
+      <div class="down-arrow" id="btn-dec-arch-free-wine" onclick="ArchHousesDecFree(4)"></div>
+      <div class="down-arrow" id="btn-dec-arch-free-cloth" onclick="ArchHousesDecFree(5)"></div>
+    
+              <!-- ========================================================================== -->
+      <!-- Row : Additional Houses -->
+      <div class="grid-item-no-border">HA</div>
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
+      </div>
+      <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAddFree(1)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAddFree(2)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAddFree(3)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAddFree(4)"></div>
+      <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAddFree(5)"></div>
+    
+    </div>
+
     <div class="line-with-text">STORE REQD NORMAL</div>
 
 
@@ -105,114 +171,12 @@
     </div>
 
 
-    <div id="arch-free-group">
-
-      <div class="title-divider">ARCHITECT</div>
-
-      <div class="line-with-text">BUILD FREE</div>
-
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-
-        <!-- ========================================================================== -->
-        <!-- Row 9: Arch numbers -->
-        <div class="grid-item-no-border" style="font-size: 10pt"></div>
-        <div class="grid-item-no-border" style="font-size: 10pt"></div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
-
-        <!-- ========================================================================== -->
-        <!-- Row: Arch Free Build -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border">
-          <button class="btn-full-not-selected" onclick="ResetStoreFree()" style="background-color: red; color: white">RST</button>
-        </div>
-        <div class="grid-item-no-border" id="num-arch-houses-free-brick" onclick="ArchHousesIncFree(1)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-free-food" onclick="ArchHousesIncFree(2)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-free-tool" onclick="ArchHousesIncFree(3)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-free-wine" onclick="ArchHousesIncFree(4)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-free-cloth" onclick="ArchHousesIncFree(5)"></div>
-
-        <!-- ========================================================================== -->
-        <!-- Arch Free Build Dec -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border"></div>
-        <div class="down-arrow" id="btn-dec-arch-free-brick" onclick="ArchHousesDecFree(1)"></div>
-        <div class="down-arrow" id="btn-dec-arch-free-food" onclick="ArchHousesDecFree(2)"></div>
-        <div class="down-arrow" id="btn-dec-arch-free-tool" onclick="ArchHousesDecFree(3)"></div>
-        <div class="down-arrow" id="btn-dec-arch-free-wine" onclick="ArchHousesDecFree(4)"></div>
-        <div class="down-arrow" id="btn-dec-arch-free-cloth" onclick="ArchHousesDecFree(5)"></div>
-
-      </div>
-
-
-      <!--<div class="line-with-text">HOUSES ALREADY PRESENT</div>-->
-
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-        <!-- ========================================================================== -->
-        <!-- Row : Additional Houses -->
-        <div class="grid-item-no-border">HA</div>
-        <div class="grid-item-no-border">
-          <button class="btn-full-not-selected" onclick="ResetStoreAdd()" style="background-color: red; color: white">RST</button>
-        </div>
-        <div class="grid-item-no-border"id="num-arch-houses-add-brick" onclick="ArchHousesAddFree(1)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-add-food" onclick="ArchHousesAddFree(2)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-add-tool" onclick="ArchHousesAddFree(3)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-add-wine" onclick="ArchHousesAddFree(4)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-add-cloth" onclick="ArchHousesAddFree(5)"></div>
         
-      </div>
-
-      <div class="line-with-text">BUILD ACTUAL</div>
-
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
- 
-        <!-- ========================================================================== -->
-        <!-- Row 9: Arch numbers -->
-        <div class="grid-item-no-border" style="font-size: 10pt"></div>
-        <div class="grid-item-no-border" style="font-size: 10pt"></div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">1/F</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">2/B/F</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">3/B/T</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">4/B/W</div>
-        <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">5/B/C</div>
-
-        <!-- ========================================================================== -->
-        <!-- Row: Arch Strict Build -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-strict-brick" onclick="ArchHousesIncStrict(1)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-strict-food" onclick="ArchHousesIncStrict(2)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-strict-tool" onclick="ArchHousesIncStrict(3)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-strict-wine" onclick="ArchHousesIncStrict(4)"></div>
-        <div class="grid-item-no-border" id="num-arch-houses-strict-cloth" onclick="ArchHousesIncStrict(5)"></div>
-
-        <!-- ========================================================================== -->
-        <!-- Arch Strict Build Dec -->
-        <div class="grid-item-no-border">-</div>
-        <div class="grid-item-no-border"></div>
-        <div class="down-arrow" id="btn-dec-arch-strict-brick" onclick="ArchHousesDecStrict(1)"></div>
-        <div class="down-arrow" id="btn-dec-arch-strict-food" onclick="ArchHousesDecStrict(2)"></div>
-        <div class="down-arrow" id="btn-dec-arch-strict-tool" onclick="ArchHousesDecStrict(3)"></div>
-        <div class="down-arrow" id="btn-dec-arch-strict-wine" onclick="ArchHousesDecStrict(4)"></div>
-        <div class="down-arrow" id="btn-dec-arch-strict-cloth" onclick="ArchHousesDecStrict(5)"></div>
-
-      </div>
-
-
-
-      <!-- *************************************************************************************** -->
-      <!-- ROW: -->
-      <!-- *************************************************************************************** -->
-
     <div class="title-divider">MERCATOR</div>
-
-
+    
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white"    >
-
-            <!-- ========================================================================== -->
+    
+      <!-- ========================================================================== -->
       <!-- Row 14: Cost of resource (for Mercator) -->
       <div class="grid-item-no-border"></div>
       <div class="card-title" onclick="SetCardMerc()" id="btn-merc">MERC0</div>
@@ -223,7 +187,7 @@
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected" onclick="ResetMercTrades()" style="background-color: red; color: white">TR</button>
       </div>
-
+    
       <!-- ========================================================================== -->
       <!-- Row 13: Padding row -->
       <div class="grid-item-no-border"></div>
@@ -233,10 +197,10 @@
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">5</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">6</div>
       <div class="grid-item-no-border" style="font-size: 10pt; justify-content: left; margin-top: auto">7</div>
-
+    
       <!-- ========================================================================== -->
       <!-- COL1: ARCH STRICT STORE -->
-        <div class="grid-item-no-border" id="version"></div>
+      <div class="grid-item-no-border" id="version"></div>
       <div class="grid-item cash-filled" id="btn-inc-store-free-cash">£</div>
       <div class="grid-item brick-filled" id="btn-inc-store-free-brick"">
         <img src="brick.PNG" />
@@ -253,13 +217,10 @@
       <div class="grid-item cloth-filled" id="btn-inc-store-free-cloth""> 
         <img src="Cloth.png" />
       </div>
-
-      <!-- ******************************************** MERC *************************************************** -->
-
     </div>
-
+    
     <div class="line-with-text">STORE PRE TRADE</div>
-
+    
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt">£??</div>
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cash" style="font-size: 8pt"></div>
@@ -268,173 +229,55 @@
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-tool" style="font-size: 8pt"></div>
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-wine" style="font-size: 8pt"></div>
       <div class="grid-item-no-border" id="num-pre-merc-cashvalue-cloth" style="font-size: 8pt"></div>
-
-
-      <div
-        class="grid-item-no-border"
-        style="font-weight: lighter; font-size: 10pt"
-      >
-        Store
-      </div>
-      <div
-        class="grid-item-no-border cash"
-        id="num-pre-merc-cash"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border brick"
-        id="num-pre-merc-brick"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border food"
-        id="num-pre-merc-food"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border tool"
-        id="num-pre-merc-tool"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border wine"
-        id="num-pre-merc-wine"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border cloth"
-        id="num-pre-merc-cloth"
-        style="font-weight: bolder"
-      ></div>
-
+    
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt">Store</div>
+      <div class="grid-item-no-border" id="num-pre-merc-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-food" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-pre-merc-cloth" style="font-weight: bolder"></div>
     </div>
-
+    
     <div class="line-with-text">SELL</div>
-
-    <div
-      class="grid-container-no-gap"
-      style="white-space: nowrap; overflow-x: auto; background-color: white"
-    >
-      <!-- ========================================================================== -->
-      <!-- Row x: Merc Sell -->
+    
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">SELL</button>
       </div>
       <div class="grid-item-no-border" id="btn-merc-sell-cash"></div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-sell-brick"
-        onclick="ClickMercSellResourcePlus(1)"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-sell-food"
-        onclick="ClickMercSellResourcePlus(2)"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-sell-tool"
-        onclick="ClickMercSellResourcePlus(3)"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-sell-wine"
-        onclick="ClickMercSellResourcePlus(4)"
-      >
-        0
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-sell-cloth"
-        onclick="ClickMercSellResourcePlus(5)"
-      >
-        0
-      </div>
-    </div>
+      <div class="grid-item-no-border" id="btn-merc-sell-brick" onclick="ClickMercSellResourcePlus(1)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-food" onclick="ClickMercSellResourcePlus(2)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-tool" onclick="ClickMercSellResourcePlus(3)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-wine" onclick="ClickMercSellResourcePlus(4)">0</div>
+      <div class="grid-item-no-border" id="btn-merc-sell-cloth" onclick="ClickMercSellResourcePlus(5)">0</div>
+    </div>  
+    <!-- </div> group thing-->
 
     <div class="line-with-text">BUY</div>
 
-    <div
-      class="grid-container-no-gap"
-      style="white-space: nowrap; overflow-x: auto; background-color: white"
-    >
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <!-- ========================================================================== -->
       <!-- Row x: Merc Buy -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">BUY</button>
       </div>
       <div class="grid-item-no-border" id="btn-merc-buy-cash"></div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-buy-brick"
-        onclick="ClickMercBuyResourcePlus(1)"
-      >
-        BUY
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-buy-food"
-        onclick="ClickMercBuyResourcePlus(2)"
-      >
-        BUY
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-buy-tool"
-        onclick="ClickMercBuyResourcePlus(3)"
-      >
-        BUY
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-buy-wine"
-        onclick="ClickMercBuyResourcePlus(4)"
-      >
-        BUY
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="btn-merc-buy-cloth"
-        onclick="ClickMercBuyResourcePlus(5)"
-      >
-        BUY
-      </div>
+      <div class="grid-item-no-border" id="btn-merc-buy-brick" onclick="ClickMercBuyResourcePlus(1)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-food" onclick="ClickMercBuyResourcePlus(2)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-tool" onclick="ClickMercBuyResourcePlus(3)">BUY</div>
+      <div class="grid-item-no-border" id="btn-merc-buy-wine" onclick="ClickMercBuyResourcePlus(4)">BUY</div> 
+      <div class="grid-item-no-border" id="btn-merc-buy-cloth" onclick="ClickMercBuyResourcePlus(5)">BUY</div>
 
       <!-- ========================================================================== -->
       <!-- Row x: Merc Trade Minus -->
       <div class="grid-item-no-border"></div>
       <div class="grid-item-no-border" id="btn-merc-trade-minus-cash"></div>
-      <div
-        class="down-arrow"
-        id="btn-merc-trade-minus-brick"
-        onclick="ClickMercTradeMinus(1)"
-      ></div>
-      <div
-        class="down-arrow"
-        id="btn-merc-trade-minus-food"
-        onclick="ClickMercTradeMinus(2)"
-      ></div>
-      <div
-        class="down-arrow"
-        id="btn-merc-trade-minus-tool"
-        onclick="ClickMercTradeMinus(3)"
-      ></div>
-      <div
-        class="down-arrow"
-        id="btn-merc-trade-minus-wine"
-        onclick="ClickMercTradeMinus(4)"
-      ></div>
-      <div
-        class="down-arrow"
-        id="btn-merc-trade-minus-cloth"
-        onclick="ClickMercTradeMinus(5)"
-      ></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-brick" onclick="ClickMercTradeMinus(1)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-food" onclick="ClickMercTradeMinus(2)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-tool" onclick="ClickMercTradeMinus(3)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-wine" onclick="ClickMercTradeMinus(4)"></div>
+      <div class="down-arrow" id="btn-merc-trade-minus-cloth" onclick="ClickMercTradeMinus(5)"></div>
     </div>
 
     <div class="divider-small"></div>
@@ -444,76 +287,29 @@
       style="white-space: nowrap; overflow-x: auto; background-color: white"
     >
       <!-- ========================================================================== -->
-      <!-- Row x: MERC STORE IN -->
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">IN</button>
-      </div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-cash"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-brick"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-food"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-tool"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-wine"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-in-cloth"
-        style="font-weight: bolder"
-      ></div>
-
-      <!-- ========================================================================== -->
       <!-- Row x: MERC STORE OUT -->
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected">OUT</button>
       </div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-cash"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-brick"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-food"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-tool"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-wine"
-        style="font-weight: bolder"
-      ></div>
-      <div
-        class="grid-item-no-border"
-        id="num-merc-store-out-cloth"
-        style="font-weight: bolder"
-      ></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-food" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-out-cloth" style="font-weight: bolder"></div>
+
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected">IN</button>
+      </div>
+      <div class="grid-item-no-border" id="num-merc-store-in-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-food" style="font-weight: bolder"></div>      
+      <div class="grid-item-no-border" id="num-merc-store-in-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-in-cloth" style="font-weight: bolder"></div>
+
     </div>
 
     <div class="divider-small"></div>

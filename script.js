@@ -443,7 +443,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V5.1";
+  document.getElementById("version").textContent = "V5.2";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1399,16 +1399,10 @@ function UpdateGUIMerc() {
     if (resourceId === 0) {
 
       if (mercActive === MercType.MERC0) {
-        elemNumPreMercStore[resourceId].textContent = mercGlobal.mercStore[resourceId];
-
+        WriteNormal(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
       }
       else {
-        largeText.textContent = mercGlobal.mercStore[resourceId];
-        smallTextGrey.textContent = "/" + mercGlobal.storePreSell[resourceId];
-
-        elemNumPreMercStore[resourceId].textContent = '';
-        elemNumPreMercStore[resourceId].appendChild(largeText);
-        elemNumPreMercStore[resourceId].appendChild(smallTextGrey);
+        WriteSlash(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],12,true,mercGlobal.storePreSell[resourceId],16,true,"black",false,false);
       }
 
       if (mercGlobal.storePreSell[resourceId] === 0 && mercActive === MercType.MERC0) {
@@ -1416,20 +1410,19 @@ function UpdateGUIMerc() {
         elemNumPreMercStore[resourceId].textContent = '';
       }
       else {
-        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
 
     }
     else {
-      if (mercGlobal.storePreSell[resourceId] === 0) {
-        elemNumPreMercStore[resourceId].textContent = "";
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
-        //elemNumPreMercStore[resourceId].classList.remove(styleResourceName);
-      } else {
-        elemNumPreMercStore[resourceId].textContent = mercGlobal.storePreSell[resourceId];
+      WriteNormal(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
 
-        SetStyle(elemNumPreMercStore,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-        //elemNumPreMercStore[resourceId].classList.add(styleResourceName);
+      if (mercGlobal.storePreSell[resourceId] === 0) {
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
+      } 
+      else {
+
+        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
 
     }
@@ -1465,6 +1458,7 @@ function UpdateGUIMerc() {
 
     if (resourceId != 0) {
 
+      SetBorderRadius(elemBtnMercSell[resourceId],'15px');
 
       let fontColor = "";
       if (mercGlobal.totalTradeCount >= 2 && !sellActive) fontColor = "grey" ;
@@ -1547,6 +1541,8 @@ function UpdateGUIMerc() {
       // UPDATE BUY BUTTON
       let buyAct = mercGlobal.storeFinal[resourceId] - mercGlobal.storePreBuy[resourceId];
       let buyPoss = mercGlobal.buyQtyPossible[resourceId];
+
+      SetBorderRadius(elemBtnMercBuyPlus[resourceId],'15px');
 
       if (buyPoss === 0) {
         elemBtnMercBuyPlus[resourceId].textContent = "";

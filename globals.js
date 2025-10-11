@@ -46,6 +46,7 @@ let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],
   storeCurrentFree:[0,0,0,0,0,0],
   storeCurrentStrict:[0,0,0,0,0,0],
+  storeStrictMinusFree:[0,0,0,0,0,0],
 
   mercBuyBrick:0,
   mercBuyFood:0,

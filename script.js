@@ -391,17 +391,6 @@ const elemIdsStoreCost = [
 
 const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
 
-const elemIdsNumArchPost = [
-  "num-arch-remaining-cash",
-  "num-arch-remaining-brick",
-  "num-arch-remaining-food",
-  "num-arch-remaining-tool",
-  "num-arch-remaining-wine",
-  "num-arch-remaining-cloth",
-];
-
-const elemNumArchPost = elemIdsNumArchPost.map((id) => document.getElementById(id));
-
 const elemIdsNumArchHousesFree = [
   "num-arch-houses-free-cash",
   "num-arch-houses-free-brick",
@@ -540,14 +529,6 @@ function ArchHousesAddFree(resourceId) {
   }
 
   UpdateAll();
-}
-
-function ArchHousesAddStrict(resourceId) {
-  if (dataArch.archMoreHousesAvailable[resourceId]) {
-    dataArch.archHousesAdd[resourceId] = 0;
-  }
-  UpdateAll();
-
 }
 
 
@@ -946,34 +927,6 @@ function ResetMercStore() {
   UpdateAll();
 }
 
-function UpdateArchPostGui(elemArray, storeCurrent, storePost, archFreeMode, resourceId) {
-
-  let archPostState = StylesType.CLEAR;
-  let archPostStyle = archPostState[resourceId];
-
-  if (archFreeMode) {
-    elemArray[resourceId].textContent = "";
-    archPostState = StylesType.CLEAR;    
-
-  } 
-  else {
-    if ((storePost === 0 && storeCurrent > 0) || storePost > 0) {
-      /* Must have spent it all */
-      elemArray[resourceId].textContent = storePost;
-      archPostState = StylesType.CLEAR_NORMAL;
-    } else {
-      elemArray[resourceId].textContent = "";
-      archPostState = StylesType.CLEAR;
-    }
-
-  }
-
-  archPostStyle = archPostState[resourceId];
-  SetStyle(elemArray,archPostStyle,resourceId);
-
-
-}
-
 function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_,displayZero_) {
   elem_.style.fontSize = fontSize_ + "px";
 
@@ -1284,12 +1237,6 @@ function UpdateGUIArch() {
     //-----------------------------------------------------------
     // ARCH POST
     //-----------------------------------------------------------
-    if (dataArch.archPost[resourceId] < 0) {
-      elemNumArchPost[resourceId].classList.add("red-background");
-    } 
-    else {
-      elemNumArchPost[resourceId].classList.remove("red-background");
-    }
 
     // ARCH COST
     let archCostState = StylesType.CLEAR;
@@ -1307,13 +1254,7 @@ function UpdateGUIArch() {
       WriteNormal(elemNumArchStoreCost[resourceId],-dataArch.archBuildCost[resourceId],14,true,"black",false,true);
     }
 
-    UpdateArchPostGui(elemNumArchPost, fieldValues.storeCurrentStrict[resourceId], dataArch.archPost[resourceId], fieldValues.archFreeMode, resourceId);
-
-    // ARCH REQD
-
-
   }
-
 
 
 }
@@ -1327,6 +1268,12 @@ function UpdateAll() {
 
   ProcessArchitectFree();
   ProcessArchitectStrict();
+
+  // Calculate the delta store values
+  for (let resourceId=0; resourceId<=5; resourceId++) {
+    fieldValues.storeStrictMinusFree[resourceId] = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeCurrentFree[resourceId];
+
+  }
 
   ProcessMerc();
 

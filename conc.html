@@ -43,49 +43,49 @@
       </div>
     </div>
 
-      <div class="line-with-text">STORE STRICT</div>
+    <div class="line-with-text">STORE ACTUAL</div>
+    
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+    
+      <!-- ========================================================================== -->
+      <!-- COL1: ARCH STRICT STORE -->
+      <!-- ========================================================================== -->
+      <!-- Row 3: RESET button and Current Store values -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-cash" style="font-weight: bolder" onclick="ArchStoreStrictInc(0)"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-brick" style="font-weight: bolder" onclick="ArchStoreStrictInc(1)"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-food" style="font-weight: bolder" onclick="ArchStoreStrictInc(2)"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-tool" style="font-weight: bolder" onclick="ArchStoreStrictInc(3)"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-wine" style="font-weight: bolder" onclick="ArchStoreStrictInc(4)"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-strict-cloth" style="font-weight: bolder" onclick="ArchStoreStrictInc(5)"></div>
+    
+      <!-- ========================================================================== -->
+      <!-- Row 5: Dec Buttons for current store -->
+      <div class="grid-item-no-border"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreStrictDec(0)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreStrictDec(1)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-food"  onclick="ArchStoreStrictDec(2)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreStrictDec(3)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreStrictDec(4)"></div>
+      <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreStrictDec(5)"></div>
+    </div>
 
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-
-        <!-- ========================================================================== -->
-        <!-- COL1: ARCH STRICT STORE -->
-        <!-- ========================================================================== -->
-        <!-- Row 3: RESET button and Current Store values -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-cash" style="font-weight: bolder" onclick="ArchStoreStrictInc(0)"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-brick" style="font-weight: bolder" onclick="ArchStoreStrictInc(1)"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-food" style="font-weight: bolder" onclick="ArchStoreStrictInc(2)"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-tool" style="font-weight: bolder" onclick="ArchStoreStrictInc(3)"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-wine" style="font-weight: bolder" onclick="ArchStoreStrictInc(4)"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-strict-cloth" style="font-weight: bolder" onclick="ArchStoreStrictInc(5)"></div>
-
-        <!-- ========================================================================== -->
-        <!-- Row 5: Dec Buttons for current store -->
-        <div class="grid-item-no-border"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-cash" onclick="ArchStoreStrictDec(0)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-brick" onclick="ArchStoreStrictDec(1)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-food"  onclick="ArchStoreStrictDec(2)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-tool" onclick="ArchStoreStrictDec(3)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-wine" onclick="ArchStoreStrictDec(4)"></div>
-        <div class="down-arrow" id="btn-dec-storecurrent-cloth" onclick="ArchStoreStrictDec(5)"></div>
-      </div>
-
-            <div class="line-with-text">STORE REQUIRED</div>
+    <div class="line-with-text">STORE FREE</div>
 
 
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-
-        <!-- ========================================================================== -->
-        <!-- Row 3: RESET button and Current Store values -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-cash" style="font-weight: bolder"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-brick" style="font-weight: bolder"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-food" style="font-weight: bolder"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-tool" style="font-weight: bolder"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-wine" style="font-weight: bolder"></div>
-        <div class="grid-item-no-border" id="num-storecurrent-free-cloth" style="font-weight: bolder"></div>
-
-      </div>
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+    
+      <!-- ========================================================================== -->
+      <!-- Row 3: RESET button and Current Store values -->
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-food" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-storecurrent-free-cloth" style="font-weight: bolder"></div>
+    
+    </div>
 
     <div id="arch-free-group">
 
@@ -94,8 +94,6 @@
       <div class="line-with-text">BUILD FREE</div>
 
       <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
- 
-
 
         <!-- ========================================================================== -->
         <!-- Row 9: Arch numbers -->
@@ -149,12 +147,7 @@
         
       </div>
 
-
-
-
-
-
-      <div class="line-with-text">BUILD STRICT</div>
+      <div class="line-with-text">BUILD ACTUAL</div>
 
       <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
  
@@ -206,24 +199,6 @@
 
       </div>
 
-      <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-
-
-        <!-- ========================================================================== -->
-        <!-- Row : Additional Houses -->
-        <div class="grid-item-no-border"></div>
-        <div class="grid-item-no-border">
-          <button class="btn-full-not-selected" onclick="ResetStoreAddStrict()" style="background-color: red; color: white">RST</button>
-        </div>
-        <div class="grid-item-no-border"id="num-arch-strict-houses-add-brick" onclick="ArchHousesAddStrict(1)"></div>
-        <div class="grid-item-no-border" id="num-arch-strict-houses-add-food" onclick="ArchHousesAddStrict(2)"></div>
-        <div class="grid-item-no-border" id="num-arch-strict-houses-add-tool" onclick="ArchHousesAddStrict(3)"></div>
-        <div class="grid-item-no-border" id="num-arch-strict-houses-add-wine" onclick="ArchHousesAddStrict(4)"></div>
-        <div class="grid-item-no-border" id="num-arch-strict-houses-add-cloth" onclick="ArchHousesAddStrict(5)"></div>
-
-        
-
-      </div>
 
       <!-- *************************************************************************************** -->
       <!-- ROW: -->
@@ -258,19 +233,6 @@
       <div class="grid-item-no-border" id="num-arch-store-cost-wine" style="font-weight: lighter; font-size: 8pt">0</div>
       <div class="grid-item-no-border" id="num-arch-store-cost-cloth" style="font-weight: lighter; font-size: 8pt">0</div>
 
-      <!-- ========================================================================== -->
-      <!-- Row 7: Arch Store Rem -->
-      <div class="grid-item-no-border" style="font-weight: bolder; font-size: 12pt">Rem</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-cash" style="font-weight: bolder; font-size: 12pt"></div>0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-brick" style="font-weight: bolder; font-size: 12pt">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-food" style="font-weight: bolder; font-size: 12pt">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-tool" style="font-weight: bolder; font-size: 12pt">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-wine" style="font-weight: bolder; font-size: 12pt">0</div>
-      <div class="grid-item-no-border" id="num-arch-remaining-cloth" style="font-weight: bolder; font-size: 12pt">0</div>
-
-      <!-- ******************************************************************************** -->
-      <!-- **************************************** ARCHITECT ***************************** -->
-      <!-- ******************************************************************************** -->
     </div>
 
 

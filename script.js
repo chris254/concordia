@@ -355,6 +355,18 @@ const elemIdsStoreFreeCurrent = [
 
 const elemNumStoreFreeCurrent = elemIdsStoreFreeCurrent.map((id) => document.getElementById(id));
 
+const elemIdsStoreFreeMercCurrent = [
+  "num-storecurrent-free-merc-cash",
+  "num-storecurrent-free-merc-brick",
+  "num-storecurrent-free-merc-food",
+  "num-storecurrent-free-merc-tool",
+  "num-storecurrent-free-merc-wine",
+  "num-storecurrent-free-merc-cloth",
+];
+
+const elemNumStoreFreeMercCurrent = elemIdsStoreFreeCurrent.map((id) => document.getElementById(id));
+
+
 //------------------------------------------------------------------------------------------
 const elemIdsStoreStrictCurrent = [
   "num-storecurrent-strict-cash",
@@ -431,7 +443,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V5.0";
+  document.getElementById("version").textContent = "V5.1";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -473,7 +485,7 @@ function SetNewStyle(fill_, borderSize_, fontSize_) {
 
 function ArchStoreStrictDec(resourceId) {
   
-  if (dataArch.archStrictStoreRemaining[resourceId] > 0) {
+  if (dataArch.archStrictStoreRemaining[resourceId] > 0 && mercGlobal.storeFinal[resourceId] > 0) {
     fieldValues.storeCurrentStrict[resourceId] = Max(0, fieldValues.storeCurrentStrict[resourceId] - 1);
   }
 
@@ -522,10 +534,6 @@ function ArchHousesAddFree(resourceId) {
 
 
 
-function MercStoreInc(resourceId) {
-  mercGlobal.mercStore[resourceId] += 1;
-  UpdateAll();
-}
 
 function MercStoreDec(resourceId) {
 
@@ -904,17 +912,6 @@ function ResetStoreAdd()
   UpdateAll();
 }
 
-function ResetMercStore() {
-
-  ResetMercTrades();
-
-  for (let resourceId = 0; resourceId <=5; resourceId++) {
-    mercGlobal.mercStore[resourceId] = 0;
-  }
-
-  UpdateAll();
-}
-
 function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_,displayZero_) {
   elem_.style.fontSize = fontSize_ + "px";
 
@@ -1048,7 +1045,7 @@ function UpdateGUIArch() {
       elemBtnDecStrictStore[resourceId].textContent = ""
 
     }
-    else if (dataArch.runOutOf[resourceId]) {
+    else if (dataArch.runOutOf[resourceId] || mercGlobal.storeFinal[resourceId] === 0) {
       elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusInvalidImgPath}')`;
       // SetMinusStyle(elemBtnDecStrictStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
 
@@ -1095,7 +1092,11 @@ function UpdateGUIArch() {
     //--------------------------------------------------------------
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
-    WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId], fieldValues.storeCurrentFree[resourceId]);
+    WriteSlash(elemNumStoreFreeCurrent[resourceId],
+      fieldValues.storeCurrentFree[resourceId], 18, true,
+      fieldValues.storeCurrentStrict[resourceId], 18, false, "black", false, false);
+
+    //WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId], fieldValues.storeCurrentFree[resourceId]);
     if (fieldValues.storeCurrentFree[resourceId] === 0) {
       SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
     }
@@ -1385,32 +1386,16 @@ function UpdateGUIMerc() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
 
-    SetBorderRadius(elemBtnMercStore[resourceId],'25%');
-
     styleResourceName = resourceLookup[resourceId];
 
     // MERC STORE MINUS BUTTON
     let minusButtonState = MinusButtonType.ORANGE_NORMAL;
 
     // use different store values dependent upon cash or resource
-    let storeValue = 0;
-    storeValue = mercGlobal.mercStore[resourceId];
-
-    if (storeValue === 0) {
-      elemBtnDecMercStore[resourceId].style.backgroundImage = 'none';
-      //minusButtonState = MinusButtonType.CLEAR;
-    }
-    else {
-      elemBtnDecMercStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
-
-    }
     
     //let newStyle = minusButtonState[resourceId];
     //SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
 
-    //--------------------------------------------------------------------
-    // Pre Sell
-    //--------------------------------------------------------------------
     if (resourceId === 0) {
 
       if (mercActive === MercType.MERC0) {
@@ -1920,6 +1905,15 @@ function ProcessMerc() {
 
   let localSellCount = 0;
   let localBuyCount = 0;
+
+  for (let resourceId=0; resourceId<=5; resourceId++) {
+
+    //--------------------------------------------------------------------
+    // Pre Sell
+    //--------------------------------------------------------------------
+    mercGlobal.mercStore[resourceId] = fieldValues.storeCurrentStrict[resourceId];
+
+  }
 
   mercGlobal.sellInProgress.fill(false);
   mercGlobal.buyInProgress.fill(false);

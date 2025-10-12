@@ -355,6 +355,19 @@ const elemIdsStoreFreeCurrent = [
 
 const elemNumStoreFreeCurrent = elemIdsStoreFreeCurrent.map((id) => document.getElementById(id));
 
+//------------------------------------------------------------------------------------------
+const elemIdsStoreHaveCurrent = [
+  "num-storecurrent-have-cash",
+  "num-storecurrent-have-brick",
+  "num-storecurrent-have-food",
+  "num-storecurrent-have-tool",
+  "num-storecurrent-have-wine",
+  "num-storecurrent-have-cloth",
+];
+
+const elemNumStoreHaveCurrent = elemIdsStoreHaveCurrent.map((id) => document.getElementById(id));
+
+
 const elemIdsStoreFreeMercCurrent = [
   "num-storecurrent-free-merc-cash",
   "num-storecurrent-free-merc-brick",
@@ -364,7 +377,7 @@ const elemIdsStoreFreeMercCurrent = [
   "num-storecurrent-free-merc-cloth",
 ];
 
-const elemNumStoreFreeMercCurrent = elemIdsStoreFreeCurrent.map((id) => document.getElementById(id));
+const elemNumStoreFreeMercCurrent = elemIdsStoreFreeMercCurrent.map((id) => document.getElementById(id));
 
 
 //------------------------------------------------------------------------------------------
@@ -1093,31 +1106,38 @@ function UpdateGUIArch() {
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
 
-    let allZero = (fieldValues.storeCurrentFree[resourceId] === 0 && fieldValues.storeCurrentStrict[resourceId] === 0);
-    if (allZero) {
-      elemNumStoreFreeCurrent[resourceId].textContent = "";
-    }
-    else {
-      WriteSlash(elemNumStoreFreeCurrent[resourceId],
-        fieldValues.storeCurrentFree[resourceId], 18, true,
-        fieldValues.storeCurrentStrict[resourceId], 18, true, "black", false, false);
+    SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    WriteSingle(elemNumStoreFreeCurrent[resourceId],fieldValues.storeCurrentFree[resourceId],18,true);
 
-    }
-
-    if (fieldValues.storeCurrentFree[resourceId] === 0) {
-      SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
-    }
-    else 
-    {
-      SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-    }
-
-    if (fieldValues.storeStrictMinusFree[resourceId] >=0) {
-      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.8;
+    if (fieldValues.storeCurrentFree[resourceId] == 0) {
+      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.4;
     }
     else {
       elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;
+    }
 
+    SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    WriteSingle(elemNumStoreHaveCurrent[resourceId],fieldValues.storeCurrentStrict[resourceId],18,true);
+
+    let diff = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeCurrentFree[resourceId];
+    if (diff < 0.0) {
+      //elemNumStoreHaveCurrent[resourceId].style.opacity = 0.4;
+      SetStyle(elemNumStoreHaveCurrent,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else {
+      //elemNumStoreHaveCurrent[resourceId].style.opacity = 1.0;
+      SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+
+    SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    WriteSingle(elemNumStoreFreeMercCurrent[resourceId],mercGlobal.storeFinal[resourceId],18,true);
+
+    let diff2 = mercGlobal.storeFinal[resourceId] - fieldValues.storeCurrentFree[resourceId];
+    if (diff2 < 0.0) {
+      elemNumStoreFreeMercCurrent[resourceId].style.opacity = 0.4;
+    }
+    else {
+      elemNumStoreFreeMercCurrent[resourceId].style.opacity = 1.0;
     }
 
 

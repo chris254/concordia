@@ -1106,38 +1106,70 @@ function UpdateGUIArch() {
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
 
-    SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-    WriteSingle(elemNumStoreFreeCurrent[resourceId],fieldValues.storeCurrentFree[resourceId],18,true);
+    let freeNumber = fieldValues.storeCurrentFree[resourceId];
+    let strictNumber = fieldValues.storeCurrentStrict[resourceId];
+    let diff = strictNumber - freeNumber;
+    var bothZero = false;
+    bothZero = freeNumber === 0 && strictNumber === 0
+
+    WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId],freeNumber,18,true);
 
     if (fieldValues.storeCurrentFree[resourceId] == 0) {
-      elemNumStoreFreeCurrent[resourceId].style.opacity = 0.4;
+      SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
     }
     else {
-      elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;
+      SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      //elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;
     }
 
-    SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-    WriteSingle(elemNumStoreHaveCurrent[resourceId],fieldValues.storeCurrentStrict[resourceId],18,true);
+    //-----------------------------------------------------------------------------------------------
+    // store current strict
 
-    let diff = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeCurrentFree[resourceId];
-    if (diff < 0.0) {
-      //elemNumStoreHaveCurrent[resourceId].style.opacity = 0.4;
+
+    if (bothZero) {
+      // Blank as no requirement for any of this resource
+      WriteFieldValueBlankZero(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true);
       SetStyle(elemNumStoreHaveCurrent,StylesType.CLEAR[resourceId],resourceId);
     }
-    else {
+    else if (diff === 0) {
+      // diff is zero or more
       //elemNumStoreHaveCurrent[resourceId].style.opacity = 1.0;
+      WriteNormal(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true,"black",false,true);
       SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
+    else {
+      WriteSlash(elemNumStoreHaveCurrent[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
+      //WriteNormal(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true,"black",false,true);
+      if (diff < 0) {
+        SetStyle(elemNumStoreHaveCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+      }
+      else {
+        SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      }
+    }
 
-    SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-    WriteSingle(elemNumStoreFreeMercCurrent[resourceId],mercGlobal.storeFinal[resourceId],18,true);
+    //-----------------------------------------------------------------------------------------------
+    let mercFinal = mercGlobal.storeFinal[resourceId]; 
+    diff = mercFinal - freeNumber;
 
-    let diff2 = mercGlobal.storeFinal[resourceId] - fieldValues.storeCurrentFree[resourceId];
-    if (diff2 < 0.0) {
-      elemNumStoreFreeMercCurrent[resourceId].style.opacity = 0.4;
+    if (bothZero && mercFinal === 0) {
+      // Blank as no requirement for any of this resource
+      WriteFieldValueBlankZero(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true);
+      SetStyle(elemNumStoreFreeMercCurrent,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else if (diff === 0) {
+      // diff is zero or more
+      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true,"black",false,true);
+      SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
     else {
-      elemNumStoreFreeMercCurrent[resourceId].style.opacity = 1.0;
+      WriteSlash(elemNumStoreFreeMercCurrent[resourceId],mercFinal,16,true,diff,16,true,"black",false,true);
+      if (diff < 0) {
+        SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+      }
+      else {
+        SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      }
     }
 
 

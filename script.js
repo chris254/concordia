@@ -456,7 +456,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V5.3";
+  document.getElementById("version").textContent = "V5.4";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -2097,7 +2097,24 @@ function ProcessMerc() {
 
 }
 
+function ArchMercClick(resourceId) {
 
+  if (resourceId != 0) {
+      let freeNumber = fieldValues.storeCurrentFree[resourceId];
+      let mercFinal = mercGlobal.storeFinal[resourceId];
+      let diffMercFinalToFree = mercFinal - freeNumber;
+
+      if (diffMercFinalToFree > 0) {
+        // Sell
+        ClickMercSellResourcePlus(resourceId);
+      }
+      else if (diffMercFinalToFree < 0) {
+        // Buy
+        ClickMercBuyResourcePlus(resourceId);
+      }
+  }
+
+}
 
 function ClickMercSellResourcePlus(resourceId) {
 
@@ -2117,22 +2134,6 @@ function ClickMercSellResourcePlus(resourceId) {
   UpdateAll();
 }
 
-function ClickBuyResource(resourceId) {
-
-  let localTradeId = 0;
-  if (mercGlobal.buyInProgress[resourceId] && mercGlobal.storePreBuy[0] > resourceValue[resourceId]) {
-    localTradeId = mercGlobal.buyInProgressTradeId[resourceId];
-    mercGlobal.storeTradeBuyArray[localTradeId][resourceId]++;
-  }
-  else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[0] > resourceValue[resourceId]) {
-    // Not in progress so a new trade is to be created
-    // if sellcount is zero, then place the new trade at the first element, i.e. zero
-    localTradeId = mercGlobal.buyTradeCount;
-    mercGlobal.storeTradeBuyArray[localTradeId][resourceId]++;
-  }
-
-  UpdateAll();
-}
 
   function SetBorderRadius(elem_, radius_) {
 

@@ -1124,8 +1124,6 @@ function UpdateGUIArch() {
 
     //-----------------------------------------------------------------------------------------------
     // store current strict
-
-
     if (bothZero) {
       // Blank as no requirement for any of this resource
       WriteFieldValueBlankZero(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true);
@@ -1138,9 +1136,9 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
     else {
-      WriteSlash(elemNumStoreHaveCurrent[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
-      //WriteNormal(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true,"black",false,true);
+      WriteNormal(elemNumStoreHaveCurrent[resourceId],diff,18,true,"black",true,true);
       if (diff < 0) {
+        //WriteSlash(elemNumStoreHaveCurrent[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
         SetStyle(elemNumStoreHaveCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
       }
       else {
@@ -1163,7 +1161,8 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
     else {
-      WriteSlash(elemNumStoreFreeMercCurrent[resourceId],mercFinal,16,true,diff,16,true,"black",false,true);
+      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,18,true,"black",true,true);
+      //WriteSlash(elemNumStoreFreeMercCurrent[resourceId],mercFinal,16,true,diff,16,true,"black",false,true);
       if (diff < 0) {
         SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
       }
@@ -1172,7 +1171,7 @@ function UpdateGUIArch() {
       }
     }
 
-
+    //---------------------------------------------------------------------
     let tradeCountReached = mercGlobal.totalTradeCount >= 2;
 
     if (resourceId != 0) {

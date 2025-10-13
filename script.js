@@ -1134,15 +1134,19 @@ function UpdateGUIArch() {
       //elemNumStoreHaveCurrent[resourceId].style.opacity = 1.0;
       WriteNormal(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true,"black",false,true);
       SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      elemNumStoreHaveCurrent[resourceId].style.borderRadius = '0%';
     }
     else {
       WriteNormal(elemNumStoreHaveCurrent[resourceId],diff,18,true,"black",true,true);
       if (diff < 0) {
         //WriteSlash(elemNumStoreHaveCurrent[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
         SetStyle(elemNumStoreHaveCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        elemNumStoreHaveCurrent[resourceId].style.borderRadius = '50%';
+
       }
       else {
         SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        elemNumStoreHaveCurrent[resourceId].style.borderRadius = '0%';
       }
     }
 
@@ -1159,15 +1163,21 @@ function UpdateGUIArch() {
       // diff is zero or more
       WriteNormal(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true,"black",false,true);
       SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
+
     }
     else {
       WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,18,true,"black",true,true);
       //WriteSlash(elemNumStoreFreeMercCurrent[resourceId],mercFinal,16,true,diff,16,true,"black",false,true);
       if (diff < 0) {
         SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
+
       }
       else {
         SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
+
       }
     }
 

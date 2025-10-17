@@ -748,9 +748,6 @@ function ProcessArchitectStrict() {
 
 }
 
-function GetMercTradeActive(buy, sell) {
-  return buy > 0 || sell > 0;
-}
 
 function Min3(value1, value2, value3) {
   if (value1 < value2) {
@@ -861,7 +858,8 @@ function SellMinus(resourceId) {
 }
 
 function TradeActive(resourceId) {
-  return MercTradeDelta(resourceId) != 0;
+  return (mercGlobal.buyQtyActual[resourceId] = 0 != 0 ||
+      mercGlobal.sellQtyActual[resourceId] != 0);
 }
 
 let firstPass = true;
@@ -1151,33 +1149,64 @@ function UpdateGUIArch() {
     }
 
     //-----------------------------------------------------------------------------------------------
+    // MERC FINAL / POST MERC
     let mercFinal = mercGlobal.storeFinal[resourceId]; 
     diff = mercFinal - freeNumber;
 
     if (bothZero && mercFinal === 0) {
+      /// No reqt for any, and don;t have any
       // Blank as no requirement for any of this resource
-      WriteFieldValueBlankZero(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true);
+      elemNumStoreFreeMercCurrent[resourceId].textContent = "";
       SetStyle(elemNumStoreFreeMercCurrent,StylesType.CLEAR[resourceId],resourceId);
     }
     else if (diff === 0) {
-      // diff is zero or more
+      // Required = Have
       WriteNormal(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true,"black",false,true);
       SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
 
     }
     else {
-      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,18,true,"black",true,true);
-      //WriteSlash(elemNumStoreFreeMercCurrent[resourceId],mercFinal,16,true,diff,16,true,"black",false,true);
-      if (diff < 0) {
-        SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
-        elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
 
+      // Either haver too many or not enough
+      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,18,true,"black",true,true);
+      
+      if (diff < 0) {
+
+        SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        if (CanBuyResource(resourceId) && resourceId != 0) {
+          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '15px';
+        }
+        else {
+          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
+        }
+        WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,20,true,"red",true,true);
+      }
+      else if (diff > 0) {
+
+        if (resourceId === 0) {
+          // Cash treated differently
+          SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
+
+        }
+        else {
+
+          if (CanSellResource(resourceId)) {
+            elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '15px';
+            SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+
+          }
+          else {
+            SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+            elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
+          }
+        }
       }
       else {
         SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
         elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
-
+          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0px';
       }
     }
 

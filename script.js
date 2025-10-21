@@ -365,7 +365,7 @@ const elemIdsStoreHaveCurrent = [
   "num-storecurrent-have-cloth",
 ];
 
-const elemNumStoreHaveCurrent = elemIdsStoreHaveCurrent.map((id) => document.getElementById(id));
+const elemNumStoreDelta = elemIdsStoreHaveCurrent.map((id) => document.getElementById(id));
 
 
 const elemIdsStoreFreeMercCurrent = [
@@ -377,7 +377,7 @@ const elemIdsStoreFreeMercCurrent = [
   "num-storecurrent-free-merc-cloth",
 ];
 
-const elemNumStoreFreeMercCurrent = elemIdsStoreFreeMercCurrent.map((id) => document.getElementById(id));
+const elemNumPostMercDelta = elemIdsStoreFreeMercCurrent.map((id) => document.getElementById(id));
 
 
 //------------------------------------------------------------------------------------------
@@ -1038,6 +1038,15 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
+    let freeNumber = fieldValues.storeCurrentFree[resourceId];
+    let strictNumber = fieldValues.storeCurrentStrict[resourceId];
+    let diff = strictNumber - freeNumber;
+    var bothZero = false;
+    bothZero = freeNumber === 0 && strictNumber === 0
+
+    //-----------------------------------------------------------------------------------
+    // STORE CURRENT
+    //-----------------------------------------------------------------------------------
     SetBorderRadius(elemNumStoreStrictCurrent[resourceId],'15px');
     WriteFieldValueBlankZero(elemNumStoreStrictCurrent[resourceId], fieldValues.storeCurrentStrict[resourceId]);
 
@@ -1049,7 +1058,9 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
     }
 
-    // ARCH STORE MINUS BUTTON
+    //-----------------------------------------------------------------------------------
+    // STORE CURRENT MINUS BUTTON
+    //-----------------------------------------------------------------------------------
     if (fieldValues.storeCurrentStrict[resourceId] === 0) {
         elemBtnDecStrictStore[resourceId].style.backgroundImage = `none`;
 
@@ -1065,7 +1076,64 @@ function UpdateGUIArch() {
         elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
     }
 
-    // ARCH BUILD MINUS BUTTON
+    //-----------------------------------------------------------------------------------
+    // STORE FREE
+    //-----------------------------------------------------------------------------------
+    WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId],freeNumber,18,true);
+
+    if (fieldValues.storeCurrentFree[resourceId] == 0) {
+      SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else {
+      SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+
+    //-----------------------------------------------------------------------------------------------
+    // STORE DELTA PRE MERC
+    //-----------------------------------------------------------------------------------
+    if (bothZero) {
+      // Blank as no requirement for any of this resource
+      WriteFieldValueBlankZero(elemNumStoreDelta[resourceId],strictNumber,18,true);
+      SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
+    }
+    else if (diff === 0) {
+      // just enough
+      //elemNumStoreDelta[resourceId].style.opacity = 1.0;
+      WriteNormal(elemNumStoreDelta[resourceId],"-",18,true,"black",false,true);
+      SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      elemNumStoreDelta[resourceId].style.borderRadius = '0%';
+    }
+    else {
+      WriteNormal(elemNumStoreDelta[resourceId],diff,18,true,"black",true,true);
+      if (diff < 0) {
+        //WriteSlash(elemNumStoreDelta[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
+        SetStyle(elemNumStoreDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        elemNumStoreDelta[resourceId].style.borderRadius = '50%';
+
+      }
+      else {
+        SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        elemNumStoreDelta[resourceId].style.borderRadius = '0%';
+      }
+    }
+
+
+    //-----------------------------------------------------------------------------------
+    // STRICT BUILD MINUS BUTTON
+    if (resourceId != 0)
+    {
+
+      if (dataArch.archHousesCurrentStrict[resourceId] > 0 ) {
+        elemBtnDecArchStrict[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
+      }
+      else {
+        elemBtnDecArchStrict[resourceId].style.backgroundImage = 'none';
+      }
+
+    }
+
+    //-----------------------------------------------------------------------------------
+    // FREE BUILD MINUS BUTTON
     if (resourceId != 0)
     {
 
@@ -1078,18 +1146,6 @@ function UpdateGUIArch() {
 
     }
 
-    // ARCH BUILD MINUS BUTTON
-    if (resourceId != 0)
-    {
-
-      if (dataArch.archHousesCurrentStrict[resourceId] > 0 ) {
-        elemBtnDecArchStrict[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
-      }
-      else {
-        elemBtnDecArchStrict[resourceId].style.backgroundImage = 'none';
-      }
-
-    }
 
   }
 
@@ -1110,44 +1166,6 @@ function UpdateGUIArch() {
     var bothZero = false;
     bothZero = freeNumber === 0 && strictNumber === 0
 
-    WriteFieldValueBlankZero(elemNumStoreFreeCurrent[resourceId],freeNumber,18,true);
-
-    if (fieldValues.storeCurrentFree[resourceId] == 0) {
-      SetStyle(elemNumStoreFreeCurrent,StylesType.CLEAR[resourceId],resourceId);
-    }
-    else {
-      SetStyle(elemNumStoreFreeCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-      //elemNumStoreFreeCurrent[resourceId].style.opacity = 1.0;
-    }
-
-    //-----------------------------------------------------------------------------------------------
-    // store current strict
-    if (bothZero) {
-      // Blank as no requirement for any of this resource
-      WriteFieldValueBlankZero(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true);
-      SetStyle(elemNumStoreHaveCurrent,StylesType.CLEAR[resourceId],resourceId);
-    }
-    else if (diff === 0) {
-      // diff is zero or more
-      //elemNumStoreHaveCurrent[resourceId].style.opacity = 1.0;
-      WriteNormal(elemNumStoreHaveCurrent[resourceId],strictNumber,18,true,"black",false,true);
-      SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-      elemNumStoreHaveCurrent[resourceId].style.borderRadius = '0%';
-    }
-    else {
-      WriteNormal(elemNumStoreHaveCurrent[resourceId],diff,18,true,"black",true,true);
-      if (diff < 0) {
-        //WriteSlash(elemNumStoreHaveCurrent[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
-        SetStyle(elemNumStoreHaveCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
-        elemNumStoreHaveCurrent[resourceId].style.borderRadius = '50%';
-
-      }
-      else {
-        SetStyle(elemNumStoreHaveCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-        elemNumStoreHaveCurrent[resourceId].style.borderRadius = '0%';
-      }
-    }
-
     //-----------------------------------------------------------------------------------------------
     // MERC FINAL / POST MERC
     let mercFinal = mercGlobal.storeFinal[resourceId]; 
@@ -1156,57 +1174,57 @@ function UpdateGUIArch() {
     if (bothZero && mercFinal === 0) {
       /// No reqt for any, and don;t have any
       // Blank as no requirement for any of this resource
-      elemNumStoreFreeMercCurrent[resourceId].textContent = "";
-      SetStyle(elemNumStoreFreeMercCurrent,StylesType.CLEAR[resourceId],resourceId);
+      elemNumPostMercDelta[resourceId].textContent = "";
+      SetStyle(elemNumPostMercDelta,StylesType.CLEAR[resourceId],resourceId);
     }
     else if (diff === 0) {
       // Required = Have
-      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],mercFinal,18,true,"black",false,true);
-      SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-      elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
+      WriteNormal(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
+      SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
 
     }
     else {
 
       // Either haver too many or not enough
-      WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,18,true,"black",true,true);
+      WriteNormal(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
       
       if (diff < 0) {
 
-        SetStyle(elemNumStoreFreeMercCurrent,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
         if (CanBuyResource(resourceId) && resourceId != 0) {
-          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '15px';
+          elemNumPostMercDelta[resourceId].style.borderRadius = '15px';
         }
         else {
-          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
+          elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
-        WriteNormal(elemNumStoreFreeMercCurrent[resourceId],diff,20,true,"red",true,true);
+        WriteNormal(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
       }
       else if (diff > 0) {
 
         if (resourceId === 0) {
           // Cash treated differently
-          SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
+          SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+          elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
 
         }
         else {
 
           if (CanSellResource(resourceId)) {
-            elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '15px';
-            SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+            elemNumPostMercDelta[resourceId].style.borderRadius = '15px';
+            SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
 
           }
           else {
-            SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-            elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '50%';
+            SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+            elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
           }
         }
       }
       else {
-        SetStyle(elemNumStoreFreeMercCurrent,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-        elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0%';
-          elemNumStoreFreeMercCurrent[resourceId].style.borderRadius = '0px';
+        SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
+          elemNumPostMercDelta[resourceId].style.borderRadius = '0px';
       }
     }
 
@@ -1219,13 +1237,8 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       // ARCH BUILD ACTUAL
       //------------------------------------------------------------ 
-//      ClearAllStyles(elemNumArchHousesStrict,resourceId);
-
-      let archStyleState = StylesType.CLEAR;
-      
       elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
 
-      archStyleState = ArchStateType.GREEN_NORMAL;
       WriteNormal(elemNumArchHousesFree[resourceId],
         dataArch.archHousesCurrentFree[resourceId],16,true,"black",false,false);
 
@@ -1261,7 +1274,6 @@ function UpdateGUIArch() {
       }
       else if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
         // Not possible
-        archStyleState = ArchStateType.CLEAR_THICK_BOLD;
         WriteNormal(elemNumArchHousesStrict[resourceId],
           dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false,false);
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
@@ -1273,7 +1285,6 @@ function UpdateGUIArch() {
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
       else {
-        archStyleState = StylesType.CLEAR;
         elemNumArchHousesStrict[resourceId].textContent = "";
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }

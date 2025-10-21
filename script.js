@@ -857,10 +857,6 @@ function SellMinus(resourceId) {
   UpdateAll();
 }
 
-function TradeActive(resourceId) {
-  return (mercGlobal.buyQtyActual[resourceId] = 0 != 0 ||
-      mercGlobal.sellQtyActual[resourceId] != 0);
-}
 
 let firstPass = true;
 
@@ -1176,22 +1172,26 @@ function UpdateGUIArch() {
       // Blank as no requirement for any of this resource
       elemNumPostMercDelta[resourceId].textContent = "";
       SetStyle(elemNumPostMercDelta,StylesType.CLEAR[resourceId],resourceId);
+      elemNumPostMercDelta[resourceId].style.border = 'none';
     }
     else if (diff === 0) {
       // Required = Have
       WriteNormal(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
       SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
+      elemNumPostMercDelta[resourceId].style.border = 'solid';
 
     }
     else {
 
-      // Either haver too many or not enough
+      // diff is non zero
+      // Either have too many or not enough
       WriteNormal(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
       
       if (diff < 0) {
 
         SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        elemNumPostMercDelta[resourceId].style.border = 'solid';
         if (CanBuyResource(resourceId) && resourceId != 0) {
           elemNumPostMercDelta[resourceId].style.borderRadius = '15px';
         }
@@ -1206,6 +1206,7 @@ function UpdateGUIArch() {
           // Cash treated differently
           SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
           elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
+          elemNumPostMercDelta[resourceId].style.border = 'solid';
 
         }
         else {
@@ -1213,19 +1214,27 @@ function UpdateGUIArch() {
           if (CanSellResource(resourceId)) {
             elemNumPostMercDelta[resourceId].style.borderRadius = '15px';
             SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+            elemNumPostMercDelta[resourceId].style.border = 'solid';
 
           }
           else {
             SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
             elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
+            elemNumPostMercDelta[resourceId].style.border = 'solid';
           }
         }
       }
       else {
         SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+        elemNumPostMercDelta[resourceId].style.border = 'solid';
         elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
           elemNumPostMercDelta[resourceId].style.borderRadius = '0px';
       }
+    }
+
+
+    if (mercGlobal.buyInProgress[resourceId] || mercGlobal.sellInProgress[resourceId]) {
+      elemNumPostMercDelta[resourceId].style.border = 'dashed';
     }
 
     //---------------------------------------------------------------------

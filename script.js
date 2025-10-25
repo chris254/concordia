@@ -186,16 +186,30 @@ const elemIdsMercStoreFinal = [
 
 const elemNumMercStoreFinal = elemIdsMercStoreFinal.map((id) => document.getElementById(id));
 
-const elemIdsMercArch = [
-  "num-merc-arch-cash",
-  "num-merc-arch-brick",
-  "num-merc-arch-food",
-  "num-merc-arch-tool",
-  "num-merc-arch-wine",
-  "num-merc-arch-cloth",
+//-----------------------------------------------------------------------------
+const elemIdsMercQuickAct = [
+  "merc-quick-cash-act",
+  "merc-quick-brick-act",
+  "merc-quick-food-act",
+  "merc-quick-tool-act",
+  "merc-quick-wine-act",
+  "merc-quick-cloth-act",
 ];
 
-const elemNumMercArch = elemIdsMercArch.map((id) => document.getElementById(id));
+const elemNumQuickMercAct = elemIdsMercQuickAct.map((id) => document.getElementById(id));
+
+//-----------------------------------------------------------------------------
+const elemIdsMercQuickReq = [
+  "merc-quick-cash-req",
+  "merc-quick-brick-req",
+  "merc-quick-food-req",
+  "merc-quick-tool-req",
+  "merc-quick-wine-req",
+  "merc-quick-cloth-req",
+];
+
+const elemNumQuickMercReq = elemIdsMercQuickReq.map((id) => document.getElementById(id));
+
 
 //----------------------------------------------------------------------
 const elemIdsMercBuyPot = [
@@ -456,7 +470,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V5.6";
+  document.getElementById("version").textContent = "V6.0";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1831,29 +1845,31 @@ function UpdateGUIMerc() {
     let leftBold = false;
     let leftSize = 14;
     if (fieldValues.storeCurrentFree[resourceId] === 0) {
-     SetStyle(elemNumMercArch,StylesType.BLUE_NORMAL[resourceId],resourceId);
+     SetStyle(elemNumQuickMercAct,StylesType.BLUE_NORMAL[resourceId],resourceId);
+     SetStyle(elemNumQuickMercReq,StylesType.BLUE_NORMAL[resourceId],resourceId);
      leftBold = mercResourceDelta > 0;
     }
     else if (mercResourceDelta >= 0) {
-      SetStyle(elemNumMercArch,StylesType.GREEN_NORMAL[resourceId],resourceId);
+     SetStyle(elemNumQuickMercAct,StylesType.GREEN_NORMAL[resourceId],resourceId);
+     SetStyle(elemNumQuickMercReq,StylesType.GREEN_NORMAL[resourceId],resourceId);
       leftBold = true;
     }
     else if (mercResourceDelta < -1) {
-      SetStyle(elemNumMercArch,StylesType.RED_NORMAL[resourceId],resourceId);
+      SetStyle(elemNumQuickMercAct,StylesType.RED_NORMAL[resourceId],resourceId);
+      SetStyle(elemNumQuickMercReq,StylesType.RED_NORMAL[resourceId],resourceId);
       leftBold=false;
     }
     else if (mercResourceDelta < 0) {
-      SetStyle(elemNumMercArch,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+      SetStyle(elemNumQuickMercAct,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+      SetStyle(elemNumQuickMercReq,StylesType.ORANGE_NORMAL[resourceId],resourceId);
       leftBold=false;
     }
 
     if (leftBold) leftSize = 16;
     else leftSize = 14;
 
-    WriteSlash(
-      elemNumMercArch[resourceId],
-      mercGlobal.storeFinal[resourceId],leftSize,leftBold,
-      fieldValues.storeCurrentFree[resourceId],14,false);
+    elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
+    elemNumQuickMercReq[resourceId].textContent = fieldValues.storeCurrentFree[resourceId];
 
   }
 }

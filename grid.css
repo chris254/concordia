@@ -55,6 +55,18 @@ body {
   /*height: 100vh;*/
 }
 
+.grid-split-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two parts */
+
+  grid-auto-rows: 25px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+
+}
+
 .grid-container-no-gap-sticky {
   position: sticky;
   display: grid;

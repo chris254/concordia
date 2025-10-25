@@ -58,7 +58,7 @@ body {
 .grid-container-no-gap-sticky {
   position: sticky;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
   
   grid-auto-rows: 25px;
   column-gap: 2px; /* Space between grid items */

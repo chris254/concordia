@@ -64,27 +64,31 @@
 
     <div class="line-with-text">STRICT BUILD</div>
     
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+    <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
       <!-- ========================================================================== -->
       <!-- Row: Arch Strict Build -->
       <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetStrictBuild()" style="background-color: red; color: white">RST</button>
+      </div>
       <div class="grid-item-no-border" id="num-arch-houses-strict-brick" onclick="ArchHousesIncStrict(1)"></div>
       <div class="grid-item-no-border" id="num-arch-houses-strict-food" onclick="ArchHousesIncStrict(2)"></div>
       <div class="grid-item-no-border" id="num-arch-houses-strict-tool" onclick="ArchHousesIncStrict(3)"></div>
       <div class="grid-item-no-border" id="num-arch-houses-strict-wine" onclick="ArchHousesIncStrict(4)"></div>
       <div class="grid-item-no-border" id="num-arch-houses-strict-cloth" onclick="ArchHousesIncStrict(5)"></div>
-    
+    </div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <!-- ========================================================================== -->
       <!-- Arch Strict Build Dec -->
-      <div class="grid-item-no-border">-</div>
-      <div class="grid-item-no-border"></div>
-      <div class="down-arrow" id="btn-dec-arch-strict-brick" onclick="ArchHousesDecStrict(1)"></div>
-      <div class="down-arrow" id="btn-dec-arch-strict-food" onclick="ArchHousesDecStrict(2)"></div>
-      <div class="down-arrow" id="btn-dec-arch-strict-tool" onclick="ArchHousesDecStrict(3)"></div>
-      <div class="down-arrow" id="btn-dec-arch-strict-wine" onclick="ArchHousesDecStrict(4)"></div>
-      <div class="down-arrow" id="btn-dec-arch-strict-cloth" onclick="ArchHousesDecStrict(5)"></div>
+      <div class="grid-item-no-border">REM</div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-cash"></div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-brick"></div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-food"></div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-tool"></div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-wine"></div>
+      <div class="grid-item-no-border" id="num-arch-strict-rem-cloth"></div>
     
     </div>
 
@@ -113,8 +117,10 @@
       <div class="down-arrow" id="btn-dec-arch-free-tool" onclick="ArchHousesDecFree(3)"></div>
       <div class="down-arrow" id="btn-dec-arch-free-wine" onclick="ArchHousesDecFree(4)"></div>
       <div class="down-arrow" id="btn-dec-arch-free-cloth" onclick="ArchHousesDecFree(5)"></div>
-    
-              <!-- ========================================================================== -->
+    </div>
+      
+    <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
       <!-- Row : Additional Houses -->
       <div class="grid-item-no-border">HA</div>
       <div class="grid-item-no-border">
@@ -128,7 +134,6 @@
     
     </div>
 
-    <div class="line-with-text">CURRENT STORE STATUS</div>
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
@@ -143,6 +148,8 @@
       <div class="grid-item-no-border" id="num-storecurrent-free-cloth" style="font-weight: bolder"></div>
     
     </div>
+
+    <div class="line-with-text">CURRENT STORE STATUS</div>
 
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
@@ -162,33 +169,13 @@
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
 
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" style="font-size: 8pt;">ACT/REQD</button>
-      </div>
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-cash-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-cash-req">2</div>
-      </div> 
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-brick-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-brick-req">2</div>
-      </div> 
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-food-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-food-req">2</div>
-      </div> 
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-tool-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-tool-req">2</div>
-      </div> 
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-wine-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-wine-req">2</div>
-      </div> 
-      <div class="grid-split-column">
-        <div class="grid-item-no-border" id ="merc-quick-cloth-act">1</div>
-        <div class="grid-item-no-border" id ="merc-quick-cloth-req">2</div>
-      </div> 
+      <div class="grid-item-no-border" id="num-storecurrent-have-cash" style="font-weight: bolder">ACT</div>
+      <div class="grid-item-no-border" id="merc-quick-cash-act" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="merc-quick-brick-act" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="merc-quick-food-act" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="merc-quick-tool-act" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="merc-quick-wine-act" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="merc-quick-cloth-act" style="font-weight: bolder"></div>
     </div>
 
 

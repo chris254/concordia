@@ -31,6 +31,7 @@ const StylesType = Object.freeze({
   CLEAR_THICK_BOLD: ["clear-thick-bold-cash","clear-thick-bold-brick","clear-thick-bold-food","clear-thick-bold-tool","clear-thick-bold-wine","clear-thick-bold-cloth"],
 
 
+  ORANGE_BLACK: ["orange-background-black","orange-background-black","orange-background-black","orange-background-black","orange-background-black","orange-background-black"],
   ORANGE_NORMAL: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
   RED_NORMAL: ["red-background-cash","red-background-brick","red-background-food","red-background-tool","red-background-wine","red-background-cloth"],
   GREEN_NORMAL: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
@@ -447,16 +448,16 @@ btnDecArchTool = document.getElementById("");
 btnDecArchWine = document.getElementById("");
 btnDecArchCloth = document.getElementById("");
 
-const elemIdsBtnDecArchStrict = [
-  "btn-dec-arch-strict-cash",
-  "btn-dec-arch-strict-brick",
-  "btn-dec-arch-strict-food",
-  "btn-dec-arch-strict-tool",
-  "btn-dec-arch-strict-wine",
-  "btn-dec-arch-strict-cloth",
+const elemIdsStrictBuildRem = [
+  "num-arch-strict-rem-cash",
+  "num-arch-strict-rem-brick",
+  "num-arch-strict-rem-food",
+  "num-arch-strict-rem-tool",
+  "num-arch-strict-rem-wine",
+  "num-arch-strict-rem-cloth",
 ];
 
-const elemBtnDecArchStrict = elemIdsBtnDecArchStrict.map((id) => document.getElementById(id));
+const elemNumStrictBuildRem = elemIdsStrictBuildRem.map((id) => document.getElementById(id));
 
 
 
@@ -905,6 +906,20 @@ function ResetMercTrades() {
   UpdateAll();
 }
 
+function ResetStrictBuild()
+{
+  for (let resourceId=1; resourceId <= 5; resourceId++)
+  {
+    dataArch.archHousesCurrentStrict[resourceId] = 0;
+}
+
+
+  ResetStoreAdd();
+
+
+  UpdateAll();
+}
+
 function ResetStoreFree() 
 {
   for (let resourceId=0; resourceId <= 5; resourceId++)
@@ -1052,7 +1067,7 @@ function UpdateGUIArch() {
     let strictNumber = fieldValues.storeCurrentStrict[resourceId];
     let diff = strictNumber - freeNumber;
     var bothZero = false;
-    bothZero = freeNumber === 0 && strictNumber === 0
+    bothZero = freeNumber === 0 && strictNumber === 0;
 
     //-----------------------------------------------------------------------------------
     // STORE CURRENT
@@ -1114,10 +1129,11 @@ function UpdateGUIArch() {
       elemNumStoreDelta[resourceId].style.borderRadius = '0%';
     }
     else {
+      // either have more than required or less
       WriteNormal(elemNumStoreDelta[resourceId],diff,18,true,"black",true,true);
       if (diff < 0) {
         //WriteSlash(elemNumStoreDelta[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
-        SetStyle(elemNumStoreDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+        SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreDelta[resourceId].style.borderRadius = '50%';
 
       }
@@ -1130,16 +1146,13 @@ function UpdateGUIArch() {
 
     //-----------------------------------------------------------------------------------
     // STRICT BUILD MINUS BUTTON
-    if (resourceId != 0)
-    {
-
-      if (dataArch.archHousesCurrentStrict[resourceId] > 0 ) {
-        elemBtnDecArchStrict[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
-      }
-      else {
-        elemBtnDecArchStrict[resourceId].style.backgroundImage = 'none';
-      }
-
+    if (dataArch.archStrictStoreRemaining[resourceId] > 0 ) {
+      elemNumStrictBuildRem[resourceId].textContent = dataArch.archStrictStoreRemaining[resourceId];
+      SetStyle(elemNumStrictBuildRem,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+    }
+    else {
+      SetStyle(elemNumStrictBuildRem,StylesType.CLEAR[resourceId],resourceId);
+      elemNumStrictBuildRem[resourceId].textContent = "";
     }
 
     //-----------------------------------------------------------------------------------
@@ -1845,31 +1858,40 @@ function UpdateGUIMerc() {
     let leftBold = false;
     let leftSize = 14;
     if (fieldValues.storeCurrentFree[resourceId] === 0) {
-     SetStyle(elemNumQuickMercAct,StylesType.BLUE_NORMAL[resourceId],resourceId);
-     SetStyle(elemNumQuickMercReq,StylesType.BLUE_NORMAL[resourceId],resourceId);
+      // Don't need any
+      if (mercGlobal.storeFinal[resourceId] === 0) {
+        SetStyle(elemNumQuickMercAct,StylesType.CLEAR[resourceId],resourceId);
+       elemNumQuickMercAct[resourceId].textContent = "";
+      }
+      else {
+        SetStyle(elemNumQuickMercAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+       elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
+      }
      leftBold = mercResourceDelta > 0;
     }
     else if (mercResourceDelta >= 0) {
-     SetStyle(elemNumQuickMercAct,StylesType.GREEN_NORMAL[resourceId],resourceId);
-     SetStyle(elemNumQuickMercReq,StylesType.GREEN_NORMAL[resourceId],resourceId);
+     SetStyle(elemNumQuickMercAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+     //SetStyle(elemNumQuickMercReq,StylesType.GREEN_NORMAL[resourceId],resourceId);
       leftBold = true;
+      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
     else if (mercResourceDelta < -1) {
       SetStyle(elemNumQuickMercAct,StylesType.RED_NORMAL[resourceId],resourceId);
-      SetStyle(elemNumQuickMercReq,StylesType.RED_NORMAL[resourceId],resourceId);
+      //SetStyle(elemNumQuickMercReq,StylesType.RED_NORMAL[resourceId],resourceId);
       leftBold=false;
+      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
     else if (mercResourceDelta < 0) {
       SetStyle(elemNumQuickMercAct,StylesType.ORANGE_NORMAL[resourceId],resourceId);
-      SetStyle(elemNumQuickMercReq,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+      //etStyle(elemNumQuickMercReq,StylesType.ORANGE_NORMAL[resourceId],resourceId);
       leftBold=false;
+      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
 
     if (leftBold) leftSize = 16;
     else leftSize = 14;
 
-    elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-    elemNumQuickMercReq[resourceId].textContent = fieldValues.storeCurrentFree[resourceId];
+    //elemNumQuickMercReq[resourceId].textContent = fieldValues.storeCurrentFree[resourceId];
 
   }
 }
@@ -1945,6 +1967,7 @@ function ClearAllStyles(elemArray,resourceId) {
   elemArray[resourceId].classList.remove(StylesType.CLEAR_THICK[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.CLEAR_NORMAL_BOLD[resourceId]);
 
+  elemArray[resourceId].classList.remove(StylesType.ORANGE_BLACK[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.ORANGE_NORMAL[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.RED_NORMAL[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.GREEN_NORMAL[resourceId]);

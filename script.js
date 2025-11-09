@@ -1202,6 +1202,7 @@ function UpdateGUIArch() {
 
 
 
+
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
   /*    red - if none Left (it's all been spent)                */
@@ -1409,6 +1410,12 @@ function UpdateGUIArch() {
   if (failCountPostMerc === 0) {
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
                     "MERC STATUS",16,true,"green");
+  }
+  else if (failCountPostMerc <= 2) {
+    let storeDeltaText = "";
+    storeDeltaText = "MERC STATUS (MISSING: " + failCountPostMerc + ")";
+    WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
+                    storeDeltaText,16,true,"orange");
   }
   else {
     let storeDeltaText = "";

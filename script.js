@@ -471,7 +471,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.1";
+  document.getElementById("version").textContent = "V6.2";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -948,7 +948,19 @@ function ResetStoreAdd()
   UpdateAll();
 }
 
-function WriteNormal(elem_, number_, fontSize_, bold_, color_,displaySign_,displayZero_) {
+function WriteSingleString(elem_, string_, fontSize_, bold_, color_) {
+  elem_.style.fontSize = fontSize_ + "px";
+
+  if (bold_) elem_.style.fontWeight = "bold";
+  else elem_.style.fontWeight = "normal";
+
+  elem_.style.color = color_;
+
+  elem_.textContent = string_;
+
+}
+
+function WriteSingleNumber(elem_, number_, fontSize_, bold_, color_,displaySign_,displayZero_) {
   elem_.style.fontSize = fontSize_ + "px";
 
   if (bold_) elem_.style.fontWeight = "bold";
@@ -1061,6 +1073,9 @@ function UpdateGUIArch() {
   /*    transparent - all other times                              */
   /* ------------------------------------------------------------- */
 
+  // a count of the number of resources that are below their reqd values
+  let failCount = 0;
+
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
     let freeNumber = fieldValues.storeCurrentFree[resourceId];
@@ -1124,17 +1139,18 @@ function UpdateGUIArch() {
     else if (diff === 0) {
       // just enough
       //elemNumStoreDelta[resourceId].style.opacity = 1.0;
-      WriteNormal(elemNumStoreDelta[resourceId],"-",18,true,"black",false,true);
+      WriteSingleNumber(elemNumStoreDelta[resourceId],"-",18,true,"black",false,true);
       SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumStoreDelta[resourceId].style.borderRadius = '0%';
     }
     else {
       // either have more than required or less
-      WriteNormal(elemNumStoreDelta[resourceId],diff,18,true,"black",true,true);
+      WriteSingleNumber(elemNumStoreDelta[resourceId],diff,18,true,"black",true,true);
       if (diff < 0) {
         //WriteSlash(elemNumStoreDelta[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
         SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreDelta[resourceId].style.borderRadius = '50%';
+        failCount++;
 
       }
       else {
@@ -1172,6 +1188,19 @@ function UpdateGUIArch() {
 
   }
 
+  if (failCount === 0) {
+    WriteSingleString(document.getElementById("linewithtext-current-store-status"),
+                    "CURRENT STORE DELTA",16,true,"green");
+  }
+  else {
+    let storeDeltaText = "";
+    storeDeltaText = "CURRENT STORE DELTA (MISSING: " + failCount + ")";
+    WriteSingleString(document.getElementById("linewithtext-current-store-status"),
+                    storeDeltaText,16,true,"red");
+  }
+
+
+
 
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
@@ -1203,7 +1232,7 @@ function UpdateGUIArch() {
     }
     else if (diff === 0) {
       // Required = Have
-      WriteNormal(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
+      WriteSingleNumber(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
       SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
       elemNumPostMercDelta[resourceId].style.border = 'solid';
@@ -1213,7 +1242,7 @@ function UpdateGUIArch() {
 
       // diff is non zero
       // Either have too many or not enough
-      WriteNormal(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
+      WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
       
       if (diff < 0) {
 
@@ -1225,7 +1254,7 @@ function UpdateGUIArch() {
         else {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
-        WriteNormal(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
+        WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
       }
       else if (diff > 0) {
 
@@ -1275,7 +1304,7 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
 
-      WriteNormal(elemNumArchHousesFree[resourceId],
+      WriteSingleNumber(elemNumArchHousesFree[resourceId],
         dataArch.archHousesCurrentFree[resourceId],16,true,"black",false,false);
 
       if (dataArch.archHousesCurrentFree[resourceId] > 0) {
@@ -1310,7 +1339,7 @@ function UpdateGUIArch() {
       }
       else if (dataArch.archHousesCurrentStrict[resourceId] > 0) {
         // Not possible
-        WriteNormal(elemNumArchHousesStrict[resourceId],
+        WriteSingleNumber(elemNumArchHousesStrict[resourceId],
           dataArch.archHousesCurrentStrict[resourceId],16,true,"black",false,false);
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
@@ -1347,12 +1376,12 @@ function UpdateGUIArch() {
       if (dataArch.archHousesCurrentFree[resourceId] > 0) {
         if (dataArch.archHousesAddFree[resourceId] > 0)
         {
-          WriteNormal(elemNumArchHousesAdd[resourceId],
+          WriteSingleNumber(elemNumArchHousesAdd[resourceId],
             dataArch.archHousesAddFree[resourceId],16,true,"black",false,false);
         }
         else 
         {
-          WriteNormal(elemNumArchHousesAdd[resourceId],
+          WriteSingleNumber(elemNumArchHousesAdd[resourceId],
             dataArch.archHousesAddFree[resourceId],10,false,"black",false,false);
         }
 
@@ -1543,7 +1572,7 @@ function UpdateGUIMerc() {
     if (resourceId === 0) {
 
       if (mercActive === MercType.MERC0) {
-        WriteNormal(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
+        WriteSingleNumber(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
       }
       else {
         WriteSlash(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],12,true,mercGlobal.storePreSell[resourceId],16,true,"black",false,false);
@@ -1559,7 +1588,7 @@ function UpdateGUIMerc() {
 
     }
     else {
-      WriteNormal(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
+      WriteSingleNumber(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
 
       if (mercGlobal.storePreSell[resourceId] === 0) {
         SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);

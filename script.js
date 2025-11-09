@@ -471,7 +471,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.2";
+  document.getElementById("version").textContent = "V6.3";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1074,7 +1074,7 @@ function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
 
   // a count of the number of resources that are below their reqd values
-  let failCount = 0;
+  let failCountStoreCurrent = 0;
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
@@ -1150,7 +1150,7 @@ function UpdateGUIArch() {
         //WriteSlash(elemNumStoreDelta[resourceId],strictNumber,16,true,diff,16,true,"black",false,true);
         SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreDelta[resourceId].style.borderRadius = '50%';
-        failCount++;
+        failCountStoreCurrent++;
 
       }
       else {
@@ -1188,13 +1188,13 @@ function UpdateGUIArch() {
 
   }
 
-  if (failCount === 0) {
+  if (failCountStoreCurrent === 0) {
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     "CURRENT STORE DELTA",16,true,"green");
   }
   else {
     let storeDeltaText = "";
-    storeDeltaText = "CURRENT STORE DELTA (MISSING: " + failCount + ")";
+    storeDeltaText = "CURRENT STORE DELTA (MISSING: " + failCountStoreCurrent + ")";
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     storeDeltaText,16,true,"red");
   }
@@ -1206,8 +1206,9 @@ function UpdateGUIArch() {
   /* Set arch build actual colour:                           */
   /*    red - if none Left (it's all been spent)                */
   /* ------------------------------------------------------------- */
+  let failCountPostMerc = 0;
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
--``
+
     //--------------------------------------------------------------
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
@@ -1246,6 +1247,7 @@ function UpdateGUIArch() {
       
       if (diff < 0) {
 
+        failCountPostMerc++;
         SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
         elemNumPostMercDelta[resourceId].style.border = 'solid';
         if (CanBuyResource(resourceId) && resourceId != 0) {
@@ -1402,6 +1404,17 @@ function UpdateGUIArch() {
     else if (dataArch.archBuildCost[resourceId] === 0) archCostState = StylesType.CLEAR;
     else archCostState = StylesType.CLEAR_NORMAL;
 
+  }
+
+  if (failCountPostMerc === 0) {
+    WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
+                    "MERC STATUS",16,true,"green");
+  }
+  else {
+    let storeDeltaText = "";
+    storeDeltaText = "MERC STATUS (MISSING: " + failCountPostMerc + ")";
+    WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
+                    storeDeltaText,16,true,"red");
   }
 
 

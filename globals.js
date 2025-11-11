@@ -40,6 +40,7 @@ let dataArch = {
 
   archStrictStoreRemaining:[0,0,0,0,0,0],
 
+  senatorCost:[0,0,0,0,0,0],
 }
 
 let fieldValues = {

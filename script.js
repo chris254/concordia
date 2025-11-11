@@ -138,6 +138,19 @@ const elemIdsArchHousesStrict = [
 
  const elemNumArchHousesAdd = elemIdsArchHousesAdd.map((id) => document.getElementById(id));
 
+ //--------------------------------------------------------------------
+ const elemIdsSenatorCost = [
+  "senator-cost-mystery",
+  "senator-cost-brick",
+  "senator-cost-food",
+  "senator-cost-tool",
+  "senator-cost-wine",
+  "senator-cost-cloth",
+];
+
+ const elemNumSenatorAdd = elemIdsSenatorCost.map((id) => document.getElementById(id));
+
+
  // btn-dec-store-merc-brick
 
  const elemIdsBtnDecMercStore = [
@@ -471,7 +484,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.3";
+  document.getElementById("version").textContent = "V6.4";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -559,6 +572,11 @@ function ArchHousesAddFree(resourceId) {
   UpdateAll();
 }
 
+function SenatorAdd(resourceId) {
+  dataArch.senatorCost[resourceId]++;
+
+  UpdateAll();
+}
 
 
 
@@ -937,6 +955,17 @@ function ResetStoreFree()
   UpdateAll();
 }
 
+function ResetStoreCurrent() 
+{
+  for (let resourceId=0; resourceId <= 5; resourceId++)
+  {
+    fieldValues.storeCurrentStrict[resourceId] = 0;
+  }
+
+  ResetMercTrades();
+
+  UpdateAll();
+}
 
 function ResetStoreAdd() 
 {
@@ -947,6 +976,17 @@ function ResetStoreAdd()
 
   UpdateAll();
 }
+
+function ResetSenator() 
+{
+  for (let resourceId=0; resourceId <= 5; resourceId++)
+  {
+    dataArch.senatorCost[resourceId] = 0;
+  }
+
+  UpdateAll();
+}
+
 
 function WriteSingleString(elem_, string_, fontSize_, bold_, color_) {
   elem_.style.fontSize = fontSize_ + "px";
@@ -1361,22 +1401,10 @@ function UpdateGUIArch() {
       //------------------------------------------------------------ 
       // ARCH BUILD ADDITIONAL
       //------------------------------------------------------------ 
-      let archAddStyle = StylesType.CLEAR[resourceId];
-
       if (dataArch.archHousesCurrentFree[resourceId] > 0) {
-        archAddStyle = StylesType.CLEAR_THICK[resourceId];
+        SetStyle(elemNumArchHousesAdd,StylesType.CLEAR_NORMAL[resourceId],resourceId); 
+
         elemNumArchHousesAdd[resourceId].style.borderRadius = '15px' ;
-      }
-      else
-      {
-        archAddStyle = StylesType.CLEAR[resourceId];
-        elemNumArchHousesAdd[resourceId].style.borderRadius = '0px' ;
-      }
-
-      // Additional houses
-      SetStyle(elemNumArchHousesAdd,archAddStyle,resourceId); 
-
-      if (dataArch.archHousesCurrentFree[resourceId] > 0) {
         if (dataArch.archHousesAddFree[resourceId] > 0)
         {
           WriteSingleNumber(elemNumArchHousesAdd[resourceId],
@@ -1387,12 +1415,26 @@ function UpdateGUIArch() {
           WriteSingleNumber(elemNumArchHousesAdd[resourceId],
             dataArch.archHousesAddFree[resourceId],10,false,"black",false,false);
         }
-
-      } 
-      else {
+      }
+      else
+      {
+        SetStyle(elemNumArchHousesAdd,StylesType.CLEAR[resourceId],resourceId); 
+        elemNumArchHousesAdd[resourceId].style.borderRadius = '0px' ;
         elemNumArchHousesAdd[resourceId].textContent = "";
       }
 
+    }
+
+    // Sator additional resource required
+    SetStyle(elemNumSenatorAdd,StylesType.CLEAR_NORMAL[resourceId],resourceId); 
+
+    elemNumSenatorAdd[resourceId].style.borderRadius = '15px' ;
+
+    if (resourceId === 0 && dataArch.senatorCost[resourceId] === 0) {
+      elemNumSenatorAdd[resourceId].textContent = '?';
+    }
+    else {
+      WriteFieldValueBlankZero(elemNumSenatorAdd[resourceId],dataArch.senatorCost[resourceId])
     }
 
     //-----------------------------------------------------------

@@ -502,8 +502,8 @@ document.addEventListener("DOMContentLoaded", function () {
   editMode = EditModeType.FREE;
   btnEditMode = document.getElementById("btn-edit-mode");
 
-  mercActive = MercType.MERC0;
-  lastMercActive = MercType.MERC0;
+  mercActive = MercType.MERC3;
+  lastMercActive = MercType.MERC3;
 
 
   dataArch.archHousesCurrentFree.fill(0);
@@ -1408,7 +1408,7 @@ function UpdateGUIArch() {
         if (dataArch.archHousesAddFree[resourceId] > 0)
         {
           WriteSingleNumber(elemNumArchHousesAdd[resourceId],
-            dataArch.archHousesAddFree[resourceId],16,true,"black",false,false);
+            dataArch.archHousesAddFree[resourceId],16,true,"black",true,false);
         }
         else 
         {

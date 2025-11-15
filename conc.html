@@ -109,31 +109,31 @@
     
     </div>
 
-    <div class="line-with-text">BUILD RESOURCES REQD</div>
+    <div class="line-with-text">BUILD STORE REQD</div>
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
       <!-- ========================================================================== -->
       <!-- Row 3: RESET button and Current Store values -->
       <div class="grid-item-no-border" style="font-size: 8pt;"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-cash" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-brick" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-food" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-tool" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-wine" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-cloth" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-food" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-arch-store-reqd-cloth" style="font-weight: bolder"></div>
     
     </div>
 
-    <div class="line-with-text">SENATOR RESOURCES REQD</div>
+    <div class="line-with-text">SENATOR STORE REQD</div>
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <!-- ========================================================================== -->
       <!-- Row : Additional Houses -->
+      <div class="grid-item-no-border"id="senator-cost-mystery" onclick="SenatorAdd(0)">?</div>
       <div class="grid-item-no-border">
         <button class="btn-full-not-selected" onclick="ResetSenator()" style="background-color: red; color: white">RST</button>
       </div>
-      <div class="grid-item-no-border"id="senator-cost-mystery" onclick="SenatorAdd(0)">?</div>
       <div class="grid-item-no-border"id="senator-cost-brick" onclick="SenatorAdd(1)"></div>
       <div class="grid-item-no-border" id="senator-cost-food" onclick="SenatorAdd(2)"></div>
       <div class="grid-item-no-border" id="senator-cost-tool" onclick="SenatorAdd(3)"></div>
@@ -142,19 +142,19 @@
     
     </div>
 
-    <div class="line-with-text">TOTAL RESOURCES REQD</div>
+    <div class="line-with-text">TOTAL STORE REQD</div>
     
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
       <!-- ========================================================================== -->
       <!-- Row: Arch Free Build -->
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-cash" ></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-brick" ></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-food" ></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-tool" ></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-wine" ></div>
-      <div class="grid-item-no-border" id="num-arch-total-reqd-cloth" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-mystery" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-cash" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-brick" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-food" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-tool" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-wine" ></div>
+      <div class="grid-item-no-border" id="num-store-total-reqd-cloth" ></div>
 
     </div>
 
@@ -165,20 +165,20 @@
       <!-- ========================================================================== -->
       <!-- Row 3: RESET button and Current Store values -->
       <div class="grid-item-no-border">+/-</div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-cash" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-brick" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-food" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-tool" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-wine" style="font-weight: bolder"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-have-cloth" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-cash" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-brick" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-food" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-tool" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-wine" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-store-total-delta-cloth" style="font-weight: bolder"></div>
     
     </div>
 
-    <div class="line-with-text" id="linewithtext-post-merc-status">MERCATOR QUICK ACCESS</div>
+    <div class="line-with-text" id="linewithtext-post-merc-status">POST MERC STATUS</div>
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
 
-      <div class="grid-item-no-border" id="num-storecurrent-have-cash" style="font-weight: bolder">ACT</div>
+      <div class="grid-item-no-border" id="num-store-total-delta-cash" style="font-weight: bolder">ACT</div>
       <div class="grid-item-no-border" id="merc-quick-cash-act" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-brick-act" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-food-act" style="font-weight: bolder"></div>
@@ -193,12 +193,12 @@
       <!-- ========================================================================== -->
       <!-- Row 3: RESET button and Current Store values -->
       <div class="grid-item-no-border">+/-</div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-cash" style="font-weight: bolder" onclick="ArchMercClick(0)"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-brick" style="font-weight: bolder" onclick="ArchMercClick(1)"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-food" style="font-weight: bolder" onclick="ArchMercClick(2)"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-tool" style="font-weight: bolder" onclick="ArchMercClick(3)"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-wine" style="font-weight: bolder" onclick="ArchMercClick(4)"></div>
-      <div class="grid-item-no-border" id="num-storecurrent-free-merc-cloth" style="font-weight: bolder" onclick="ArchMercClick(5)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-cash" style="font-weight: bolder" onclick="ArchMercClick(0)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-brick" style="font-weight: bolder" onclick="ArchMercClick(1)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-food" style="font-weight: bolder" onclick="ArchMercClick(2)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-tool" style="font-weight: bolder" onclick="ArchMercClick(3)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-wine" style="font-weight: bolder" onclick="ArchMercClick(4)"></div>
+      <div class="grid-item-no-border" id="num-post-merc-delta-cloth" style="font-weight: bolder" onclick="ArchMercClick(5)"></div>
     
     </div>
 

@@ -12,7 +12,7 @@ const resourceValue = [0,3,4,5,6,7];
 
 let dataArch = {
   //archHousesCurrent:[0,0,0,0,0,0],
-  archHousesCurrentFree:[0,0,0,0,0,0],
+  archHousesReqd:[0,0,0,0,0,0],
   archHousesCurrentStrict:[0,0,0,0,0,0],
 
   archHousesAdd:[0,0,0,0,0,0],
@@ -40,14 +40,16 @@ let dataArch = {
 
   archStrictStoreRemaining:[0,0,0,0,0,0],
 
-  senatorCost:[0,0,0,0,0,0],
+  senatorStoreReqd:[0,0,0,0,0,0],
+  senatorMystery:0,
 }
 
 let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],
-  storeCurrentFree:[0,0,0,0,0,0],
+  archStoreReqd:[0,0,0,0,0,0],
   storeCurrentStrict:[0,0,0,0,0,0],
   storeStrictMinusFree:[0,0,0,0,0,0],
+  storeTotalReqd:[0,0,0,0,0,0],
 
   mercBuyBrick:0,
   mercBuyFood:0,
@@ -70,7 +72,6 @@ let fieldValues = {
 
   archFreeMode:true,
   archModeFirstPass:true,
-
 
 }
 

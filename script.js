@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.8";
+  document.getElementById("version").textContent = "V6.9";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1140,11 +1140,11 @@ function UpdateGUIArch() {
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
     let freeNumber = fieldValues.archStoreReqd[resourceId];
-    let strictNumber = fieldValues.storeCurrentStrict[resourceId];
+    let storeCurrentStrict = fieldValues.storeCurrentStrict[resourceId];
     let senatorReqd = dataArch.senatorStoreReqd[resourceId];
-    let storeTotalDelta = strictNumber - freeNumber - senatorReqd;
+    let storeTotalDelta = storeCurrentStrict - freeNumber - senatorReqd;
     var bothZero = false;
-    bothZero = freeNumber === 0 && strictNumber === 0 && senatorReqd === 0;
+    bothZero = freeNumber === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
 
     //-----------------------------------------------------------------------------------
     // STORE CURRENT
@@ -1191,11 +1191,10 @@ function UpdateGUIArch() {
     }
 
     //-----------------------------------------------------------------------------------------------
-    // STORE DELTA PRE MERC
+    // CURRENT STORE DELTA
     //-----------------------------------------------------------------------------------
     if (bothZero) {
-      // Blank as no requirement for any of this resource
-      WriteFieldValueBlankZero(elemNumStoreTotalDelta[resourceId],strictNumber,18,true);
+      WriteFieldValueBlankZero(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,18,true);
       SetStyle(elemNumStoreTotalDelta,StylesType.CLEAR[resourceId],resourceId);
     }
     else if (storeTotalDelta === 0) {
@@ -1206,10 +1205,11 @@ function UpdateGUIArch() {
       elemNumStoreTotalDelta[resourceId].style.borderRadius = '0%';
     }
     else {
+      WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,storeTotalDelta,16,true,"black",false,true);
       // either have more than required or less
-      WriteSingleNumber(elemNumStoreTotalDelta[resourceId],storeTotalDelta,18,true,"black",true,true);
+//      WriteSingleNumber(elemNumStoreTotalDelta[resourceId],storeTotalDelta,18,true,"black",true,true);
       if (storeTotalDelta < 0) {
-        //WriteSlash(elemNumStoreTotalDelta[resourceId],strictNumber,16,true,storeTotalDelta,16,true,"black",false,true);
+        //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,storeTotalDelta,16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreTotalDelta[resourceId].style.borderRadius = '50%';
         failCountStoreCurrent++;
@@ -1277,11 +1277,11 @@ function UpdateGUIArch() {
     //--------------------------------------------------------------
 
     let freeNumber = fieldValues.archStoreReqd[resourceId];
-    let strictNumber = fieldValues.storeCurrentStrict[resourceId];
+    let storeCurrentStrict = fieldValues.storeCurrentStrict[resourceId];
     let senatorReqd = dataArch.senatorStoreReqd[resourceId];
     let mercFinal = mercGlobal.storeFinal[resourceId]; 
     var allZero = false;
-    allZero = freeNumber === 0 && strictNumber === 0 && senatorReqd === 0;
+    allZero = freeNumber === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
 
     //-----------------------------------------------------------------------------------------------
     // MERC FINAL / POST MERC
@@ -1668,6 +1668,16 @@ function UpdateGUIMerc() {
   largeText.className = 'large-text';
 
   elemNumTrades.textContent = mercGlobal.totalTradeCount;
+  if (mercGlobal.totalTradeCount === 2) {
+    elemNumTrades.style.backgroundColor = "red";
+  }
+  else if (mercGlobal.totalTradeCount === 1) {
+    elemNumTrades.style.backgroundColor = "orange";
+  }
+  else
+  {
+    elemNumTrades.style.backgroundColor = "lightgreen";
+  }
   //elemNumTrades.style.color = "grey";
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];

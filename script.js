@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.9";
+  document.getElementById("version").textContent = "V6.10";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1296,6 +1296,7 @@ function UpdateGUIArch() {
     }
     else if (diff === 0) {
       // Required = Have
+
       WriteSingleNumber(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
       SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
@@ -1306,7 +1307,7 @@ function UpdateGUIArch() {
 
       // diff is non zero
       // Either have too many or not enough
-      WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
+      //WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
       
       if (diff < 0) {
 
@@ -1319,9 +1320,12 @@ function UpdateGUIArch() {
         else {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
-        WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,diff,16,true,"black",false,true);
+//        WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
       }
       else if (diff > 0) {
+
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,diff,16,true,"black",false,true);
 
         if (resourceId === 0) {
           // Cash treated differently
@@ -1970,6 +1974,7 @@ function UpdateGUIMerc() {
       }
     }
 
+    
     //--------------------------------------------------------------------
     // STORE OUT
     //--------------------------------------------------------------------
@@ -2011,6 +2016,7 @@ function UpdateGUIMerc() {
       elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
 
+/*
     let mercResourceDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
     let leftBold = false;
     let leftSize = 14;
@@ -2044,10 +2050,7 @@ function UpdateGUIMerc() {
       leftBold=false;
       elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
     }
-
-    if (leftBold) leftSize = 16;
-    else leftSize = 14;
-
+*/
     //elemNumQuickMercReq[resourceId].textContent = fieldValues.archStoreReqd[resourceId];
 
   }

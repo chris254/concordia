@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.7";
+  document.getElementById("version").textContent = "V6.8";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1480,7 +1480,8 @@ function UpdateGUIArch() {
     }
     else
     {
-      SetStyle(elemNumStoreTotalReqd,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+      // zero required
+      SetStyle(elemNumStoreTotalReqd,StylesType.CLEAR[resourceId],resourceId);
     }
 
     

@@ -42,6 +42,7 @@ let dataArch = {
 
   senatorStoreReqd:[0,0,0,0,0,0],
   senatorMystery:0,
+
 }
 
 let fieldValues = {
@@ -138,6 +139,8 @@ let mercGlobal = {
 
   hideArchFree:false,
   hideArchStrict:false,
+  spareResourceCount:0,
+  postMercDelta:[0,0,0,0,0,0],
 
 
 }

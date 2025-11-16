@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.6";
+  document.getElementById("version").textContent = "V6.7";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1187,7 +1187,7 @@ function UpdateGUIArch() {
       SetStyle(elemNumArchStoreReqd,StylesType.CLEAR[resourceId],resourceId);
     }
     else {
-      SetStyle(elemNumArchStoreReqd,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      SetStyle(elemNumArchStoreReqd,StylesType.CLEAR_NORMAL[resourceId],resourceId);
     }
 
     //-----------------------------------------------------------------------------------------------
@@ -1279,13 +1279,12 @@ function UpdateGUIArch() {
     let freeNumber = fieldValues.archStoreReqd[resourceId];
     let strictNumber = fieldValues.storeCurrentStrict[resourceId];
     let senatorReqd = dataArch.senatorStoreReqd[resourceId];
-    let diff = strictNumber - freeNumber - senatorReqd;
+    let mercFinal = mercGlobal.storeFinal[resourceId]; 
     var allZero = false;
     allZero = freeNumber === 0 && strictNumber === 0 && senatorReqd === 0;
 
     //-----------------------------------------------------------------------------------------------
     // MERC FINAL / POST MERC
-    let mercFinal = mercGlobal.storeFinal[resourceId]; 
     diff = mercFinal - freeNumber - senatorReqd;
 
     if (allZero && mercFinal === 0) {
@@ -1364,9 +1363,8 @@ function UpdateGUIArch() {
 
     if (resourceId != 0) {
  
-
       //------------------------------------------------------------ 
-      // ARCH BUILD ACTUAL
+      // HOUSES REQD
       //------------------------------------------------------------ 
       elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
 
@@ -1380,6 +1378,10 @@ function UpdateGUIArch() {
       {
         SetStyle(elemNumArchHousesFree,StylesType.CLEAR_NORMAL[resourceId],resourceId);
       }
+
+    }
+    
+    if (resourceId != 0) {
 
       // Arch strict
       if (dataArch.archHousesDeltaPossible[resourceId] > 0 || dataArch.archHousesCurrentStrict[resourceId] > 0) {
@@ -1446,9 +1448,11 @@ function UpdateGUIArch() {
         elemNumArchHousesAdd[resourceId].textContent = "";
       }
 
-    }
+    } // if resourceId != 0
 
-    // Sator additional resource required
+    //-----------------------------------------------------------
+    // SENATOR STORE REQD
+    //-----------------------------------------------------------
     SetStyle(elemNumsenatorStoreReqd,StylesType.CLEAR_NORMAL[resourceId],resourceId); 
 
     elemNumsenatorStoreReqd[resourceId].style.borderRadius = '15px' ;
@@ -1464,10 +1468,22 @@ function UpdateGUIArch() {
     }
 
     //-----------------------------------------------------------
-    // ARCH POST
+    // TOTAL STORE REQD
     //-----------------------------------------------------------
-    elemNumStoreTotalReqd[resourceId].textContent = fieldValues.storeTotalReqd[resourceId];
+    elemNumStoreTotalReqd[resourceId].style.borderRadius = '15px';
 
+    WriteSingleNumber(elemNumStoreTotalReqd[resourceId],
+      fieldValues.storeTotalReqd[resourceId],16,true,"black",false,false);
+
+    if (fieldValues.storeTotalReqd[resourceId] > 0) {
+      SetStyle(elemNumStoreTotalReqd,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+    else
+    {
+      SetStyle(elemNumStoreTotalReqd,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+    }
+
+    
   } // 0 to 5
 
   if (failCountPostMerc === 0) {
@@ -1508,6 +1524,23 @@ function UpdateAll() {
   }
 
   ProcessMerc();
+
+  // Ca;lculate post merc delta
+  for (let resourceId=0; resourceId<=5; resourceId++) {
+
+    mercGlobal.postMercDelta[resourceId] = 
+      mercGlobal.storeFinal[resourceId] - 
+      fieldValues.archStoreReqd[resourceId] - 
+      dataArch.senatorStoreReqd[resourceId];
+  }
+
+  // Calculate spare resource count
+  mercGlobal.spareResourceCount = 0;
+  for (let resourceId=1; resourceId<=5; resourceId++) {
+     if (mercGlobal.postMercDelta[resourceId] < 0 ) {
+        mercGlobal.spareResourceCount--;
+     }   
+  }
 
   UpdateGUIArch();
   UpdateGUIMerc();

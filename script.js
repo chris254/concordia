@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.11";
+  document.getElementById("version").textContent = "V6.12";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1561,12 +1561,13 @@ function UpdateAll() {
   UpdateGUIArch();
   UpdateGUIMerc();
 
+  // SENATOR STORE REQD row
   // Senator mystery
   let elemMysteryTotalReqd = document.getElementById("num-store-total-reqd-mystery");
   elemMysteryTotalReqd.classList.remove('mystery-reqd-non-zero');
   elemMysteryTotalReqd.classList.remove('mystery-reqdd-zero');
 
-  if (dataArch.senatorMysteryReqd >0) {
+  if (dataArch.senatorMysteryReqd > 0) {
     elemMysteryTotalReqd.classList.add('mystery-reqd-non-zero');
     elemMysteryTotalReqd.textContent = '? ' + dataArch.senatorMysteryReqd + ' ?';
 
@@ -1577,8 +1578,16 @@ function UpdateAll() {
     
   }
 
+  // Write to CURRENT STORE STATUS MYSTERY and MERC STATUS MYSTERY
   let elemMysteryStoreTotalDelta = document.getElementById("num-store-total-delta-mystery");
-   
+  let elemMysteryPostMercTotalDelta = document.getElementById("num-post-merc-total-delta-mystery");
+  
+  let delta = 0;
+  delta = mercGlobal.mysteryDeltaPreMerc - dataArch.senatorMysteryReqd;
+  WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.mysteryDeltaPreMerc,16,false,delta,16,false,"black",false, true);
+  delta = mercGlobal.mysteryDeltaPostMerc - dataArch.senatorMysteryReqd;
+  WriteSlash(elemMysteryPostMercTotalDelta,mercGlobal.mysteryDeltaPostMerc,16,false,delta,16,false,"black",false, true);
+
   //let mysteryDelta = mercGlobal.spareResourceCount - dataArch.senatorMysteryReqd;
   //WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.spareResourceCount,12,false,mysteryDelta,14,FinalizationRegistry,"black",false,true); 
   let pareResourceCOunt = 

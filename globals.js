@@ -41,7 +41,8 @@ let dataArch = {
   archStrictStoreRemaining:[0,0,0,0,0,0],
 
   senatorStoreReqd:[0,0,0,0,0,0],
-  senatorMystery:0,
+  senatorMysteryReqd:0,
+
 
 }
 
@@ -73,6 +74,7 @@ let fieldValues = {
 
   archFreeMode:true,
   archModeFirstPass:true,
+
 
 }
 
@@ -139,7 +141,10 @@ let mercGlobal = {
 
   hideArchFree:false,
   hideArchStrict:false,
-  spareResourceCount:0,
+  mysteryDeltaPreMerc:0,
+  mysteryDeltaPostMerc:0,
+
+  preMercDelta:[0,0,0,0,0,0],
   postMercDelta:[0,0,0,0,0,0],
 
 

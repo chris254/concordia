@@ -399,7 +399,7 @@ const elemIdsStoreFreeCurrent = [
 const elemNumArchStoreReqd = elemIdsStoreFreeCurrent.map((id) => document.getElementById(id));
 
 //------------------------------------------------------------------------------------------
-// -------------------- CURRENT STORE DELTA ---------------------------------
+// -------------------- CURRENT STORE STATUS ---------------------------------
 const elemIdsStoreTotalDelta = [
   "num-store-total-delta-cash",
   "num-store-total-delta-brick",
@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.10";
+  document.getElementById("version").textContent = "V6.11";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -593,7 +593,7 @@ function SenatorAdd(resourceId) {
     dataArch.senatorStoreReqd[resourceId]++;
   }
   else {
-    dataArch.senatorMystery++;
+    dataArch.senatorMysteryReqd++;
   }
 
   UpdateAll();
@@ -1191,7 +1191,7 @@ function UpdateGUIArch() {
     }
 
     //-----------------------------------------------------------------------------------------------
-    // CURRENT STORE DELTA
+    // CURRENT STORE STATUS
     //-----------------------------------------------------------------------------------
     if (bothZero) {
       WriteFieldValueBlankZero(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,18,true);
@@ -1252,11 +1252,11 @@ function UpdateGUIArch() {
 
   if (failCountStoreCurrent === 0) {
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    "CURRENT STORE DELTA",16,true,"green");
+                    "CURRENT STORE STATUS",16,true,"green");
   }
   else {
     let storeDeltaText = "";
-    storeDeltaText = "CURRENT STORE DELTA (MISSING: " + failCountStoreCurrent + ")";
+    storeDeltaText = "CURRENT STORE STATUS (MISSING: " + failCountStoreCurrent + ")";
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     storeDeltaText,16,true,"red");
   }
@@ -1461,11 +1461,17 @@ function UpdateGUIArch() {
 
     elemNumsenatorStoreReqd[resourceId].style.borderRadius = '15px' ;
 
-    if (resourceId === 0 && dataArch.senatorMystery === 0) {
+    if (resourceId === 0 && dataArch.senatorMysteryReqd === 0) {
       elemNumsenatorStoreReqd[resourceId].textContent = '?';
     }
     else if (resourceId === 0) {
-      WriteFieldValueBlankZero(elemNumsenatorStoreReqd[resourceId],dataArch.senatorMystery);
+      if (dataArch.senatorMysteryReqd != 0) {
+        elemNumsenatorStoreReqd[resourceId].textContent = '? ' + dataArch.senatorMysteryReqd + ' ?';
+      }
+      else {
+        elemNumsenatorStoreReqd[resourceId].textContent = '';
+
+      }
     }
     else {
       WriteFieldValueBlankZero(elemNumsenatorStoreReqd[resourceId],dataArch.senatorStoreReqd[resourceId]);
@@ -1474,7 +1480,7 @@ function UpdateGUIArch() {
     //-----------------------------------------------------------
     // TOTAL STORE REQD
     //-----------------------------------------------------------
-    elemNumStoreTotalReqd[resourceId].style.borderRadius = '15px';
+    elemNumStoreTotalReqd[resourceId].style.borderRadius = '0px';
 
     WriteSingleNumber(elemNumStoreTotalReqd[resourceId],
       fieldValues.storeTotalReqd[resourceId],16,true,"black",false,false);
@@ -1533,6 +1539,11 @@ function UpdateAll() {
   // Ca;lculate post merc delta
   for (let resourceId=0; resourceId<=5; resourceId++) {
 
+    mercGlobal.preMercDelta[resourceId] = 
+      fieldValues.storeCurrentStrict[resourceId] - 
+      fieldValues.archStoreReqd[resourceId] - 
+      dataArch.senatorStoreReqd[resourceId];
+
     mercGlobal.postMercDelta[resourceId] = 
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
@@ -1540,15 +1551,44 @@ function UpdateAll() {
   }
 
   // Calculate spare resource count
-  mercGlobal.spareResourceCount = 0;
+  mercGlobal.mysteryDeltaPreMerc = 0;
+  mercGlobal.mysteryDeltaPostMerc = 0;
   for (let resourceId=1; resourceId<=5; resourceId++) {
-     if (mercGlobal.postMercDelta[resourceId] < 0 ) {
-        mercGlobal.spareResourceCount--;
-     }   
+    mercGlobal.mysteryDeltaPreMerc += Math.max(0,mercGlobal.preMercDelta[resourceId]);
+    mercGlobal.mysteryDeltaPostMerc += Math.max(0,mercGlobal.postMercDelta[resourceId]);
   }
 
   UpdateGUIArch();
   UpdateGUIMerc();
+
+  // Senator mystery
+  let elemMysteryTotalReqd = document.getElementById("num-store-total-reqd-mystery");
+  elemMysteryTotalReqd.classList.remove('mystery-reqd-non-zero');
+  elemMysteryTotalReqd.classList.remove('mystery-reqdd-zero');
+
+  if (dataArch.senatorMysteryReqd >0) {
+    elemMysteryTotalReqd.classList.add('mystery-reqd-non-zero');
+    elemMysteryTotalReqd.textContent = '? ' + dataArch.senatorMysteryReqd + ' ?';
+
+  }
+  else {
+    elemMysteryTotalReqd.classList.add('mystery-reqd-zero');
+    elemMysteryTotalReqd.textContent = '';
+    
+  }
+
+  let elemMysteryStoreTotalDelta = document.getElementById("num-store-total-delta-mystery");
+   
+  //let mysteryDelta = mercGlobal.spareResourceCount - dataArch.senatorMysteryReqd;
+  //WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.spareResourceCount,12,false,mysteryDelta,14,FinalizationRegistry,"black",false,true); 
+  let pareResourceCOunt = 
+  // if (dataArch.senatorMysteryReqd === 0 && mercGlobal.spareResourceCount === 0) {
+    //elemMysteryTotalReqd.textContent = '';
+  //}
+  //else if (mysteryDelta >= 0) {
+  //  //elemMysteryTotalReqd.classList.remove('mystery-achieved');
+
+  // }
 
   fieldValues.archModeFirstPass = false;
 }
@@ -2137,12 +2177,14 @@ function ClearAllStyles(elemArray,resourceId) {
 
 }
 
+
 function SetStyle(elemArray,newStyle, resourceId) {
   ClearAllStyles(elemArray, resourceId);
 
   elemArray[resourceId].classList.add(newStyle);
 
 }
+
 
 
 //------------------------------------------------------------------

@@ -44,7 +44,7 @@ let dataArch = {
   senatorMysteryReqd:0,
 
 
-}
+} // dataArch
 
 let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],

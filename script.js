@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.12";
+  document.getElementById("version").textContent = "V6.13";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1004,6 +1004,8 @@ function ResetSenator()
   {
     dataArch.senatorStoreReqd[resourceId] = 0;
   }
+
+  dataArch.senatorMysteryReqd = 0;
 
   UpdateAll();
 }

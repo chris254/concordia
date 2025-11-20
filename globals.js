@@ -52,6 +52,8 @@ let fieldValues = {
   storeCurrentStrict:[0,0,0,0,0,0],
   storeStrictMinusFree:[0,0,0,0,0,0],
   storeTotalReqd:[0,0,0,0,0,0],
+  storeCurrentStatusDelta:[0,0,0,0,0,0],
+  storePostMercDelta:[0,0,0,0,0,0],
 
   mercBuyBrick:0,
   mercBuyFood:0,
@@ -75,6 +77,7 @@ let fieldValues = {
   archFreeMode:true,
   archModeFirstPass:true,
 
+  
 
 }
 

@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.14";
+  document.getElementById("version").textContent = "V6.15";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1199,7 +1199,7 @@ function UpdateGUIArch() {
       WriteFieldValueBlankZero(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,18,true);
       SetStyle(elemNumStoreTotalDelta,StylesType.CLEAR[resourceId],resourceId);
     }
-    else if (storeTotalDelta === 0) {
+    else if (fieldValues.storeCurrentStatusDelta[resourceId] === 0) {
       // just enough
       //elemNumStoreTotalDelta[resourceId].style.opacity = 1.0;
       WriteSingleNumber(elemNumStoreTotalDelta[resourceId],"-",18,true,"black",false,true);
@@ -1207,10 +1207,10 @@ function UpdateGUIArch() {
       elemNumStoreTotalDelta[resourceId].style.borderRadius = '0%';
     }
     else {
-      WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,storeTotalDelta,16,true,"black",false,true);
+      WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
       // either have more than required or less
-      if (storeTotalDelta < 0) {
-        //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,storeTotalDelta,16,true,"black",false,true);
+      if (fieldValues.storeCurrentStatusDelta[resourceId] < 0) {
+        //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreTotalDelta[resourceId].style.borderRadius = '50%';
         failCountStoreCurrent++;
@@ -1541,12 +1541,12 @@ function UpdateAll() {
   // Ca;lculate post merc delta
   for (let resourceId=0; resourceId<=5; resourceId++) {
 
-    mercGlobal.preMercDelta[resourceId] = 
+    fieldValues.storeCurrentStatusDelta[resourceId] = 
       fieldValues.storeCurrentStrict[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
 
-    mercGlobal.postMercDelta[resourceId] = 
+    fieldValues.storePostMercDelta[resourceId] = 
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
@@ -1556,8 +1556,8 @@ function UpdateAll() {
   mercGlobal.mysteryDeltaPreMerc = 0;
   mercGlobal.mysteryDeltaPostMerc = 0;
   for (let resourceId=1; resourceId<=5; resourceId++) {
-    mercGlobal.mysteryDeltaPreMerc += Math.max(0,mercGlobal.preMercDelta[resourceId]);
-    mercGlobal.mysteryDeltaPostMerc += Math.max(0,mercGlobal.postMercDelta[resourceId]);
+    mercGlobal.mysteryDeltaPreMerc += Math.max(0,fieldValues.storeCurrentStatusDelta[resourceId]);
+    mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
   }
 
   UpdateGUIArch();

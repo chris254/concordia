@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.13";
+  document.getElementById("version").textContent = "V6.14";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1209,7 +1209,6 @@ function UpdateGUIArch() {
     else {
       WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,storeTotalDelta,16,true,"black",false,true);
       // either have more than required or less
-//      WriteSingleNumber(elemNumStoreTotalDelta[resourceId],storeTotalDelta,18,true,"black",true,true);
       if (storeTotalDelta < 0) {
         //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,storeTotalDelta,16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
@@ -1239,7 +1238,6 @@ function UpdateGUIArch() {
     // FREE BUILD MINUS BUTTON
     if (resourceId != 0)
     {
-
       if (dataArch.archHousesReqd[resourceId] > 0 ) {
         elemBtnDecArchFree[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
       }
@@ -1252,7 +1250,9 @@ function UpdateGUIArch() {
 
   }
 
+  // Can I achieve the required build + senator??
   if (failCountStoreCurrent === 0) {
+    // Everything good
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     "CURRENT STORE STATUS",16,true,"green");
   }

@@ -55,6 +55,12 @@ let fieldValues = {
   storeCurrentStatusDelta:[0,0,0,0,0,0],
   storePostMercDelta:[0,0,0,0,0,0],
 
+  storeCurrentResourceTypeFailCount: 0,
+  storeCurrentResourceFailCount: 0,
+  storeCurrentCashFail: false,
+
+  storeCurrentStatusString: "",
+
   mercBuyBrick:0,
   mercBuyFood:0,
   mercBuyTool:0,

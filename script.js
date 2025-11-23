@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.15";
+  document.getElementById("version").textContent = "V6.16";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -671,7 +671,8 @@ function ResetArchitect() {
   UpdateAll();
 }
 
-function ProcessArchitectFree() {
+
+function CalculateStoreReqdTotal() {
   if (fieldValues.archModeFirstPass) {
   }
 
@@ -717,7 +718,15 @@ function ProcessArchitectFree() {
 
   fieldValues.archStoreReqd[5] = dataArch.archHousesReqd[indexCloth];
 
-}
+    // Calculate the delta store values
+  for (let resourceId=0; resourceId<=5; resourceId++) {
+    fieldValues.storeTotalReqd[resourceId] = fieldValues.archStoreReqd[resourceId] + dataArch.senatorStoreReqd[resourceId];
+    fieldValues.storeStrictMinusFree[resourceId] = fieldValues.storeCurrentStrict[resourceId] - fieldValues.archStoreReqd[resourceId];
+
+  }
+
+
+} // CalculateStoreTotalReqd
 
 function ProcessArchitectStrict() {
   /* -------------------------------------------------------------- */
@@ -1137,7 +1146,6 @@ function UpdateGUIArch() {
   /* ------------------------------------------------------------- */
 
   // a count of the number of resources that are below their reqd values
-  let failCountStoreCurrent = 0;
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
@@ -1213,7 +1221,6 @@ function UpdateGUIArch() {
         //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreTotalDelta[resourceId].style.borderRadius = '50%';
-        failCountStoreCurrent++;
 
       }
       else {
@@ -1251,16 +1258,17 @@ function UpdateGUIArch() {
   }
 
   // Can I achieve the required build + senator??
-  if (failCountStoreCurrent === 0) {
+  if (fieldValues.storeCurrentResourceTypeFailCount === 0 && !fieldValues.storeCurrentCashFail) {
     // Everything good
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    "CURRENT STORE STATUS",16,true,"green");
+                    fieldValues.storeCurrentStatusString,16,true,"black");
+    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "lightgreen";                
+
   }
   else {
-    let storeDeltaText = "";
-    storeDeltaText = "CURRENT STORE STATUS (MISSING: " + failCountStoreCurrent + ")";
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    storeDeltaText,16,true,"red");
+                    fieldValues.storeCurrentStatusString,16,true,"white");
+    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "red";                
   }
 
 
@@ -1526,19 +1534,18 @@ function UpdateGUIArch() {
 function UpdateAll() {
   /* Check to see if current architect houses selected are still affordable */
 
-  ProcessArchitectFree();
+  CalculateStoreReqdTotal();
   ProcessArchitectStrict();
 
-  // Calculate the delta store values
-  for (let resourceId=0; resourceId<=5; resourceId++) {
-    fieldValues.storeTotalReqd[resourceId] = fieldValues.archStoreReqd[resourceId] + dataArch.senatorStoreReqd[resourceId];
-    fieldValues.storeStrictMinusFree[resourceId] = fieldValues.storeCurrentStrict[resourceId] - fieldValues.archStoreReqd[resourceId];
-
-  }
 
   ProcessMerc();
 
-  // Ca;lculate post merc delta
+  fieldValues.storeCurrentResourceTypeFailCount = 0;
+  fieldValues.storeCurrentResourceFailCount = 0;
+  fieldValues.storeCurrentCashFail = false;
+
+
+  // Calculate all the deltas
   for (let resourceId=0; resourceId<=5; resourceId++) {
 
     fieldValues.storeCurrentStatusDelta[resourceId] = 
@@ -1546,11 +1553,42 @@ function UpdateAll() {
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
 
+    let deltaThisResource = fieldValues.storeCurrentStatusDelta[resourceId];
+    if (resourceId != 0 )  {
+      if (deltaThisResource < 0) {
+        fieldValues.storeCurrentResourceTypeFailCount += 1;
+        fieldValues.storeCurrentResourceFailCount += Math.abs(deltaThisResource) ;
+      }
+    }
+    else {
+      // cash
+      if (deltaThisResource < 0) {
+        fieldValues.storeCurrentCashFail = true;
+      }
+      else {
+        fieldValues.storeCurrentCashFail = false;
+      }
+
+    }
+
     fieldValues.storePostMercDelta[resourceId] = 
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
   }
+
+  let cashStatus = "$=" + fieldValues.storeCurrentStatusDelta[0];
+  let resourceTypeStatus = "";
+  if (fieldValues.storeCurrentResourceTypeFailCount > 0) {
+    resourceTypeStatus = "R=" + -fieldValues.storeCurrentResourceTypeFailCount;
+  }
+  else {
+    resourceTypeStatus = "R=\u2713";
+  }
+  fieldValues.storeCurrentStatusString = "CURRENT: " +
+    cashStatus + ", " +
+    resourceTypeStatus;// +
+    //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
 
   // Calculate spare resource count
   mercGlobal.mysteryDeltaPreMerc = 0;
@@ -1563,6 +1601,7 @@ function UpdateAll() {
   UpdateGUIArch();
   UpdateGUIMerc();
 
+  // ------------------------------------------------------------
   // SENATOR STORE REQD row
   // Senator mystery
   let elemMysteryTotalReqd = document.getElementById("num-store-total-reqd-mystery");

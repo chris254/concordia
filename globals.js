@@ -41,7 +41,6 @@ let dataArch = {
   archStrictStoreRemaining:[0,0,0,0,0,0],
 
   senatorStoreReqd:[0,0,0,0,0,0],
-  senatorMysteryReqd:0,
 
 
 } // dataArch
@@ -58,6 +57,11 @@ let fieldValues = {
   storeCurrentResourceTypeFailCount: 0,
   storeCurrentResourceFailCount: 0,
   storeCurrentCashFail: false,
+  storeCurrentMysteryFail: false,
+  storeCurrentMysteryAvailable:0,
+  senatorMysteryReqd:0,
+
+
 
   storeCurrentStatusString: "",
 
@@ -150,7 +154,6 @@ let mercGlobal = {
 
   hideArchFree:false,
   hideArchStrict:false,
-  mysteryDeltaPreMerc:0,
   mysteryDeltaPostMerc:0,
 
   preMercDelta:[0,0,0,0,0,0],

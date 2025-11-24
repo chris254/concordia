@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.16";
+  document.getElementById("version").textContent = "V6.17";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -593,7 +593,7 @@ function SenatorAdd(resourceId) {
     dataArch.senatorStoreReqd[resourceId]++;
   }
   else {
-    dataArch.senatorMysteryReqd++;
+    fieldValues.senatorMysteryReqd++;
   }
 
   UpdateAll();
@@ -1014,7 +1014,7 @@ function ResetSenator()
     dataArch.senatorStoreReqd[resourceId] = 0;
   }
 
-  dataArch.senatorMysteryReqd = 0;
+  fieldValues.senatorMysteryReqd = 0;
 
   UpdateAll();
 }
@@ -1258,7 +1258,9 @@ function UpdateGUIArch() {
   }
 
   // Can I achieve the required build + senator??
-  if (fieldValues.storeCurrentResourceTypeFailCount === 0 && !fieldValues.storeCurrentCashFail) {
+  if (fieldValues.storeCurrentResourceTypeFailCount === 0 && 
+      !fieldValues.storeCurrentCashFail && 
+      !fieldValues.storeCurrentMysteryFail) {
     // Everything good
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     fieldValues.storeCurrentStatusString,16,true,"black");
@@ -1471,12 +1473,12 @@ function UpdateGUIArch() {
 
     elemNumsenatorStoreReqd[resourceId].style.borderRadius = '15px' ;
 
-    if (resourceId === 0 && dataArch.senatorMysteryReqd === 0) {
+    if (resourceId === 0 && fieldValues.senatorMysteryReqd === 0) {
       elemNumsenatorStoreReqd[resourceId].textContent = '?';
     }
     else if (resourceId === 0) {
-      if (dataArch.senatorMysteryReqd != 0) {
-        elemNumsenatorStoreReqd[resourceId].textContent = '? ' + dataArch.senatorMysteryReqd + ' ?';
+      if (fieldValues.senatorMysteryReqd != 0) {
+        elemNumsenatorStoreReqd[resourceId].textContent = '? ' + fieldValues.senatorMysteryReqd + ' ?';
       }
       else {
         elemNumsenatorStoreReqd[resourceId].textContent = '';
@@ -1543,6 +1545,8 @@ function UpdateAll() {
   fieldValues.storeCurrentResourceTypeFailCount = 0;
   fieldValues.storeCurrentResourceFailCount = 0;
   fieldValues.storeCurrentCashFail = false;
+  fieldValues.storeCurrentMysteryAvailable = 0;
+  mercGlobal.mysteryDeltaPostMerc = 0;
 
 
   // Calculate all the deltas
@@ -1559,6 +1563,9 @@ function UpdateAll() {
         fieldValues.storeCurrentResourceTypeFailCount += 1;
         fieldValues.storeCurrentResourceFailCount += Math.abs(deltaThisResource) ;
       }
+      fieldValues.storeCurrentMysteryAvailable += Math.max(0,fieldValues.storeCurrentStatusDelta[resourceId]);
+      mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
+      
     }
     else {
       // cash
@@ -1575,28 +1582,41 @@ function UpdateAll() {
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
-  }
+  } // 0..5
 
-  let cashStatus = "$=" + fieldValues.storeCurrentStatusDelta[0];
-  let resourceTypeStatus = "";
-  if (fieldValues.storeCurrentResourceTypeFailCount > 0) {
-    resourceTypeStatus = "R=" + -fieldValues.storeCurrentResourceTypeFailCount;
+  let cashStatus = "$:";
+  if (fieldValues.storeCurrentStatusDelta[0] > 0) {
+    cashStatus += "+" + fieldValues.storeCurrentStatusDelta[0];
   }
   else {
-    resourceTypeStatus = "R=\u2713";
+    cashStatus += fieldValues.storeCurrentStatusDelta[0];
   }
-  fieldValues.storeCurrentStatusString = "CURRENT: " +
+
+  let resourceTypeStatus = "";
+  let mysteryStatus = "";
+  if (fieldValues.storeCurrentResourceTypeFailCount > 0) {
+    resourceTypeStatus = "R:" + -fieldValues.storeCurrentResourceTypeFailCount;
+  }
+  else {
+    resourceTypeStatus = "R:\u2713";
+  }
+
+  let mysteryDelta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd;
+  if (mysteryDelta < 0) {
+    fieldValues.storeCurrentMysteryFail = true;
+    mysteryStatus = "?:" + mysteryDelta;
+  }
+  else {
+    mysteryStatus = "?:\u2713";
+    fieldValues.storeCurrentMysteryFail = false;
+  }
+
+  fieldValues.storeCurrentStatusString = "CURRENT = [" +
     cashStatus + ", " +
-    resourceTypeStatus;// +
+    resourceTypeStatus + ", " +
+    mysteryStatus + "]";
     //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
 
-  // Calculate spare resource count
-  mercGlobal.mysteryDeltaPreMerc = 0;
-  mercGlobal.mysteryDeltaPostMerc = 0;
-  for (let resourceId=1; resourceId<=5; resourceId++) {
-    mercGlobal.mysteryDeltaPreMerc += Math.max(0,fieldValues.storeCurrentStatusDelta[resourceId]);
-    mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
-  }
 
   UpdateGUIArch();
   UpdateGUIMerc();
@@ -1608,9 +1628,9 @@ function UpdateAll() {
   elemMysteryTotalReqd.classList.remove('mystery-reqd-non-zero');
   elemMysteryTotalReqd.classList.remove('mystery-reqdd-zero');
 
-  if (dataArch.senatorMysteryReqd > 0) {
+  if (fieldValues.senatorMysteryReqd > 0) {
     elemMysteryTotalReqd.classList.add('mystery-reqd-non-zero');
-    elemMysteryTotalReqd.textContent = '? ' + dataArch.senatorMysteryReqd + ' ?';
+    elemMysteryTotalReqd.textContent = '? ' + fieldValues.senatorMysteryReqd + ' ?';
 
   }
   else {
@@ -1624,15 +1644,15 @@ function UpdateAll() {
   let elemMysteryPostMercTotalDelta = document.getElementById("num-post-merc-total-delta-mystery");
   
   let delta = 0;
-  delta = mercGlobal.mysteryDeltaPreMerc - dataArch.senatorMysteryReqd;
-  WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.mysteryDeltaPreMerc,16,false,delta,16,false,"black",false, true);
-  delta = mercGlobal.mysteryDeltaPostMerc - dataArch.senatorMysteryReqd;
+  delta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd;
+  WriteSlash(elemMysteryStoreTotalDelta,fieldValues.storeCurrentMysteryAvailable,16,false,delta,16,false,"black",false, true);
+  delta = mercGlobal.mysteryDeltaPostMerc - fieldValues.senatorMysteryReqd;
   WriteSlash(elemMysteryPostMercTotalDelta,mercGlobal.mysteryDeltaPostMerc,16,false,delta,16,false,"black",false, true);
 
-  //let mysteryDelta = mercGlobal.spareResourceCount - dataArch.senatorMysteryReqd;
+  //let mysteryDelta = mercGlobal.spareResourceCount - fieldValues.senatorMysteryReqd;
   //WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.spareResourceCount,12,false,mysteryDelta,14,FinalizationRegistry,"black",false,true); 
   let pareResourceCOunt = 
-  // if (dataArch.senatorMysteryReqd === 0 && mercGlobal.spareResourceCount === 0) {
+  // if (fieldValues.senatorMysteryReqd === 0 && mercGlobal.spareResourceCount === 0) {
     //elemMysteryTotalReqd.textContent = '';
   //}
   //else if (mysteryDelta >= 0) {

@@ -1535,24 +1535,24 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
   let tick = " \u2705 ";
   let cross = " \u274C ";
   if (cashFail_) {
-    cashStatus = "£:" + cross;
+    cashStatus = "£:" + cross + "(" + cashDelta_ + ")";
   } 
   else if (cashDelta_ > 0) 
   {
-    cashStatus = "£:" + tick;
+    cashStatus = "£:" + tick + "(+" + cashDelta_ + ")";
   }
   else {
-    cashStatus = "£:" + tick;
+    cashStatus = "£:" + tick + "      ";
   }
 
   // Resource status
   let resourceTypeStatus = "";
   let mysteryStatus = "";
   if (resourceTypeFailCount_ > 0) {
-    resourceTypeStatus = "Resource:" + cross;
+    resourceTypeStatus = "Res:" + cross;
   }
   else {
-    resourceTypeStatus = "Resource:" + tick;
+    resourceTypeStatus = "Res:" + tick;
   }
 
   // mystery status

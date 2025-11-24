@@ -52,18 +52,32 @@ let fieldValues = {
   storeStrictMinusFree:[0,0,0,0,0,0],
   storeTotalReqd:[0,0,0,0,0,0],
   storeCurrentStatusDelta:[0,0,0,0,0,0],
+  postMercStatusDelta:[0,0,0,0,0,0],
   storePostMercDelta:[0,0,0,0,0,0],
 
   storeCurrentResourceTypeFailCount: 0,
   storeCurrentResourceFailCount: 0,
   storeCurrentCashFail: false,
+  storeCurrentResourceFail: false,
   storeCurrentMysteryFail: false,
+  storeCurrentMysteryDelta: 0,
   storeCurrentMysteryAvailable:0,
+  storeCurrentStatusString: "",
+
+  postMercResourceTypeFailCount: 0,
+  postMercResourceFailCount: 0,
+  postMercCashFail: false,
+  postMercResourceFail: false,
+  postMercMysteryFail: false,
+  postMercMysteryDelta: 0,
+  postMercMysteryAvailable:0,
+  postMercStatusString: "",
+
+
   senatorMysteryReqd:0,
 
 
 
-  storeCurrentStatusString: "",
 
   mercBuyBrick:0,
   mercBuyFood:0,

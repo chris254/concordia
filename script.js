@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V6.17";
+  document.getElementById("version").textContent = "V7.00";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1269,8 +1269,8 @@ function UpdateGUIArch() {
   }
   else {
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    fieldValues.storeCurrentStatusString,16,true,"white");
-    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "red";                
+                    fieldValues.storeCurrentStatusString,16,true,"black");
+    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "#F9967A";                
   }
 
 
@@ -1333,7 +1333,6 @@ function UpdateGUIArch() {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
         WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,diff,16,true,"black",false,true);
-//        WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,20,true,"red",true,true);
       }
       else if (diff > 0) {
 
@@ -1509,39 +1508,141 @@ function UpdateGUIArch() {
     
   } // 0 to 5
 
-  if (failCountPostMerc === 0) {
+
+    // Can I achieve the required build + senator??
+  if (fieldValues.postMercResourceTypeFailCount === 0 && 
+      !fieldValues.postMercCashFail && 
+      !fieldValues.postMercMysteryFail) {
+    // Everything good
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
-                    "POST MERC STATUS",16,true,"green");
-  }
-  else if (failCountPostMerc <= 2) {
-    let storeDeltaText = "";
-    storeDeltaText = "MERC STATUS (MISSING: " + failCountPostMerc + ")";
-    WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
-                    storeDeltaText,16,true,"orange");
+                    fieldValues.postMercStatusString,16,true,"black");
+    document.getElementById("linewithtext-post-merc-status").style.backgroundColor = "lightgreen";                
+
   }
   else {
-    let storeDeltaText = "";
-    storeDeltaText = "MERC STATUS (MISSING: " + failCountPostMerc + ")";
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
-                    storeDeltaText,16,true,"red");
+                    fieldValues.postMercStatusString,16,true,"black");
+    document.getElementById("linewithtext-post-merc-status").style.backgroundColor = "#F9967A";                
   }
 
 
+} // UPdateGUIArch
+
+function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFailCount_, mysteryDelta_) {
+
+  let cashStatus = "";
+  
+  let tick = " \u2705 ";
+  let cross = " \u274C ";
+  if (cashFail_) {
+    cashStatus = "£:" + cross;
+  } 
+  else if (cashDelta_ > 0) 
+  {
+    cashStatus = "£:" + tick;
+  }
+  else {
+    cashStatus = "£:" + tick;
+  }
+
+  // Resource status
+  let resourceTypeStatus = "";
+  let mysteryStatus = "";
+  if (resourceTypeFailCount_ > 0) {
+    resourceTypeStatus = "Resource:" + cross;
+  }
+  else {
+    resourceTypeStatus = "Resource:" + tick;
+  }
+
+  // mystery status
+  if (mysteryDelta_ < 0) {
+    mysteryStatus = "?:" + cross;
+  }
+  else {
+    mysteryStatus = "?:" + tick;
+  }
+
+  return caption_ + ":         " +
+    cashStatus + "       " +
+    resourceTypeStatus + "       " +
+    mysteryStatus;
+    //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
 }
 
+function CalculatePostMercStatus() {
 
-/* ---------------------------------------------------------------------------------------- */
-/* Function: UpdateAll
-/* ---------------------------------------------------------------------------------------- */
-function UpdateAll() {
-  /* Check to see if current architect houses selected are still affordable */
+  ////////////////////////////////////////////////////////////////////////
+  // Calculate post merc status
+  ////////////////////////////////////////////////////////////////////////
+  fieldValues.postMercResourceTypeFailCount = 0;
+  fieldValues.postMercResourceFailCount = 0;
+  fieldValues.postMercCashFail = false;
+  fieldValues.postMercMysteryAvailable = 0;
+  // ????
+  mercGlobal.mysteryDeltaPostMerc = 0;
 
-  CalculateStoreReqdTotal();
-  ProcessArchitectStrict();
+
+  // Calculate all the deltas
+  for (let resourceId=0; resourceId<=5; resourceId++) {
+
+    fieldValues.postMercStatusDelta[resourceId] = 
+      mercGlobal.storeFinal[resourceId] - 
+      fieldValues.archStoreReqd[resourceId] - 
+      dataArch.senatorStoreReqd[resourceId];
+
+    let deltaThisResource = fieldValues.postMercStatusDelta[resourceId];
+    if (resourceId != 0 )  {
+      if (deltaThisResource < 0) {
+        fieldValues.postMercResourceTypeFailCount += 1;
+        fieldValues.postMercResourceFailCount += Math.abs(deltaThisResource) ;
+      }
+      fieldValues.postMercMysteryAvailable += Math.max(0,fieldValues.postMercStatusDelta[resourceId]);
+      mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
+      
+    }
+    else {
+      // cash
+      if (deltaThisResource < 0) {
+        fieldValues.postMercCashFail = true;
+      }
+      else {
+        fieldValues.postMercCashFail = false;
+      }
+
+    }
+
+    fieldValues.postMercResourceFail = fieldValues.postMercResourceFailCount > 0;
+
+    fieldValues.storePostMercDelta[resourceId] = 
+      mercGlobal.storeFinal[resourceId] - 
+      fieldValues.archStoreReqd[resourceId] - 
+      dataArch.senatorStoreReqd[resourceId];
+  } // 0..5
+
+  fieldValues.postMercMysteryDelta = fieldValues.postMercMysteryAvailable - fieldValues.senatorMysteryReqd
+  fieldValues.postMercMysteryFail = fieldValues.postMercMysteryDelta < 0;
 
 
-  ProcessMerc();
 
+
+  fieldValues.postMercStatusString = CreateStoreStatusString(
+    mercActive + "     ",
+    fieldValues.postMercCashFail, 
+    fieldValues.postMercStatusDelta[0], 
+    fieldValues.postMercResourceTypeFailCount, 
+    fieldValues.postMercMysteryDelta);
+
+
+
+
+} // CalculatePostMercStatus
+
+function CalculateCurrentStoreStatus() {
+
+  ////////////////////////////////////////////////////////////////////////
+  // Calculate current status
+  ////////////////////////////////////////////////////////////////////////
   fieldValues.storeCurrentResourceTypeFailCount = 0;
   fieldValues.storeCurrentResourceFailCount = 0;
   fieldValues.storeCurrentCashFail = false;
@@ -1578,45 +1679,43 @@ function UpdateAll() {
 
     }
 
+    fieldValues.storeCurrentResourceFail = fieldValues.storeCurrentResourceFailCount > 0;
+
     fieldValues.storePostMercDelta[resourceId] = 
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
   } // 0..5
 
-  let cashStatus = "$:";
-  if (fieldValues.storeCurrentStatusDelta[0] > 0) {
-    cashStatus += "+" + fieldValues.storeCurrentStatusDelta[0];
-  }
-  else {
-    cashStatus += fieldValues.storeCurrentStatusDelta[0];
-  }
+  fieldValues.storeCurrentMysteryDelta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd
+  fieldValues.storeCurrentMysteryFail = fieldValues.storeCurrentMysteryDelta < 0;
 
-  let resourceTypeStatus = "";
-  let mysteryStatus = "";
-  if (fieldValues.storeCurrentResourceTypeFailCount > 0) {
-    resourceTypeStatus = "R:" + -fieldValues.storeCurrentResourceTypeFailCount;
-  }
-  else {
-    resourceTypeStatus = "R:\u2713";
-  }
 
-  let mysteryDelta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd;
-  if (mysteryDelta < 0) {
-    fieldValues.storeCurrentMysteryFail = true;
-    mysteryStatus = "?:" + mysteryDelta;
-  }
-  else {
-    mysteryStatus = "?:\u2713";
-    fieldValues.storeCurrentMysteryFail = false;
-  }
 
-  fieldValues.storeCurrentStatusString = "CURRENT = [" +
-    cashStatus + ", " +
-    resourceTypeStatus + ", " +
-    mysteryStatus + "]";
-    //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
 
+  fieldValues.storeCurrentStatusString = CreateStoreStatusString(
+    "CURRENT",
+    fieldValues.storeCurrentCashFail, 
+    fieldValues.storeCurrentStatusDelta[0], 
+    fieldValues.storeCurrentResourceTypeFailCount, 
+    fieldValues.storeCurrentMysteryDelta);
+
+} // CalculateCurrentStoreStatus
+
+/* ---------------------------------------------------------------------------------------- */
+/* Function: UpdateAll
+/* ---------------------------------------------------------------------------------------- */
+function UpdateAll() {
+  /* Check to see if current architect houses selected are still affordable */
+
+  CalculateStoreReqdTotal();
+  ProcessArchitectStrict();
+
+
+  ProcessMerc();
+
+  CalculateCurrentStoreStatus();
+  CalculatePostMercStatus();
 
   UpdateGUIArch();
   UpdateGUIMerc();
@@ -1661,7 +1760,7 @@ function UpdateAll() {
   // }
 
   fieldValues.archModeFirstPass = false;
-}
+} // UpdateAll
 
 function SetCardArch() {
   UpdateAll();

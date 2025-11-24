@@ -101,13 +101,14 @@ body {
   width: 100%;
   display: flex;
   background-color: transparent;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   font-size: 8px;
   color: white;
-  font-weight: bolder;
+  font-weight: normal;
   border: 1px solid black;
   margin-bottom: 2px;
+  white-space: pre;
 
 }
 

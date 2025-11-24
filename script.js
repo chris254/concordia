@@ -1563,7 +1563,7 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
     mysteryStatus = "?:" + tick;
   }
 
-  return caption_ + ":         " +
+  return caption_ +
     cashStatus + "       " +
     resourceTypeStatus + "       " +
     mysteryStatus;
@@ -1627,7 +1627,7 @@ function CalculatePostMercStatus() {
 
 
   fieldValues.postMercStatusString = CreateStoreStatusString(
-    mercActive + "     ",
+    mercActive + ":        ",
     fieldValues.postMercCashFail, 
     fieldValues.postMercStatusDelta[0], 
     fieldValues.postMercResourceTypeFailCount, 
@@ -1694,7 +1694,7 @@ function CalculateCurrentStoreStatus() {
 
 
   fieldValues.storeCurrentStatusString = CreateStoreStatusString(
-    "CURRENT",
+    "CURRENT:    ",
     fieldValues.storeCurrentCashFail, 
     fieldValues.storeCurrentStatusDelta[0], 
     fieldValues.storeCurrentResourceTypeFailCount, 

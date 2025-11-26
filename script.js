@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.01";
+  document.getElementById("version").textContent = "V7.02";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1594,22 +1594,22 @@ function CalculateMercSuccessFuture() {
           result = true;
       }
     }
-  }  
-  else if (resourcesOk && !cashOK && !mysteryOK) {//100
-      // Cannot fix this with just one trade
-      result = false;
-  }
-  else if (!resourcesOk && cashOK && mysteryOK && resourceTypeFailCount < 2) { //100
-    // Can we buy just one type of resource?
-    // find out which resource we need more of
-    let resourceFailId = 0;
-    for (resourceId=1; resourceId<=5; resourceId++) {
-      if (fieldValues.postMercStatusDelta[resourceId] < 0) {
-        resourceFailId = resourceId
-      }
+    else if (resourcesOk && !cashOK && !mysteryOK) {//100
+        // Cannot fix this with just one trade
+        result = false;
     }
-    // Error if failId is zero!!!!!
-    result = cashDelta >= (fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]);
+    else if (!resourcesOk && cashOK && mysteryOK && resourceTypeFailCount < 2) { //100
+      // Can we buy just one type of resource?
+      // find out which resource we need more of
+      let resourceFailId = 0;
+      for (resourceId=1; resourceId<=5; resourceId++) {
+        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+          resourceFailId = resourceId
+        }
+      }
+      // Error if failId is zero!!!!!
+      result = cashDelta >= (fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]);
+    }  
   }
 
   fieldValues.postMercSuccessFuture = result;

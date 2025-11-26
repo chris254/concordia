@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.00";
+  document.getElementById("version").textContent = "V7.01";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -851,37 +851,6 @@ function CanSellResource(resourceId) {
   return mercGlobal.storeFinal[resourceId] > 0;
 }
 
-function CalcMercHouseBuild() {
-
-  mercGlobal.mercHouses[indexBrick] = 
-    Math.min(Math.floor(mercGlobal.storeFinal[0] / houseCost[indexBrick]), mercGlobal.storeFinal[indexFood]);
-
-  mercGlobal.mercHouses[indexFood] = Min3(
-    Math.floor(mercGlobal.storeFinal[indexCash] / houseCost[indexFood]),
-    mercGlobal.storeFinal[indexBrick],
-    mercGlobal.storeFinal[indexFood]
-  );
-  mercGlobal.mercHouses[indexTool] = Min3(
-    Math.floor(mercGlobal.storeFinal[indexCash] / houseCost[indexTool]),
-    mercGlobal.storeFinal[indexBrick],
-    mercGlobal.storeFinal[indexTool]
-  );
-
-  mercGlobal.mercHouses[indexWine] = Min3(
-    Math.floor(mercGlobal.storeFinal[indexCash] / houseCost[indexWine]),
-    mercGlobal.storeFinal[indexBrick],
-    mercGlobal.storeFinal[indexWine]
-  );
-  mercGlobal.mercHouses[indexCloth] = Min3(
-    Math.floor(mercGlobal.storeFinal[indexCash] / houseCost[indexCloth]),
-    mercGlobal.storeFinal[indexBrick],
-    mercGlobal.storeFinal[indexCloth]
-  );
-
-  for (let resourceId=0; resourceId <= 5; resourceId++) {
-    mercGlobal.mercHouses[resourceId] = fieldValues.archStoreReqd[resourceId];
-  }
-}
 // -------------------------------------------------------------------------
 // FUNCTION BUY RESOURCE
 // -------------------------------------------------------------------------
@@ -1297,7 +1266,8 @@ function UpdateGUIArch() {
 
     //-----------------------------------------------------------------------------------------------
     // MERC FINAL / POST MERC
-    diff = mercFinal - freeNumber - senatorReqd;
+    let mercFinalDelta = mercFinal - freeNumber - senatorReqd;
+    mercGlobal.mercFinalReqdDelta[resourceId] = mercFinalDelta;
 
     if (allZero && mercFinal === 0) {
       /// No reqt for any, and don't have any
@@ -1306,7 +1276,7 @@ function UpdateGUIArch() {
       SetStyle(elemNumPostMercDelta,StylesType.CLEAR[resourceId],resourceId);
       elemNumPostMercDelta[resourceId].style.border = 'none';
     }
-    else if (diff === 0) {
+    else if (mercFinalDelta === 0) {
       // Required = Have
 
       WriteSingleNumber(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
@@ -1317,11 +1287,10 @@ function UpdateGUIArch() {
     }
     else {
 
-      // diff is non zero
+      // mercFinalDelta is non zero
       // Either have too many or not enough
-      //WriteSingleNumber(elemNumPostMercDelta[resourceId],diff,18,true,"black",true,true);
       
-      if (diff < 0) {
+      if (mercFinalDelta < 0) {
 
         failCountPostMerc++;
         SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
@@ -1332,11 +1301,11 @@ function UpdateGUIArch() {
         else {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
-        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,diff,16,true,"black",false,true);
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
       }
-      else if (diff > 0) {
+      else if (mercFinalDelta > 0) {
 
-        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,diff,16,true,"black",false,true);
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
 
         if (resourceId === 0) {
           // Cash treated differently
@@ -1532,8 +1501,6 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
 
   let cashStatus = "";
   
-  let tick = " \u2705 ";
-  let cross = " \u274C ";
   if (cashFail_) {
     cashStatus = "£:" + cross + "(" + cashDelta_ + ")";
   } 
@@ -1568,6 +1535,85 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
     resourceTypeStatus + "       " +
     mysteryStatus;
     //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
+}
+
+function CalculateMercSuccessFuture() {
+
+  //mercGlobal.totalTradeCount;
+  //fieldValues.postMercResourceTypeFailCount;
+  //fieldValues.postMercResourceFailCount;
+  //fieldValues.postMercStatusDelta[0];
+  //fieldValues.postMercSuccessNow;
+  //mercGlobal.mysteryDeltaPostMerc;
+  //mercGlobal.mercFinalReqdDelta[resourceId];
+  //function MercBuyResourceId
+  //function MercBuyResourceId
+
+  let cashOK = fieldValues.postMercStatusDelta[0] >= 0;
+  let cashDelta = fieldValues.postMercStatusDelta[0];
+  let mysteryOK = mercGlobal.mysteryDeltaPostMerc >= 0;
+  let resourcesOk = fieldValues.postMercResourceTypeFailCount <= 0;
+  let resourceTypeFailCount = fieldValues.postMercResourceTypeFailCount;
+  let totalResourceFailCount = fieldValues.postMercResourceFailCount;
+  let result = false;
+
+  let spareResourceCashValue = [0,0,0,0,0,0];
+  for (resourceId = 1; resourceId <=5; resourceId++) {
+    spareResourceCashValue[resourceId] = Math.max(0,fieldValues.postMercStatusDelta[resourceId]) * resourceValue[resourceId] ;
+  }
+
+  result = false;
+
+  if (fieldValues.postMercSuccessNow) {
+    // Already achieved it
+    result = true;
+  }
+  else if (mercGlobal.totalTradeCount === 2) {
+    // Now = false and run out of trades. So not possible
+    result = false;
+  }
+  else if (mercGlobal.totalTradeCount === 1) {
+
+    // How many resources are we missing
+    if (resourcesOk && cashOK && mysteryOK) {
+        // everything fine
+        result = true;
+    }
+    else if (resourcesOk && cashOK && !mysteryOK) { 110
+      // Got a trade left, so can we buy any
+      result = (cashDelta >= 3);
+    }    
+    else if (resourcesOk && !cashOK && mysteryOK) {//101
+      // Need to sell to get more cash
+      if (mercGlobal.mercFinalReqdDelta[1]*3 >= Math.abs(cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[2]*4 >= Math.abs(cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[3]*5 >= Math.abs(cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[4]*6 >= Math.abs(cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[5]*7 >= Math.abs(cashDelta)) {
+
+          result = true;
+      }
+    }
+  }  
+  else if (resourcesOk && !cashOK && !mysteryOK) {//100
+      // Cannot fix this with just one trade
+      result = false;
+  }
+  else if (!resourcesOk && cashOK && mysteryOK && resourceTypeFailCount < 2) { //100
+    // Can we buy just one type of resource?
+    // find out which resource we need more of
+    let resourceFailId = 0;
+    for (resourceId=1; resourceId<=5; resourceId++) {
+      if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+        resourceFailId = resourceId
+      }
+    }
+    // Error if failId is zero!!!!!
+    result = cashDelta >= (fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]);
+  }
+
+  fieldValues.postMercSuccessFuture = result;
+
 }
 
 function CalculatePostMercStatus() {
@@ -1618,16 +1664,32 @@ function CalculatePostMercStatus() {
       mercGlobal.storeFinal[resourceId] - 
       fieldValues.archStoreReqd[resourceId] - 
       dataArch.senatorStoreReqd[resourceId];
+
   } // 0..5
+
+  fieldValues.postMercSuccessNow = 
+    fieldValues.postMercResourceTypeFailCount === 0 &&   
+    !fieldValues.postMercCashFail && 
+    fieldValues.postMercStatusDelta[0] >= 0 && 
+    fieldValues.postMercResourceTypeFailCount <= 0 &&
+    fieldValues.postMercMysteryDelta >=0; 
+
 
   fieldValues.postMercMysteryDelta = fieldValues.postMercMysteryAvailable - fieldValues.senatorMysteryReqd
   fieldValues.postMercMysteryFail = fieldValues.postMercMysteryDelta < 0;
 
+  CalculateMercSuccessFuture();
 
-
+  let mercSuccessString = "";
+  if (fieldValues.postMercSuccessFuture) {
+    mercSuccessString = tick; 
+  }
+  else {
+    mercSuccessString = cross; 
+  }
 
   fieldValues.postMercStatusString = CreateStoreStatusString(
-    mercActive + ":        ",
+    mercSuccessString + mercActive + ":     ",
     fieldValues.postMercCashFail, 
     fieldValues.postMercStatusDelta[0], 
     fieldValues.postMercResourceTypeFailCount, 
@@ -1692,9 +1754,8 @@ function CalculateCurrentStoreStatus() {
 
 
 
-
   fieldValues.storeCurrentStatusString = CreateStoreStatusString(
-    "CURRENT:    ",
+    "         CURR:    ",
     fieldValues.storeCurrentCashFail, 
     fieldValues.storeCurrentStatusDelta[0], 
     fieldValues.storeCurrentResourceTypeFailCount, 
@@ -2422,7 +2483,6 @@ function ProcessMerc() {
 
   // Calculate:
   // mercGlobal.sellInProgress[resourceId]
-  // mercGlobal.sellTradeCount
   // mercGlobal.buyTradeCount
   // mercGlobal.totalTradeCount
 
@@ -2454,22 +2514,11 @@ function ProcessMerc() {
 
   }
 
-  mercGlobal.sellTradeCount = localSellCount;
-  mercGlobal.buyTradeCount = localBuyCount;
   mercGlobal.totalTradeCount = localSellCount + localBuyCount;
 
 
 
   //-------------------------------------------------------
-  // Calculate mercGlobal.storePreSell
-  //-------------------------------------------------------
-  // mercGlobal.mercStore ->
-  //   mercGlobal.storePreSell ->
-  //     mercGlobal.storeTradeSellArray ->
-  //       mercGlobal.storePreBuy ->
-  //         mercGlobal.storeTradeBuyArray ->
-  //           mercGlobal.storeFinal ->
-  //      
   // MERC3 or MERC5
   if (mercActive === MercType.MERC0) mercGlobal.cashBonus = 0;
   else if (mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
@@ -2546,14 +2595,32 @@ function ProcessMerc() {
       Math.floor(mercGlobal.storeFinal[0] / resourceValue[index]);
     mercGlobal.buyQtyPossible[index] = mercGlobal.buyQtyActual[index] + mercGlobal.mercBuyPot[index];
 
-    CalcMercHouseBuild();
 
   }
 
   mercGlobal.storeCashValue[0] = mercGlobal.totalStoreCashValue;
 
 
+}
 
+function MercBuyResourceId() {
+  // Only gets the first buy
+  for (resourceId = 1; resourceId <=5 ; resourceId++) {
+    if (mercGlobal.buyInProgress[resourceId]) {
+      return resourceId;
+    }
+  }
+  return 0;
+}
+
+function MercSellResourceId() {
+  // Only gets the first buy
+  for (resourceId = 1; resourceId <=5 ; resourceId++) {
+    if (mercGlobal.sellInProgress[resourceId]) {
+      return resourceId;
+    }
+  }
+  return 0;
 }
 
 function ArchMercClick(resourceId) {

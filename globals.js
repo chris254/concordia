@@ -9,6 +9,8 @@ const indexCloth = 5;
 
 const resourceValue = [0,3,4,5,6,7];
 
+let tick = " \u2705 ";
+let cross = " \u274C ";
 
 let dataArch = {
   //archHousesCurrent:[0,0,0,0,0,0],
@@ -72,7 +74,8 @@ let fieldValues = {
   postMercMysteryDelta: 0,
   postMercMysteryAvailable:0,
   postMercStatusString: "",
-
+  postMercSuccessNow: false,
+  postMercSuccessFuture: false,
 
   senatorMysteryReqd:0,
 
@@ -131,17 +134,9 @@ let mercGlobal = {
 
   lastTimeMercStore:[0,0,0,0,0,0],
 
-  mercSellDelta:[0,0,0,0,0,0],
-  mercBuyDelta:[0,0,0,0,0,0],
-
-  mercHouses:[0,0,0,0,0,0],
-
   storePreSell:[0,0,0,0,0,0],
   sellInProgress:[false,false,false,false,false,false],
   sellInProgressTradeId:[0,0,0,0,0,0],
-  tradeSellCount:[0,0,0,0,0,0],
-  sellTradeCount:0,
-  storeTradeSellArray:[[0,0,0,0,0,0],[0,0,0,0,0,0]],
   sellQtyActual:[0,0,0,0,0,0],
   sellQtyPossible:[0,0,0,0,0,0],
 
@@ -149,7 +144,6 @@ let mercGlobal = {
   storePreBuy:[0,0,0,0,0],
   buyInProgress:[false,false,false,false,false,false],
   buyInProgressTradeId:[0,0,0,0,0,0],
-  tradeBuyCount:[0,0,0,0,0,0],
   buyTradeCount:0,
   storeTradeBuyArray:[[0,0,0,0,0,0],[0,0,0,0,0,0]],
   buyQtyActual:[0,0,0,0,0,0],
@@ -173,5 +167,5 @@ let mercGlobal = {
   preMercDelta:[0,0,0,0,0,0],
   postMercDelta:[0,0,0,0,0,0],
 
-
+  mercFinalReqdDelta:[0,0,0,0,0,0],
 }

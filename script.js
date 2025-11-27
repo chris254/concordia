@@ -1559,8 +1559,19 @@ function CalculateMercSuccessFuture() {
   let result = false;
 
   let spareResourceCashValue = [0,0,0,0,0,0];
+  let missingResourceCashValue = [0,0,0,0,0,0];
+  let missingResourcesTotalValue = 0;
   for (resourceId = 1; resourceId <=5; resourceId++) {
     spareResourceCashValue[resourceId] = Math.max(0,fieldValues.postMercStatusDelta[resourceId]) * resourceValue[resourceId] ;
+    if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+      // This resource is missing
+      missingResourceCashValue[resourceId] = Math.abs(fieldValues.postMercStatusDelta[resourceId])*resourceValue[resourceId];
+      missingResourcesTotalValue += missingResourceCashValue[resourceId];
+    }
+    else {
+      // Not short on this resource
+      missingResourceCashValue[resourceId] = 0;
+    }
   }
 
   result = false;
@@ -1613,13 +1624,16 @@ function CalculateMercSuccessFuture() {
     }  
   }
   else {
+    ////////////////////////////////////////////////////////////////////////////////
     // 2 trades remaining
+    ////////////////////////////////////////////////////////////////////////////////
     if (resourceTypeFailCount > 2) {
       // Not possible
       result = false;
     }
     else if (resourceTypeFailCount == 1) {
-      // BGet the resource id and cost
+      // Need to buy one resource. Mystery not checked at this point
+      // Get the resource id and cost
       let resourceFailId = 0;
       for (resourceId=1; resourceId<=5; resourceId++) {
         if (fieldValues.postMercStatusDelta[resourceId] < 0) {
@@ -1636,6 +1650,26 @@ function CalculateMercSuccessFuture() {
         reult = cashDelta >= Math.abs(mysteryDelta)*3;
 
       }
+    }
+    else if (resourceTypeFailCount == 2) {
+      // Can only do this with cash
+      if (cashDelta >= missingResourcesTotalValue && mysteryOK) {
+        // Enough cas to buy the resource and mystery is also good (on another resource)
+        result = true;
+      }
+      //else if (cashDelta >= missingResourcesTotalValue && !mysteryOK) {
+      //  let cashRemaining = cashDelta - missingResourcesTotalValue;
+      //  if (cashRemaining >= 3) {
+      //    // Check if we can continue to buy the resources that are being bought already
+      //  }
+     // }
+     // let mysteryBuyOK = false;
+     // for (resourceId=1; resourceId<=5; resourceId++) {
+     //   if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+     //     // This is one of the resources. Can we afford more for mystery?
+     //     if (cashRemaining >= mercGlobal.mysteryDeltaPostMerc[resourceId] * resourceValue[resourceId]) {
+
+     //     }
 
     }
   }

@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.02";
+  document.getElementById("version").textContent = "V7.03";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1552,6 +1552,7 @@ function CalculateMercSuccessFuture() {
   let cashOK = fieldValues.postMercStatusDelta[0] >= 0;
   let cashDelta = fieldValues.postMercStatusDelta[0];
   let mysteryOK = mercGlobal.mysteryDeltaPostMerc >= 0;
+  let mysteryDelta = mercGlobal.mysteryDeltaPostMerc;
   let resourcesOk = fieldValues.postMercResourceTypeFailCount <= 0;
   let resourceTypeFailCount = fieldValues.postMercResourceTypeFailCount;
   let totalResourceFailCount = fieldValues.postMercResourceFailCount;
@@ -1608,8 +1609,35 @@ function CalculateMercSuccessFuture() {
         }
       }
       // Error if failId is zero!!!!!
-      result = cashDelta >= (fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]);
+      result = cashDelta >= Math.abs((fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]));
     }  
+  }
+  else {
+    // 2 trades remaining
+    if (resourceTypeFailCount > 2) {
+      // Not possible
+      result = false;
+    }
+    else if (resourceTypeFailCount == 1) {
+      // BGet the resource id and cost
+      let resourceFailId = 0;
+      for (resourceId=1; resourceId<=5; resourceId++) {
+        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+          resourceFailId = resourceId
+        }
+      }
+      let resourceCost = Math.abs(fieldValues.postMercStatusDelta[resourceFailId]) * resourceValue[resourceFailId];
+      if (cashDelta >= resourceCost && mysteryOK) {
+        // can buy more resource
+        result = true;
+      }
+      else if (cashDelta >= resourceCost && !mysteryOK) {
+        // only one trade left here. buy the mystery?
+        reult = cashDelta >= Math.abs(mysteryDelta)*3;
+
+      }
+
+    }
   }
 
   fieldValues.postMercSuccessFuture = result;

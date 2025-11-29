@@ -81,13 +81,13 @@ body {
 }
 
 .title-divider {
-  height: 20px;
+  height: 15px;
   width: 100%;
   display: flex;
   background-color: grey;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   font-weight: bolder;
   border: 5px solid black;

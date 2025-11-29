@@ -489,7 +489,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.08";
+  document.getElementById("version").textContent = "V7.09";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1214,7 +1214,7 @@ function UpdateGUIArch() {
   else {
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     fieldValues.storeCurrentStatusString,16,true,"black");
-    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "mercFailColour";                
+    document.getElementById("linewithtext-current-store-status").style.backgroundColor = mercFailColour;                
   }
 
 
@@ -1472,7 +1472,7 @@ function UpdateGUIArch() {
   else {
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
                     fieldValues.postMercStatusString,16,true,"black");
-    document.getElementById("linewithtext-post-merc-status").style.backgroundColor = "#F9967A";                
+    document.getElementById("linewithtext-post-merc-status").style.backgroundColor = mercFailColour;                
   }
 
 

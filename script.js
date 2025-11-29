@@ -489,7 +489,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.07";
+  document.getElementById("version").textContent = "V7.08";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1151,22 +1151,25 @@ function UpdateGUIArch() {
     else if (fieldValues.storeCurrentStatusDelta[resourceId] === 0) {
       // just enough
       //elemNumStoreTotalDelta[resourceId].style.opacity = 1.0;
-      WriteSingleNumber(elemNumStoreTotalDelta[resourceId],"-",18,true,"black",false,true);
+      WriteSingleNumber(elemNumStoreTotalDelta[resourceId],storeTotalReqd,18,true,"black",false,true);
       SetStyle(elemNumStoreTotalDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumStoreTotalDelta[resourceId].style.borderRadius = '0%';
     }
     else {
-      WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
+      // Non zero, either negative or positive
       // either have more than required or less
       if (fieldValues.storeCurrentStatusDelta[resourceId] < 0) {
         //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
         elemNumStoreTotalDelta[resourceId].style.borderRadius = '50%';
+        WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,storeTotalReqd,16,true,"black",false,false);
 
       }
       else {
+        // more than enough
         SetStyle(elemNumStoreTotalDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
         elemNumStoreTotalDelta[resourceId].style.borderRadius = '0%';
+        WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,storeTotalReqd,14,false,"black",false,false);
       }
     }
 
@@ -1211,7 +1214,7 @@ function UpdateGUIArch() {
   else {
     WriteSingleString(document.getElementById("linewithtext-current-store-status"),
                     fieldValues.storeCurrentStatusString,16,true,"black");
-    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "#F9967A";                
+    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "mercFailColour";                
   }
 
 
@@ -1269,6 +1272,7 @@ function UpdateGUIArch() {
         // short on this one
         failCountPostMerc++;
         SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
+       // elemNumPostMercDelta[resourceId].style.backgroundColor = mercFailColour;
         elemNumPostMercDelta[resourceId].style.border = 'solid';
         if (CanBuyResource(resourceId) && resourceId != 0) {
           elemNumPostMercDelta[resourceId].style.borderRadius = '15px';
@@ -1521,15 +1525,15 @@ function CalculateMercSuccessFuture() {
   //fieldValues.postMercResourceFailCount;
   //fieldValues.postMercStatusDelta[0];
   //fieldValues.postMercSuccessNow;
-  //mercGlobal.mysteryDeltaPostMerc;
+  //mercGlobal.postMercMysteryAvailable;
   //mercGlobal.mercFinalReqdDelta[resourceId];
   //function MercBuyResourceId
   //function MercBuyResourceId
 
   let cashOK = fieldValues.postMercStatusDelta[0] >= 0;
   let cashDelta = fieldValues.postMercStatusDelta[0];
-  let mysteryOK = mercGlobal.mysteryDeltaPostMerc >= 0;
-  let mysteryDelta = mercGlobal.mysteryDeltaPostMerc;
+  let mysteryOK = mercGlobal.postMercMysteryAvailable >= 0;
+  let mysteryDelta = mercGlobal.postMercMysteryAvailable;
   let resourcesOk = fieldValues.postMercResourceTypeFailCount <= 0;
   let resourceTypeFailCount = fieldValues.postMercResourceTypeFailCount;
   let totalResourceFailCount = fieldValues.postMercResourceFailCount;
@@ -1644,7 +1648,7 @@ function CalculateMercSuccessFuture() {
      // for (resourceId=1; resourceId<=5; resourceId++) {
      //   if (fieldValues.postMercStatusDelta[resourceId] < 0) {
      //     // This is one of the resources. Can we afford more for mystery?
-     //     if (cashRemaining >= mercGlobal.mysteryDeltaPostMerc[resourceId] * resourceValue[resourceId]) {
+     //     if (cashRemaining >= mercGlobal.postMercMysteryAvailable[resourceId] * resourceValue[resourceId]) {
 
      //     }
 
@@ -1665,7 +1669,7 @@ function CalculatePostMercStatus() {
   fieldValues.postMercCashFail = false;
   fieldValues.postMercMysteryAvailable = 0;
   // ????
-  mercGlobal.mysteryDeltaPostMerc = 0;
+  mercGlobal.postMercMysteryAvailable = 0;
 
 
   // Calculate all the deltas
@@ -1683,7 +1687,7 @@ function CalculatePostMercStatus() {
         fieldValues.postMercResourceFailCount += Math.abs(deltaThisResource) ;
       }
       fieldValues.postMercMysteryAvailable += Math.max(0,fieldValues.postMercStatusDelta[resourceId]);
-      mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
+      mercGlobal.postMercMysteryAvailable += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
       
     }
     else {
@@ -1748,7 +1752,7 @@ function CalculateCurrentStoreStatus() {
   fieldValues.storeCurrentResourceFailCount = 0;
   fieldValues.storeCurrentCashFail = false;
   fieldValues.storeCurrentMysteryAvailable = 0;
-  mercGlobal.mysteryDeltaPostMerc = 0;
+  mercGlobal.postMercMysteryAvailable = 0;
 
 
   // Calculate all the deltas
@@ -1766,7 +1770,7 @@ function CalculateCurrentStoreStatus() {
         fieldValues.storeCurrentResourceFailCount += Math.abs(deltaThisResource) ;
       }
       fieldValues.storeCurrentMysteryAvailable += Math.max(0,fieldValues.storeCurrentStatusDelta[resourceId]);
-      mercGlobal.mysteryDeltaPostMerc += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
+      mercGlobal.postMercMysteryAvailable += Math.max(0,fieldValues.storePostMercDelta[resourceId]);
       
     }
     else {
@@ -1801,6 +1805,10 @@ function CalculateCurrentStoreStatus() {
     fieldValues.storeCurrentMysteryDelta);
 
 } // CalculateCurrentStoreStatus
+
+function WriteElemBlank(elem_) {
+  elem_.textContent = "";
+}
 
 /* ---------------------------------------------------------------------------------------- */
 /* Function: UpdateAll
@@ -1842,11 +1850,39 @@ function UpdateAll() {
   let elemMysteryStoreTotalDelta = document.getElementById("num-store-total-delta-mystery");
   let elemMysteryPostMercTotalDelta = document.getElementById("num-post-merc-total-delta-mystery");
   
-  let delta = 0;
-  delta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd;
-  WriteSlash(elemMysteryStoreTotalDelta,fieldValues.storeCurrentMysteryAvailable,16,false,delta,16,false,"black",false, true);
-  delta = mercGlobal.mysteryDeltaPostMerc - fieldValues.senatorMysteryReqd;
-  WriteSlash(elemMysteryPostMercTotalDelta,mercGlobal.mysteryDeltaPostMerc,16,false,delta,16,false,"black",false, true);
+  let deltaCurrent = 0;
+  let deltaPostMerc = 0;
+  if (fieldValues.senatorMysteryReqd === 0) {
+    WriteElemBlank(elemMysteryStoreTotalDelta)
+    WriteElemBlank(elemMysteryPostMercTotalDelta)
+  }
+  else {
+    deltaCurrent = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd;
+    deltaPostMerc = mercGlobal.postMercMysteryAvailable - fieldValues.senatorMysteryReqd;
+
+    // delta Current
+    if (deltaCurrent === 0) {
+      WriteSingleNumber(elemMysteryStoreTotalDelta,fieldValues.senatorMysteryReqd,16,false,"black",false,false);
+    }
+    else if (deltaCurrent > 0) {
+      WriteSlash(elemMysteryStoreTotalDelta,fieldValues.storeCurrentMysteryAvailable,16,true,fieldValues.senatorMysteryReqd,14,false,"black",false, false);
+    }
+    else if (deltaCurrent < 0) {
+      WriteSlash(elemMysteryStoreTotalDelta,fieldValues.storeCurrentMysteryAvailable,14,false,fieldValues.senatorMysteryReqd,16,true,"black",false, false);
+    }
+
+    // delta Current
+    if (deltaPostMerc === 0) {
+      WriteSingleNumber(elemMysteryPostMercTotalDelta,fieldValues.senatorMysteryReqd,16,false,"black",false,false);
+    }
+    else if (deltaPostMerc > 0) {
+      WriteSlash(elemMysteryPostMercTotalDelta,fieldValues.postMercMysteryAvailable,16,true,fieldValues.senatorMysteryReqd,14,false,"black",false, false);
+    }
+    else if (deltaPostMerc < 0) {
+      WriteSlash(elemMysteryPostMercTotalDelta,fieldValues.postMercMysteryAvailable,14,false,fieldValues.senatorMysteryReqd,16,true,"black",false, false);
+    }
+
+  }
 
   //let mysteryDelta = mercGlobal.spareResourceCount - fieldValues.senatorMysteryReqd;
   //WriteSlash(elemMysteryStoreTotalDelta,mercGlobal.spareResourceCount,12,false,mysteryDelta,14,FinalizationRegistry,"black",false,true); 

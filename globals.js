@@ -11,6 +11,7 @@ const resourceValue = [0,3,4,5,6,7];
 
 let tick = " \u2705 ";
 let cross = " \u274C ";
+let mercFailColour = "#F9967A"
 
 let dataArch = {
   //archHousesCurrent:[0,0,0,0,0,0],
@@ -162,7 +163,7 @@ let mercGlobal = {
 
   hideArchFree:false,
   hideArchStrict:false,
-  mysteryDeltaPostMerc:0,
+  postMercMysteryAvailable:0,
 
   preMercDelta:[0,0,0,0,0,0],
   postMercDelta:[0,0,0,0,0,0],

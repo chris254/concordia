@@ -500,7 +500,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.03";
+  document.getElementById("version").textContent = "V7.04";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1142,7 +1142,7 @@ function UpdateGUIArch() {
     //-----------------------------------------------------------------------------------
     // STORE CURRENT MINUS BUTTON
     //-----------------------------------------------------------------------------------
-    if (fieldValues.storeCurrentStrict[resourceId] === 0) {
+/*    if (fieldValues.storeCurrentStrict[resourceId] === 0) {
         elemBtnDecStrictStore[resourceId].style.backgroundImage = `none`;
 
       elemBtnDecStrictStore[resourceId].textContent = ""
@@ -1156,7 +1156,7 @@ function UpdateGUIArch() {
     else {
         elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
     }
-
+*/
     //-----------------------------------------------------------------------------------
     // STORE FREE
     //-----------------------------------------------------------------------------------

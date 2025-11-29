@@ -180,17 +180,6 @@ const elemIdsArchHousesStrict = [
 const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getElementById(id));
 
 
-  const elemIdsBtnDecStore = [
-    "btn-dec-storecurrent-cash",
-    "btn-dec-storecurrent-brick",
-    "btn-dec-storecurrent-food",
-    "btn-dec-storecurrent-tool",
-    "btn-dec-storecurrent-wine",
-    "btn-dec-storecurrent-cloth",
-  ];
-
-  const elemBtnDecStrictStore = elemIdsBtnDecStore.map((id) => document.getElementById(id));
-
 //-------------------------------------------------------------------------
 const elemIdsPreMercStore = [
   "num-pre-merc-cash",
@@ -500,7 +489,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.05";
+  document.getElementById("version").textContent = "V7.06";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1139,24 +1128,6 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreStrictCurrent,StylesType.CLEAR_NORMAL[resourceId],resourceId);
     }
 
-    //-----------------------------------------------------------------------------------
-    // STORE CURRENT MINUS BUTTON
-    //-----------------------------------------------------------------------------------
-/*    if (fieldValues.storeCurrentStrict[resourceId] === 0) {
-        elemBtnDecStrictStore[resourceId].style.backgroundImage = `none`;
-
-      elemBtnDecStrictStore[resourceId].textContent = ""
-
-    }
-    else if (dataArch.runOutOf[resourceId] || mercGlobal.storeFinal[resourceId] === 0) {
-      elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusInvalidImgPath}')`;
-      // SetMinusStyle(elemBtnDecStrictStore[resourceId],MinusButtonType.RED_NORMAL[resourceId],resourceId);
-
-    }
-    else {
-        elemBtnDecStrictStore[resourceId].style.backgroundImage = `url('${minusImgPath}')`;
-    }
-*/
     //-----------------------------------------------------------------------------------
     // STORE FREE
     //-----------------------------------------------------------------------------------

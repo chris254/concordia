@@ -489,7 +489,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.06";
+  document.getElementById("version").textContent = "V7.07";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1107,12 +1107,13 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <=5; resourceId++) {
 
-    let freeNumber = fieldValues.archStoreReqd[resourceId];
+    let archStoreReqd = fieldValues.archStoreReqd[resourceId];
     let storeCurrentStrict = fieldValues.storeCurrentStrict[resourceId];
     let senatorReqd = dataArch.senatorStoreReqd[resourceId];
-    let storeTotalDelta = storeCurrentStrict - freeNumber - senatorReqd;
+    let storeTotalDelta = storeCurrentStrict - fieldValues.storeTotalReqd[resourceId];
+    let storeTotalReqd = fieldValues.storeTotalReqd[resourceId];
     var bothZero = false;
-    bothZero = freeNumber === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
+    bothZero = archStoreReqd === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
 
     //-----------------------------------------------------------------------------------
     // STORE CURRENT
@@ -1131,7 +1132,7 @@ function UpdateGUIArch() {
     //-----------------------------------------------------------------------------------
     // STORE FREE
     //-----------------------------------------------------------------------------------
-    WriteFieldValueBlankZero(elemNumArchStoreReqd[resourceId],freeNumber,18,true);
+    WriteFieldValueBlankZero(elemNumArchStoreReqd[resourceId],archStoreReqd,18,true);
 
     if (fieldValues.archStoreReqd[resourceId] == 0) {
       SetStyle(elemNumArchStoreReqd,StylesType.CLEAR[resourceId],resourceId);
@@ -1228,16 +1229,18 @@ function UpdateGUIArch() {
     // ARCH HOUSES ACTUAL
     //--------------------------------------------------------------
 
-    let freeNumber = fieldValues.archStoreReqd[resourceId];
+    let archStoreReqd = fieldValues.archStoreReqd[resourceId];
     let storeCurrentStrict = fieldValues.storeCurrentStrict[resourceId];
     let senatorReqd = dataArch.senatorStoreReqd[resourceId];
     let mercFinal = mercGlobal.storeFinal[resourceId]; 
+    let storeTotalReqd = fieldValues.storeTotalReqd[resourceId];
     var allZero = false;
-    allZero = freeNumber === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
+    allZero = archStoreReqd === 0 && storeCurrentStrict === 0 && senatorReqd === 0;
 
     //-----------------------------------------------------------------------------------------------
     // MERC FINAL / POST MERC
-    let mercFinalDelta = mercFinal - freeNumber - senatorReqd;
+    let mercFinalDelta = mercFinal - archStoreReqd - senatorReqd;
+    let totalStoreReqd = archStoreReqd + senatorReqd;
     mercGlobal.mercFinalReqdDelta[resourceId] = mercFinalDelta;
 
     if (allZero && mercFinal === 0) {
@@ -1250,7 +1253,7 @@ function UpdateGUIArch() {
     else if (mercFinalDelta === 0) {
       // Required = Have
 
-      WriteSingleNumber(elemNumPostMercDelta[resourceId],"-",18,true,"black",false,true);
+      WriteSingleNumber(elemNumPostMercDelta[resourceId],storeTotalReqd,18,true,"black",false,true);
       SetStyle(elemNumPostMercDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
       elemNumPostMercDelta[resourceId].style.borderRadius = '0%';
       elemNumPostMercDelta[resourceId].style.border = 'solid';
@@ -1263,6 +1266,7 @@ function UpdateGUIArch() {
       
       if (mercFinalDelta < 0) {
 
+        // short on this one
         failCountPostMerc++;
         SetStyle(elemNumPostMercDelta,StylesType.ORANGE_NORMAL[resourceId],resourceId);
         elemNumPostMercDelta[resourceId].style.border = 'solid';
@@ -1272,11 +1276,13 @@ function UpdateGUIArch() {
         else {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
-        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,storeTotalReqd,16,true,"black",false,false);
+//        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
       }
       else if (mercFinalDelta > 0) {
 
-        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
+        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,16,true,storeTotalReqd,14,false,"black",false,false);
+//        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
 
         if (resourceId === 0) {
           // Cash treated differently
@@ -2659,10 +2665,10 @@ function MercSellResourceId() {
 function ArchMercClick(resourceId) {
 
   if (resourceId != 0) {
-      let freeNumber = fieldValues.archStoreReqd[resourceId];
+      let archStoreReqd = fieldValues.archStoreReqd[resourceId];
       let mercFinal = mercGlobal.storeFinal[resourceId];
       let senatorReqd = dataArch.senatorStoreReqd[resourceId];
-      let diffMercFinalToFree = mercFinal - freeNumber - senatorReqd;
+      let diffMercFinalToFree = mercFinal - archStoreReqd - senatorReqd;
 
       if (diffMercFinalToFree > 0) {
         // Sell

@@ -96,6 +96,22 @@ body {
 
 }
 
+.settings-entry {
+  height: 10px;
+  width: 100%;
+  display: flex;
+  background-color: clear;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: black;
+  font-weight: bolder;
+  border: 1px solid black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+}
+
 .sub-title-divider {
   height: 15px;
   width: 100%;

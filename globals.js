@@ -45,6 +45,9 @@ let dataArch = {
 
   senatorStoreReqd:[0,0,0,0,0,0],
 
+  freeBuildCashValue:[0,0,0,0,0,0],
+  freeBuildCashValueTotal:0,
+
 
 } // dataArch
 
@@ -169,4 +172,11 @@ let mercGlobal = {
   postMercDelta:[0,0,0,0,0,0],
 
   mercFinalReqdDelta:[0,0,0,0,0,0],
+}
+
+let settings = {
+  showSenator : true,
+  showStartingCost : true,
+  showArchitectOnly: true,
+
 }

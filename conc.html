@@ -128,6 +128,20 @@
     
     </div>
 
+    <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row : Additional Houses -->
+      <div class="grid-item-no-border" id="cash-value-total">0</div>
+      <div class="grid-item-no-border" id="cash-value-cash">0</div>
+      <div class="grid-item-no-border" id="cash-value-brick" >0</div>
+      <div class="grid-item-no-border" id="cash-value-food" >0</div>
+      <div class="grid-item-no-border" id="cash-value-tool" >0</div>
+      <div class="grid-item-no-border" id="cash-value-wine" >0</div>
+      <div class="grid-item-no-border" id="cash-value-cloth" >0</div>
+    
+    </div>
+
+
     <div class="line-with-text">BUILD STORE REQD</div>
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
@@ -412,9 +426,9 @@
     <div class="divider"></div>
 
     <div class="title-divider">SETTINGS</div>
-    <div class="settings-entry">SENATOR: SHOWN</div>
-    <div class="settings-entry">STARTING COST: SHOWN</div>
-    <div class="settings-entry">ARCHITECT ONLY: SHOWN</div>
+    <div class="settings-entry" id="settings-senator" onclick="SettingsSenatorClick()">SENATOR: SHOWN</div>
+    <div class="settings-entry" id="settings-startcost"  onclick="SettingsStartCostClick()">STARTING COST: SHOWN</div>
+    <div class="settings-entry" id="settings-architectonly"  onclick="SettingsArchitectOnlyClick()">ARCHITECT ONLY: SHOWN</div>
 
     <!-- CARDS -->
     <div class="title-divider">CARDS</div>

@@ -162,6 +162,18 @@ const elemIdsArchHousesStrict = [
 
  const elemNumStoreTotalReqd = elemIdstotalStoreReqd.map((id) => document.getElementById(id));
 
+ 
+ //--------------------------------------------------------------------
+ const elemIdsCashValue = [
+  "cash-value-cash",
+  "cash-value-brick",
+  "cash-value-food",
+  "cash-value-tool",
+  "cash-value-wine",
+  "cash-value-cloth",
+];
+
+ const elemNumCashValue = elemIdsCashValue.map((id) => document.getElementById(id));
 
 
 
@@ -714,6 +726,17 @@ function CalculateStoreReqdTotal() {
 
   }
 
+  // Calculate cash values
+  let totalCashValue = 0;
+  let thisCashValue  = 0;
+  for (let resourceId = 1; resourceId <= 5; resourceId++) {
+    thisCashValue = fieldValues.storeTotalReqd[resourceId] * resourceValue[resourceId];
+    dataArch.freeBuildCashValue[resourceId] = thisCashValue;
+    totalCashValue += thisCashValue;
+  }
+
+  dataArch.freeBuildCashValue[0] = fieldValues.storeTotalReqd[0];
+  dataArch.freeBuildCashValueTotal = dataArch.freeBuildCashValue[0] + totalCashValue;
 
 } // CalculateStoreTotalReqd
 
@@ -1475,9 +1498,41 @@ function UpdateGUIArch() {
     document.getElementById("linewithtext-post-merc-status").style.backgroundColor = mercFailColour;                
   }
 
+  for (let resourceId = 0; resourceId <= 5; resourceId++) {
+    if (dataArch.freeBuildCashValue[resourceId] != 0 ) {
+      elemNumCashValue[resourceId].textContent = dataArch.freeBuildCashValue[resourceId];
+    }
+    else {
+      elemNumCashValue[resourceId].textContent = "";
+    }
+  }
+
+  WriteFieldValueBlankZero(document.getElementById("cash-value-total"),dataArch.freeBuildCashValueTotal);
 
 } // UPdateGUIArch
 
+function UpdateGUISettings() {
+
+  const elSenator = document.getElementById("settings-senator");
+  const elSenatorTitle = document.getElementById("senator-title");
+  const elSenatorContent = document.getElementById("senator-content");
+
+  const elStartcost = document.getElementById("settings-startcost");
+  const elArchitectonly = document.getElementById("settings-architectonly");
+
+  if (settings.showSenator) {
+    elSenator.style.backgroundColor = "lightgreen";
+    elSenator.textContent = "SENATOR: SHOWN";
+    elSenatorTitle.classList.remove('hidden');
+    elSenatorContent.classList.remove('hidden');
+  }
+  else {
+    elSenator.style.backgroundColor = "grey";
+    elSenator.textContent = "SENATOR: HIDDEN";
+    elSenatorTitle.classList.add('hidden');
+    elSenatorContent.classList.add('hidden');
+  }
+}
 function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFailCount_, mysteryDelta_) {
 
   let cashStatus = "";
@@ -1827,6 +1882,7 @@ function UpdateAll() {
 
   UpdateGUIArch();
   UpdateGUIMerc();
+  UpdateGUISettings();
 
   // ------------------------------------------------------------
   // SENATOR STORE REQD row
@@ -2737,8 +2793,21 @@ function ClickMercSellResourcePlus(resourceId) {
 }
 
 
-  function SetBorderRadius(elem_, radius_) {
+function SetBorderRadius(elem_, radius_) {
+   elem_.style.borderRadius = radius_;
+}
 
-    elem_.style.borderRadius = radius_;
-  }
+function SettingsSenatorClick() {
+  settings.showSenator = !settings.showSenator;
+  UpdateAll();
+}
 
+function SettingsStartCostClick () {
+  settings.showStartingCost = !settings.showStartingCost;
+  UpdateAll();
+}
+
+function SettingsArchitectOnlyClick () {
+  settings.showArchitectOnly = !settings.showArchitectOnly;
+  UpdateAll();
+}

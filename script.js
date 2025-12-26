@@ -162,6 +162,18 @@ const elemIdsArchHousesStrict = [
 
  const elemNumStoreTotalReqd = elemIdstotalStoreReqd.map((id) => document.getElementById(id));
 
+ //--------------------------------------------------------------------
+ const elemIdsStoreDelta = [
+  "num-store-delta-cash",
+  "num-store-delta-brick",
+  "num-store-delta-food",
+  "num-store-delta-tool",
+  "num-store-delta-wine",
+  "num-store-delta-cloth",
+];
+
+ const elemNumStoreDelta = elemIdsStoreDelta.map((id) => document.getElementById(id));
+
  
  //--------------------------------------------------------------------
  const elemIdsCashValue = [
@@ -501,7 +513,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V7.11";
+  document.getElementById("version").textContent = "V8.00";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -1478,6 +1490,28 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreTotalReqd,StylesType.CLEAR[resourceId],resourceId);
     }
 
+    //-----------------------------------------------------------
+    // STORE DELTA
+    //-----------------------------------------------------------
+
+    let thisDelta = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeTotalReqd[resourceId];
+    elemNumStoreDelta[resourceId].style.borderRadius = '0px';
+
+    WriteSingleNumber(elemNumStoreDelta[resourceId],
+      thisDelta,16,true,"black",true,false);
+
+    if (thisDelta > 0) {
+      SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+    else if (thisDelta < 0) {
+      SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
+
+    }
+    else {
+      // zero required
+      SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
+    }
+
     
   } // 0 to 5
 
@@ -1500,37 +1534,76 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
     if (dataArch.freeBuildCashValue[resourceId] != 0 ) {
-      elemNumCashValue[resourceId].textContent = dataArch.freeBuildCashValue[resourceId];
+      elemNumCashValue[resourceId].textContent = "£ "+ dataArch.freeBuildCashValue[resourceId];
     }
     else {
       elemNumCashValue[resourceId].textContent = "";
     }
   }
 
-  WriteFieldValueBlankZero(document.getElementById("cash-value-total"),dataArch.freeBuildCashValueTotal);
+  if (dataArch.freeBuildCashValueTotal != 0) {
+    document.getElementById("cash-value-total").textContent = "£ " + dataArch.freeBuildCashValueTotal;
+  }
+  else {
+    document.getElementById("cash-value-total").textContent = "";
+  }
 
 } // UPdateGUIArch
 
 function UpdateGUISettings() {
 
   const elSenator = document.getElementById("settings-senator");
-  const elSenatorTitle = document.getElementById("senator-title");
-  const elSenatorContent = document.getElementById("senator-content");
-
-  const elStartcost = document.getElementById("settings-startcost");
-  const elArchitectonly = document.getElementById("settings-architectonly");
 
   if (settings.showSenator) {
     elSenator.style.backgroundColor = "lightgreen";
     elSenator.textContent = "SENATOR: SHOWN";
-    elSenatorTitle.classList.remove('hidden');
-    elSenatorContent.classList.remove('hidden');
+    document
+      .querySelectorAll('.senator-group')
+      .forEach(el => el.classList.remove('hidden') );
   }
   else {
     elSenator.style.backgroundColor = "grey";
     elSenator.textContent = "SENATOR: HIDDEN";
-    elSenatorTitle.classList.add('hidden');
-    elSenatorContent.classList.add('hidden');
+    document
+      .querySelectorAll('.senator-group')
+      .forEach(el => el.classList.add('hidden') );
+  }
+
+  // CASH VALUES
+  const elCashValues = document.getElementById("settings-cashvalues");
+
+  if (settings.showCashValues) {
+    elCashValues.style.backgroundColor = "lightgreen";
+    elCashValues.textContent = "CASH VALUES: SHOWN";
+    document
+      .querySelectorAll('.cash-values-group')
+      .forEach(el => el.classList.remove('hidden') );
+  }
+  else {
+    elCashValues.style.backgroundColor = "grey";
+    elCashValues.textContent = "CASH VALUES: HIDDEN";
+    document
+      .querySelectorAll('.cash-values-group')
+      .forEach(el => el.classList.add('hidden') );
+
+  }
+  // CASH VALUES
+  const elArchitectOnly = document.getElementById("settings-architectonly");
+
+  if (settings.showArchitectOnly) {
+    elArchitectOnly.style.backgroundColor = "lightgreen";
+    elArchitectOnly.textContent = "ARCHITECT ONLY: SHOWN";
+    document
+      .querySelectorAll('.architect-only-group')
+      .forEach(el => el.classList.remove('hidden') );
+  }
+  else {
+    elArchitectOnly.style.backgroundColor = "grey";
+    elArchitectOnly.textContent = "ARCHITECT ONLY: HIDDEN";
+    document
+      .querySelectorAll('.architect-only-group')
+      .forEach(el => el.classList.add('hidden') );
+
   }
 }
 function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFailCount_, mysteryDelta_) {
@@ -2802,8 +2875,8 @@ function SettingsSenatorClick() {
   UpdateAll();
 }
 
-function SettingsStartCostClick () {
-  settings.showStartingCost = !settings.showStartingCost;
+function SettingsCashValuesClick () {
+  settings.showCashValues = !settings.showCashValues;
   UpdateAll();
 }
 

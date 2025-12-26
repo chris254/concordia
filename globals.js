@@ -175,8 +175,8 @@ let mercGlobal = {
 }
 
 let settings = {
-  showSenator : true,
-  showStartingCost : true,
-  showArchitectOnly: true,
+  showSenator : false,
+  showCashValues : true,
+  showArchitectOnly: false,
 
 }

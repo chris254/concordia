@@ -1534,7 +1534,7 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
     if (dataArch.freeBuildCashValue[resourceId] != 0 ) {
-      elemNumCashValue[resourceId].textContent = "£ "+ dataArch.freeBuildCashValue[resourceId];
+      elemNumCashValue[resourceId].textContent = ""+ dataArch.freeBuildCashValue[resourceId];
     }
     else {
       elemNumCashValue[resourceId].textContent = "";

@@ -204,17 +204,6 @@ const elemIdsArchHousesStrict = [
 const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getElementById(id));
 
 
-//-------------------------------------------------------------------------
-const elemIdsPreMercStore = [
-  "num-pre-merc-cash",
-  "num-pre-merc-brick",
-  "num-pre-merc-food",
-  "num-pre-merc-tool",
-  "num-pre-merc-wine",
-  "num-pre-merc-cloth",
-];
-
-const elemNumPreMercStore = elemIdsPreMercStore.map((id) => document.getElementById(id));
 
 //-------------------------------------------------------------------------
 const elemIdsMercStoreFinal = [
@@ -264,17 +253,6 @@ const elemIdsMercBuyPot = [
 ];
 
 const elemNumMercBuyPot = elemIdsMercBuyPot.map((id) => document.getElementById(id));
-
-const elemIdsPreMercSellValue = [
-  "num-pre-merc-cashvalue-cash",
-  "num-pre-merc-cashvalue-brick",
-  "num-pre-merc-cashvalue-food",
-  "num-pre-merc-cashvalue-tool",
-  "num-pre-merc-cashvalue-wine",
-  "num-pre-merc-cashvalue-cloth",
-];
-
-const elemNumPreMercCashValue = elemIdsPreMercSellValue.map((id) => document.getElementById(id));
 
 //---------------------------------------------------------------------------------
 const elemIdsMercDeltaTotal = [
@@ -513,7 +491,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V8.00";
+  document.getElementById("version").textContent = "V8.01";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -2188,57 +2166,6 @@ function UpdateGUIMerc() {
     //let newStyle = minusButtonState[resourceId];
     //SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
 
-    if (resourceId === 0) {
-
-      if (mercActive === MercType.MERC0) {
-        WriteSingleNumber(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
-      }
-      else {
-        WriteSlash(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],12,true,mercGlobal.storePreSell[resourceId],16,true,"black",false,false);
-      }
-
-      if (mercGlobal.storePreSell[resourceId] === 0 && mercActive === MercType.MERC0) {
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
-        elemNumPreMercStore[resourceId].textContent = '';
-      }
-      else {
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
-      }
-
-    }
-    else {
-      WriteSingleNumber(elemNumPreMercStore[resourceId],mercGlobal.mercStore[resourceId],16,true,"black",false,false);
-
-      if (mercGlobal.storePreSell[resourceId] === 0) {
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR[resourceId],resourceId);
-      } 
-      else {
-
-        SetStyle(elemNumPreMercStore,StylesType.CLEAR_NORMAL[resourceId],resourceId);
-      }
-
-    }
-
-    //--------------------------------------------------------------------
-    // £??
-    //--------------------------------------------------------------------
-    if (resourceId === 0) {
-
-      let totalValue = mercGlobal.storePreSell[0] + mercGlobal.totalStoreCashValue;
-      elemNumPreMercCashValue[resourceId].textContent = 
-        mercGlobal.storePreSell[0] + "+" +
-          mercGlobal.totalStoreCashValue + "=" +
-          totalValue;
-
-    }
-    else if (mercGlobal.storePreSell[resourceId] === 0) {
-      elemNumPreMercCashValue[resourceId].textContent = "";
-      elemNumPreMercCashValue[resourceId].classList.remove(styleResourceName);
-    } 
-    else {
-      elemNumPreMercCashValue[resourceId].textContent = mercGlobal.storeCashValue[resourceId];
-      elemNumPreMercCashValue[resourceId].classList.remove(styleResourceName);
-    }
 
     //-----------------------------------------------------------------------
     // SELL PLUS BUTTON

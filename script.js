@@ -2906,11 +2906,11 @@ function OnClickRst(index_) {
     scores.mercuriousCount = 0;
   }
   else if (index_ === 4) {
-    scores.marsCardsCards = 0;
+    scores.marsCards = 0;
     scores.marsCount = 0;
   }
   else if (index_ === 5) {
-    scores.minBCardsCards = 0;
+    scores.minBCards = 0;
     scores.minBCount=0;
   }
   else if (index_ === 6) {
@@ -2997,22 +2997,22 @@ function OnClickCards(index_) {
     scores.marsCards++;
   }
   else if (index_ === 5) {
-    scores.minBCards++;
+    scores.minBCards = 1
   }
   else if (index_ === 6) {
-    scores.minFCards++;
+    scores.minFCards = 1;
   }
   else if (index_ === 7) {
-    scores.minTCards++;
+    scores.minTCards = 1;
   }
   else if (index_ === 8) {
-    scores.minWCards++;
+    scores.minWCards = 1;
   }
   else if (index_ === 9) {
-    scores.minCCards++;
+    scores.minCCards = 1;
   }
   else if (index_ === 10) {
-    scores.concordiaCards++;
+    scores.concordiaCards = 1;
   }
   else if (index_ === 11) {
   }

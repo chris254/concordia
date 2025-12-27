@@ -2802,3 +2802,219 @@ function SettingsArchitectOnlyClick () {
   settings.showArchitectOnly = !settings.showArchitectOnly;
   UpdateAll();
 }
+
+function WriteToCount(index_,value_) {
+  let elemId = "count-" + (index_);
+  WriteFieldValueBlankZero(document.getElementById(elemId),value_);
+}
+
+function WriteToCards(index_,value_) {
+  let elemId = "cards-" + (index_);
+  WriteFieldValueBlankZero(document.getElementById(elemId),value_);
+}
+
+function WriteToVp(index_,value_) {
+  let elemId = "vp-" + (index_);
+  WriteFieldValueBlankZero(document.getElementById(elemId),value_);
+}
+
+function ProcessScores() {
+  scores.jupVp = 1 * scores.jupCount * scores.jupCards;
+  WriteToCount(0,scores.jupCount);
+  WriteToCards(0,scores.jupCards);
+  WriteToVp(0,scores.jupVp);
+
+  scores.satVp = 1 * scores.satCount * scores.satCards;
+  WriteToCount(1,scores.satCount);
+  WriteToCards(1,scores.satCards);
+  WriteToVp(1,scores.satVp);
+
+  scores.venusVp = 2 * scores.venusCount * scores.venusCards;
+  WriteToCount(2,scores.venusCount);
+  WriteToCards(2,scores.venusCards);
+  WriteToVp(2,scores.venusVp);
+
+  scores.mercuriousVp = 2 * scores.mercuriousCount * scores.mercuriousCards;
+  WriteToCount(3,scores.mercuriousCount);
+  WriteToCards(3,scores.mercuriousCards);
+  WriteToVp(3,scores.mercuriousVp);
+
+
+  scores.marsVp = 2 * scores.marsCount * scores.marsCards;
+  WriteToCount(4,scores.marsCount);
+  WriteToCards(4,scores.marsCards);
+  WriteToVp(4,scores.marsVp);
+
+  scores.minBVp = 3 * scores.minBCount * scores.minBCards;
+  WriteToCount(5,scores.minBCount);
+  WriteToCards(5,scores.minBCards);
+  WriteToVp(5,scores.minBVp);
+
+  scores.minFVp = 3 * scores.minFCount * scores.minFCards;
+  WriteToCount(6,scores.minFCount);
+  WriteToCards(6,scores.minFCards);
+  WriteToVp(6,scores.minFVp);
+
+  scores.minTVp = 3 * scores.minTCount * scores.minTCards;
+  WriteToCount(7,scores.minTCount);
+  WriteToCards(7,scores.minTCards);
+  WriteToVp(7,scores.minTVp);
+
+  scores.minWVp = 4 * scores.minWCount * scores.minWCards;
+  WriteToCount(8,scores.minWCount);
+  WriteToCards(8,scores.minWCards);
+  WriteToVp(8,scores.minWVp);
+
+  scores.minCVp = 5 * scores.minCCount * scores.minCCards;
+  WriteToCount(9,scores.minCCount);
+  WriteToCards(9,scores.minCCards);
+  WriteToVp(9,scores.minCVp);
+
+
+  scores.concordiaVp = 7 * scores.concordiaCards;
+  WriteToCards(10,scores.concordiaCards);
+  WriteToVp(10,scores.concordiaVp);
+
+  scores.vestaVp = Math.floor(scores.cashTotal/10);
+  WriteToCount(11,scores.cashTotal);
+  WriteToVp(11,scores.vestaVp);
+
+  scores.totalVp = scores.jupVp + scores.satVp + scores.venusVp + scores.mercuriousVp + scores.marsVp + 
+    scores.minBVp + scores.minFVp + scores.minTVp + scores.minWVp + scores.minCVp + scores.concordiaVp + scores.vestaVp;
+
+  document.getElementById("score").textContent = "SCORE: " + scores.totalVp;
+  // Write to the GUI
+}
+
+// Scores
+function OnClickRst(index_) {
+
+  if (index_ === 0) {
+    scores.jupCards = 0;
+    scores.jupCount=0;
+  }
+  else if (index_ === 1) {
+    scores.satCards = 0;
+    scores.satCount=0;
+  }
+  else if (index_ === 2) {
+    scores.venusCards = 0;
+    scores.venusCount=0;
+  }
+  else if (index_ === 3) {
+    scores.mercuriousCards = 0;
+    scores.mercuriousCount = 0;
+  }
+  else if (index_ === 4) {
+    scores.marsCardsCards = 0;
+    scores.marsCount = 0;
+  }
+  else if (index_ === 5) {
+    scores.minBCardsCards = 0;
+    scores.minBCount=0;
+  }
+  else if (index_ === 6) {
+    scores.minFCards = 0;
+    scores.minFCount=0;
+  }
+  else if (index_ === 7) {
+    scores.minTCards = 0;
+    scores.minTCount=0;
+  }
+  else if (index_ === 8) {
+    scores.minWCards = 0;
+    scores.minWCount=0;
+  }
+  else if (index_ === 9) {
+    scores.minCCards = 0;
+    scores.minCCount=0;
+  }
+  else if (index_ === 10) {
+    scores.concordiaCards = 0;
+  }
+  else if (index_ === 11) {
+    scores.cashTotal = 0;
+  }
+
+  ProcessScores();
+}
+
+function OnClickCount(index_) {
+
+  if (index_ === 0) {
+    scores.jupCount++;
+  }
+  else if (index_ === 1) {
+    scores.satCount++;
+  }
+  else if (index_ === 2) {
+    scores.venusCount++;
+  }
+  else if (index_ === 3) {
+    scores.mercuriousCount++;
+  }
+  else if (index_ === 4) {
+    scores.marsCount++;
+  }
+  else if (index_ === 5) {
+    scores.minBCount++;
+  }
+  else if (index_ === 6) {
+    scores.minFCount++;
+  }
+  else if (index_ === 7) {
+    scores.minTCount++;
+  }
+  else if (index_ === 8) {
+    scores.minWCount++;
+  }
+  else if (index_ === 9) {
+    scores.minCCount++;
+  }
+  else if (index_ === 10) {
+  }
+  else if (index_ === 11) {
+    scores.cashTotal++;
+  }
+  ProcessScores();
+}
+
+function OnClickCards(index_) {
+
+  if (index_ === 0) {
+    scores.jupCards++;
+  }
+  else if (index_ === 1) {
+    scores.satCards++;
+  }
+  else if (index_ === 2) {
+    scores.venusCards++;
+  }
+  else if (index_ === 3) {
+    scores.mercuriousCards++;
+  }
+  else if (index_ === 4) {
+    scores.marsCards++;
+  }
+  else if (index_ === 5) {
+    scores.minBCards++;
+  }
+  else if (index_ === 6) {
+    scores.minFCards++;
+  }
+  else if (index_ === 7) {
+    scores.minTCards++;
+  }
+  else if (index_ === 8) {
+    scores.minWCards++;
+  }
+  else if (index_ === 9) {
+    scores.minCCards++;
+  }
+  else if (index_ === 10) {
+    scores.concordiaCards++;
+  }
+  else if (index_ === 11) {
+  }
+  ProcessScores();
+}

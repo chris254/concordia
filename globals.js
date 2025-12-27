@@ -180,3 +180,54 @@ let settings = {
   showArchitectOnly: false,
 
 }
+
+let scores = {
+  jupCount: 0,
+  jupCards: 0,
+  jupVp: 0,
+
+  satCount: 0,
+  satCards: 0,
+  satVp: 0,
+
+  venusCount: 0,
+  venusCards: 0,
+  venusVp: 0,
+
+  mercuriousCount: 0,
+   mercuriousCards: 0,
+   mercuriousVp: 0,
+
+  marsCount: 0,
+  marsCards: 0,
+  marsVp: 0,
+
+  minBCount: 0,
+  minBCards: 0,
+  minBVp: 0,
+
+  minFCount: 0,
+  minFCards: 0,
+  minFVp: 0,
+
+  minTCount: 0,
+  minTCards: 0,
+  minTVp: 0,
+
+  minWCount: 0,
+  minWCards: 0,
+  minWVp: 0,
+
+  minCCount: 0,
+  minCCards: 0,
+  minCVp: 0,
+
+  concoridaVp: 0,
+  concordiaCards: 0,
+
+  cashTotal: 0,
+  vestaVp: 0,
+
+  totalVp: 0,
+
+}

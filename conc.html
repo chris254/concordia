@@ -395,7 +395,166 @@
     <div class="settings-entry" id="settings-cashvalues"  onclick="SettingsCashValuesClick()">CASH VALUES: SHOWN</div>
     <div class="settings-entry" id="settings-architectonly"  onclick="SettingsArchitectOnlyClick()">ARCHITECT ONLY: SHOWN</div>
 
+    <!-- **************************************************************************************** -->
     <!-- CARDS -->
+    <div class="title-divider" id="score">SCORE: 0</div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white; font-size:10px;">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder">God</div>
+      <div class="grid-item-border" style="font-weight: bolder">X</div>
+      <div class="grid-item-border" style="font-weight: bolder">Count</div>
+      <div class="grid-item-border" style="font-weight: bolder">Cards</div>      
+      <div class="grid-item-border" style="font-weight: bolder">VP</div>
+      <div class="grid-item-border" style="font-weight: bolder">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #7fcfda;">Jup</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #7fcfda;">1</div>
+      <div class="grid-item-border" id="count-0" style="font-weight: bolder; background-color: #7fcfda;" onclick="OnClickCount(0)"></div>
+      <div class="grid-item-border" id="cards-0" style="font-weight: bolder; background-color: #7fcfda;" onclick="OnClickCards(0)"></div>      
+      <div class="grid-item-border" id="vp-0" style="font-weight: bolder; background-color: #7fcfda;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(0)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #f8afc4;">Sat</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #f8afc4;">1</div>
+      <div class="grid-item-border" id="count-1" style="font-weight: bolder; background-color: #f8afc4;" onclick="OnClickCount(1)"></div>
+      <div class="grid-item-border" id="cards-1" style="font-weight: bolder; background-color: #f8afc4;" onclick="OnClickCards(1)"></div>      
+      <div class="grid-item-border" id="vp-1" style="font-weight: bolder; background-color: #f8afc4;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(1)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #2521f3;">Venus</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #2521f3;">2</div>
+      <div class="grid-item-border" id="count-2" style="font-weight: bolder; background-color: #2521f3;" onclick="OnClickCount(2)"></div>
+      <div class="grid-item-border" id="cards-2" style="font-weight: bolder; background-color: #2521f3;" onclick="OnClickCards(2)"></div>      
+      <div class="grid-item-border" id="vp-2" style="font-weight: bolder; background-color: #2521f3;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(2)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #803d06;">Merc</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #803d06;">2</div>
+      <div class="grid-item-border" id="count-3" style="font-weight: bolder; background-color: #803d06;" onclick="OnClickCount(3)"></div>
+      <div class="grid-item-border" id="cards-3" style="font-weight: bolder; background-color: #803d06;" onclick="OnClickCards(3)"></div>      
+      <div class="grid-item-border" id="vp-3" style="font-weight: bolder; background-color: #803d06;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(3)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #f3aa0d;">Mars</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #f3aa0d;">2</div>
+      <div class="grid-item-border" id="count-4" style="font-weight: bolder; background-color: #f3aa0d;" onclick="OnClickCount(4)"></div>
+      <div class="grid-item-border" id="cards-4" style="font-weight: bolder; background-color: #f3aa0d;" onclick="OnClickCards(4)"></div>      
+      <div class="grid-item-border" id="vp-4" style="font-weight: bolder; background-color: #f3aa0d;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(4)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">MinB</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">3</div>
+      <div class="grid-item-border" id="count-5" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCount(5)"></div>
+      <div class="grid-item-border" id="cards-5" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(5)"></div>      
+      <div class="grid-item-border" id="vp-5" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(5)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">MinF</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">3</div>
+      <div class="grid-item-border" id="count-6" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCount(6)"></div>
+      <div class="grid-item-border" id="cards-6" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(6)"></div>      
+      <div class="grid-item-border" id="vp-6" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(6)">RST</div>
+
+    </div>
+
+        <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">MinT</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">3</div>
+      <div class="grid-item-border" id="count-7" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCount(7)"></div>
+      <div class="grid-item-border" id="cards-7" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(7)"></div>      
+      <div class="grid-item-border" id="vp-7" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(7)">RST</div>
+
+    </div>
+
+        <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">MinW</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">4</div>
+      <div class="grid-item-border" id="count-8" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCount(8)"></div>
+      <div class="grid-item-border" id="cards-8" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(8)"></div>      
+      <div class="grid-item-border" id="vp-8" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(8)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">MinC</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">5</div>
+      <div class="grid-item-border" id="count-9" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCount(9)"></div>
+      <div class="grid-item-border" id="cards-9" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(9)"></div>      
+      <div class="grid-item-border" id="vp-9" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(9)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">Conc</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #aff0f8;">7</div>
+      <div class="grid-item-border" id="count-10" style="font-weight: bolder; background-color: #aff0f8;">N/A</div>
+      <div class="grid-item-border" id="cards-10" style="font-weight: bolder; background-color: #aff0f8;" onclick="OnClickCards(10)"></div>      
+      <div class="grid-item-border" id="vp-10" style="font-weight: bolder; background-color: #aff0f8;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(10)">RST</div>
+
+    </div>
+
+    <div class="scores-row" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #409407;">Vesta</div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: #409407;">N/A</div>
+      <div class="grid-item-border" id="count-11" style="font-weight: bolder; background-color: #409407;" onclick="OnClickCount(11)"></div>
+      <div class="grid-item-border" id="cards-11" style="font-weight: bolder; background-color: #409407;">N/A</div>      
+      <div class="grid-item-border" id="vp-11" style="font-weight: bolder; background-color: #409407;"></div>
+      <div class="grid-item-border" style="font-weight: bolder; background-color: red;" onclick="OnClickRst(11)">RST</div>
+
+    </div>
+
     <div class="title-divider">CARDS</div>
     <div class="row-gap"></div>
 

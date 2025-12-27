@@ -106,7 +106,7 @@ body {
 
 }
 
-.sub-title-divider {
+.sub-title-divider-left {
   height: 15px;
   width: 100%;
   display: flex;
@@ -114,8 +114,24 @@ body {
   justify-content: left;
   align-items: center;
   font-size: 8px;
-  color: white;
+  color: black;
   font-weight: normal;
+  border: 1px solid black;
+  margin-bottom: 2px;
+  white-space: pre;
+
+}
+
+.sub-title-divider-center {
+  height: 15px;
+  width: 100%;
+  display: flex;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  color: black;
+  font-weight: bolder;
   border: 1px solid black;
   margin-bottom: 2px;
   white-space: pre;

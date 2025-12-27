@@ -1196,7 +1196,7 @@ function UpdateGUIArch() {
       if (fieldValues.storeCurrentStatusDelta[resourceId] < 0) {
         //WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,16,true,fieldValues.storeCurrentStatusDelta[resourceId],16,true,"black",false,true);
         SetStyle(elemNumStoreTotalDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
-        elemNumStoreTotalDelta[resourceId].style.borderRadius = '50%';
+        elemNumStoreTotalDelta[resourceId].style.borderRadius = '0%';
         WriteSlash(elemNumStoreTotalDelta[resourceId],storeCurrentStrict,14,false,storeTotalReqd,16,true,"black",false,false);
 
       }
@@ -1237,20 +1237,20 @@ function UpdateGUIArch() {
   }
 
   // Can I achieve the required build + senator??
-  if (fieldValues.storeCurrentResourceTypeFailCount === 0 && 
-      !fieldValues.storeCurrentCashFail && 
-      !fieldValues.storeCurrentMysteryFail) {
-    // Everything good
-    WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    fieldValues.storeCurrentStatusString,16,true,"black");
-    document.getElementById("linewithtext-current-store-status").style.backgroundColor = "lightgreen";                
-
-  }
-  else {
-    WriteSingleString(document.getElementById("linewithtext-current-store-status"),
-                    fieldValues.storeCurrentStatusString,16,true,"black");
-    document.getElementById("linewithtext-current-store-status").style.backgroundColor = mercFailColour;                
-  }
+  //if (fieldValues.storeCurrentResourceTypeFailCount === 0 && 
+  //    !fieldValues.storeCurrentCashFail && 
+  //    !fieldValues.storeCurrentMysteryFail) {
+  //  // Everything good
+  //  WriteSingleString(document.getElementById("linewithtext-current-store-status"),
+  //                  fieldValues.storeCurrentStatusString,16,true,"black");
+  //  document.getElementById("linewithtext-current-store-status").style.backgroundColor = "lightgreen";                
+  //
+ // }
+//  else {
+ //   WriteSingleString(document.getElementById("linewithtext-current-store-status"),
+ //                   fieldValues.storeCurrentStatusString,16,true,"black");
+ //   document.getElementById("linewithtext-current-store-status").style.backgroundColor = mercFailColour;                
+ // }
 
 
 
@@ -1490,6 +1490,11 @@ function UpdateGUIArch() {
       SetStyle(elemNumStoreTotalReqd,StylesType.CLEAR[resourceId],resourceId);
     }
 
+  } // 0 to 5
+  
+  let failCountPreMerc = 0;
+  for (let resourceId=0; resourceId <=5; resourceId++ ) {
+
     //-----------------------------------------------------------
     // STORE DELTA
     //-----------------------------------------------------------
@@ -1505,6 +1510,7 @@ function UpdateGUIArch() {
     }
     else if (thisDelta < 0) {
       SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
+      failCountPreMerc++;
 
     }
     else {
@@ -1514,6 +1520,13 @@ function UpdateGUIArch() {
 
     
   } // 0 to 5
+
+  if (failCountPreMerc > 0) {
+    document.getElementById("title-divider-store-delta").style.backgroundColor = mercFailColour;
+  }
+  else {
+    document.getElementById("title-divider-store-delta").style.backgroundColor = "lightgreen";
+  }
 
 
     // Can I achieve the required build + senator??

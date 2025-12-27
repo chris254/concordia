@@ -94,7 +94,7 @@
     
     </div>
 
-    <div class="title-divider">RESOURCE MANAGEMENT</div>
+    <div class="title-divider">ARCHITECT STATUS (CURRENT STORE)</div>
 
     <div class="line-with-text senator-group">SENATOR STORE REQD</div>
 
@@ -204,7 +204,7 @@
     
     </div>
 
-    <div class="sub-title-divider-center" id="title-divider-store-delta">STORE DELTA</div>
+    <div class="sub-title-divider-center" id="title-divider-store-delta">PRE MERC STATUS</div>
     
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
@@ -242,12 +242,30 @@
 
     <div class="title-divider">MERCATOR</div>
 
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white"    >
+    
+      <!-- ========================================================================== -->
+      <!-- Row 14: Cost of resource (for Mercator) -->
+      <div class="grid-item-no-border">
+        <button class="btn-full-not-selected" onclick="ResetMercTrades()" style="background-color: red; color: white">RST</button>
+      </div>
+      <div class="card-title" onclick="SetCardMerc()" id="btn-merc">MERC3</div>
+      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 8pt">Trades:</div>
+      <div class="grid-item" id="num-trades"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+      <div class="grid-item-no-border"></div>
+
+    </div>
+
+    <div class="sub-title-divider-center" id="title-divider-post-merc">POST MERC STATUS</div>
+
     <div class="sub-title-divider-left" id="linewithtext-post-merc-status">POST MERC STATUS</div>
 
-<!--
+
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
 
-      <div class="grid-item-no-border" id="num-store-total-delta-cash" style="font-weight: bolder">ACT</div>
+      <div class="grid-item-no-border" id="num-store-total-delta-cash" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-cash-act" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-brick-act" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-food-act" style="font-weight: bolder"></div>
@@ -255,7 +273,8 @@
       <div class="grid-item-no-border" id="merc-quick-wine-act" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="merc-quick-cloth-act" style="font-weight: bolder"></div>
     </div>
--->    
+
+
 
     <div class="grid-container-row-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
     
@@ -298,34 +317,6 @@
 
     </div>
 
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">FINAL</button>
-      </div>
-      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder">0</div>
-    </div>
-
-
-    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white"    >
-    
-      <!-- ========================================================================== -->
-      <!-- Row 14: Cost of resource (for Mercator) -->
-      <div class="grid-item-no-border">
-        <button class="btn-full-not-selected" onclick="ResetMercTrades()" style="background-color: red; color: white">RST</button>
-      </div>
-      <div class="card-title" onclick="SetCardMerc()" id="btn-merc">MERC3</div>
-      <div class="grid-item-no-border" style="font-weight: lighter; font-size: 10pt">Trades</div>
-      <div class="grid-item" id="num-trades"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-      <div class="grid-item-no-border"></div>
-
-    </div>
 
 
     <!-- ------------------------------------------------------------------------------------ -->
@@ -350,10 +341,7 @@
 
     <div class="divider-small"></div>
 
-    <div
-      class="grid-container-no-gap"
-      style="white-space: nowrap; overflow-x: auto; background-color: white"
-    >
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <!-- ========================================================================== -->
       <!-- Row x: MERC STORE OUT -->
       <div class="grid-item-no-border">
@@ -366,6 +354,9 @@
       <div class="grid-item-no-border" id="num-merc-store-out-wine" style="font-weight: bolder"></div>
       <div class="grid-item-no-border" id="num-merc-store-out-cloth" style="font-weight: bolder"></div>
 
+    </div>
+
+    <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
       <!-- ========================================================================== -->
       <!-- Row x: MERC STORE IN -->
       <div class="grid-item-no-border">
@@ -380,19 +371,22 @@
 
     </div>
 
-    <div class="divider-small"></div>
-
     <div class="grid-container-no-gap" style="white-space: nowrap; overflow-x: auto; background-color: white">
+      <!-- ========================================================================== -->
+      <!-- Row x: MERC STORE IN -->
       <div class="grid-item-no-border">
-        <button class="btn-full-not-selected">FINAL</button>
+        <button class="btn-full-not-selected">FIN</button>
       </div>
-      <div class="grid-item-no-border cash" id="num-final-merc-cash" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border brick" id="num-final-merc-brick" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border food" id="num-final-merc-food" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border tool" id="num-final-merc-tool" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border wine" id="num-final-merc-wine" style="font-weight: bolder">0</div>
-      <div class="grid-item-no-border cloth" id="num-final-merc-cloth" style="font-weight: bolder">0</div>
+      <div class="grid-item-no-border" id="num-merc-store-cash-final" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-brick-final" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-food-final" style="font-weight: bolder"></div>      
+      <div class="grid-item-no-border" id="num-merc-store-tool-final" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-wine-final" style="font-weight: bolder"></div>
+      <div class="grid-item-no-border" id="num-merc-store-cloth-final" style="font-weight: bolder"></div>
+
     </div>
+
+    <div class="divider-small"></div>
 
     <div class="divider"></div>
 

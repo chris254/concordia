@@ -205,18 +205,6 @@ const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getEleme
 
 
 
-//-------------------------------------------------------------------------
-const elemIdsMercStoreFinal = [
-  "num-final-merc-cash",
-  "num-final-merc-brick",
-  "num-final-merc-food",
-  "num-final-merc-tool",
-  "num-final-merc-wine",
-  "num-final-merc-cloth",
-];
-
-const elemNumMercStoreFinal = elemIdsMercStoreFinal.map((id) => document.getElementById(id));
-
 //-----------------------------------------------------------------------------
 const elemIdsMercQuickAct = [
   "merc-quick-cash-act",
@@ -365,6 +353,18 @@ const elemIdsMercStoreIn = [
 const elemMercStoreIn = elemIdsMercStoreIn.map((id) => document.getElementById(id));
 
 //------------------------------------------------------------------------
+const elemIdsMercStoreFinal = [
+  "num-merc-store-cash-final",
+  "num-merc-store-brick-final",
+  "num-merc-store-food-final",
+  "num-merc-store-tool-final",
+  "num-merc-store-wine-final",
+  "num-merc-store-cloth-final",
+];
+
+const elemMercStoreFinal = elemIdsMercStoreFinal.map((id) => document.getElementById(id));
+
+//------------------------------------------------------------------------
 const elemIdsMercStoreOut = [
   "num-merc-store-out-cash",
   "num-merc-store-out-brick",
@@ -491,7 +491,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V8.01";
+  document.getElementById("version").textContent = "V8.02";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");
@@ -2388,6 +2388,16 @@ function UpdateGUIMerc() {
       }
     }
 
+    let mercStoreFinal = mercGlobal.storeFinal[resourceId] ;
+    if (mercStoreFinal === 0) {
+      elemMercStoreFinal[resourceId].textContent = "";
+      SetStyle(elemMercStoreFinal,StylesType.CLEAR[resourceId],resourceId);
+    } 
+    else {
+      elemMercStoreFinal[resourceId].textContent = mercStoreFinal;
+      SetStyle(elemMercStoreFinal,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+
     
     //--------------------------------------------------------------------
     // STORE OUT
@@ -2417,56 +2427,24 @@ function UpdateGUIMerc() {
       }
     }
 
-    //--------------------------------------------------------------------
-    // Final
-    //---------xxx-----------------------------------------------------------
-    if (mercGlobal.storeFinal[resourceId] === 0) {
-      SetStyle(elemNumMercStoreFinal,StylesType.CLEAR[resourceId],resourceId);
-      elemNumMercStoreFinal[resourceId].textContent = "";
-    } 
+    let mercFinalFailCount = 0
+    let thisDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
+    elemNumQuickMercAct[resourceId].style.borderRadius = '0px';
+
+    WriteSingleNumber(elemNumQuickMercAct[resourceId],
+      thisDelta,16,true,"black",true,false);
+
+    if (thisDelta > 0) {
+      SetStyle(elemNumQuickMercAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+    }
+    else if (thisDelta < 0) {
+      SetStyle(elemNumQuickMercAct,StylesType.ORANGE_BLACK[resourceId],resourceId);
+      mercFinalFailCount++;
+    }
     else {
-      SetStyle(elemNumMercStoreFinal,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-
-      elemNumMercStoreFinal[resourceId].textContent = mercGlobal.storeFinal[resourceId];
+      // zero required
+      SetStyle(elemNumQuickMercAct,StylesType.CLEAR[resourceId],resourceId);
     }
-
-/*
-    let mercResourceDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
-    let leftBold = false;
-    let leftSize = 14;
-    if (fieldValues.archStoreReqd[resourceId] === 0) {
-      // Don't need any
-      if (mercGlobal.storeFinal[resourceId] === 0) {
-        SetStyle(elemNumQuickMercAct,StylesType.CLEAR[resourceId],resourceId);
-       elemNumQuickMercAct[resourceId].textContent = "";
-      }
-      else {
-        SetStyle(elemNumQuickMercAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-       elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-      }
-     leftBold = mercResourceDelta > 0;
-    }
-    else if (mercResourceDelta >= 0) {
-     SetStyle(elemNumQuickMercAct,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-     //SetStyle(elemNumQuickMercReq,StylesType.GREEN_NORMAL[resourceId],resourceId);
-      leftBold = true;
-      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-    }
-    else if (mercResourceDelta < -1) {
-      SetStyle(elemNumQuickMercAct,StylesType.RED_NORMAL[resourceId],resourceId);
-      //SetStyle(elemNumQuickMercReq,StylesType.RED_NORMAL[resourceId],resourceId);
-      leftBold=false;
-      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-    }
-    else if (mercResourceDelta < 0) {
-      SetStyle(elemNumQuickMercAct,StylesType.ORANGE_NORMAL[resourceId],resourceId);
-      //etStyle(elemNumQuickMercReq,StylesType.ORANGE_NORMAL[resourceId],resourceId);
-      leftBold=false;
-      elemNumQuickMercAct[resourceId].textContent = mercGlobal.storeFinal[resourceId];
-    }
-*/
-    //elemNumQuickMercReq[resourceId].textContent = fieldValues.archStoreReqd[resourceId];
-
   }
 }
 

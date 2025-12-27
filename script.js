@@ -491,7 +491,7 @@ let elemNumTrades;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V8.03";
+  document.getElementById("version").textContent = "V8.04";
 
   elemNumTrades = document.getElementById("num-trades");
   elemBtnMode = document.getElementById("btn-mode");

@@ -178,7 +178,8 @@ let mercGlobal = {
 
 let preMercStatus = {
   cashDelta:0,
-  resourceFailCount:0,
+  resourceOnlyFailCount:0,
+  resourceAllFailCount:0,
   resourceDelta:[0,0,0,0,0,0],
 
 

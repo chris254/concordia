@@ -1116,6 +1116,7 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
 function CalculatePreMercStatus() {
 
   preMercStatus.resourceFailCount = 0;
+  preMercStatus.resourceAllFailCount = 0;
   for (let resourceId=0; resourceId <=5; resourceId++ ) {
 
     //-----------------------------------------------------------
@@ -1126,11 +1127,16 @@ function CalculatePreMercStatus() {
 
     if (resourceId == 0) {
       preMercStatus.cashDelta = thisDelta;
+      preMercStatus.resourceDelta[resourceId] = thisDelta;
+      if (thisDelta < 0) {
+        preMercStatus.resourceAllFailCount++;
+      }
     }
     else {
       preMercStatus.resourceDelta[resourceId] = thisDelta;
       if (thisDelta < 0) {
-        preMercStatus.resourceFailCount++;
+        preMercStatus.resourceOnlyFailCount++;
+        preMercStatus.resourceAllFailCount++;
       }
     }
     
@@ -1521,22 +1527,27 @@ function UpdateGUIArch() {
     }
 
     if (preMercStatus.resourceDelta[resourceId] < 0) {
-      failStatus = failStatus + "  " + resourceNames[resourceId]; 
+      failStatus = failStatus + resourceNames[resourceId] + " "; 
+    }
+    else {
+      failStatus = failStatus + tick + " "; 
     }
     
   } // 0 to 5
 
 
 
-  if (preMercStatus.resourceFailCount > 0) {
+  if (preMercStatus.resourceAllFailCount > 0) {
     document.getElementById("pre-merc-status").style.backgroundColor = mercFailColour;
     document.getElementById("pre-merc-status").textContent = 
-      "PRE MERC STATUS: " + failStatus;
+      "PRE MERC STATUS:             " + failStatus + 
+      "         Failed: " + Math.abs(preMercStatus.resourceAllFailCount);
   }
   else {
+    // No failures
     document.getElementById("pre-merc-status").style.backgroundColor = "lightgreen";
     document.getElementById("pre-merc-status").textContent = 
-      "PRE MERC STATUS: " + tick;
+      "PRE MERC STATUS:             " + tick;
   }
 
 

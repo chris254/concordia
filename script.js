@@ -487,13 +487,15 @@ document.getElementById("btn-inc-arch-cloth");
 let elemMercStore = [0, 0, 0, 0, 0];
 
 let elemNumTrades;
+let elemMercAutoStatus;
 
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V8.05";
+  document.getElementById("version").textContent = "V8.1";
 
   elemNumTrades = document.getElementById("num-trades");
+  elemMercAutoStatus = document.getElementById("merc-auto-status");
   elemBtnMode = document.getElementById("btn-mode");
 
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -925,6 +927,11 @@ function ResetMercTrades() {
   UpdateAll();
 }
 
+function RunMercAuto() {
+
+  UpdateAll();
+}
+
 function ResetStrictBuild()
 {
   for (let resourceId=1; resourceId <= 5; resourceId++)
@@ -1103,6 +1110,32 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
   elem_.appendChild(rightText);
 
   elem_.color = color_
+
+}
+
+function CalculatePreMercStatus() {
+
+  preMercStatus.resourceFailCount = 0;
+  for (let resourceId=0; resourceId <=5; resourceId++ ) {
+
+    //-----------------------------------------------------------
+    // STORE DELTA
+    //-----------------------------------------------------------
+
+    let thisDelta = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeTotalReqd[resourceId];
+
+    if (resourceId == 0) {
+      preMercStatus.cashDelta = thisDelta;
+    }
+    else {
+      preMercStatus.resourceDelta[resourceId] = thisDelta;
+      if (thisDelta < 0) {
+        preMercStatus.resourceFailCount++;
+      }
+    }
+    
+  } // 0 to 5
+
 
 }
 
@@ -1294,12 +1327,10 @@ function UpdateGUIArch() {
           elemNumPostMercDelta[resourceId].style.borderRadius = '50%';
         }
         WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,storeTotalReqd,16,true,"black",false,false);
-//        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
       }
       else if (mercFinalDelta > 0) {
 
         WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,16,true,storeTotalReqd,14,false,"black",false,false);
-//        WriteSlash(elemNumPostMercDelta[resourceId],mercFinal,14,false,mercFinalDelta,16,true,"black",false,true);
 
         if (resourceId === 0) {
           // Cash treated differently
@@ -1470,41 +1501,46 @@ function UpdateGUIArch() {
 
   } // 0 to 5
   
-  let failCountPreMerc = 0;
+  let failStatus = "";
   for (let resourceId=0; resourceId <=5; resourceId++ ) {
 
-    //-----------------------------------------------------------
-    // STORE DELTA
-    //-----------------------------------------------------------
-
-    let thisDelta = fieldValues.storeCurrentStrict[resourceId] - fieldValues.storeTotalReqd[resourceId];
     elemNumStoreDelta[resourceId].style.borderRadius = '0px';
 
     WriteSingleNumber(elemNumStoreDelta[resourceId],
-      thisDelta,16,true,"black",true,false);
+      preMercStatus.resourceDelta[resourceId],16,true,"black",true,false);
 
-    if (thisDelta > 0) {
+    if (preMercStatus.resourceDelta[resourceId] > 0) {
       SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
     }
-    else if (thisDelta < 0) {
+    else if (preMercStatus.resourceDelta[resourceId] < 0) {
       SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
-      failCountPreMerc++;
-
     }
     else {
       // zero required
       SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
     }
 
+    if (preMercStatus.resourceDelta[resourceId] < 0) {
+      failStatus = failStatus + "  " + resourceNames[resourceId]; 
+    }
     
   } // 0 to 5
 
-  if (failCountPreMerc > 0) {
-    document.getElementById("title-divider-store-delta").style.backgroundColor = mercFailColour;
+
+
+  if (preMercStatus.resourceFailCount > 0) {
+    document.getElementById("pre-merc-status").style.backgroundColor = mercFailColour;
+    document.getElementById("pre-merc-status").textContent = 
+      "PRE MERC STATUS: " + failStatus;
   }
   else {
-    document.getElementById("title-divider-store-delta").style.backgroundColor = "lightgreen";
+    document.getElementById("pre-merc-status").style.backgroundColor = "lightgreen";
+    document.getElementById("pre-merc-status").textContent = 
+      "PRE MERC STATUS: " + tick;
   }
+
+
+
 
 
     // Can I achieve the required build + senator??
@@ -1525,10 +1561,11 @@ function UpdateGUIArch() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
     if (dataArch.freeBuildCashValue[resourceId] != 0 ) {
-      elemNumCashValue[resourceId].textContent = ""+ dataArch.freeBuildCashValue[resourceId];
+      elemNumCashValue[resourceId].textContent = dataArch.freeBuildCashValue[resourceId];
     }
     else {
-      elemNumCashValue[resourceId].textContent = "";
+      elemNumCashValue[resourceId].textContent = dataArch.freeBuildCashValue[resourceId];
+      elemNumCashValue[resourceId].textContent = " ";
     }
   }
 
@@ -1536,7 +1573,7 @@ function UpdateGUIArch() {
     document.getElementById("cash-value-total").textContent = "£ " + dataArch.freeBuildCashValueTotal;
   }
   else {
-    document.getElementById("cash-value-total").textContent = "";
+    document.getElementById("cash-value-total").textContent = " ";
   }
 
 } // UPdateGUIArch
@@ -1942,6 +1979,7 @@ function UpdateAll() {
   ProcessMerc();
 
   CalculateCurrentStoreStatus();
+  CalculatePreMercStatus();
   CalculatePostMercStatus();
 
   UpdateGUIArch();
@@ -2147,7 +2185,10 @@ function UpdateGUIMerc() {
   {
     elemNumTrades.style.backgroundColor = "lightgreen";
   }
-  //elemNumTrades.style.color = "grey";
+
+  SetBorderRadius(elemMercAutoStatus,'15px');
+  elemMercAutoStatus.textContent = "N/A";
+  elemMercAutoStatus.style.backgroundColor = "lightgreen";
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 

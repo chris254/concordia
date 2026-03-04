@@ -9,6 +9,8 @@ const indexCloth = 5;
 
 const resourceValue = [0,3,4,5,6,7];
 
+const resourceNames = ["££","BR","FO","TO","WI","CL"];
+
 let tick = " \u2705 ";
 let cross = " \u274C ";
 let mercFailColour = "#F9967A"
@@ -172,6 +174,15 @@ let mercGlobal = {
   postMercDelta:[0,0,0,0,0,0],
 
   mercFinalReqdDelta:[0,0,0,0,0,0],
+}
+
+let preMercStatus = {
+  cashDelta:0,
+  resourceFailCount:0,
+  resourceDelta:[0,0,0,0,0,0],
+
+
+
 }
 
 let settings = {

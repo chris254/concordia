@@ -492,7 +492,7 @@ let elemMercAutoStatus;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V8.1";
+  document.getElementById("version").textContent = "V8.2";
 
   elemNumTrades = document.getElementById("num-trades");
   elemMercAutoStatus = document.getElementById("merc-auto-status");
@@ -1515,15 +1515,25 @@ function UpdateGUIArch() {
     WriteSingleNumber(elemNumStoreDelta[resourceId],
       preMercStatus.resourceDelta[resourceId],16,true,"black",true,false);
 
-    if (preMercStatus.resourceDelta[resourceId] > 0) {
-      SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
-    }
-    else if (preMercStatus.resourceDelta[resourceId] < 0) {
-      SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
+    if (fieldValues.storeTotalReqd[resourceId] == 0 && fieldValues.storeCurrentStrict[resourceId] == 0) {
+      // None required and none in the store so leave empty
+      SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
     }
     else {
-      // zero required
-      SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
+      if (preMercStatus.resourceDelta[resourceId] > 0) {
+        // Have more than required
+        SetStyle(elemNumStoreDelta,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
+      }
+      else if (preMercStatus.resourceDelta[resourceId] < 0) {
+        // Have less than required
+        SetStyle(elemNumStoreDelta,StylesType.ORANGE_BLACK[resourceId],resourceId);
+      }
+      else {
+        // Have just got enough
+        SetStyle(elemNumStoreDelta,StylesType.CLEAR[resourceId],resourceId);
+        elemNumStoreDelta[resourceId].textContent = tick;
+      }
+
     }
 
     if (preMercStatus.resourceDelta[resourceId] < 0) {

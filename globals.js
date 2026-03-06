@@ -181,9 +181,13 @@ let preMercStatus = {
   resourceOnlyFailCount:0,
   resourceAllFailCount:0,
   resourceDelta:[0,0,0,0,0,0],
+}
 
-
-
+let postMercStatus = {
+  cashDelta:0,
+  resourceOnlyFailCount:0,
+  resourceAllFailCount:0,
+  resourceDelta:[0,0,0,0,0,0],
 }
 
 let settings = {

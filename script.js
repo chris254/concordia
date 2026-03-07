@@ -39,6 +39,7 @@ const StylesType = Object.freeze({
   BLUE_NORMAL: ["blue-background-cash","blue-background-brick","blue-background-food","blue-background-tool","blue-background-wine","blue-background-cloth"],
 
   RESOURCE_SPECIFIC: ["cash-background-black","brick-background-black","food-background-black","tool-background-black","wine-background-black","cloth-background-black"],
+  RESOURCE_THICK_SPECIFIC: ["cash-background-thick-black","brick-background-thick-black","food-background-thick-black","tool-background-thick-black","wine-background-thick-black","cloth-background-thick-black"],
 
 })
 
@@ -529,7 +530,7 @@ let elemMercAutoStatus;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V9.0";
+  document.getElementById("version").textContent = "V9.01";
 
   elemNumTrades = document.getElementById("num-trades");
   elemMercAutoStatus = document.getElementById("merc-auto-status");
@@ -2423,15 +2424,25 @@ function UpdateGUIMerc() {
       SetBorderRadius(elemBtnMercBuyPlus[resourceId],'15px');
 
       if (buyPoss === 0) {
-        elemBtnMercBuyPlus[resourceId].textContent = "";
+        // Cannot buy any at all
+        if (postMercStatus.resourceDelta[resourceId] < 0) {
+          // Need to buy these but can't
+          elemBtnMercBuyPlus[resourceId].textContent = cross ;
+        }
+        else {
+          // Don't need to buy
+          elemBtnMercBuyPlus[resourceId].textContent = "";
+        }
         SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
       }
       else if (sellActive && buyPoss > 0) {
+        // Currently an active sell and cam buy some, so make this unselectable.
         SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
         WriteSingle(elemBtnMercBuyPlus[resourceId],"x",12,false,fontColor); 
       }
       else {
         if (buyAct === buyPoss) {   
+          // Have bought all there is to buy
           SetStyle(elemBtnMercBuyPlus,StylesType.RESOURCE_SPECIFIC[resourceId],resourceId);
           WriteSingle(elemBtnMercBuyPlus[resourceId],buyAct,16,true,fontColor);    
         }
@@ -2441,12 +2452,22 @@ function UpdateGUIMerc() {
             WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],16,true,mercGlobal.buyQtyPossible[resourceId],12,false,fontColor);
           }
           else {
+            // buy is not active, but can we actually buy any?
             if (mercGlobal.totalTradeCount >= 2) {
+              // Not possible as currently have 2 trades
               SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
               WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor); 
             }           
             else {
-              SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+              // Buying is possible
+              if (postMercStatus.resourceDelta[resourceId] < 0) {
+                // Can and need to buy
+                SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_THICK[resourceId],resourceId);
+              }
+              else {
+                // Don't need to buy
+                SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+              }
               WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor); 
             }
           }
@@ -2685,6 +2706,7 @@ function ClearAllStyles(elemArray,resourceId) {
   elemArray[resourceId].classList.remove(StylesType.BLUE_NORMAL[resourceId]);
 
   elemArray[resourceId].classList.remove(StylesType.RESOURCE_SPECIFIC[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.RESOURCE_THICK_SPECIFIC[resourceId]);
 
 }
 

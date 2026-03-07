@@ -518,27 +518,53 @@ body {
 
 /* -------------------------------------------------------------------- */
 .cash-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
   background-color: rgb(128, 172, 128);
 }
 .brick-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
   background-color: rgb(183, 65, 14);
 }
 .food-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
   background-color: rgb(226, 199, 23);
 }
 .tool-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
   background-color: rgb(141, 141, 137);
 }
 .wine-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
   background-color: rgb(241, 12, 12);
 }
 .cloth-background-black {
-  border: 2px solid black;
+  border: 1px solid black;
+  background-color: rgb(62, 100, 189);
+}
+
+/* -------------------------------------------------------------------- */
+.cash-background-thick-black {
+  border: 5px solid black;
+  background-color: rgb(128, 172, 128);
+}
+.brick-background-thick-black {
+  border: 5px solid black;
+  background-color: rgb(183, 65, 14);
+}
+.food-background-thick-black {
+  border: 5px solid black;
+  background-color: rgb(226, 199, 23);
+}
+.tool-background-thick-black {
+  border: 5px solid black;
+  background-color: rgb(141, 141, 137);
+}
+.wine-background-thick-black {
+  border: 5px solid black;
+  background-color: rgb(241, 12, 12);
+}
+.cloth-background-thick-black {
+  border: 5px solid black;
   background-color: rgb(62, 100, 189);
 }
 

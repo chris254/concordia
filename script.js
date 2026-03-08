@@ -526,15 +526,15 @@ document.getElementById("btn-inc-arch-cloth");
 let elemMercStore = [0, 0, 0, 0, 0];
 
 let elemNumTrades;
-let elemMercAutoStatus;
+let elemTradesReqd;
 
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V9.03";
+  document.getElementById("version").textContent = "V9.04";
 
   elemNumTrades = document.getElementById("num-trades");
-  elemMercAutoStatus = document.getElementById("merc-auto-status");
+  elemTradesReqd = document.getElementById("trades-reqd");
   elemBtnMode = document.getElementById("btn-mode");
 
   elemBtnResetAll = document.getElementById("btn-reset-all");
@@ -906,7 +906,7 @@ function ClickMercBuyResourcePlus(resourceId) {
     if (mercGlobal.buyInProgress[resourceId]) {
       mercGlobal.buyQtyActual[resourceId]++;
     }
-    else if (mercGlobal.totalTradeCount < 2) {
+    else if (postMercStatus.currentTradeCount < 2) {
 
       // Not in progress so a new trade is to be created
       // if sellcount is zero, then place the new trade at the first element, i.e. zero
@@ -1417,7 +1417,7 @@ function UpdateGUIArch() {
     }
 
     //---------------------------------------------------------------------
-    let tradeCountReached = mercGlobal.totalTradeCount >= 2;
+    let tradeCountReached = postMercStatus.currentTradeCount >= 2;
 
     if (resourceId != 0) {
  
@@ -1796,7 +1796,7 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
 
 function CalculateMercSuccessFuture() {
 
-  //mercGlobal.totalTradeCount;
+  //postMercStatus.currentTradeCount;
   //fieldValues.postMercResourceTypeFailCount;
   //fieldValues.postMercResourceFailCount;
   //fieldValues.postMercStatusDelta[0];
@@ -1837,11 +1837,11 @@ function CalculateMercSuccessFuture() {
     // Already achieved it
     result = true;
   }
-  else if (mercGlobal.totalTradeCount === 2) {
+  else if (postMercStatus.currentTradeCount === 2) {
     // Now = false and run out of trades. So not possible
     result = false;
   }
-  else if (mercGlobal.totalTradeCount === 1) {
+  else if (postMercStatus.currentTradeCount === 1) {
 
     // How many resources are we missing
     if (resourcesOk && cashOK && mysteryOK) {
@@ -2013,6 +2013,31 @@ function CalculatePostMercStatus() {
     fieldValues.postMercStatusDelta[0], 
     fieldValues.postMercResourceTypeFailCount, 
     fieldValues.postMercMysteryDelta);
+
+  // Calculate   
+  postMercStatus.totalCostOfMissingResource = 0;
+  let thisDelta = 0;
+  for (resourceId = 0; resourceId<=5; resourceId++) {
+    thisDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
+    postMercStatus.resourceDelta[resourceId] = thisDelta;
+    if (resourceId == 0) {
+      postMercStatus.cashDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
+    }
+
+    if (thisDelta < 0) {
+      postMercStatus.totalCostOfMissingResource += Math.abs(thisDelta);
+    }
+
+    // Calcuate number of trades reqd
+    postMercStatus.tradeCountRequired = 0;
+    postMercStatus.tradeIsPossible=false;
+
+    if (postMercStatus.totalCostOfMissingResource <= 0 && postMercStatus.cashDelta <= 0) {
+
+    }
+
+  }
+
 
 
 
@@ -2294,11 +2319,11 @@ function UpdateGUIMerc() {
   const largeText = document.createElement('span');
   largeText.className = 'large-text';
 
-  elemNumTrades.textContent = mercGlobal.totalTradeCount;
-  if (mercGlobal.totalTradeCount === 2) {
+  elemNumTrades.textContent = postMercStatus.currentTradeCount;
+  if (postMercStatus.currentTradeCount === 2) {
     elemNumTrades.style.backgroundColor = "red";
   }
-  else if (mercGlobal.totalTradeCount === 1) {
+  else if (postMercStatus.currentTradeCount === 1) {
     elemNumTrades.style.backgroundColor = "orange";
   }
   else
@@ -2306,9 +2331,8 @@ function UpdateGUIMerc() {
     elemNumTrades.style.backgroundColor = "lightgreen";
   }
 
-  SetBorderRadius(elemMercAutoStatus,'15px');
-  elemMercAutoStatus.textContent = "N/A";
-  elemMercAutoStatus.style.backgroundColor = "lightgreen";
+  elemTradesReqd.textContent = "N/A";
+  elemTradesReqd.style.backgroundColor = "lightgreen";
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
 
@@ -2341,7 +2365,7 @@ function UpdateGUIMerc() {
       SetBorderRadius(elemBtnMercSell[resourceId],'15px');
 
       let fontColor = "";
-      if (mercGlobal.totalTradeCount >= 2 && !sellActive) fontColor = "grey" ;
+      if (postMercStatus.currentTradeCount >= 2 && !sellActive) fontColor = "grey" ;
       else fontColor = "black";
     
       if (buyActive && mercGlobal.storePreSell[resourceId] > 0) {
@@ -2376,7 +2400,7 @@ function UpdateGUIMerc() {
 
       }
 
-      if (mercGlobal.totalTradeCount >= 2 && !sellActive) { newSellStyle = StylesType.CLEAR[resourceId]} ;
+      if (postMercStatus.currentTradeCount >= 2 && !sellActive) { newSellStyle = StylesType.CLEAR[resourceId]} ;
 
       SetStyle(elemBtnMercSell,newSellStyle,resourceId);
     }
@@ -2415,7 +2439,7 @@ function UpdateGUIMerc() {
       let buyActive = mercGlobal.buyInProgress[resourceId];
     
       let fontColor = "";
-      if (mercGlobal.totalTradeCount >= 2 && !buyActive) fontColor = "grey" ;
+      if (postMercStatus.currentTradeCount >= 2 && !buyActive) fontColor = "grey" ;
       else fontColor = "black";
 
       // UPDATE BUY BUTTON
@@ -2454,7 +2478,7 @@ function UpdateGUIMerc() {
           }
           else {
             // buy is not active, but can we actually buy any?
-            if (mercGlobal.totalTradeCount >= 2) {
+            if (postMercStatus.currentTradeCount >= 2) {
               // Not possible as currently have 2 trades
               SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR[resourceId],resourceId);
               WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor); 
@@ -2792,7 +2816,7 @@ function ProcessMerc() {
   // Calculate:
   // mercGlobal.sellInProgress[resourceId]
   // mercGlobal.buyTradeCount
-  // mercGlobal.totalTradeCount
+  // postMercStatus.currentTradeCount
 
   let localSellCount = 0;
   let localBuyCount = 0;
@@ -2822,7 +2846,7 @@ function ProcessMerc() {
 
   }
 
-  mercGlobal.totalTradeCount = localSellCount + localBuyCount;
+  postMercStatus.currentTradeCount = localSellCount + localBuyCount;
 
 
 
@@ -2908,13 +2932,6 @@ function ProcessMerc() {
 
   mercGlobal.storeCashValue[0] = mercGlobal.totalStoreCashValue;
 
-  for (resourceId = 0; resourceId<=5; resourceId++) {
-    postMercStatus.resourceDelta[resourceId] = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
-    if (resourceId == 0) {
-      postMercStatus.cashDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
-    }
-  }
-
 
 }
 
@@ -2965,7 +2982,7 @@ function ClickMercSellResourcePlus(resourceId) {
     if (mercGlobal.sellInProgress[resourceId] && mercGlobal.storePreBuy[resourceId] > 0) {
       mercGlobal.sellQtyActual[resourceId]++;
     }
-    else if (mercGlobal.totalTradeCount < 2 && mercGlobal.storePreBuy[resourceId] > 0) {
+    else if (postMercStatus.currentTradeCount < 2 && mercGlobal.storePreBuy[resourceId] > 0) {
       // Not in progress so a new trade is to be created
       // if sellcount is zero, then place the new trade at the first element, i.e. zero
       mercGlobal.sellQtyActual[resourceId]++;

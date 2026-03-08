@@ -162,7 +162,6 @@ let mercGlobal = {
   cashBonus:0,
 
 
-  totalTradeCount:0,
   
   totalStoreCashValue:0,
 
@@ -188,6 +187,13 @@ let postMercStatus = {
   resourceOnlyFailCount:0,
   resourceAllFailCount:0,
   resourceDelta:[0,0,0,0,0,0],
+
+  currentTradeCount:0,
+  totalCostOfMissingResource:0,
+
+  tradeCountRequired:0,
+  tradeIsPossible:false,
+
 }
 
 let settings = {

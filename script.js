@@ -26,6 +26,7 @@ const StylesType = Object.freeze({
 
   CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
   CLEAR_NORMAL: ["cash","brick","food","tool","wine","cloth"],
+  CLEAR_GREY: ["grey","grey","grey","grey","grey","grey"],
   CLEAR_THICK: ["clear-thick-cash","clear-thick-brick","clear-thick-food","clear-thick-tool","clear-thick-wine","clear-thick-cloth"],
   CLEAR_NORMAL_BOLD: ["clear-normal-bold-cash","clear-normal-bold-brick","clear-normal-bold-ood","clear-normal-bold-tool","clear-normal-bold-wine","clear-normal-bold-cloth"],
   CLEAR_THICK_BOLD: ["clear-thick-bold-cash","clear-thick-bold-brick","clear-thick-bold-food","clear-thick-bold-tool","clear-thick-bold-wine","clear-thick-bold-cloth"],
@@ -530,7 +531,7 @@ let elemMercAutoStatus;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V9.01";
+  document.getElementById("version").textContent = "V9.03";
 
   elemNumTrades = document.getElementById("num-trades");
   elemMercAutoStatus = document.getElementById("merc-auto-status");
@@ -2463,12 +2464,14 @@ function UpdateGUIMerc() {
               if (postMercStatus.resourceDelta[resourceId] < 0) {
                 // Can and need to buy
                 SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_THICK[resourceId],resourceId);
+                WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor); 
               }
               else {
                 // Don't need to buy
-                SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_NORMAL[resourceId],resourceId);
+                SetStyle(elemBtnMercBuyPlus,StylesType.CLEAR_GREY[resourceId],resourceId);
+                fontColor = "lightgrey";
+                WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,false,fontColor); 
               }
-              WriteSlash(elemBtnMercBuyPlus[resourceId],mercGlobal.buyQtyActual[resourceId],12,false,mercGlobal.buyQtyPossible[resourceId],16,true,fontColor); 
             }
           }
         }
@@ -2656,6 +2659,7 @@ function SetMinusStyle(elem, newStyle, resourceId) {
 function ClearAllArchResNumStyles(elem, resourceId) {
 
   elem.classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
+  elem.classList.remove(StylesType.CLEAR_GREY[resourceId]);
   elem.classList.remove(StylesType.CLEAR[resourceId]);
 }
 
@@ -2696,6 +2700,7 @@ function ClearAllStyles(elemArray,resourceId) {
 
   elemArray[resourceId].classList.remove(StylesType.CLEAR[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
+  elemArray[resourceId].classList.remove(StylesType.CLEAR_GREY[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.CLEAR_THICK[resourceId]);
   elemArray[resourceId].classList.remove(StylesType.CLEAR_NORMAL_BOLD[resourceId]);
 

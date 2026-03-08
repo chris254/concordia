@@ -54,9 +54,9 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
 
-  grid-auto-rows: 25px;
+  grid-auto-rows: auto;
   column-gap: 2px; /* Space between grid items */
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   width: 100%;
   height: auto;
   /*height: 100vh;*/
@@ -298,6 +298,13 @@ body {
   width: 5px;
 }
 
+.grey {
+  background-color: transparent;
+  border: 1px solid lightgrey;
+  color: lightgrey;
+  font-weight: lighter;
+}
+
 .cash {
   background-color: transparent;
   border: 3px solid green;
@@ -461,32 +468,32 @@ body {
 
 /* -------------------------------------------------------------------- */
 .orange-background-black {
-  border: 4px solid black;
+  border: 2px solid black;
   background-color: orange;
 }
 
 .orange-background-cash {
-  border: 4px solid green;
+  border: 2px solid green;
   background-color: orange;
 }
 .orange-background-brick {
-  border: 4px solid rgb(183, 65, 14);
+  border: 2px solid rgb(183, 65, 14);
   background-color: orange;
 }
 .orange-background-food {
-  border: 4px solid rgb(226, 199, 23);
+  border: 2px solid rgb(226, 199, 23);
   background-color: orange;
 }
 .orange-background-tool {
-  border: 4px solid rgb(141, 141, 137);
+  border: 2px solid rgb(141, 141, 137);
   background-color: orange;
 }
 .orange-background-wine {
-  border: 4px solid rgb(241, 12, 12);
+  border: 2px solid rgb(241, 12, 12);
   background-color: orange;
 }
 .orange-background-cloth {
-  border: 4px solid rgb(62, 100, 189);
+  border: 2px solid rgb(62, 100, 189);
   background-color: orange;
 }
 

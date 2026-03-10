@@ -531,7 +531,7 @@ let elemTradesReqd;
 document.addEventListener("DOMContentLoaded", function () {
   function Initialise() {}
 
-  document.getElementById("version").textContent = "V9.04";
+  document.getElementById("version").textContent = "V9.05";
 
   elemNumTrades = document.getElementById("num-trades");
   elemTradesReqd = document.getElementById("trades-reqd");
@@ -1664,18 +1664,17 @@ function UpdateGUIArch() {
 
 
     // Can I achieve the required build + senator??
-  if (fieldValues.postMercResourceTypeFailCount === 0 && 
-      !fieldValues.postMercCashFail && 
+  if (postMercStatus.resourceAllFailCount === 0 && 
       !fieldValues.postMercMysteryFail) {
     // Everything good
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
-                    fieldValues.postMercStatusString,16,true,"black");
+                    postMercStatus.postMercStatusString,16,true,"black");
     document.getElementById("linewithtext-post-merc-status").style.backgroundColor = "lightgreen";                
 
   }
   else {
     WriteSingleString(document.getElementById("linewithtext-post-merc-status"),
-                    fieldValues.postMercStatusString,16,true,"black");
+                    postMercStatus.postMercStatusString,16,true,"black");
     document.getElementById("linewithtext-post-merc-status").style.backgroundColor = mercFailColour;                
   }
 
@@ -1796,146 +1795,83 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
 
 function CalculateMercSuccessFuture() {
 
-  //postMercStatus.currentTradeCount;
-  //fieldValues.postMercResourceTypeFailCount;
-  //fieldValues.postMercResourceFailCount;
-  //fieldValues.postMercStatusDelta[0];
-  //fieldValues.postMercSuccessNow;
-  //mercGlobal.postMercMysteryAvailable;
-  //mercGlobal.mercFinalReqdDelta[resourceId];
-  //function MercBuyResourceId
-  //function MercBuyResourceId
-
-  let cashOK = fieldValues.postMercStatusDelta[0] >= 0;
-  let cashDelta = fieldValues.postMercStatusDelta[0];
-  let mysteryOK = mercGlobal.postMercMysteryAvailable >= 0;
-  let mysteryDelta = mercGlobal.postMercMysteryAvailable;
-  let resourcesOk = fieldValues.postMercResourceTypeFailCount <= 0;
-  let resourceTypeFailCount = fieldValues.postMercResourceTypeFailCount;
-  let totalResourceFailCount = fieldValues.postMercResourceFailCount;
-  let result = false;
-
-  let spareResourceCashValue = [0,0,0,0,0,0];
-  let missingResourceCashValue = [0,0,0,0,0,0];
-  let missingResourcesTotalValue = 0;
-  for (resourceId = 1; resourceId <=5; resourceId++) {
-    spareResourceCashValue[resourceId] = Math.max(0,fieldValues.postMercStatusDelta[resourceId]) * resourceValue[resourceId] ;
-    if (fieldValues.postMercStatusDelta[resourceId] < 0) {
-      // This resource is missing
-      missingResourceCashValue[resourceId] = Math.abs(fieldValues.postMercStatusDelta[resourceId])*resourceValue[resourceId];
-      missingResourcesTotalValue += missingResourceCashValue[resourceId];
-    }
-    else {
-      // Not short on this resource
-      missingResourceCashValue[resourceId] = 0;
-    }
-  }
-
-  result = false;
-
-  if (fieldValues.postMercSuccessNow) {
-    // Already achieved it
-    result = true;
-  }
-  else if (postMercStatus.currentTradeCount === 2) {
-    // Now = false and run out of trades. So not possible
-    result = false;
-  }
-  else if (postMercStatus.currentTradeCount === 1) {
-
-    // How many resources are we missing
-    if (resourcesOk && cashOK && mysteryOK) {
-        // everything fine
-        result = true;
-    }
-    else if (resourcesOk && cashOK && !mysteryOK) { 110
-      // Got a trade left, so can we buy any
-      result = (cashDelta >= 3);
-    }    
-    else if (resourcesOk && !cashOK && mysteryOK) {//101
-      // Need to sell to get more cash
-      if (mercGlobal.mercFinalReqdDelta[1]*3 >= Math.abs(cashDelta) ||
-          mercGlobal.mercFinalReqdDelta[2]*4 >= Math.abs(cashDelta) ||
-          mercGlobal.mercFinalReqdDelta[3]*5 >= Math.abs(cashDelta) ||
-          mercGlobal.mercFinalReqdDelta[4]*6 >= Math.abs(cashDelta) ||
-          mercGlobal.mercFinalReqdDelta[5]*7 >= Math.abs(cashDelta)) {
-
-          result = true;
-      }
-    }
-    else if (resourcesOk && !cashOK && !mysteryOK) {//100
-        // Cannot fix this with just one trade
-        result = false;
-    }
-    else if (!resourcesOk && cashOK && mysteryOK && resourceTypeFailCount < 2) { //100
-      // Can we buy just one type of resource?
-      // find out which resource we need more of
-      let resourceFailId = 0;
-      for (resourceId=1; resourceId<=5; resourceId++) {
-        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
-          resourceFailId = resourceId
-        }
-      }
-      // Error if failId is zero!!!!!
-      result = cashDelta >= Math.abs((fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]));
-    }  
-  }
-  else {
-    ////////////////////////////////////////////////////////////////////////////////
-    // 2 trades remaining
-    ////////////////////////////////////////////////////////////////////////////////
-    if (resourceTypeFailCount > 2) {
-      // Not possible
-      result = false;
-    }
-    else if (resourceTypeFailCount == 1) {
-      // Need to buy one resource. Mystery not checked at this point
-      // Get the resource id and cost
-      let resourceFailId = 0;
-      for (resourceId=1; resourceId<=5; resourceId++) {
-        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
-          resourceFailId = resourceId
-        }
-      }
-      let resourceCost = Math.abs(fieldValues.postMercStatusDelta[resourceFailId]) * resourceValue[resourceFailId];
-      if (cashDelta >= resourceCost && mysteryOK) {
-        // can buy more resource
-        result = true;
-      }
-      else if (cashDelta >= resourceCost && !mysteryOK) {
-        // only one trade left here. buy the mystery?
-        reult = cashDelta >= Math.abs(mysteryDelta)*3;
-
-      }
-    }
-    else if (resourceTypeFailCount == 2) {
-      // Can only do this with cash
-      if (cashDelta >= missingResourcesTotalValue && mysteryOK) {
-        // Enough cas to buy the resource and mystery is also good (on another resource)
-        result = true;
-      }
-      //else if (cashDelta >= missingResourcesTotalValue && !mysteryOK) {
-      //  let cashRemaining = cashDelta - missingResourcesTotalValue;
-      //  if (cashRemaining >= 3) {
-      //    // Check if we can continue to buy the resources that are being bought already
-      //  }
-     // }
-     // let mysteryBuyOK = false;
-     // for (resourceId=1; resourceId<=5; resourceId++) {
-     //   if (fieldValues.postMercStatusDelta[resourceId] < 0) {
-     //     // This is one of the resources. Can we afford more for mystery?
-     //     if (cashRemaining >= mercGlobal.postMercMysteryAvailable[resourceId] * resourceValue[resourceId]) {
-
-     //     }
-
-    }
-  }
-
-  fieldValues.postMercSuccessFuture = result;
-
-}
+} // CalculateMercStatusFuture
 
 function CalculatePostMercStatus() {
+
+  // Calculate:
+  // postMercStatus.resourceDelta : resource required (-ve) or resource spare (+ve)  
+  // postMercStatus.cashDelta : cash required (-ve) or cash spare (+ve)
+  // postMercStatus.resourceDeltaCashValue : Cost to either buy all reqd resource (-ve) or sell (+ve)
+  // postMercStatus.totalCostOfMissingResource : (+ve) cash to buy all missing resource
+  // postMercStatus.totalSpareResourceValue : (+ve) cash for selling everything
+  // postMercStatus.resourceOnlyFailCount = 0;      
+  // postMercStatus.resourceAllFailCount = 0;      
+
+  postMercStatus.totalCostOfMissingResource = 0;
+  postMercStatus.totalSpareResourceValue = 0;
+  postMercStatus.resourceOnlyFailCount = 0;      
+  postMercStatus.resourceAllFailCount = 0;      
+
+  let thisResourceDelta = 0;
+  for (resourceId = 0; resourceId<=5; resourceId++) {
+    thisResourceDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
+
+    postMercStatus.resourceDelta[resourceId] = thisResourceDelta;
+
+    if (resourceId == 0) {
+
+      // Cash specific
+      postMercStatus.cashDelta = thisResourceDelta;
+      // Assign but likely not used
+      postMercStatus.resourceDeltaCashValue[resourceId] = thisResourceDelta;
+
+      if (thisResourceDelta < 0) {
+        // Keep adding up total cost of missing resource
+        postMercStatus.totalCostOfMissingResource += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);
+        // Increase all resource fail count (including cash)
+        postMercStatus.resourceAllFailCount++;
+      }
+
+    }
+    else {
+
+      // Actual resource, not cash
+      postMercStatus.resourceDeltaCashValue[resourceId] = thisResourceDelta * resourceValue[resourceId];
+
+      if (thisResourceDelta < 0) {
+        // Keep adding up total cost of missing resource
+        postMercStatus.totalCostOfMissingResource += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);
+        // Increase resource fail count (including cash)
+        postMercStatus.resourceOnlyFailCount++;
+        postMercStatus.resourceAllFailCount++;
+      }
+      else {
+        // delta = 0 or +ve
+        // Keep adding spare cash
+        postMercStatus.totalSpareResourceValue += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);     
+      }
+    }
+
+    // Add up the total cost of the missing resources+
+    if (thisResourceDelta < 0) {
+
+    }
+    else {
+      postMercStatus.totalSpareResourceValue += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);     
+    }
+
+    // Calcuate number of trades reqd
+    postMercStatus.tradeCountRequired = 0;
+    postMercStatus.tradeIsPossible=false;
+
+    if (postMercStatus.totalCostOfMissingResource <= 0 && postMercStatus.cashDelta <= 0) {
+
+    }
+
+  }
+
+
 
   ////////////////////////////////////////////////////////////////////////
   // Calculate post merc status
@@ -1986,18 +1922,155 @@ function CalculatePostMercStatus() {
 
   } // 0..5
 
-  fieldValues.postMercSuccessNow = 
-    fieldValues.postMercResourceTypeFailCount === 0 &&   
-    !fieldValues.postMercCashFail && 
-    fieldValues.postMercStatusDelta[0] >= 0 && 
-    fieldValues.postMercResourceTypeFailCount <= 0 &&
+  postMercStatus.achieved = 
+    postMercStatus.resourceAllFailCount === 0 && // covers cash and resources
     fieldValues.postMercMysteryDelta >=0; 
 
 
   fieldValues.postMercMysteryDelta = fieldValues.postMercMysteryAvailable - fieldValues.senatorMysteryReqd
   fieldValues.postMercMysteryFail = fieldValues.postMercMysteryDelta < 0;
 
-  CalculateMercSuccessFuture();
+  let cashOK = postMercStatus.cashDelta >= 0; 
+  let mysteryOK = mercGlobal.postMercMysteryAvailable >= 0;
+  let mysteryDelta = mercGlobal.postMercMysteryAvailable;
+  let resourcesOk = postMercStatus.resourceOnlyFailCount <= 0;
+  let resourceTypeFailCount = postMercStatus.resourceOnlyFailCount;
+  let result = false;
+
+  let missingResourcesTotalValue = 0;
+  let thisResourceDeltaCashValue = 0;
+
+  postMercStatus.resourceOnlyFailCount = 0;      
+  postMercStatus.resourceAllFailCount = 0;      
+  for (resourceId = 1; resourceId <=5; resourceId++) {
+
+    // --ve if not enough of this resource
+    thisResourceDelta = postMercStatus.resourceDelta[resourceId];
+    // Always calcukated as a +ve number
+    thisResourceDeltaCashValue = Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);
+
+    if (thisResourceDelta < 0) {
+      // This resource is missing
+      missingResourcesTotalValue += thisResourceDeltaCashValue;
+      postMercStatus.resourceOnlyFailCount++;
+      // postMercStatus.resourceAllFailCount++;
+    }
+  }
+
+  if (postMercStatus.cashDelta < 0) {
+    // postMercStatus.resourceAllFailCount++;
+  }
+
+  // postMercStatus.achievable is set to true if it can be achieved, irrespective of the 
+  // number of trades it would take
+  // Calculaate postMercStatus.additionalTradesReqd
+  if (postMercStatus.achieved) {
+    // Already achieved it
+    postMercStatus.additionalTradesReqd = 0;
+    postMercStatus.achievable = true;
+  }
+  else {
+
+
+    // how many trades will it to take
+    postMercStatus.achievable = false;
+
+
+  }
+
+
+  result = false;
+
+
+
+  if (postMercStatus.achieved) {
+    // Already achieved it
+    result = true;
+    postMercStatus.additionalTradesReqd = 0;
+  }
+  else if (postMercStatus.currentTradeCount === 2) {
+    // Now = false and run out of trades. So not possible
+    result = false;
+  }
+  else if (postMercStatus.currentTradeCount === 1) {
+
+    // How many resources are we missing
+    if (resourcesOk && cashOK && mysteryOK) {
+        // everything fine
+        result = true;
+    }
+    else if (resourcesOk && cashOK && !mysteryOK) { 110
+      // Got a trade left, so can we buy any
+      result = (postMercStatus.cashDelta >= 3);
+    }    
+    else if (resourcesOk && !cashOK && mysteryOK) {//101
+      // Need to sell to get more cash
+      if (mercGlobal.mercFinalReqdDelta[1]*3 >= Math.abs(postMercStatus.cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[2]*4 >= Math.abs(postMercStatus.cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[3]*5 >= Math.abs(postMercStatus.cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[4]*6 >= Math.abs(postMercStatus.cashDelta) ||
+          mercGlobal.mercFinalReqdDelta[5]*7 >= Math.abs(postMercStatus.cashDelta)) {
+
+          result = true;
+      }
+    }
+    else if (resourcesOk && !cashOK && !mysteryOK) {//100
+        // Cannot fix this with just one trade
+        result = false;
+    }
+    else if (!resourcesOk && cashOK && mysteryOK && resourceTypeFailCount < 2) { //100
+      // Can we buy just one type of resource?
+      // find out which resource we need more of
+      let resourceFailId = 0;
+      for (resourceId=1; resourceId<=5; resourceId++) {
+        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+          resourceFailId = resourceId
+        }
+      }
+      // Error if failId is zero!!!!!
+      result = postMercStatus.cashDelta >= Math.abs((fieldValues.postMercStatusDelta[resourceFailId] * resourceValue[resourceFailId]));
+    }  
+  }
+  else {
+    ////////////////////////////////////////////////////////////////////////////////
+    // 2 trades remaining
+    ////////////////////////////////////////////////////////////////////////////////
+    if (resourceTypeFailCount > 2) {
+      // Not possible
+      result = false;
+    }
+    else if (resourceTypeFailCount == 1) {
+      // Need to buy one resource. Mystery not checked at this point
+      // Get the resource id and cost
+      let resourceFailId = 0;
+      for (resourceId=1; resourceId<=5; resourceId++) {
+        if (fieldValues.postMercStatusDelta[resourceId] < 0) {
+          resourceFailId = resourceId
+        }
+      }
+      let resourceCost = Math.abs(fieldValues.postMercStatusDelta[resourceFailId]) * resourceValue[resourceFailId];
+      if (postMercStatus.cashDelta >= resourceCost && mysteryOK) {
+        // can buy more resource
+        result = true;
+      }
+      else if (postMercStatus.cashDelta >= resourceCost && !mysteryOK) {
+        // only one trade left here. buy the mystery?
+        reult = postMercStatus.cashDelta >= Math.abs(mysteryDelta)*3;
+
+      }
+    }
+    else if (resourceTypeFailCount == 2) {
+      // Can only do this with cash
+      if (postMercStatus.cashDelta >= postMercStatus.totalCostOfMissingResource && mysteryOK) {
+        // Enough cas to buy the resource and mystery is also good (on another resource)
+        result = true;
+      }
+
+    }
+  }
+
+  fieldValues.postMercSuccessFuture = result;
+
 
   let mercSuccessString = "";
   if (fieldValues.postMercSuccessFuture) {
@@ -2007,36 +2080,13 @@ function CalculatePostMercStatus() {
     mercSuccessString = cross; 
   }
 
-  fieldValues.postMercStatusString = CreateStoreStatusString(
+  postMercStatus.postMercStatusString = CreateStoreStatusString(
     mercSuccessString + mercActive + ":     ",
-    fieldValues.postMercCashFail, 
-    fieldValues.postMercStatusDelta[0], 
-    fieldValues.postMercResourceTypeFailCount, 
+    postMercStatus.cashDelta < 0, 
+    postMercStatus.cashDelta, 
+    postMercStatus.resourceOnlyFailCount, 
     fieldValues.postMercMysteryDelta);
 
-  // Calculate   
-  postMercStatus.totalCostOfMissingResource = 0;
-  let thisDelta = 0;
-  for (resourceId = 0; resourceId<=5; resourceId++) {
-    thisDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
-    postMercStatus.resourceDelta[resourceId] = thisDelta;
-    if (resourceId == 0) {
-      postMercStatus.cashDelta = mercGlobal.storeFinal[resourceId] - fieldValues.archStoreReqd[resourceId];
-    }
-
-    if (thisDelta < 0) {
-      postMercStatus.totalCostOfMissingResource += Math.abs(thisDelta);
-    }
-
-    // Calcuate number of trades reqd
-    postMercStatus.tradeCountRequired = 0;
-    postMercStatus.tradeIsPossible=false;
-
-    if (postMercStatus.totalCostOfMissingResource <= 0 && postMercStatus.cashDelta <= 0) {
-
-    }
-
-  }
 
 
 
@@ -2653,6 +2703,24 @@ function UpdateGUIMerc() {
       SetStyle(elemNumQuickMercAct,StylesType.CLEAR[resourceId],resourceId);
     }
   }
+
+  if (preMercStatus.resourceAllFailCount <= 0) {
+    document.getElementById("pre-merc-status-all").style.backgroundColor = "lightgreen";
+  }
+  else {
+    document.getElementById("pre-merc-status-all").style.backgroundColor = mercFailColour;
+  }
+
+  if (postMercStatus.achieved) {
+    document.getElementById("post-merc-status-all").style.backgroundColor = "lightgreen";
+  }
+  else if (postMercStatus.achievable) {
+    document.getElementById("post-merc-status-all").style.backgroundColor = "orange";
+  }
+  else {
+    document.getElementById("post-merc-status-all").style.backgroundColor = mercFailColour;
+  }
+
 }
 
 //------------------------------------------------------------------

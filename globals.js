@@ -79,7 +79,6 @@ let fieldValues = {
   postMercMysteryFail: false,
   postMercMysteryDelta: 0,
   postMercMysteryAvailable:0,
-  postMercStatusString: "",
   postMercSuccessNow: false,
   postMercSuccessFuture: false,
 
@@ -176,6 +175,7 @@ let mercGlobal = {
 }
 
 let preMercStatus = {
+  achieved:false,
   cashDelta:0,
   resourceOnlyFailCount:0,
   resourceAllFailCount:0,
@@ -183,16 +183,23 @@ let preMercStatus = {
 }
 
 let postMercStatus = {
+  achieved:false,
+  achievable:false,
   cashDelta:0,
   resourceOnlyFailCount:0,
   resourceAllFailCount:0,
   resourceDelta:[0,0,0,0,0,0],
+  resourceDeltaCashValue:[0,0,0,0,0,0],
 
   currentTradeCount:0,
   totalCostOfMissingResource:0,
+  totalSpareResourceValue:0,
 
   tradeCountRequired:0,
   tradeIsPossible:false,
+  additionalTradesReqd:0,
+
+  postMercStatusString:"",  
 
 }
 

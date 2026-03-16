@@ -16,11 +16,6 @@ const CardType = Object.freeze({
   MERC5: "MERC5",
 });
 
-const MercType = Object.freeze({
-  MERC0: "MERC0",
-  MERC3: "MERC3",
-  MERC5: "MERC5",
-});
 
 const StylesType = Object.freeze({
 
@@ -67,9 +62,6 @@ const MercBtnState = Object.freeze({
   NOT_AVAILABLE: ["not-selectable-cash","not-selectable-brick","not-selectable-food","not-selectable-tool","not-selectable-wine","not-selectable-cloth"],
 });
 
-
-let mercActive;
-let lastMercActive;
 
 const EditModeType = Object.freeze({
   STRICT: "STRICT",
@@ -550,8 +542,8 @@ document.addEventListener("DOMContentLoaded", function () {
   editMode = EditModeType.FREE;
   btnEditMode = document.getElementById("btn-edit-mode");
 
-  mercActive = MercType.MERC3;
-  lastMercActive = MercType.MERC3;
+  postMercStatus.mercActive = MercType.MERC3;
+  postMercStatus.lastMercActive = MercType.MERC3;
 
 
   dataArch.archHousesReqd.fill(0);
@@ -1810,8 +1802,11 @@ function CalculatePostMercStatus() {
 
   postMercStatus.totalCostOfMissingResource = 0;
   postMercStatus.totalSpareResourceValue = 0;
+
   postMercStatus.resourceOnlyFailCount = 0;      
   postMercStatus.resourceAllFailCount = 0;      
+  postMercStatus.resourceOnlyPassCount = 0;      
+  postMercStatus.resourceAllPassCount = 0;      
 
   let thisResourceDelta = 0;
   for (resourceId = 0; resourceId<=5; resourceId++) {
@@ -1828,7 +1823,7 @@ function CalculatePostMercStatus() {
 
       if (thisResourceDelta < 0) {
         // Keep adding up total cost of missing resource
-        postMercStatus.totalCostOfMissingResource += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);
+        //postMercStatus.totalCostOfMissingResource += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);
         // Increase all resource fail count (including cash)
         postMercStatus.resourceAllFailCount++;
       }
@@ -1850,26 +1845,13 @@ function CalculatePostMercStatus() {
         // delta = 0 or +ve
         // Keep adding spare cash
         postMercStatus.totalSpareResourceValue += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);     
+
+        postMercStatus.resourceOnlyPassCount++;
+        postMercStatus.resourceAllPassCount++;
       }
     }
 
-    // Add up the total cost of the missing resources+
-    if (thisResourceDelta < 0) {
-
-    }
-    else {
-      postMercStatus.totalSpareResourceValue += Math.abs(postMercStatus.resourceDeltaCashValue[resourceId]);     
-    }
-
-    // Calcuate number of trades reqd
-    postMercStatus.tradeCountRequired = 0;
-    postMercStatus.tradeIsPossible=false;
-
-    if (postMercStatus.totalCostOfMissingResource <= 0 && postMercStatus.cashDelta <= 0) {
-
-    }
-
-  }
+  } // resourceId = 0 to 5
 
 
 
@@ -2081,12 +2063,25 @@ function CalculatePostMercStatus() {
   }
 
   postMercStatus.postMercStatusString = CreateStoreStatusString(
-    mercSuccessString + mercActive + ":     ",
+    mercSuccessString + postMercStatus.mercActive + ":     ",
     postMercStatus.cashDelta < 0, 
     postMercStatus.cashDelta, 
     postMercStatus.resourceOnlyFailCount, 
     fieldValues.postMercMysteryDelta);
 
+  // Calculate the totl amount of spare cash, taking into account:
+  // delta cash currently (above/over the cash reqd to build desired houses) +
+  // all spare cash resource cash value -
+  // all missing reource cash value
+  postMercStatus.netDeltaCashOneMercator = 
+    postMercStatus.cashDelta + 
+    postMercStatus.totalSpareResourceValue - 
+    postMercStatus.totalCostOfMissingResource;  
+
+  postMercStatus.tradeCountRequiredAtLeast = postMercStatus.resourceAllFailCount;
+  // do we have enough cash Delta to  
+    postMercStatus.tradeCountRequired = 0;
+    postMercStatus.tradeIsPossible=false;
 
 
 
@@ -2257,21 +2252,21 @@ function SetCardArch() {
 
 function SetCardMerc() {
   /* Toggle between MERC3 and MERC5 */
-  if (mercActive === MercType.MERC0) {
-    mercActive = MercType.MERC3;
+  if (postMercStatus.mercActive === MercType.MERC0) {
+    postMercStatus.mercActive = MercType.MERC3;
   } 
-  else if (mercActive === MercType.MERC3) {
+  else if (postMercStatus.mercActive === MercType.MERC3) {
 
-    mercActive = MercType.MERC5;
+    postMercStatus.mercActive = MercType.MERC5;
   }
   else {  
     if (mercGlobal.storeFinal[0] >= 5) {
-      mercActive = MercType.MERC0;
+      postMercStatus.mercActive = MercType.MERC0;
     }
   }
 
 
-  elemBtnMerc.textContent = mercActive;
+  elemBtnMerc.textContent = postMercStatus.mercActive;
 
   UpdateAll();
 }
@@ -2381,7 +2376,7 @@ function UpdateGUIMerc() {
     elemNumTrades.style.backgroundColor = "lightgreen";
   }
 
-  elemTradesReqd.textContent = "N/A";
+  elemTradesReqd.textContent = postMercStatus.netDeltaCashOneMercator;
   elemTradesReqd.style.backgroundColor = "lightgreen";
 
   //elemNumMercStore[0].textContent = mercGlobal.mercStore[0];
@@ -2877,6 +2872,31 @@ function SetMercSellBuyStyle(elem, newStyle, resourceId, fontSize_) {
 
 }
 
+function CalculateTradeCountRequired(
+  achieved,
+  currentMercActive, 
+  currentTradeCount, 
+  resourceDeltaCashValueArr,
+  totalCostOfMissingResource,
+  cashDelta) {
+
+  if (achieved) {
+    return 0;
+  }
+  else {
+    // Calculate number of trades
+    if (cashDelta >= totalCostOfMissingResource) {
+      // Can do it without selling anything
+
+    }
+  }
+  return 0;
+
+
+
+
+}
+
 function ProcessMerc() {
 
   let localTradeId = 0;
@@ -2920,13 +2940,13 @@ function ProcessMerc() {
 
   //-------------------------------------------------------
   // MERC3 or MERC5
-  if (mercActive === MercType.MERC0) mercGlobal.cashBonus = 0;
-  else if (mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
+  if (postMercStatus.mercActive === MercType.MERC0) mercGlobal.cashBonus = 0;
+  else if (postMercStatus.mercActive === MercType.MERC3) mercGlobal.cashBonus = 3;
   else mercGlobal.cashBonus = 5;
   
   mercGlobal.storePreSell[0] = mercGlobal.mercStore[0] + mercGlobal.cashBonus;     
   
-  // Jst coopy all of teh resoyrce values across as not impacted by merc3 or merc5
+  // Just copy all of the resource values across as not impacted by merc3 or merc5
   for (let resourceId = 1; resourceId <=5; resourceId++) {
     mercGlobal.storePreSell[resourceId] = mercGlobal.mercStore[resourceId];
   }

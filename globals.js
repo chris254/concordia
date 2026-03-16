@@ -182,24 +182,43 @@ let preMercStatus = {
   resourceDelta:[0,0,0,0,0,0],
 }
 
+const MercType = Object.freeze({
+  MERC0: "MERC0",
+  MERC3: "MERC3",
+  MERC5: "MERC5",
+});
+
 let postMercStatus = {
   achieved:false,
   achievable:false,
-  cashDelta:0,
+
   resourceOnlyFailCount:0,
-  resourceAllFailCount:0,
+  resourceAllFailCount:0, // includes cash
+  resourceOnlyPassCount:0,
+  resourceAllPassCount:0, // includes cash
+
   resourceDelta:[0,0,0,0,0,0],
   resourceDeltaCashValue:[0,0,0,0,0,0],
 
   currentTradeCount:0,
-  totalCostOfMissingResource:0,
-  totalSpareResourceValue:0,
 
+  cashDelta:0,
+  // alwyas +ve
+  totalCostOfMissingResource:0,
+  // always +ve
+  totalSpareResourceValue:0,
+  netDeltaCashOneMercator:0,
+  netDeltaCashTwoMercators:0,
+
+  tradeCountRequiredBasic:0,
   tradeCountRequired:0,
   tradeIsPossible:false,
   additionalTradesReqd:0,
 
-  postMercStatusString:"",  
+  postMercStatusString:"", 
+  mercActive:MercType.MERC3, 
+  lastMercActive:MercType.MERC3, 
+
 
 }
 

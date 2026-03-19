@@ -279,3 +279,29 @@ let scores = {
   totalVp: 0,
 
 }
+
+function sortWithOriginalIndexes(arr) {
+    if (!Array.isArray(arr) || arr.length !== 5) {
+        throw new Error("Input must be an array of 5 integers");
+    }
+
+    // Pair each value with its original index
+    const paired = arr.map((value, index) => ({
+        value,
+        originalIndex: index
+    }));
+
+    // Sort in descending order
+    paired.sort((a, b) => b.value - a.value);
+
+    // Extract sorted values and original indexes
+    const sortedValues = paired.map(item => item.value);
+    const originalIndexes = paired.map(item => item.originalIndex);
+
+    return {
+        sorted: sortedValues,
+        indexes: originalIndexes
+    };
+}
+
+

@@ -1862,6 +1862,11 @@ function CalculatePostMercStatus() {
     }
   } // resourceId = 0 to 5
 
+  postMercStatus.cashDeltaIncludeSpareAndMissing = 
+    postMercStatus.cashDelta + 
+    postMercStatus.totalSpareResourceValue -
+    postMercStatus.totalMissingResourceValue;  
+
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2025,14 +2030,6 @@ function CalculatePostMercStatus() {
     postMercStatus.resourceOnlyFailCount, 
     fieldValues.postMercMysteryDelta);
 
-  // Calculate the totl amount of spare cash, taking into account:
-  // delta cash currently (above/over the cash reqd to build desired houses) +
-  // all spare cash resource cash value -
-  // all missing reource cash value
-  postMercStatus.netDeltaCashOneMercator = 
-    postMercStatus.cashDelta + 
-    postMercStatus.totalSpareResourceValue - 
-    postMercStatus.totalMissingResourceValue;  
 
   postMercStatus.tradeCountRequiredAtLeast = postMercStatus.resourceAllFailCount;
   // do we have enough cash Delta to  
@@ -2342,11 +2339,8 @@ function UpdateGUIMerc() {
     elemNumTrades.style.backgroundColor = "lightgreen";
   }
 
-  elemTradesReqd.textContent = postMercStatus.netDeltaCashOneMercator;
-  elemTradesReqd.textContent = 
-    postMercStatus.cashDelta + "/" + 
-    postMercStatus.totalSpareResourceValue + "/" + 
-    postMercStatus.totalMissingResourceValue;  
+ 
+  WriteSingleNumber(elemTradesReqd,postMercStatus.cashDeltaIncludeSpareAndMissing,10,true,"black",true,true);
 
   elemTradesReqd.style.backgroundColor = "lightgreen";
 

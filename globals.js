@@ -198,6 +198,8 @@ let postMercStatus = {
   currentTradeCount:0,
 
   cashDelta:0,
+  // Cash delta when taking into account spare and ising resource values, as well as normal cashDelta
+  cashDeltaIncludeSpareAndMissing:0,
   // alwyas +ve
   totalMissingResourceValue:0,
   // always +ve
@@ -207,7 +209,6 @@ let postMercStatus = {
   resourceSpareCashValueSortedArr:[0,0,0,0,0],
   resourceMissingCashValueSortedArr:[0,0,0,0,0], // always +ve
 
-  netDeltaCashOneMercator:0,
   netDeltaCashTwoMercators:0,
 
   tradeCountRequiredBasic:0,

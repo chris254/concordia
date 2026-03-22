@@ -60,8 +60,6 @@ let fieldValues = {
   storeStrictMinusFree:[0,0,0,0,0,0],
   storeTotalReqd:[0,0,0,0,0,0],
   storeCurrentStatusDelta:[0,0,0,0,0,0],
-  postMercStatusDelta:[0,0,0,0,0,0],
-  storePostMercDelta:[0,0,0,0,0,0],
 
   storeCurrentResourceTypeFailCount: 0,
   storeCurrentResourceFailCount: 0,
@@ -72,15 +70,12 @@ let fieldValues = {
   storeCurrentMysteryAvailable:0,
   storeCurrentStatusString: "",
 
-  postMercResourceTypeFailCount: 0,
-  postMercResourceFailCount: 0,
   postMercCashFail: false,
   postMercResourceFail: false,
   postMercMysteryFail: false,
   postMercMysteryDelta: 0,
   postMercMysteryAvailable:0,
   postMercSuccessNow: false,
-  postMercSuccessFuture: false,
 
   senatorMysteryReqd:0,
 
@@ -197,16 +192,21 @@ let postMercStatus = {
   resourceOnlyPassCount:0,
   resourceAllPassCount:0, // includes cash
 
-  resourceDelta:[0,0,0,0,0,0],
-  resourceDeltaCashValue:[0,0,0,0,0,0],
+  resourceDeltaArr:[0,0,0,0,0,0],
+  resourceDeltaCashValueArr:[0,0,0,0,0,0],
 
   currentTradeCount:0,
 
   cashDelta:0,
   // alwyas +ve
-  totalCostOfMissingResource:0,
+  totalMissingResourceValue:0,
   // always +ve
   totalSpareResourceValue:0,
+  resourceSpareCashValueArr:[0,0,0,0,0,0],
+  resourceMissingCashValueArr:[0,0,0,0,0,0], // always +ve
+  resourceSpareCashValueSortedArr:[0,0,0,0,0],
+  resourceMissingCashValueSortedArr:[0,0,0,0,0], // always +ve
+
   netDeltaCashOneMercator:0,
   netDeltaCashTwoMercators:0,
 
@@ -280,28 +280,39 @@ let scores = {
 
 }
 
-function sortWithOriginalIndexes(arr) {
-    if (!Array.isArray(arr) || arr.length !== 5) {
-        throw new Error("Input must be an array of 5 integers");
+function SortLastFiveWithIndexes(arr) {
+    if (!Array.isArray(arr) || arr.length !== 6 || !arr.every(Number.isInteger)) {
+        throw new Error("Input must be an array of 6 integers");
     }
 
-    // Pair each value with its original index
-    const paired = arr.map((value, index) => ({
+    // Take last 5 elements (index 1 → 5) and pair with original indexes
+    const paired = arr.slice(1).map((value, i) => ({
         value,
-        originalIndex: index
+        originalIndex: i + 1 // offset because we sliced from index 1
     }));
 
-    // Sort in descending order
+    // Sort descending
     paired.sort((a, b) => b.value - a.value);
 
-    // Extract sorted values and original indexes
-    const sortedValues = paired.map(item => item.value);
-    const originalIndexes = paired.map(item => item.originalIndex);
-
+    // Return separate arrays
     return {
-        sorted: sortedValues,
-        indexes: originalIndexes
+        sorted: paired.map(item => item.value),
+        indexes: paired.map(item => item.originalIndex)
     };
 }
 
+function ShiftLeftKeepLength(arr) {
+    if (!Array.isArray(arr) || arr.length !== 5 || !arr.every(Number.isInteger)) {
+        throw new Error("Input must be an array of 5 integers");
+    }
 
+    // Move elements left
+    for (let i = 0; i < arr.length - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    // Fill last position (choose what makes sense: 0, null, etc.)
+    arr[arr.length - 1] = 0;
+
+    return arr;
+}

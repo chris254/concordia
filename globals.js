@@ -57,6 +57,9 @@ let fieldValues = {
   storeCurrent:[0,0,0,0,0,0],
   archStoreReqd:[0,0,0,0,0,0],
   storeCurrentStrict:[0,0,0,0,0,0],
+  storeCurrentCashValue:[0,0,0,0,0,0],
+  storeCurrentCashValueTotal:0,
+
   storeStrictMinusFree:[0,0,0,0,0,0],
   storeTotalReqd:[0,0,0,0,0,0],
   storeCurrentStatusDelta:[0,0,0,0,0,0],

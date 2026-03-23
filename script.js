@@ -218,6 +218,18 @@ const elemIdsArchHousesStrict = [
 
  const elemNumCashValue = elemIdsCashValue.map((id) => document.getElementById(id));
 
+ //--------------------------------------------------------------------
+ const elemIdsStoreCurrentCashValue = [
+  "storecurrent-cash-value-cash",
+  "storecurrent-cash-value-brick",
+  "storecurrent-cash-value-food",
+  "storecurrent-cash-value-tool",
+  "storecurrent-cash-value-wine",
+  "storecurrent-cash-value-cloth",
+];
+
+ const elemNumStoreCurrentCashValue = elemIdsStoreCurrentCashValue.map((id) => document.getElementById(id));
+
 
 
 
@@ -842,6 +854,20 @@ function ProcessArchitectStrict() {
 
   for (let resourceId = 0; resourceId <= 5; resourceId++) {
     dataArch.archStrictStoreRemaining[resourceId] = fieldValues.storeCurrentStrict[resourceId] - dataArch.archBuildCost[resourceId];
+  }
+
+  // Calculate store cash equivalents.
+  fieldValues.storeCurrentCashValueTotal = 0;
+  for (let resourceId = 0; resourceId <= 5; resourceId++) {
+    if (resourceId === 0) {
+       fieldValues.storeCurrentCashValue[resourceId] = fieldValues.storeCurrentStrict[resourceId];
+    }
+    else {
+      // nrmal resource
+       fieldValues.storeCurrentCashValue[resourceId] = fieldValues.storeCurrentStrict[resourceId] * resourceValue[resourceId];      
+    }
+
+    fieldValues.storeCurrentCashValueTotal += fieldValues.storeCurrentCashValue[resourceId]
   }
 
 }
@@ -1678,6 +1704,14 @@ function UpdateGUIArch() {
       elemNumCashValue[resourceId].textContent = dataArch.freeBuildCashValue[resourceId];
       elemNumCashValue[resourceId].textContent = " ";
     }
+
+    if (fieldValues.storeCurrentCashValue[resourceId] != 0 ) {
+      elemNumStoreCurrentCashValue[resourceId].textContent = fieldValues.storeCurrentCashValue[resourceId];
+    }
+    else {
+      elemNumStoreCurrentCashValue[resourceId].textContent = " ";
+    }
+
   }
 
   if (dataArch.freeBuildCashValueTotal != 0) {
@@ -1685,6 +1719,13 @@ function UpdateGUIArch() {
   }
   else {
     document.getElementById("cash-value-total").textContent = " ";
+  }
+
+  if (fieldValues.storeCurrentCashValueTotal != 0) {
+    document.getElementById("storecurrent-cash-value-total").textContent = "£ " + fieldValues.storeCurrentCashValueTotal;
+  }
+  else {
+    document.getElementById("storecurrent-cash-value-total").textContent = " ";
   }
 
 } // UPdateGUIArch

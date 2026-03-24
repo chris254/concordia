@@ -343,7 +343,7 @@ function SumUpToIndex(arr, index) {
     return sum;
 }
 
-function NberOfSellsRequired(arr, target) {
+function SellTradesReqired(arr, target) {
     if (!Array.isArray(arr)) {
         throw new Error("First argument must be an array");
     }

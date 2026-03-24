@@ -342,3 +342,28 @@ function SumUpToIndex(arr, index) {
 
     return sum;
 }
+
+function NberOfSellsRequired(arr, target) {
+    if (!Array.isArray(arr)) {
+        throw new Error("First argument must be an array");
+    }
+
+    if (typeof target !== "number") {
+        throw new Error("Target must be a number");
+    }
+
+    let index = 0;
+
+    while (index < arr.length) {
+        const sum = SumUpToIndex(arr, index);
+
+        if (sum >= target) {
+            return index;
+        }
+
+        index++;
+    }
+
+    // If target is never reached, return -1 (or you could return arr.length)
+    return -1;
+}

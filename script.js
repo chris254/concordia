@@ -1909,7 +1909,6 @@ function CalculatePostMercStatus() {
     postMercStatus.totalMissingResourceValue;  
 
 
-
   ////////////////////////////////////////////////////////////////////////
   // Calculate post merc status
   ////////////////////////////////////////////////////////////////////////
@@ -1952,6 +1951,9 @@ function CalculatePostMercStatus() {
 
   postMercStatus.resourceOnlyFailCount = 0;      
   postMercStatus.resourceAllFailCount = 0;      
+  if (postMercStatus.resourceDeltaArr[0] < 0 ) {
+    postMercStatus.resourceAllFailCount++;
+  }
   for (resourceId = 1; resourceId <=5; resourceId++) {
 
     // --ve if not enough of this resource
@@ -1963,6 +1965,7 @@ function CalculatePostMercStatus() {
       // This resource is missing
       missingResourcesTotalValue += thisResourceDeltaCashValue;
       postMercStatus.resourceOnlyFailCount++;
+      postMercStatus.resourceAllFailCount++;
    }
   }
 
@@ -2071,8 +2074,19 @@ function CalculatePostMercStatus() {
     postMercStatus.resourceOnlyFailCount, 
     fieldValues.postMercMysteryDelta);
 
+  //postMercStatus.cashDeltaIncludeSpareAndMissing = 
+  //  postMercStatus.cashDelta + 
+  //  postMercStatus.totalSpareResourceValue -
+  //  postMercStatus.totalMissingResourceValue;  
 
-  postMercStatus.tradeCountRequiredAtLeast = postMercStatus.resourceAllFailCount;
+  postMercStatus.tradesBuyRequired = postMercStatus.resourceOnlyFailCount;
+
+  // We need to sell enough resource to match:
+  // postMercStatus.totalMissingResourceValue - postMercStatus.cashDelta
+  // cashDelta is -ve then the sell value comes down
+  postMercStatus.sellResourceValueRequired = 
+    postMercStatus.totalMissingResourceValue - postMercStatus.cashDelta;
+
   // do we have enough cash Delta to  
     postMercStatus.tradeCountRequired = 0;
     postMercStatus.tradeIsPossible=false;
@@ -2086,6 +2100,22 @@ function CalculatePostMercStatus() {
     postMercStatus.resourceMissingCashValueSortedArr[resourceId] = sortDescendingResultMissing.sorted[resourceId];
 
   }
+
+  // Add up each element 
+  let totalSpareCashValue = 0;
+
+  postMercStatus.tradesSellRequired = -1;
+  for (let spareCashValueIndex = 0; spareCashValueIndex < postMercStatus.resourceSpareCashValueSortedArr.length; spareCashValueIndex++) {
+      totalSpareCashValue += postMercStatus.resourceSpareCashValueSortedArr[spareCashValueIndex];
+
+      if (totalSpareCashValue >= postMercStatus.sellResourceValueRequired) {
+        // stop now as we can sell enough
+        postMercStatus.tradesSellRequired = spareCashValueIndex+1;
+        // Stop now
+        break;  
+      }
+  }
+
 
   // Calculate mercator status
   // xxx
@@ -2720,6 +2750,14 @@ function UpdateGUIMerc() {
   }
   else {
     document.getElementById("post-merc-status-all").style.backgroundColor = mercFailColour;
+  }
+
+  document.getElementById("trades-buy-reqd").textContent =   "B: " + postMercStatus.tradesBuyRequired;
+  if (postMercStatus.tradesSellRequired < 0) {
+    document.getElementById("trades-sell-reqd").textContent =   "S: X";
+  }
+  else {
+    document.getElementById("trades-sell-reqd").textContent = "S: " + postMercStatus.tradesSellRequired;
   }
 
 }

@@ -197,6 +197,7 @@ let postMercStatus = {
 
   resourceDeltaArr:[0,0,0,0,0,0],
   resourceDeltaCashValueArr:[0,0,0,0,0,0],
+  sellResourceValueRequired:0,
 
   currentTradeCount:0,
 
@@ -214,6 +215,8 @@ let postMercStatus = {
 
   netDeltaCashTwoMercators:0,
 
+  tradesBuyRequired:0,
+  tradesSellRequired:0,
   tradeCountRequiredBasic:0,
   tradeCountRequired:0,
   tradeIsPossible:false,
@@ -222,6 +225,7 @@ let postMercStatus = {
   postMercStatusString:"", 
   mercActive:MercType.MERC3, 
   lastMercActive:MercType.MERC3, 
+
 
 
 }

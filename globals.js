@@ -324,3 +324,50 @@ function ShiftLeftKeepLength(arr) {
 
     return arr;
 }
+
+function SumUpToIndex(arr, index) {
+    if (!Array.isArray(arr)) {
+        throw new Error("First argument must be an array");
+    }
+
+    if (typeof index !== "number" || index < 0) {
+        throw new Error("Index must be a non-negative integer");
+    }
+
+    if (index >= arr.length) {
+        throw new Error("Index is out of bounds of the array");
+    }
+
+    let sum = 0;
+
+    for (let i = 0; i <= index; i++) {
+        sum += arr[i];
+    }
+
+    return sum;
+}
+
+function SellTradesReqired(arr, target) {
+    if (!Array.isArray(arr)) {
+        throw new Error("First argument must be an array");
+    }
+
+    if (typeof target !== "number") {
+        throw new Error("Target must be a number");
+    }
+
+    let index = 0;
+
+    while (index < arr.length) {
+        const sum = SumUpToIndex(arr, index);
+
+        if (sum >= target) {
+            return index;
+        }
+
+        index++;
+    }
+
+    // If target is never reached, return -1 (or you could return arr.length)
+    return -1;
+}

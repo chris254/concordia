@@ -2105,7 +2105,12 @@ function CalculatePostMercStatus() {
   let totalSpareCashValue = 0;
 
   postMercStatus.tradesSellRequired = -1;
-  for (let spareCashValueIndex = 0; spareCashValueIndex < postMercStatus.resourceSpareCashValueSortedArr.length; spareCashValueIndex++) {
+  if (postMercStatus.sellResourceValueRequired < 0) {
+    // Don't need to sell anything
+    postMercStatus.tradesSellRequired = 0;
+  }
+  else {
+    for (let spareCashValueIndex = 0; spareCashValueIndex < postMercStatus.resourceSpareCashValueSortedArr.length; spareCashValueIndex++) {
       totalSpareCashValue += postMercStatus.resourceSpareCashValueSortedArr[spareCashValueIndex];
 
       if (totalSpareCashValue >= postMercStatus.sellResourceValueRequired) {
@@ -2114,6 +2119,7 @@ function CalculatePostMercStatus() {
         // Stop now
         break;  
       }
+    }
   }
 
 

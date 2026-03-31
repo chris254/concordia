@@ -1445,7 +1445,7 @@ function UpdateGUIArch() {
       elemNumArchHousesFree[resourceId].style.borderRadius = '15px';
 
       WriteSingleNumber(elemNumArchHousesFree[resourceId],
-        dataArch.archHousesReqd[resourceId],16,true,"black",false,false);
+        dataArch.archHousesReqd[resourceId],12,true,"black",false,false);
 
       if (dataArch.archHousesReqd[resourceId] > 0) {
         SetStyle(elemNumArchHousesFree,StylesType.CLEAR_NORMAL[resourceId],resourceId);

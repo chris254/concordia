@@ -17,7 +17,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
   
-  grid-auto-rows: 25px;
+  grid-auto-rows: auto;
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;
@@ -29,7 +29,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
   
-  grid-auto-rows: 25px;
+  grid-auto-rows: auto;
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;
@@ -37,11 +37,11 @@ body {
   /*height: 100vh;*/
 }
 
-.grid-container-no-gap {
+.grid-container-row-no-gap {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
   
-  grid-auto-rows: 25px;
+  grid-auto-rows: 20px;
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;
@@ -54,19 +54,29 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
 
-  grid-auto-rows: auto;
+  grid-auto-rows: 20px;
   column-gap: 2px; /* Space between grid items */
   margin-bottom: 1px;
   width: 100%;
   height: auto;
-  /*height: 100vh;*/
+}
+
+.grid-container-mercator-row-gap {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
+
+  grid-auto-rows: 20px;
+  column-gap: 2px; /* Space between grid items */
+  margin-bottom: 1px;
+  width: 100%;
+  height: auto;
 }
 
 .grid-container-row-fixed {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
 
-  /*grid-auto-rows: 25px;*/
+  /*grid-auto-rows: auto;*/
   column-gap: 2px; /* Space between grid items */
   margin-bottom: 0px;
   width: 100%;
@@ -80,7 +90,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr; /* two parts */
 
-  grid-auto-rows: 25px;
+  grid-auto-rows: auto;
   margin-bottom: 10px;
   width: 100%;
   height: auto;
@@ -93,7 +103,7 @@ body {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Columns sized using fr units */
   
-  grid-auto-rows: 25px;
+  grid-auto-rows: auto;
   column-gap: 2px; /* Space between grid items */
   row-gap: 0px;
   width: 100%;
@@ -102,7 +112,7 @@ body {
 }
 
 .title-divider {
-  height: 15px;
+  height: auto;
   width: 100%;
   display: flex;
   background-color: grey;
@@ -118,7 +128,7 @@ body {
 }
 
 .settings-entry {
-  height: 10px;
+  height: auto;
   width: 100%;
   display: flex;
   background-color: clear;
@@ -134,7 +144,7 @@ body {
 }
 
 .sub-title-divider-left {
-  height: 15px;
+  height: auto;
   width: 100%;
   display: flex;
   background-color: transparent;
@@ -150,7 +160,7 @@ body {
 }
 
 .sub-title-divider-center {
-  height: 15px;
+  height: auto;
   width: 100%;
   display: flex;
   background-color: transparent;
@@ -206,7 +216,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 12px;
+  height : auto;
 }
 
 .small-row {
@@ -252,7 +263,7 @@ body {
   align-items: center;
   /*font-size: 1rem;*/
   border: 1px solid black;
-  height: 20px;
+  height: auto;
 }
 
 .grid-item-selectable {
@@ -272,10 +283,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12pt;
+  font-size: 12px;
   font-weight: bolder;
   border: 1px solid black;
-  height: 20px;
+  height: auto;
 }
 
 .sub-title {
@@ -399,10 +410,10 @@ body {
   color: black; /* Button text color */
   border: none; /* Remove default button border */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 12px; /* Font size for button text */
   align-items: center; /* Center text vertically */
   justify-content: center; /* Center text horizontally */
   border: 2px solid black;
+  font-size: 10px; /* Font size for button text */
 }
 
 .tool-highlight {
@@ -856,7 +867,7 @@ body {
     display: grid;
     grid-template-columns: 0.15fr 0.3fr 0.3fr 0.15fr 0.1fr 0.1fr; /* Columns sized using fr units */
   
-    grid-auto-rows: 25px;
+    grid-auto-rows: auto;
     row-gap: 0px;
     width: 100%;
     height: auto;

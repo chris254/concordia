@@ -2758,13 +2758,18 @@ function UpdateGUIMerc() {
     document.getElementById("post-merc-status-all").style.backgroundColor = mercFailColour;
   }
 
-  document.getElementById("trades-buy-reqd").textContent =   "B: " + postMercStatus.tradesBuyRequired;
+  // BUY AND SELL REQD
+  let tradesTotalReqd = postMercStatus.tradesBuyRequired + postMercStatus.tradesSellRequired;
+  document.getElementById("trades-buy-reqd").textContent =   postMercStatus.tradesBuyRequired;
   if (postMercStatus.tradesSellRequired < 0) {
-    document.getElementById("trades-sell-reqd").textContent =   "S: X";
+    document.getElementById("trades-sell-reqd").textContent =   "X";
+    document.getElementById("trades-total-reqd").textContent =   "X";
   }
   else {
-    document.getElementById("trades-sell-reqd").textContent = "S: " + postMercStatus.tradesSellRequired;
+    document.getElementById("trades-sell-reqd").textContent = postMercStatus.tradesSellRequired;
+    document.getElementById("trades-total-reqd").textContent =   tradesTotalReqd;
   }
+
 
 }
 

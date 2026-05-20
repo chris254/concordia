@@ -1,21 +1,7 @@
-let elemBtnResetAll;
-let elemBtnResetStoreCurrent;
-let elemBtnResetArchitect;
-let elemBtnResetMerc3;
-
-const styleMinus = ["", "minus-brick", "minus-food", "minus-tool", "minus-wine", "minus-cloth"];
-
 const houseCost = [0,1,2,3,4,5];
 
 let elemBtnArch;
 let elemBtnMerc;
-
-const CardType = Object.freeze({
-  ARCHITECT: "ARCH",
-  MERC3: "MERC3",
-  MERC5: "MERC5",
-});
-
 
 const StylesType = Object.freeze({
 
@@ -25,7 +11,6 @@ const StylesType = Object.freeze({
   CLEAR_THICK: ["clear-thick-cash","clear-thick-brick","clear-thick-food","clear-thick-tool","clear-thick-wine","clear-thick-cloth"],
   CLEAR_NORMAL_BOLD: ["clear-normal-bold-cash","clear-normal-bold-brick","clear-normal-bold-ood","clear-normal-bold-tool","clear-normal-bold-wine","clear-normal-bold-cloth"],
   CLEAR_THICK_BOLD: ["clear-thick-bold-cash","clear-thick-bold-brick","clear-thick-bold-food","clear-thick-bold-tool","clear-thick-bold-wine","clear-thick-bold-cloth"],
-
 
   ORANGE_BLACK: ["orange-background-black","orange-background-black","orange-background-black","orange-background-black","orange-background-black","orange-background-black"],
   ORANGE_NORMAL: ["orange-background-cash","orange-background-brick","orange-background-food","orange-background-tool","orange-background-wine","orange-background-cloth"],
@@ -38,7 +23,6 @@ const StylesType = Object.freeze({
   RESOURCE_THICK_SPECIFIC: ["cash-background-thick-black","brick-background-thick-black","food-background-thick-black","tool-background-thick-black","wine-background-thick-black","cloth-background-thick-black"],
 
 })
-
 
 const MinusButtonType = Object.freeze({
   CLEAR: ["clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border","clear-no-border"],
@@ -60,42 +44,9 @@ const MercBtnState = Object.freeze({
   ACTIVE_FULL: ["clear-cash","clear-brick","clear-food","clear-tool","clear-wine","clear-cloth"],
   NOT_ACTIVE_AVAILABLE: ["green-background-cash","green-background-brick","green-background-food","green-background-tool","green-background-wine","green-background-cloth"],
   NOT_AVAILABLE: ["not-selectable-cash","not-selectable-brick","not-selectable-food","not-selectable-tool","not-selectable-wine","not-selectable-cloth"],
-});
-
-
-const EditModeType = Object.freeze({
-  STRICT: "STRICT",
-  FREE: "FREE",
-});
-
-let elemBtnMode;
-let editMode;
-let btnEditMode;
-
-let btnDecArchBrick;
-let btnDecArchFood;
-let btnDecArchTool;
-let btnDecArchWine;
-let btnDecArchCloth;
-
-let mercBrickDelta;
-let mercFoodDelta;
-let mercToolDelta;
-let mercWineDelta;
-let mercClothDelta;
-
-/* MERC ELEMENTS */
-let elemBtnTrade1Mode;
-let elemBtnTrade2Mode;
-
+});/* MERC ELEMENTS */
 /* MERC GLOBALS */
-let mercTrade1Mode;
-let mercTrade2Mode;
-
 const minusImgPath = 'minus.png';
-const minusInvalidImgPath = 'minus_invalid.png';
-
-"btn-arch-store-brick"
 
 const elemIdsMercStore = [
   "btn-merc-store-cash",
@@ -108,7 +59,6 @@ const elemIdsMercStore = [
 
  const elemBtnMercStore = elemIdsMercStore.map((id) => document.getElementById(id));
 
-
 const elemIdsArchHousesStrict = [
   "num-arch-houses-strict-cash",
   "num-arch-houses-strict-brick",
@@ -119,7 +69,6 @@ const elemIdsArchHousesStrict = [
 ];
 
  const elemNumArchHousesStrict = elemIdsArchHousesStrict.map((id) => document.getElementById(id));
-
 
  const elemIdsArchHousesAdd = [
   "num-arch-houses-add-cash",
@@ -192,7 +141,6 @@ const elemIdsArchHousesStrict = [
 
  const elemNumPostMercStatus = elemIdsPostMercStatus.map((id) => document.getElementById(id));
 
-
  //--------------------------------------------------------------------
  const elemIdsStoreDelta = [
   "num-store-delta-cash",
@@ -230,24 +178,7 @@ const elemIdsArchHousesStrict = [
 
  const elemNumStoreCurrentCashValue = elemIdsStoreCurrentCashValue.map((id) => document.getElementById(id));
 
-
-
-
  // btn-dec-store-merc-brick
-
- const elemIdsBtnDecMercStore = [
-  "btn-dec-store-merc-cash",
-  "btn-dec-store-merc-brick",
-  "btn-dec-store-merc-food",
-  "btn-dec-store-merc-tool",
-  "btn-dec-store-merc-wine",
-  "btn-dec-store-merc-cloth",
-];
-
-const elemBtnDecMercStore = elemIdsBtnDecMercStore.map((id) => document.getElementById(id));
-
-
-
 //-----------------------------------------------------------------------------
 const elemIdsMercQuickAct = [
   "merc-quick-cash-act",
@@ -259,69 +190,6 @@ const elemIdsMercQuickAct = [
 ];
 
 const elemNumQuickMercAct = elemIdsMercQuickAct.map((id) => document.getElementById(id));
-
-//-----------------------------------------------------------------------------
-const elemIdsMercQuickReq = [
-  "merc-quick-cash-req",
-  "merc-quick-brick-req",
-  "merc-quick-food-req",
-  "merc-quick-tool-req",
-  "merc-quick-wine-req",
-  "merc-quick-cloth-req",
-];
-
-const elemNumQuickMercReq = elemIdsMercQuickReq.map((id) => document.getElementById(id));
-
-
-//----------------------------------------------------------------------
-const elemIdsMercBuyPot = [
-  "num-merc-buypot-cash",
-  "num-merc-buypot-brick",
-  "num-merc-buypot-food",
-  "num-merc-buypot-tool",
-  "num-merc-buypot-wine",
-  "num-merc-buypot-cloth",
-];
-
-const elemNumMercBuyPot = elemIdsMercBuyPot.map((id) => document.getElementById(id));
-
-//---------------------------------------------------------------------------------
-const elemIdsMercDeltaTotal = [
-  "num-merc-delta-total-cash",
-  "num-merc-delta-total-brick",
-  "num-merc-delta-total-food",
-  "num-merc-delta-total-tool",
-  "num-merc-delta-total-wine",
-  "num-merc-delta-total-cloth",
-];
-
-const elemNumMercDeltaTotal = elemIdsMercDeltaTotal.map((id) => document.getElementById(id));
-
-//---------------------------------------------------------------------------------
-const elemIdsMercPreBuy = [
-  "num-merc-pre-buy-cash",
-  "num-merc-pre-buy-brick",
-  "num-merc-pre-buy-food",
-  "num-merc-pre-buy-tool",
-  "num-merc-pre-buy-wine",
-  "num-merc-pre-buy-cloth",
-];
-
-const elemNumPreBuy = elemIdsMercPreBuy.map((id) => document.getElementById(id));
-
-
-//---------------------------------------------------------------------------------
-const elemIdsMercDeltaBuy = [
-  "num-merc-delta-buy-cash",
-  "num-merc-delta-buy-brick",
-  "num-merc-delta-buy-food",
-  "num-merc-delta-buy-tool",
-  "num-merc-delta-buy-wine",
-  "num-merc-delta-buy-cloth",
-];
-
-const elemNumMercDeltaBuy = elemIdsMercDeltaBuy.map((id) => document.getElementById(id));
-
 
 //---------------------------------------------------------------------------------
 const elemIdsBtnMercBuyPlus = [
@@ -346,7 +214,6 @@ const elemIdsBtnMercSell = [
 
 const elemBtnMercSell = elemIdsBtnMercSell.map((id) => document.getElementById(id));
 
-
 //------------------------------------------------------
 const elemIdsBtnMercTradeMinus = [
   "btn-merc-trade-minus-cash",
@@ -358,30 +225,6 @@ const elemIdsBtnMercTradeMinus = [
 ];
 
 const elemBtnMercTradeMinus = elemIdsBtnMercTradeMinus.map((id) => document.getElementById(id));
-
-//------------------------------------------------------------------------
-const elemIdsMercSellDelta = [
-  "num-merc-sell-delta-cash",
-  "num-merc-sell-delta-brick",
-  "num-merc-sell-delta-food",
-  "num-merc-sell-delta-tool",
-  "num-merc-sell-delta-wine",
-  "num-merc-sell-delta-cloth",
-];
-
-const elemMercSellDelta = elemIdsMercSellDelta.map((id) => document.getElementById(id));
-
-//------------------------------------------------------------------------
-const elemIdsMercStoreStart = [
-  "num-merc-store-start-cash",
-  "num-merc-store-start-brick",
-  "num-merc-store-start-food",
-  "num-merc-store-start-tool",
-  "num-merc-store-start-wine",
-  "num-merc-store-start-cloth",
-];
-
-const elemMercStoreStart = elemIdsMercStoreStart.map((id) => document.getElementById(id));
 
 //------------------------------------------------------------------------
 const elemIdsMercStoreIn = [
@@ -419,7 +262,6 @@ const elemIdsMercStoreOut = [
 
 const elemMercStoreOut = elemIdsMercStoreOut.map((id) => document.getElementById(id));
 
-
 //------------------------------------------------------------------------------------------
 const elemIdsStoreFreeCurrent = [
   "num-arch-store-reqd-cash",
@@ -445,7 +287,6 @@ const elemIdsStoreTotalDelta = [
 
 const elemNumStoreTotalDelta = elemIdsStoreTotalDelta.map((id) => document.getElementById(id));
 
-
 const elemIdsStoreFreeMercCurrent = [
   "num-post-merc-delta-cash",
   "num-post-merc-delta-brick",
@@ -456,7 +297,6 @@ const elemIdsStoreFreeMercCurrent = [
 ];
 
 const elemNumPostMercDelta = elemIdsStoreFreeMercCurrent.map((id) => document.getElementById(id));
-
 
 //------------------------------------------------------------------------------------------
 const elemIdsStoreStrictCurrent = [
@@ -470,18 +310,6 @@ const elemIdsStoreStrictCurrent = [
 
 const elemNumStoreStrictCurrent = elemIdsStoreStrictCurrent.map((id) => document.getElementById(id));
 
-//------------------------------------------------------------------------------------------
-const elemIdsStoreCost = [
-  "num-arch-store-cost-cash",
-  "num-arch-store-cost-brick",
-  "num-arch-store-cost-food",
-  "num-arch-store-cost-tool",
-  "num-arch-store-cost-wine",
-  "num-arch-store-cost-cloth",
-];
-
-const elemNumArchStoreCost = elemIdsStoreCost.map((id) => document.getElementById(id));
-
 const elemIdsNumArchHousesFree = [
   "num-arch-houses-free-cash",
   "num-arch-houses-free-brick",
@@ -492,7 +320,6 @@ const elemIdsNumArchHousesFree = [
 ];
 
 const elemNumArchHousesFree = elemIdsNumArchHousesFree.map((id) => document.getElementById(id));
-
 
 const elemIdsBtnDecArchFree = [
   "btn-dec-arch-free-cash",
@@ -505,12 +332,6 @@ const elemIdsBtnDecArchFree = [
 
 const elemBtnDecArchFree = elemIdsBtnDecArchFree.map((id) => document.getElementById(id));
 
-btnDecArchBrick = document.getElementById("");
-btnDecArchFood = document.getElementById("");
-btnDecArchTool = document.getElementById("");
-btnDecArchWine = document.getElementById("");
-btnDecArchCloth = document.getElementById("");
-
 const elemIdsStrictBuildRem = [
   "num-arch-strict-rem-cash",
   "num-arch-strict-rem-brick",
@@ -522,83 +343,38 @@ const elemIdsStrictBuildRem = [
 
 const elemNumStrictBuildRem = elemIdsStrictBuildRem.map((id) => document.getElementById(id));
 
-
-
-
-document.getElementById("btn-inc-arch-cloth");
-
-let elemMercStore = [0, 0, 0, 0, 0];
-
 let elemNumTrades;
 let elemTradesReqd;
 
 document.addEventListener("DOMContentLoaded", function () {
-  function Initialise() {}
-
   document.getElementById("version").textContent = "V9.05";
 
   elemNumTrades = document.getElementById("num-trades");
   elemTradesReqd = document.getElementById("trades-reqd");
-  elemBtnMode = document.getElementById("btn-mode");
-
-  elemBtnResetAll = document.getElementById("btn-reset-all");
-  elemBtnResetStoreCurrent = document.getElementById("btn-reset-storecurrent");
-  elemBtnResetArchitect = document.getElementById("btn-reset-architect");
-  elemBtnResetMerc3 = document.getElementById("btn-reset-merc3");
-
 
   elemBtnArch = document.getElementById("btn-arch");
   elemBtnMerc = document.getElementById("btn-merc");
 
   archFreeMode = true;
-  editMode = EditModeType.FREE;
-  btnEditMode = document.getElementById("btn-edit-mode");
 
   postMercStatus.mercActive = MercType.MERC3;
   postMercStatus.lastMercActive = MercType.MERC3;
-
 
   dataArch.archHousesReqd.fill(0);
   dataArch.archHousesCurrentStrict.fill(0);
 
   /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-  elemBtnTrade1Mode = document.getElementById("btn-merc-trade1-mode");
-  elemBtnTrade2Mode = document.getElementById("btn-merc-trade2-mode");
-
-  mercTrade1Mode = "SELL";
-  mercTrade2Mode = "BUY";
 
   UpdateAll();
 });
-
-function SetNewStyle(fill_, borderSize_, fontSize_) {
-
-
-}
-
-function ArchStoreStrictDec(resourceId) {
-  
-  if (dataArch.archStrictStoreRemaining[resourceId] > 0 && mercGlobal.storeFinal[resourceId] > 0) {
-    fieldValues.storeCurrentStrict[resourceId] = Max(0, fieldValues.storeCurrentStrict[resourceId] - 1);
-  }
-
-  UpdateAll();
-
-}
 
 function ArchStoreStrictInc(resourceId) {
   fieldValues.storeCurrentStrict[resourceId] += 1;
   UpdateAll();
 }
 
-
 function ArchHousesDecFree(resourceId) {
   dataArch.archHousesReqd[resourceId] = Max(0, dataArch.archHousesReqd[resourceId] - 1);
-
-  UpdateAll();
-}
-function ArchHousesDecStrict(resourceId) {
-  dataArch.archHousesCurrentStrict[resourceId] = Max(0, dataArch.archHousesCurrentStrict[resourceId] - 1);
 
   UpdateAll();
 }
@@ -635,43 +411,7 @@ function SenatorAdd(resourceId) {
   UpdateAll();
 }
 
-
-
-
-function MercStoreDec(resourceId) {
-
-  let sellQty = 0;
-
-  if (resourceId === 0) {
-    if (mercGlobal.storeFinal[0] > 0 && mercGlobal.mercStore[0] > 0) {
-      mercGlobal.mercStore[resourceId] -= 1;
-    }
-  }
-  else {
-    if (mercGlobal.sellInProgress[resourceId]) {
-      sellQty = mercGlobal.sellQtyActual[resourceId]
-      if (mercGlobal.mercStore[resourceId] > sellQty && mercGlobal.storeFinal[0] >= resourceValue[resourceId]) {
-        mercGlobal.mercStore[resourceId] -= 1;
-      }
-    }
-    else if (mercGlobal.mercStore[resourceId] > 0) {
-      mercGlobal.mercStore[resourceId] -= 1;
-    } 
-  }
-
-  UpdateAll();
-}
-
 // Function to update the result div with whether the
-
-
-function GetTotalBuildValue(brickCount, foodCount, toolCount, wineCount, clothCount) {
-  return brickCount * 1 + foodCount * 2 + toolCount * 3 + wineCount * 4 + clothCount * 5;
-}
-
-function GetIntegerValue(str) {
-  return parseInt(str) || 0;
-}
 
 /* ---------------------------------------------------------  --------------------------- */
 /* STORE */
@@ -683,30 +423,10 @@ function WriteFieldValueBlankZero(elem, value) {
     elem.textContent = value;
   }
 }
-function ResetStoreCurrentStrict() {
-
-  ResetArchitect();
-  fieldValues.storeCurrentStrict[0] = 0;
-  fieldValues.storeCurrentStrict[1] = 0;
-  fieldValues.storeCurrentStrict[2] = 0;
-  fieldValues.storeCurrentStrict[3] = 0;
-  fieldValues.storeCurrentStrict[4] = 0;
-  fieldValues.storeCurrentStrict[5] = 0;
-
-  UpdateAll();
-}
 
 /* ------------------------------------------------------------------------------------ */
 /* BUILD */
 /* ------------------------------------------------------------------------------------ */
-
-function ResetArchitect() {
-  dataArch.archHousesReqd.fill(0);
-  dataArch.archHousesCurrentStrict.fill(0);
-
-  UpdateAll();
-}
-
 
 function CalculateStoreReqdTotal() {
   if (fieldValues.archModeFirstPass) {
@@ -734,7 +454,6 @@ function CalculateStoreReqdTotal() {
         houseCost[resourceId]*(dataArch.archHousesAddFree[resourceId]);
 
     storeCurrentLocal = storeCurrentLocal + currentCashValue;
-
 
   }
 
@@ -872,7 +591,6 @@ function ProcessArchitectStrict() {
 
 }
 
-
 function Min3(value1, value2, value3) {
   if (value1 < value2) {
     /* cannot be value 2 as value 1 is less */
@@ -885,21 +603,6 @@ function Min3(value1, value2, value3) {
       return value3;
     }
   }
-}
-
-function SetBackgroundColor(elem, colour) {
-  elem.style.backgroundColor = colour;
-
-}
-
-function ApplyBackground(elem) {
-  elem.backgroundColor = "gray";
-  /* elem.classList.add('grey-background');*/
-}
-
-
-function MercTradeDelta(resourceId) {
-  return mercGlobal.storeFinal[resourceId] - mercGlobal.mercStorePreTrade[resourceId];
 }
 
 function CanBuyResource(resourceId) {
@@ -936,55 +639,12 @@ function ClickMercBuyResourcePlus(resourceId) {
   UpdateAll();
 }
 
-function BuyMinus(resourceId) {
-  mercGlobal.storeFinal[resourceId] -= 1;
-  mercGlobal.storeFinal[0] += resourceValue[resourceId];
-
-  UpdateAll();
-}
-
-function SellMinus(resourceId) {
-  mercGlobal.storeFinal[resourceId] += 1;
-  mercGlobal.storeFinal[0] -= resourceValue[resourceId];
-
-  UpdateAll();
-}
-
-
-let firstPass = true;
-
-
-
-function ResetArchitect() {
-  dataArch.archHousesReqd.fill(0);
-  dataArch.archHousesCurrentStrict.fill(0);
-  UpdateAll();
-}
-
-function ConvertZeroesToBlank(id, value) {
-  if (value === 0) {
-    id.textContent = "";
-  } else {
-    id.textContent = value;
-  }
-}
-
-function ResetAll() {
-  ResetStoreCurrent();
-  ResetArchitect();
-}
-
 function ResetMercTrades() {
 
   for (let resourceId = 1; resourceId <=5; resourceId++) {
     mercGlobal.buyQtyActual[resourceId] = 0;
     mercGlobal.sellQtyActual[resourceId] = 0;
   }
-
-  UpdateAll();
-}
-
-function RunMercAuto() {
 
   UpdateAll();
 }
@@ -996,9 +656,7 @@ function ResetStrictBuild()
     dataArch.archHousesCurrentStrict[resourceId] = 0;
 }
 
-
   ResetStoreAdd();
-
 
   UpdateAll();
 }
@@ -1013,9 +671,7 @@ function ResetStoreFree()
     }
   }
 
-
   ResetStoreAdd();
-
 
   UpdateAll();
 }
@@ -1054,7 +710,6 @@ function ResetSenator()
   UpdateAll();
 }
 
-
 function WriteSingleString(elem_, string_, fontSize_, bold_, color_) {
   elem_.style.fontSize = fontSize_ + "px";
 
@@ -1088,31 +743,6 @@ function WriteSingleNumber(elem_, number_, fontSize_, bold_, color_,displaySign_
   }
 }
 
-function WriteSlashArray(elem_, numbers_, fonts_, bolds_, separator_,color_) {
-  let arrayLength = numbers_.length;
-
-  const textArray = Array.from({ length: arrayLength }, () => document.createElement('span'));
-
-  elem_.textContent = '';
-
-  for (let index=0; index<=length; index++) {
-    
-    textArray[index].className = 'normal-text';
-    textArray[index].fontSize = fonts_[index] + "px";
-    if (bolds_[index]) textArray[index].style.fontWeight = "bold";
-    else textArray[index].style.fontWeight = "normal";
- 
-    if (index===0 || index === length-1) elem_.append(textArray[index]);
-    else elem_.append(separator_ + textArray[index]);
-    
-
-  }
-
-  elem_.color = color_;
-
-
-}
-
 function WriteSingle(elem_, number_, fontSize_, bold_) {
 
   const text = document.createElement('span');
@@ -1131,7 +761,6 @@ function WriteSingle(elem_, number_, fontSize_, bold_) {
   elem_.appendChild(text);
 
 }
-
 
 function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, rightFontSize_, rightBold_, color_, leftSign_, rightSign_) {
 
@@ -1157,7 +786,6 @@ function WriteSlash(elem_, leftNumber_, leftFontSize_, leftBold_, rightNumber_, 
   if (leftNumber_ > 0 && leftSign_) leftSignText = "+";
   let rightSignText = "";
   if (rightNumber_ > 0 && rightSign_) rightSignText = "+";
-
 
   leftText.textContent = leftSignText + leftNumber_;
   rightText.textContent = "/" + rightSignText + rightNumber_;
@@ -1198,7 +826,6 @@ function CalculatePreMercStatus() {
     }
     
   } // 0 to 5
-
 
 }
 
@@ -1286,7 +913,6 @@ function UpdateGUIArch() {
       }
     }
 
-
     //-----------------------------------------------------------------------------------
     // STRICT BUILD MINUS BUTTON
     if (dataArch.archStrictStoreRemaining[resourceId] > 0 ) {
@@ -1311,7 +937,6 @@ function UpdateGUIArch() {
 
     }
 
-
   }
 
   // Can I achieve the required build + senator??
@@ -1329,10 +954,6 @@ function UpdateGUIArch() {
  //                   fieldValues.storeCurrentStatusString,16,true,"black");
  //   document.getElementById("linewithtext-current-store-status").style.backgroundColor = mercFailColour;                
  // }
-
-
-
-
 
   /* ------------------------------------------------------------- */
   /* Set arch build actual colour:                           */
@@ -1429,7 +1050,6 @@ function UpdateGUIArch() {
       }
     }
 
-
     if (mercGlobal.buyInProgress[resourceId] || mercGlobal.sellInProgress[resourceId]) {
       elemNumPostMercDelta[resourceId].style.border = 'dashed';
     }
@@ -1497,7 +1117,6 @@ function UpdateGUIArch() {
         elemNumArchHousesStrict[resourceId].textContent = "";
         elemNumArchHousesStrict[resourceId].style.borderRadius = '0px';
       }
-
 
       //------------------------------------------------------------ 
       // ARCH BUILD ADDITIONAL
@@ -1618,7 +1237,6 @@ function UpdateGUIArch() {
       elemNumPostMercStatus[resourceId].textContent = cross;// + "(" + postMercStatus.resourceDeltaArr[resourceId] + ")";
     }
 
-
   } // 0 to 5
   
   let failStatus = "";
@@ -1659,8 +1277,6 @@ function UpdateGUIArch() {
     
   } // 0 to 5
 
-
-
   if (preMercStatus.resourceAllFailCount > 0) {
     //document.getElementById("pre-merc-status").style.backgroundColor = mercFailColour;
     document.getElementById("current-store-status").style.backgroundColor = mercFailColour;
@@ -1676,10 +1292,6 @@ function UpdateGUIArch() {
     //document.getElementById("pre-merc-status").textContent = 
     //  "PRE MERC STATUS:             " + tick;
   }
-
-
-
-
 
     // Can I achieve the required build + senator??
   if (postMercStatus.resourceAllFailCount === 0 && 
@@ -1826,9 +1438,7 @@ function CreateStoreStatusString(caption_, cashFail_, cashDelta_, resourceTypeFa
     //"Res Total Delta: " + fieldValues.storeCurrentResourceFailCount;
 }
 
-function CalculateMercSuccessFuture() {
-
-} // CalculateMercStatusFuture
+// CalculateMercStatusFuture
 
 function CalculatePostMercStatus() {
 
@@ -1908,14 +1518,12 @@ function CalculatePostMercStatus() {
     postMercStatus.totalSpareResourceValue -
     postMercStatus.totalMissingResourceValue;  
 
-
   ////////////////////////////////////////////////////////////////////////
   // Calculate post merc status
   ////////////////////////////////////////////////////////////////////////
   fieldValues.postMercMysteryAvailable = 0;
   // ????
   mercGlobal.postMercMysteryAvailable = 0;
-
 
   // Calculate all the deltas
   for (let resourceId=0; resourceId<=5; resourceId++) {
@@ -1935,7 +1543,6 @@ function CalculatePostMercStatus() {
   postMercStatus.achieved = 
     postMercStatus.resourceAllFailCount === 0 && // covers cash and resources
     fieldValues.postMercMysteryDelta >=0; 
-
 
   fieldValues.postMercMysteryDelta = fieldValues.postMercMysteryAvailable - fieldValues.senatorMysteryReqd
   fieldValues.postMercMysteryFail = fieldValues.postMercMysteryDelta < 0;
@@ -2058,7 +1665,6 @@ function CalculatePostMercStatus() {
     }
   }
 
-
   let mercSuccessString = "";
   if (postMercStatus.achievable) {
     mercSuccessString = tick; 
@@ -2122,10 +1728,8 @@ function CalculatePostMercStatus() {
     }
   }
 
-
   // Calculate mercator status
   // xxx
-
 
 } // CalculatePostMercStatus
 
@@ -2139,7 +1743,6 @@ function CalculateCurrentStoreStatus() {
   fieldValues.storeCurrentCashFail = false;
   fieldValues.storeCurrentMysteryAvailable = 0;
   mercGlobal.postMercMysteryAvailable = 0;
-
 
   // Calculate all the deltas
   for (let resourceId=0; resourceId<=5; resourceId++) {
@@ -2181,8 +1784,6 @@ function CalculateCurrentStoreStatus() {
   fieldValues.storeCurrentMysteryDelta = fieldValues.storeCurrentMysteryAvailable - fieldValues.senatorMysteryReqd
   fieldValues.storeCurrentMysteryFail = fieldValues.storeCurrentMysteryDelta < 0;
 
-
-
   fieldValues.storeCurrentStatusString = CreateStoreStatusString(
     "         CURR:    ",
     fieldValues.storeCurrentCashFail, 
@@ -2204,7 +1805,6 @@ function UpdateAll() {
 
   CalculateStoreReqdTotal();
   ProcessArchitectStrict();
-
 
   ProcessMerc();
 
@@ -2286,10 +1886,6 @@ function UpdateAll() {
   fieldValues.archModeFirstPass = false;
 } // UpdateAll
 
-function SetCardArch() {
-  UpdateAll();
-}
-
 function SetCardMerc() {
   /* Toggle between MERC3 and MERC5 */
   if (postMercStatus.mercActive === MercType.MERC0) {
@@ -2305,62 +1901,9 @@ function SetCardMerc() {
     }
   }
 
-
   elemBtnMerc.textContent = postMercStatus.mercActive;
 
   UpdateAll();
-}
-
-function HideShow(index_) {
-
-  if (index_ === 0)
-  {
-    mercGlobal.hideArchFree = !mercGlobal.hideArchFree;
-
-    if (mercGlobal.hideArchFree) {
-      document.getElementById("arch-free-group").style.display = "none";
-    }
-    else {
-      document.getElementById("arch-free-group").style.display = "block";
-    }
-  }
-
-  if (index_ === 1)
-  {
-    mercGlobal.hideArchStrict = !mercGlobal.hideArchStrict;
-
-    if (mercGlobal.hideArchStrict) {
-      document.getElementById("arch-strict-group").style.display = "none";
-    }
-    else {
-      document.getElementById("arch-strict-group").style.display = "block";
-  }
-}
-
-//  UpdateAll();
-
-}
-
-
-function ToggleEditMode() {
-  if (fieldValues.archFreeMode) {
-    fieldValues.archFreeMode = false;
-    btnEditMode.textContent = "S";
-  } else {
-    fieldValues.archFreeMode = true;
-    btnEditMode.textContent = "F";
-  }
-
-  fieldValues.archModeFirstPass = true;
-  UpdateAll();
-}
-
-function BuyActive(resourceId) {
-  return mercGlobal.storeFinal[resourceId] > mercGlobal.mercStorePreTrade[resourceId];
-}
-
-function SellActive(resourceId) {
-  return mercGlobal.storeFinal[resourceId] < mercGlobal.mercStorePreTrade[resourceId];
 }
 
 function ClickMercTradeMinus(resourceId) {
@@ -2381,17 +1924,6 @@ function ClickMercTradeMinus(resourceId) {
 
   UpdateAll();
 }
-
-function MercBuyMinus(resourceId) {
-
-  if (mercGlobal.buyInProgress[resourceId]) {
-    // Pressing this will sell resource
-    mercGlobal.buyQtyActual[resourceId]--;
-  }
-
-  UpdateAll();
-}
-
 
 // -------------------------------------------------------------------------------
 function UpdateGUIMerc() {
@@ -2437,7 +1969,6 @@ function UpdateGUIMerc() {
     
     //let newStyle = minusButtonState[resourceId];
     //SetMinusStyle(elemBtnDecMercStore[resourceId],newStyle,resourceId);
-
 
     //-----------------------------------------------------------------------
     // SELL PLUS BUTTON
@@ -2628,7 +2159,6 @@ function UpdateGUIMerc() {
     //else if (localDeltaBuy > 0)  elemNumMercDeltaBuy[resourceId].textContent = "+" + localDeltaBuy;
     //else elemNumMercDeltaBuy[resourceId].textContent = localDeltaBuy;  
 
-
     //--------------------------------------------------------------------
     // Total Delta GUI
     //--------------------------------------------------------------------
@@ -2770,73 +2300,7 @@ function UpdateGUIMerc() {
     document.getElementById("trades-total-reqd").textContent =   tradesTotalReqd;
   }
 
-
 }
-
-//------------------------------------------------------------------
-// ClearAllMinusStyles
-//------------------------------------------------------------------
-function ClearAllMinusStyles(elem, resourceId) {
-
-  elem.classList.remove(MinusButtonType.ORANGE_NORMAL[resourceId]);
-  elem.classList.remove(MinusButtonType.CLEAR[resourceId]);
-  elem.classList.remove(MinusButtonType.RED_NORMAL[resourceId]);
-
-}
-
-//------------------------------------------------------------------
-// SetMinusStyle
-//------------------------------------------------------------------
-function SetMinusStyle(elem, newStyle, resourceId) {
-
-  ClearAllMinusStyles(elem, resourceId);
-  
-  elem.classList.add(newStyle);
-
-}
-
-//------------------------------------------------------------------
-// ClearAllArchResNumStyles
-//------------------------------------------------------------------
-function ClearAllArchResNumStyles(elem, resourceId) {
-
-  elem.classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
-  elem.classList.remove(StylesType.CLEAR_GREY[resourceId]);
-  elem.classList.remove(StylesType.CLEAR[resourceId]);
-}
-
-//------------------------------------------------------------------
-// SetArchResNumStyle
-//------------------------------------------------------------------
-function SetArchResNumStyle(elem, newStyle, resourceId) {
-
-  ClearAllArchResNumStyles(elem, resourceId);
-  
-  elem.classList.add(newStyle);
-
-}
-
-//------------------------------------------------------------------
-// ClearAllArchCostStyles
-//------------------------------------------------------------------
-function ClearAllArchCostStyles(elem, resourceId) {
-
-  elem.classList.remove(StylesType.CLEAR[resourceId]);
-  elem.classList.remove(StylesType.CLEAR_NORMAL[resourceId]);
-  elem.classList.remove(StylesType.CLEAR[resourceId]);
-}
-
-//------------------------------------------------------------------
-// SetArchCostStyle
-//------------------------------------------------------------------
-function SetArchCostStyle(elem, newStyle, resourceId) {
-
-  ClearAllArchCostStyles(elem, resourceId);
-  
-  elem.classList.add(newStyle);
-
-}
-
 
 function ClearAllStyles(elemArray,resourceId) {
 
@@ -2857,98 +2321,10 @@ function ClearAllStyles(elemArray,resourceId) {
 
 }
 
-
 function SetStyle(elemArray,newStyle, resourceId) {
   ClearAllStyles(elemArray, resourceId);
 
   elemArray[resourceId].classList.add(newStyle);
-
-}
-
-
-
-//------------------------------------------------------------------
-// SetArchAddStyle
-//------------------------------------------------------------------
-function SetArchAddStyle(elemArray, newStyle, resourceId) {
-
-  ClearAllArchAddStyles(elemArray, resourceId);
-
-  elem.classList.add(newStyle);
-
-}
-
-//------------------------------------------------------------------
-// ClearAllArchStyles
-//------------------------------------------------------------------
-function ClearAllArchStyles(elem, resourceId) {
-
-  elem.classList.remove(ArchStateType.CLEAR[resourceId]);
-  elem.classList.remove(ArchStateType.GREEN_NORMAL[resourceId]);
-  elem.classList.remove(ArchStateType.CLEAR_THICK_BOLD[resourceId]);
-}
-
-
-//------------------------------------------------------------------
-// SetArchStyle
-//------------------------------------------------------------------
-function SetArchStyle(elem, newStyle, resourceId) {
-
-  ClearAllArchStyles(elem, resourceId);
-  
-  elem.classList.add(newStyle);
-
-}
-
-
-//------------------------------------------------------------------
-// ClearAllMercBtnStyles
-//------------------------------------------------------------------
-function ClearAllMercBtnStyles(elem, resourceId) {
-
-  elem.classList.remove(MercBtnState.CLEAR[resourceId]);
-  elem.classList.remove(MercBtnState.OTHER_ACTIVE[resourceId]);
-  elem.classList.remove(MercBtnState.ACTIVE_FULL[resourceId]);
-  elem.classList.remove(MercBtnState.NOT_ACTIVE_AVAILABLE[resourceId]);
-  elem.classList.remove(MercBtnState.NOT_AVAILABLE[resourceId]);
-}
-
-//------------------------------------------------------------------
-// SetMercSellBuyStyle
-//------------------------------------------------------------------
-function SetMercSellBuyStyle(elem, newStyle, resourceId, fontSize_) {
-
-  ClearAllMercBtnStyles(elem, resourceId);
-  
-  elem.classList.add(newStyle);
-
-  let fontSizeStr = fontSize_.toString() + "px";
-  elem.style.fontSize = fontSizeStr;
-
-}
-
-function CalculateTradeCountRequired(
-  achieved,
-  currentMercActive, 
-  currentTradeCount, 
-  resourceDeltaCashValueArr,
-  totalCostOfMissingResource,
-  cashDelta) {
-
-  if (achieved) {
-    return 0;
-  }
-  else {
-    // Calculate number of trades
-    if (cashDelta >= totalCostOfMissingResource) {
-      // Can do it without selling anything
-
-    }
-  }
-  return 0;
-
-
-
 
 }
 
@@ -2991,8 +2367,6 @@ function ProcessMerc() {
 
   postMercStatus.currentTradeCount = localSellCount + localBuyCount;
 
-
-
   //-------------------------------------------------------
   // MERC3 or MERC5
   if (postMercStatus.mercActive === MercType.MERC0) mercGlobal.cashBonus = 0;
@@ -3022,7 +2396,6 @@ function ProcessMerc() {
 
     // Cash is added as it's been sold
     totalSellCashDelta = totalSellCashDelta + (localSellQty * resourceValue[resourceId]);  
-
 
     //-------------------------------------------------------
     // Calculate mercGlobal.storeFinal
@@ -3070,34 +2443,11 @@ function ProcessMerc() {
       Math.floor(mercGlobal.storeFinal[0] / resourceValue[index]);
     mercGlobal.buyQtyPossible[index] = mercGlobal.buyQtyActual[index] + mercGlobal.mercBuyPot[index];
 
-
   }
 
   mercGlobal.storeCashValue[0] = mercGlobal.totalStoreCashValue;
 
-
-
 } // END: ProcessMerc
-
-function MercBuyResourceId() {
-  // Only gets the first buy
-  for (resourceId = 1; resourceId <=5 ; resourceId++) {
-    if (mercGlobal.buyInProgress[resourceId]) {
-      return resourceId;
-    }
-  }
-  return 0;
-}
-
-function MercSellResourceId() {
-  // Only gets the first buy
-  for (resourceId = 1; resourceId <=5 ; resourceId++) {
-    if (mercGlobal.sellInProgress[resourceId]) {
-      return resourceId;
-    }
-  }
-  return 0;
-}
 
 function ArchMercClick(resourceId) {
 
@@ -3136,7 +2486,6 @@ function ClickMercSellResourcePlus(resourceId) {
 
   UpdateAll();
 }
-
 
 function SetBorderRadius(elem_, radius_) {
    elem_.style.borderRadius = radius_;
@@ -3193,7 +2542,6 @@ function ProcessScores() {
   WriteToCards(3,scores.mercuriousCards);
   WriteToVp(3,scores.mercuriousVp);
 
-
   scores.marsVp = 2 * scores.marsCount * scores.marsCards;
   WriteToCount(4,scores.marsCount);
   WriteToCards(4,scores.marsCards);
@@ -3223,7 +2571,6 @@ function ProcessScores() {
   WriteToCount(9,scores.minCCount);
   WriteToCards(9,scores.minCCards);
   WriteToVp(9,scores.minCVp);
-
 
   scores.concordiaVp = 7 * scores.concordiaCards;
   WriteToCards(10,scores.concordiaCards);
